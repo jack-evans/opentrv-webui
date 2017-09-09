@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+
+  .App__intro {
+    font-size: large;
+  }
+
+  .App__menu-icon {
+    fill: #fff;
+  }
+
+  .App__overflow-menu {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+  }
+}
