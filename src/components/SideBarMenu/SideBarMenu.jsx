@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './SideBarMenu.scss'
 
 class SideBarMenu extends Component {
-
   render () {
     const sideBarMenuClass = this.props.isOpen ? 'SideBarMenu SideBarMenu__open' : 'SideBarMenu'
     return (

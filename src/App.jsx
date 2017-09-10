@@ -4,7 +4,6 @@ import './App.scss'
 import SideBarMenu from './components/SideBarMenu/SideBarMenu'
 
 class App extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -12,7 +11,7 @@ class App extends Component {
     }
   }
 
-  handleViewSideBarMenu = () => {
+  handleViewSideBarMenu () {
     this.setState({
       sideBarMenuOpen: !this.state.sideBarMenuOpen
     })
@@ -27,8 +26,8 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-        <Header onClick={this.handleViewSideBarMenu}/>
-        <SideBarMenu isOpen={this.state.sideBarMenuOpen}/>
+        <Header onClick={this.handleViewSideBarMenu.bind(this)} />
+        <SideBarMenu isOpen={this.state.sideBarMenuOpen} />
         <p className='App__intro'>
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
