@@ -1,0 +1,16 @@
+$sideBarMenu-width: 250px;
+
+.SideBarMenu {
+  background-color: white;
+  height: 100%;
+  left: -$sideBarMenu-width;
+  position: absolute;
+  top: 60px;
+  transition: left .3s ease-in-out;
+  width: $sideBarMenu-width;
+  z-index: 1;
+}
+
+.SideBarMenu__open {
+  left: 0;
+}
