@@ -12,7 +12,7 @@ class Header extends Component {
               <Icon className='Header__menu-icon' name='icon--menu' />
             </button>
           </div>
-          {/* <a className='Header__title' href='/'>Welcome to React</a> */}
+          <a className='Header__title' href='/'>Welcome to React</a>
         </div>
       </header>
     )

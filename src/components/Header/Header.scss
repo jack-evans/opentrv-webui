@@ -1,9 +1,8 @@
 $header-background-color: #222;
 $header-height: 60px;
 $header-padding-top-bottom: 10px;
-$header-padding-left-right: 5px;
+$header-padding-left-right: 10px;
 $header-logo-height-width: $header-height;
-$header-title-line-height: 31px;
 
 .Header {
   background-color: $header-background-color;
@@ -11,19 +10,20 @@ $header-title-line-height: 31px;
   height: $header-height;
 
   .Header__left-container {
+    display: flex;
+
     .Header__title {
+      align-self: center;
       color: white;
-      line-height: $header-title-line-height;
+      padding-left: $header-padding-left-right;
+      text-decoration: none;
     }
 
-    .Header__menu {
+    .Header__menu, .Header__menu-button {
       background-color: #ccc;
-
-      .Header__menu-button {
-        border: none;
-        height: $header-logo-height-width;
-        width: $header-logo-height-width;
-      }
+      border: none;
+      height: $header-logo-height-width;
+      width: $header-logo-height-width;
     }
   }
 }
