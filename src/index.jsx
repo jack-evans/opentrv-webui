@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import './index.scss'
 import App from './App'
-// import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
+// Have to export and create element to be able to test
+export default ReactDOM.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById('root'))
-// registerServiceWorker();
+  document.getElementById('root') || document.createElement('div')
+)
