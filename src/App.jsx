@@ -20,8 +20,8 @@ class App extends Component {
   /**
    * render method
    *
-   * Creates the html for the main component of the application
-   * @returns {HTML} - the main component
+   * Creates the html for the App Component Class
+   * @returns {HTML} - App Component
    */
   render () {
     return (
