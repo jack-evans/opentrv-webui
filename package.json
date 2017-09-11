@@ -46,13 +46,16 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "prestart": "standard --fix --verbose",
-    "prebuild": "standard --fix --verbose",
-    "pretest": "standard --fix --verbose",
+    "lint": "standard --fix --verbose",
+    "prestart": "yarn lint",
+    "prebuild": "yarn lint",
+    "pretest": "yarn lint",
+    "pretest-travis": "standard --verbose",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom --coverage",
-    "test-no-coverage": "node scripts/test.js --env=jsdom"
+    "test-no-coverage": "node scripts/test.js --env=jsdom",
+    "test-travis": "node scripts/test.js --env=jsdom --coverage --updateSnapshot"
   },
   "jest": {
     "collectCoverageFrom": [
