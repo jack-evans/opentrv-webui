@@ -49,10 +49,12 @@
     "prestart": "standard --fix --verbose",
     "prebuild": "standard --fix --verbose",
     "pretest": "standard --fix --verbose",
+    "pretest-travis": "standard --verbose",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom --coverage",
-    "test-no-coverage": "node scripts/test.js --env=jsdom"
+    "test-no-coverage": "node scripts/test.js --env=jsdom",
+    "test-travis": "node scripts/test.js --env=jsdom --coverage --updateSnapshot"
   },
   "jest": {
     "collectCoverageFrom": [
