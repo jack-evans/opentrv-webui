@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Header from './Header'
-import { Icon } from 'carbon-components-react'
 
 describe('Header..jsx', () => {
   it('renders without crashing', () => {
@@ -10,9 +9,9 @@ describe('Header..jsx', () => {
     const expectedRender = (
       <header className='Header'>
         <div className='Header__left-container'>
-          <div className='Header__menu'>
-            <button type='button' className='Header__menu-button' onClick={cbFunction}>
-              <Icon className='Header__menu-icon' name='icon--menu' />
+          <div className='Header__left-nav-toggle-container'>
+            <button type='button' className='Header__left-nav-toggle' onClick={cbFunction}>
+              <span />
             </button>
           </div>
           <a className='Header__title' href='/'>Welcome to React</a>

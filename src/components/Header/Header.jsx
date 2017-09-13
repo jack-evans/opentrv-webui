@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Icon } from 'carbon-components-react'
 import './Header.scss'
 
 class Header extends Component {
@@ -7,9 +6,9 @@ class Header extends Component {
     return (
       <header className='Header'>
         <div className='Header__left-container'>
-          <div className='Header__menu'>
-            <button type='button' className='Header__menu-button' onClick={this.props.onClick}>
-              <Icon className='Header__menu-icon' name='icon--menu' />
+          <div className='Header__left-nav-toggle-container'>
+            <button type='button' className='Header__left-nav-toggle' onClick={this.props.onClick}>
+              <span />
             </button>
           </div>
           <a className='Header__title' href='/'>Welcome to React</a>

@@ -19,11 +19,73 @@ $header-logo-height-width: $header-height;
       text-decoration: none;
     }
 
-    .Header__menu, .Header__menu-button {
+    .Header__left-nav-toggle-container {
       background-color: #ccc;
-      border: none;
       height: $header-logo-height-width;
       width: $header-logo-height-width;
+
+      .Header__left-nav-toggle {
+        background-color: #ccc;
+        border: none;
+        height: inherit;
+        padding: 8px;
+        width: inherit;
+
+        span {
+          display: block;
+          height: 2px;
+          margin-top: 10px;
+          width: 20px;
+          position: relative;
+        }
+
+        span:after {
+          top: -10px;
+        }
+
+        span:before {
+          bottom: -10px;
+        }
+
+        span:after, span:before {
+          width: 20px;
+          content: "";
+          height: 2px;
+          position: absolute;
+        }
+
+        span, span:after, span:before {
+          display: block;
+          background: #000;
+          border-radius: 5px;
+        }
+      }
     }
   }
+}
+
+.mobile-menu {
+  overflow: hidden;
+  width: 36px;
+  height: 27px;
+  cursor: pointer;
+}
+.mobile-menu span {
+
+}
+.mobile-menu span, .mobile-menu span:after, .mobile-menu span:before {
+  background: #000;
+  border-radius: 5px;
+}
+.mobile-menu span:after, .mobile-menu span:before {
+  width: 36px;
+  content: "";
+  height: 2px;
+  position: absolute;
+}
+.mobile-menu span:after {
+  top: -10px;
+}
+.mobile-menu span:before {
+  bottom: -10px;
 }
