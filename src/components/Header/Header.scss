@@ -63,29 +63,3 @@ $header-logo-height-width: $header-height;
     }
   }
 }
-
-.mobile-menu {
-  overflow: hidden;
-  width: 36px;
-  height: 27px;
-  cursor: pointer;
-}
-.mobile-menu span {
-
-}
-.mobile-menu span, .mobile-menu span:after, .mobile-menu span:before {
-  background: #000;
-  border-radius: 5px;
-}
-.mobile-menu span:after, .mobile-menu span:before {
-  width: 36px;
-  content: "";
-  height: 2px;
-  position: absolute;
-}
-.mobile-menu span:after {
-  top: -10px;
-}
-.mobile-menu span:before {
-  bottom: -10px;
-}
