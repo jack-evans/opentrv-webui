@@ -9,21 +9,70 @@ $header-logo-height-width: $header-height;
   display: flex;
   height: $header-height;
 
-  .Header__left-container {
-    display: flex;
+  .Header__title {
+    align-self: center;
+    color: white;
+    padding-left: $header-padding-left-right;
+    text-decoration: none;
+  }
 
-    .Header__title {
-      align-self: center;
-      color: white;
-      padding-left: $header-padding-left-right;
-      text-decoration: none;
+  .Header__left-nav-toggle-container {
+    background-color: #ccc;
+    height: $header-logo-height-width;
+    width: $header-logo-height-width;
+
+    .Header__left-nav-toggle {
+      background-color: inherit;
+      border: 0;
+      height: inherit;
+      padding: 8px;
+      width: inherit;
+      display: inline-block;
+      cursor: pointer;
+      overflow: hidden;
+
+      .Header__left-nav-icon, .Header__left-nav-icon:after, .Header__left-nav-icon:before {
+        width: 20px;
+        height: 2px;
+        background: #000;
+        position: absolute;
+        left: 20px;
+        transition: all 0.3s ease-in-out
+      }
+
+      .Header__left-nav-icon:after {
+        top: -8px;
+      }
+
+      .Header__left-nav-icon:before {
+        bottom: -8px;
+      }
+
+      .Header__left-nav-icon:after, .Header__left-nav-icon:before {
+        content: "";
+        left: 0;
+      }
     }
 
-    .Header__menu, .Header__menu-button {
-      background-color: #ccc;
-      border: none;
-      height: $header-logo-height-width;
-      width: $header-logo-height-width;
+    .Header__left-nav-toggle--active {
+
+      .Header__left-nav-icon {
+        background: 0;
+      }
+
+      .Header__left-nav-icon:before {
+        -webkit-transform: translateY(-8px) rotate(45deg);
+        -ms-transform: translateY(-8px) rotate(45deg);
+        -o-transform: translateY(-8px) rotate(45deg);
+        transform: translateY(-8px) rotate(45deg);
+      }
+
+      .Header__left-nav-icon:after {
+        -webkit-transform: translateY(8px) rotate(-45deg);
+        -ms-transform: translateY(8px) rotate(-45deg);
+        -o-transform: translateY(8px) rotate(-45deg);
+        transform: translateY(8px) rotate(-45deg);
+      }
     }
   }
 }
