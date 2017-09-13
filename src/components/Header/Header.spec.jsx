@@ -8,14 +8,12 @@ describe('Header..jsx', () => {
 
     const expectedRender = (
       <header className='Header'>
-        <div className='Header__left-container'>
-          <div className='Header__left-nav-toggle-container'>
-            <button type='button' className='Header__left-nav-toggle' onClick={cbFunction}>
-              <span />
-            </button>
-          </div>
-          <a className='Header__title' href='/'>Welcome to React</a>
+        <div className='Header__left-nav-toggle-container'>
+          <button type='button' className='Header__left-nav-toggle' onClick={cbFunction}>
+            <span className='Header__left-nav-icon' />
+          </button>
         </div>
+        <a className='Header__title' href='/'>Welcome to React</a>
       </header>
     )
     expect(shallow(<Header onClick={cbFunction} />).contains(expectedRender)).toBe(true)
@@ -29,6 +27,24 @@ describe('Header..jsx', () => {
 
       const wrapper = shallow(<Header onClick={cbFunction} />)
       wrapper.find('button').simulate('click')
+    })
+  })
+
+  describe('when the isOpen property is true', () => {
+    it('has applied the Header__left-nav-toggle--active class to the button', () => {
+      const cbFunction = () => {}
+
+      const expectedRender = (
+        <header className='Header'>
+          <div className='Header__left-nav-toggle-container'>
+            <button type='button' className='Header__left-nav-toggle Header__left-nav-toggle--active' onClick={cbFunction}>
+              <span className='Header__left-nav-icon' />
+            </button>
+          </div>
+          <a className='Header__title' href='/'>Welcome to React</a>
+        </header>
+      )
+      expect(shallow(<Header onClick={cbFunction} isOpen />).contains(expectedRender)).toBe(true)
     })
   })
 })
