@@ -1,14 +1,28 @@
 import React, { Component } from 'react'
+import SideBarMenuItem from '../SideBarMenuItem/SideBarMenuItem'
 import './SideBarMenu.scss'
+
+const sideBarMenuContent = [
+  {
+    href: 'https://facebook.github.io/react/',
+    text: 'About React'
+  },
+  {
+    href: 'https://httpbin.org',
+    text: 'httpbin.org'
+  }
+]
 
 class SideBarMenu extends Component {
   render () {
-    const sideBarMenuClass = this.props.isOpen ? 'SideBarMenu SideBarMenu__open' : 'SideBarMenu'
+    const sideBarMenuClassName = this.props.isOpen ? 'SideBarMenu SideBarMenu__open' : 'SideBarMenu'
+    const sideBarMenuItems = sideBarMenuContent.map((sideBarMenuItem, index) => {
+      return (<SideBarMenuItem key={index} href={sideBarMenuItem.href} text={sideBarMenuItem.text} />)
+    })
+
     return (
-      <div className={sideBarMenuClass}>
-        <div>I slide into view</div>
-        <div>Me too!</div>
-        <div>Meee Threeeee!</div>
+      <div className={sideBarMenuClassName}>
+        {sideBarMenuItems}
       </div>
     )
   }
