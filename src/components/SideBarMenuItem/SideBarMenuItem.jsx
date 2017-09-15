@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './SideBarMenuItem.scss'
 
 class SideBarMenuItem extends Component {
@@ -11,6 +12,11 @@ class SideBarMenuItem extends Component {
       </div>
     )
   }
+}
+
+SideBarMenuItem.propTypes = {
+  href: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired
 }
 
 export default SideBarMenuItem
