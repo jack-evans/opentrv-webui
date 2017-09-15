@@ -1,6 +1,9 @@
 
 .SideBarMenuItem {
+  align-items: center;
+  display: flex;
   height: 50px;
+  justify-content: flex-start;
   padding-left: 40px;
   padding-right: 10px;
   width: 250px;
