@@ -5,10 +5,12 @@ import SideBarMenuItem from './SideBarMenuItem'
 describe('SideBarMenuItem.jsx', () => {
   it('renders without crashing', () => {
     const expectedRender = (
-      <div>
-        SideBarMenuItem
+      <div className='SideBarMenuItem'>
+        <a className='SideBarMenuItem__content' href='https://test.com' target='_blank'>
+          <h3>this is a test</h3>
+        </a>
       </div>
     )
-    expect(shallow(<SideBarMenuItem />).contains(expectedRender)).toBe(true)
+    expect(shallow(<SideBarMenuItem href='https://test.com' text='this is a test' />).contains(expectedRender)).toBe(true)
   })
 })
