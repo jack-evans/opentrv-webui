@@ -2,7 +2,6 @@ $sideBarMenu-width: 250px;
 
 .SideBarMenu {
   background-color: white;
-  box-shadow: 0 2px 10px 0;
   height: 100%;
   left: -$sideBarMenu-width;
   position: absolute;
@@ -13,5 +12,6 @@ $sideBarMenu-width: 250px;
 }
 
 .SideBarMenu__open {
+  box-shadow: 0 2px 10px 0;
   left: 0;
 }
