@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Header from './components/Header/Header'
 import './App.scss'
 import SideBarMenu from './components/SideBarMenu/SideBarMenu'
+import MainContent from './components/MainContent/MainContent'
 
 class App extends Component {
   constructor (props) {
@@ -30,9 +31,7 @@ class App extends Component {
       <div className='App'>
         <Header onClick={this.sideBarMenuEvent} isOpen={this.state.sideBarMenuOpen} />
         <SideBarMenu isOpen={this.state.sideBarMenuOpen} />
-        <p className='App__intro'>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <MainContent />
       </div>
     )
   }
