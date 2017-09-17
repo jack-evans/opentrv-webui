@@ -6,7 +6,7 @@ describe('SideBarMenuItem.jsx', () => {
   it('renders without crashing', () => {
     const expectedRender = (
       <div className='SideBarMenuItem'>
-        <a className='SideBarMenuItem__content' href='https://test.com' target='_blank'>
+        <a className='SideBarMenuItem__content' href='https://test.com' target='_blank' rel='noopener'>
           <h3>this is a test</h3>
         </a>
       </div>

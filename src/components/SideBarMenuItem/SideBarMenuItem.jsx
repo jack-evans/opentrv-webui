@@ -6,7 +6,7 @@ class SideBarMenuItem extends Component {
   render () {
     return (
       <div className='SideBarMenuItem'>
-        <a className='SideBarMenuItem__content' href={this.props.href} target='_blank'>
+        <a className='SideBarMenuItem__content' href={this.props.href} target='_blank' rel='noopener'>
           <h3>{this.props.text}</h3>
         </a>
       </div>
