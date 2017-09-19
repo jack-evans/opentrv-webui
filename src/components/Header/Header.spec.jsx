@@ -13,7 +13,9 @@ describe('Header..jsx', () => {
             <span className='Header__left-nav-icon' />
           </button>
         </div>
-        <a className='Header__title' href='/'>Welcome to React</a>
+        <a className='Header__title' href='/'>
+          <h3>Welcome to React</h3>
+        </a>
       </header>
     )
     expect(shallow(<Header onClick={cbFunction} />).contains(expectedRender)).toBe(true)
@@ -41,7 +43,9 @@ describe('Header..jsx', () => {
               <span className='Header__left-nav-icon' />
             </button>
           </div>
-          <a className='Header__title' href='/'>Welcome to React</a>
+          <a className='Header__title' href='/'>
+            <h3>Welcome to React</h3>
+          </a>
         </header>
       )
       expect(shallow(<Header onClick={cbFunction} isOpen />).contains(expectedRender)).toBe(true)
