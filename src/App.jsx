@@ -11,10 +11,10 @@ class App extends Component {
       sideBarMenuOpen: false
     }
 
-    this.sideBarMenuEvent = this.handleViewSideBarMenu.bind(this)
+    this.sideBarMenuClickEvent = this.handleSideBarMenuClick.bind(this)
   }
 
-  handleViewSideBarMenu () {
+  handleSideBarMenuClick () {
     this.setState({
       sideBarMenuOpen: !this.state.sideBarMenuOpen
     })
@@ -29,7 +29,7 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-        <Header onClick={this.sideBarMenuEvent} isOpen={this.state.sideBarMenuOpen} />
+        <Header onClick={this.sideBarMenuClickEvent} isOpen={this.state.sideBarMenuOpen} />
         <SideBarMenu isOpen={this.state.sideBarMenuOpen} />
         <MainContent />
       </div>
