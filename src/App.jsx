@@ -5,6 +5,7 @@ import SideBarMenu from './components/SideBarMenu/SideBarMenu'
 import MainContent from './components/MainContent/MainContent'
 
 class App extends Component {
+
   /**
    * Constructor
    *
