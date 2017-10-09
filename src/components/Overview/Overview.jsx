@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 
 class Overview extends Component {
+  /**
+   * render method
+   *
+   * renders the overview component of the UI experience
+   * @returns {HTML} - Overview component
+   */
   render () {
     return (
       <div>
