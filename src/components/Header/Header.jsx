@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import './Header.scss'
 
 class Header extends Component {
+  /**
+   * render method
+   *
+   * renders the header component of the UI experience
+   * @returns {HTML} - Header component
+   */
   render () {
     const buttonClassName = this.props.isOpen ? 'Header__left-nav-toggle Header__left-nav-toggle--active' : 'Header__left-nav-toggle'
     return (

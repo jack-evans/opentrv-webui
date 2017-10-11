@@ -3,6 +3,12 @@ import PropTypes from 'prop-types'
 import './SideBarMenuItem.scss'
 
 class SideBarMenuItem extends Component {
+  /**
+   * render method
+   *
+   * renders a side bar menu item component with the properties that were passed to the instantiation of the component
+   * @returns {HTML} - the SideBarMenuItem component
+   */
   render () {
     return (
       <div className='SideBarMenuItem'>

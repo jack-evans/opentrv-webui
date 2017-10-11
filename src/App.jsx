@@ -5,6 +5,12 @@ import SideBarMenu from './components/SideBarMenu/SideBarMenu'
 import MainContent from './components/MainContent/MainContent'
 
 class App extends Component {
+  /**
+   * Constructor
+   *
+   * Sets up the state and event callbacks before the rendering of the component
+   * @param props - properties for the class
+   */
   constructor (props) {
     super(props)
     this.state = {
@@ -14,6 +20,11 @@ class App extends Component {
     this.sideBarMenuClickEvent = this.handleSideBarMenuClick.bind(this)
   }
 
+  /**
+   * handleViewSideBarMenu method
+   *
+   * Changes the state of sideBarMenuOpen when the button in the header is clicked
+   */
   handleSideBarMenuClick () {
     this.setState({
       sideBarMenuOpen: !this.state.sideBarMenuOpen
