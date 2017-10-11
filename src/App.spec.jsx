@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import App from './App'
 import { shallow } from 'enzyme'
 
@@ -7,8 +6,9 @@ describe('App.jsx', () => {
   'use strict'
 
   it('renders without crashing', () => {
-    const div = document.createElement('div')
-    ReactDOM.render(<App />, div)
+    expect(JSON.stringify(
+      Object.assign({}, App, { _reactInternalInstance: 'censored' })
+    )).toMatchSnapshot()
   })
 
   it('renders with the state of sideBarMenuOpen set to false', () => {
