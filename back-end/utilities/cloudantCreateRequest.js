@@ -6,7 +6,7 @@ const Cloudant = require('cloudant')
  * createCloudantConnection function
  *
  * Authenticates with IBM Cloudant and returns a IBM Cloudant instance
- * @returns {*} authenticated IBM Cloudant instance
+ * @returns {Cloudant} authenticated IBM Cloudant instance
  */
 module.exports.createCloudantConnection = () => {
   let username
@@ -35,6 +35,60 @@ module.exports.createCloudantConnection = () => {
  * @param {String} databaseName - name of the database to create
  */
 module.exports.createDatabase = (cloudantInstance, databaseName) => {
+  return cloudantInstance.db.create(databaseName)
+}
 
-  return cloudantInstance.
+/**
+ * createDocument function
+ *
+ * Inserts a document into the database specified
+ * @param {Object} database - the cloudant database to insert the document into
+ * @param {Object} document - the document to be inserted
+ */
+module.exports.createDocument = (database, document) => {
+  return database.insert(document)
+}
+
+/**
+ * retrieveDocument function
+ *
+ * Retrive a document by the id of the document
+ * @param {Object} database - the cloudant database to retrieve the document from
+ * @param {String} documentId - ID of the document to be retrieved
+ */
+module.exports.retrieveDocument = (database, documentId) => {
+  return database.get(documentId)
+}
+
+/**
+ * retrieveAllDocuments function
+ *
+ * Retrieve all the documents from a given database
+ * @param {Object} database - the cloudant database to retrieve all the documents from
+ */
+module.exports.retrieveAllDocuments = (database) => {
+  return database.list()
+}
+
+/**
+ * updateDocument function
+ *
+ * Update a given document in a database
+ * @param {Object} database - the cloudant database that has a document to be updated
+ * @param {Object} newDocument - the document to update it with
+ */
+module.exports.updateDocument = (database, newDocument) => {
+  return database.insert(newDocument)
+}
+
+/**
+ * deleteDocument funtion
+ *
+ * Delete a given document in a database
+ * @param {Object} database - the cloudant database with the document to be deleted
+ * @param {String} documentId - the ID of the document to be deleted
+ * @returns {*} - Promise on the deletion of the document
+ */
+module.exports.deleteDocument = (database, documentId) => {
+  return database.destroy(documentId)
 }
