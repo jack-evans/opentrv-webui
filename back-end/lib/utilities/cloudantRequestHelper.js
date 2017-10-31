@@ -1,7 +1,10 @@
 'use strict'
 
+const bunyan = require('bunyan')
 const Cloudant = require('cloudant')
 const Promise = require('bluebird')
+
+const logger = bunyan.createLogger({name: 'opentrv-webui', serializers: bunyan.stdSerializers})
 
 /**
  * createCloudantConnection function
@@ -49,11 +52,13 @@ module.exports.createDatabase = (cloudantInstance, databaseName, databaseReferen
   return new Promise((resolve, reject) => {
     cloudantInstance.db.create(databaseName, (err) => {
       if (err) {
-        console.log('Unable to create database. Error received from cloudant: ', err)
+        logger.info(`Unable to create database ${databaseName}. Error received from cloudant: `, err)
         reject(err)
+      } else {
+        logger.info(`successfully created database called ${databaseName} in the cloudant instance`)
+        databaseReference = cloudantInstance.db.use(databaseName)
+        resolve()
       }
-      databaseReference = cloudantInstance.db.use(databaseName)
-      resolve()
     })
   })
 }
@@ -70,6 +75,7 @@ module.exports.createDocument = (database, document) => {
   return new Promise((resolve, reject) => {
     database.insert(document, (err, body) => {
       if (err) {
+        logger.info(`Unable to create document in the ${database} database. Error received from cloudant: `, err)
         reject(err)
       } else {
         resolve(body)
@@ -90,6 +96,7 @@ module.exports.retrieveDocument = (database, documentId) => {
   return new Promise((resolve, reject) => {
     database.get(documentId, (err, body) => {
       if (err) {
+        logger.info(`Unable to retrieve document from the ${database} database. Error received from cloudant: `, err)
         reject(err)
       } else {
         resolve(body)
@@ -109,6 +116,7 @@ module.exports.retrieveAllDocuments = (database) => {
   return new Promise((resolve, reject) => {
     database.list((err, body) => {
       if (err) {
+        console.log(`Unable to retrieve documents from the ${database} database. Error received from cloudant: `, err)
         reject(err)
       } else {
         resolve(body)
@@ -129,6 +137,7 @@ module.exports.updateDocument = (database, newDocument) => {
   return new Promise((resolve, reject) => {
     database.insert(newDocument, (err, body) => {
       if (err) {
+        console.log(`Unable to update document in the ${database} database. Error received from cloudant: `, err)
         reject(err)
       } else {
         resolve(body)
@@ -149,6 +158,7 @@ module.exports.deleteDocument = (database, documentId) => {
   return new Promise((resolve, reject) => {
     database.destroy(documentId, (err, body) => {
       if (err) {
+        console.log(`Unable to delete document in the ${database} database. Error received from cloudant: `, err)
         reject(err)
       } else {
         resolve(body)

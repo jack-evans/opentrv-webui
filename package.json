@@ -11,6 +11,7 @@
     "babel-preset-react-app": "^3.0.2",
     "babel-runtime": "6.26.0",
     "bluebird": "^3.5.1",
+    "bunyan": "^1.8.12",
     "carbon-components": "^7.20.1",
     "carbon-components-react": "^3.10.0",
     "carbon-icons": "^6.1.0",
