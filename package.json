@@ -55,7 +55,7 @@
     "prebuild": "yarn lint",
     "pretest": "yarn lint",
     "pretest-travis": "standard --verbose",
-    "start": "node scripts/start.js",
+    "start": "concurrently \"node scripts/start.js\" \"node back-end/server.js\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom --coverage",
     "test-no-coverage": "node scripts/test.js --env=jsdom",
@@ -117,6 +117,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "concurrently": "^3.5.0",
     "enzyme": "^2.9.1",
     "node-sass": "^4.5.3",
     "react-test-renderer": "^15.6.1",
