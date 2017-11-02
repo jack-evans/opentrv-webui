@@ -1,11 +1,14 @@
 'use strict'
 
+const bodyParser = require('body-parser')
 const express = require('express')
 const router = require('./router.js')
 
 const app = express()
 
 const SERVER_PORT = process.env.SERVER_PORT || 3001
+
+app.use(bodyParser.json())
 
 app.use('/api/v1', router)
 
