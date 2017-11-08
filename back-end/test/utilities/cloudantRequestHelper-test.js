@@ -148,6 +148,24 @@ describe('cloudantRequestHelper.js', () => {
         }
       })
 
+      describe('when the statusCode is 412', () => {
+        it('returns a resolved promise', () => {
+          fakeCloudantInstance.db = {
+            create: (databaseName, callback) => {
+              let error = {
+                statusCode: 412
+              }
+              callback(error)
+            }
+          }
+
+          return cloudantRequestHelper.createDatabase(fakeCloudantInstance, fakeDatabaseName)
+            .then(result => {
+              expect(result).toEqual({ok: true})
+            })
+        })
+      })
+
       it('returns a rejected promise', () => {
         return cloudantRequestHelper.createDatabase(fakeCloudantInstance, fakeDatabaseName)
           .catch(error => {
@@ -248,7 +266,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it successfully creates a document in the database', () => {
       it('returns a resolved promise with the document in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
-        return cloudantRequestHelper.createDocument(database, fakeDocument)
+        return cloudantRequestHelper.createDocument(database, goodDatabaseName, fakeDocument)
           .then(document => {
             expect(document).toEqual(fakeDocument)
           })
@@ -258,7 +276,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it fails to create a document in the database', () => {
       it('returns a rejected promise with the error in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
-        return cloudantRequestHelper.createDocument(database, fakeDocument)
+        return cloudantRequestHelper.createDocument(database, badDatabaseName, fakeDocument)
           .catch(error => {
             expect(error.message).toEqual('Bang in insert document function')
           })
@@ -339,7 +357,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it successfully retrieves a document from the database', () => {
       it('returns a resolved promise with the document in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
-        return cloudantRequestHelper.retrieveDocument(database, '1234')
+        return cloudantRequestHelper.retrieveDocument(database, goodDatabaseName, '1234')
           .then(document => {
             expect(document).toEqual(expectedDocument)
           })
@@ -349,7 +367,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it fails to retrieve a document from the database', () => {
       it('returns a rejected promise with the error in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
-        return cloudantRequestHelper.retrieveDocument(database, '1234')
+        return cloudantRequestHelper.retrieveDocument(database, badDatabaseName, '1234')
           .catch(error => {
             expect(error.message).toEqual('Bang in get document function')
           })
@@ -416,7 +434,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it successfully retrieves all documents from the database', () => {
       it('returns a resolved promise with the array of documents in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
-        return cloudantRequestHelper.retrieveAllDocuments(database)
+        return cloudantRequestHelper.retrieveAllDocuments(database, goodDatabaseName)
           .then(documents => {
             expect(documents).toHaveLength(2)
           })
@@ -426,7 +444,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it fails to retrieve all documents from the database', () => {
       it('returns a rejected promise with the error in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
-        return cloudantRequestHelper.retrieveAllDocuments(database)
+        return cloudantRequestHelper.retrieveAllDocuments(database, badDatabaseName)
           .catch(error => {
             expect(error.message).toEqual('Bang in list documents function')
           })
@@ -486,7 +504,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it successfully updates a document in the database', () => {
       it('returns a resolved promise with the document in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
-        return cloudantRequestHelper.updateDocument(database, fakeDocument)
+        return cloudantRequestHelper.updateDocument(database, goodDatabaseName, fakeDocument)
           .then(document => {
             expect(document).toEqual(fakeDocument)
           })
@@ -496,7 +514,7 @@ describe('cloudantRequestHelper.js', () => {
     describe('when it fails to update a document in the database', () => {
       it('returns a rejected promise with the error in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
-        return cloudantRequestHelper.updateDocument(database, fakeDocument)
+        return cloudantRequestHelper.updateDocument(database, badDatabaseName, fakeDocument)
           .catch(error => {
             expect(error.message).toEqual('Bang in insert document function')
           })
@@ -543,20 +561,20 @@ describe('cloudantRequestHelper.js', () => {
       process.env = {}
     })
 
-    describe('when it successfully retrieves a document from the database', () => {
-      it('returns a resolved promise with the document in the body', () => {
+    describe('when it successfully deletes a document from the database', () => {
+      it('returns a resolved promise', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
-        return cloudantRequestHelper.deleteDocument(database, '1234')
+        return cloudantRequestHelper.deleteDocument(database, goodDatabaseName, '1234')
           .then(result => {
             expect(result).toEqual('SUCCESS')
           })
       })
     })
 
-    describe('when it fails to retrieve a document from the database', () => {
+    describe('when it fails to delete a document from the database', () => {
       it('returns a rejected promise with the error in the body', () => {
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
-        return cloudantRequestHelper.deleteDocument(database, '1234')
+        return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
           .catch(error => {
             expect(error.message).toEqual('Bang in destroy document function')
           })
