@@ -49,13 +49,19 @@ module.exports.createCloudantConnection = (retryTimeout = 1000, retryAttempts = 
  */
 module.exports.createDatabase = (cloudantInstance, databaseName) => {
   return new Promise((resolve, reject) => {
-    cloudantInstance.db.create(databaseName, (err) => {
+    cloudantInstance.db.create(databaseName, (err, body) => {
       if (err) {
-        logger.info(`Unable to create database ${databaseName}. Error received from cloudant: `, err)
-        reject(err)
+        // When the database already exists
+        if (err.statusCode === 412) {
+          logger.info(`Database '${databaseName}' already exists`)
+          resolve({ok: true})
+        } else {
+          logger.info(`Unable to create database '${databaseName}'. Error received from cloudant: `, err)
+          reject(err)
+        }
       } else {
         logger.info(`successfully created database called ${databaseName} in the cloudant instance`)
-        resolve()
+        resolve(body)
       }
     })
   })
@@ -78,14 +84,16 @@ module.exports.useDatabase = (cloudantInstance, databaseName) => {
  *
  * Inserts a document into the database specified
  * @param {Object} database - the cloudant database to insert the document into
+ * @param {String} databaseName - the name of the database being interacted with
  * @param {Object} document - the document to be inserted
  * @returns {*} Promise on the action of creating a document in a database
  */
-module.exports.createDocument = (database, document) => {
+module.exports.createDocument = (database, databaseName, document) => {
   return new Promise((resolve, reject) => {
+    document._id = document.id
     database.insert(document, (err, body) => {
       if (err) {
-        logger.info(`Unable to create document in the ${database} database. Error received from cloudant: `, err)
+        logger.info(`Unable to create document in the '${databaseName}' database. Error received from cloudant: `, err)
         reject(err)
       } else {
         resolve(body)
@@ -97,18 +105,21 @@ module.exports.createDocument = (database, document) => {
 /**
  * retrieveDocument function
  *
- * Retrive a document by the id of the document
+ * Retrieve a document by the id of the document
  * @param {Object} database - the cloudant database to retrieve the document from
+ * @param {Object} databaseName - the name of the database being interacted with
  * @param {String} documentId - ID of the document to be retrieved
  * @returns {*} Promise on the action of retrieving a document from a database
  */
-module.exports.retrieveDocument = (database, documentId) => {
+module.exports.retrieveDocument = (database, databaseName, documentId) => {
   return new Promise((resolve, reject) => {
     database.get(documentId, (err, body) => {
       if (err) {
-        logger.info(`Unable to retrieve document from the ${database} database. Error received from cloudant: `, err)
+        logger.info(`Unable to retrieve document from the '${databaseName}' database. Error received from cloudant: `, err)
         reject(err)
       } else {
+        delete body._id
+        delete body._rev
         resolve(body)
       }
     })
@@ -120,16 +131,17 @@ module.exports.retrieveDocument = (database, documentId) => {
  *
  * Retrieve all the documents from a given database
  * @param {Object} database - the cloudant database to retrieve all the documents from
+ * @param {Object} databaseName - the name of the database being interacted with
  * @returns {*} Promise on the action of retrieving all documents from a database
  */
-module.exports.retrieveAllDocuments = (database) => {
+module.exports.retrieveAllDocuments = (database, databaseName) => {
   return new Promise((resolve, reject) => {
     database.list((err, body) => {
       if (err) {
-        logger.info(`Unable to retrieve documents from the ${database} database. Error received from cloudant: `, err)
+        logger.info(`Unable to retrieve documents from the '${databaseName}' database. Error received from cloudant: `, err)
         reject(err)
       } else {
-        resolve(body)
+        resolve(body.rows)
       }
     })
   })
@@ -140,39 +152,54 @@ module.exports.retrieveAllDocuments = (database) => {
  *
  * Update a given document in a database
  * @param {Object} database - the cloudant database that has a document to be updated
+ * @param {Object} databaseName - the name of the database being interacted with
  * @param {Object} newDocument - the document to update it with
  * @returns {*} Promise on the action of updating a document in a database
  */
-module.exports.updateDocument = (database, newDocument) => {
+module.exports.updateDocument = (database, databaseName, newDocument) => {
   return new Promise((resolve, reject) => {
-    database.insert(newDocument, (err, body) => {
+    database.get(newDocument.id, (err, body) => {
       if (err) {
-        logger.info(`Unable to update document in the ${database} database. Error received from cloudant: `, err)
         reject(err)
-      } else {
-        resolve(body)
       }
+      newDocument._rev = body._rev
+      newDocument._id = body._id
+      database.insert(newDocument, (err, body) => {
+        if (err) {
+          logger.info(`Unable to update document in the '${databaseName}' database. Error received from cloudant: `, err)
+          reject(err)
+        } else {
+          resolve(body)
+        }
+      })
     })
   })
 }
 
 /**
- * deleteDocument funtion
+ * deleteDocument function
  *
  * Delete a given document in a database
  * @param {Object} database - the cloudant database with the document to be deleted
+ * @param {Object} databaseName - the name of the database being interacted with
  * @param {String} documentId - the ID of the document to be deleted
  * @returns {*} - Promise on the deletion of the document from a database
  */
-module.exports.deleteDocument = (database, documentId) => {
+module.exports.deleteDocument = (database, databaseName, documentId) => {
   return new Promise((resolve, reject) => {
-    database.destroy(documentId, (err, body) => {
+    database.get(documentId, (err, body) => {
       if (err) {
-        logger.info(`Unable to delete document in the ${database} database. Error received from cloudant: `, err)
         reject(err)
-      } else {
-        resolve(body)
       }
+
+      database.destroy(documentId, body._rev, (err, body) => {
+        if (err) {
+          logger.info(`Unable to delete document in the '${databaseName}' database. Error received from cloudant: `, err)
+          reject(err)
+        } else {
+          resolve(body)
+        }
+      })
     })
   })
 }
