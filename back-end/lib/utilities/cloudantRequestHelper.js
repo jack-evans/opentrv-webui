@@ -105,7 +105,7 @@ module.exports.createDocument = (database, databaseName, document) => {
 /**
  * retrieveDocument function
  *
- * Retrive a document by the id of the document
+ * Retrieve a document by the id of the document
  * @param {Object} database - the cloudant database to retrieve the document from
  * @param {Object} databaseName - the name of the database being interacted with
  * @param {String} documentId - ID of the document to be retrieved
@@ -177,7 +177,7 @@ module.exports.updateDocument = (database, databaseName, newDocument) => {
 }
 
 /**
- * deleteDocument funtion
+ * deleteDocument function
  *
  * Delete a given document in a database
  * @param {Object} database - the cloudant database with the document to be deleted
