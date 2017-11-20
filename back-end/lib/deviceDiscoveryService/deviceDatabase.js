@@ -19,6 +19,12 @@ function DeviceDatabase () {
   this.initPromise = undefined
 }
 
+/**
+ * Initialise method
+ *
+ * Creates a database in the Cloudant instance for the devices
+ * @returns {Promise} on the action of initialising the device database
+ */
 DeviceDatabase.prototype.initialise = function () {
   let self = this
 
@@ -35,6 +41,13 @@ DeviceDatabase.prototype.initialise = function () {
     })
 }
 
+/**
+ * createDevice method
+ *
+ * Creates a device in the device database
+ * @param {Object} deviceDocument - document for the device
+ * @returns {Promise} on the action of inserting a document into the device database
+ */
 DeviceDatabase.prototype.createDevice = function (deviceDocument) {
   let self = this
 
