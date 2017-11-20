@@ -1,15 +1,18 @@
 'use strict'
 
-// database to store basic information of devices
-
 const bunyan = require('bunyan')
 const cloudantRequestHelper = require('../utilities/cloudantRequestHelper')
 const databaseName = 'devices'
 const Promise = require('bluebird')
-//const uuidv4 = require('uuid/v4')
+const uuidv4 = require('uuid/v4')
 
 const logger = bunyan.createLogger({name: 'device-discovery-service-db', serializers: bunyan.stdSerializers})
 
+/**
+ * Device Database Constructor
+ * creates an instance of the device Database
+ * @constructor
+ */
 function DeviceDatabase () {
   this.cloudantInstance = cloudantRequestHelper.createCloudantConnection()
   this.database = undefined
@@ -19,22 +22,23 @@ function DeviceDatabase () {
 DeviceDatabase.prototype.initialise = function () {
   let self = this
 
-  self.initPromise = cloudantRequestHelper.createDatabase(self.cloudantInstance, databaseName)
+  return cloudantRequestHelper.createDatabase(self.cloudantInstance, databaseName)
     .then(function () {
       self.database = cloudantRequestHelper.useDatabase(self.cloudantInstance, databaseName)
+      self.initPromise = Promise.resolve()
       return Promise.resolve()
     })
     .catch(function (error) {
       logger.error(`Encountered error when attempting to initialise the '${databaseName}' database, reason: `, error)
+      self.initPromise = Promise.reject(error)
       return Promise.reject(error)
     })
 }
 
-/*
 DeviceDatabase.prototype.createDevice = function (deviceDocument) {
   let self = this
 
-  self.initPromise
+  return self.initPromise
     .then(function () {
       let id = uuidv4()
 
@@ -49,6 +53,7 @@ DeviceDatabase.prototype.createDevice = function (deviceDocument) {
     })
 }
 
+/*
 DeviceDatabase.prototype.getDeviceInformation = function (deviceDocumentId) {
   let self = this
 
