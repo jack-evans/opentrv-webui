@@ -18,26 +18,23 @@ const discoverAllDevicesRequestHandler = (req, res) => {
 
   module.exports.internal._discoverAllDevices()
     .then(() => {
-      return module.exports.internal._saveDeviceBasicInformation()
-    })
-    .then(() => {
       res.status(200).end()
     })
     .catch(error => {
       switch (error.statusCode) {
         case 400: {
           logger.error('Encountered bad request in the discoverAllDevicesRequestHandler, reason: ', error)
-          res.status(400).send(error).end()
+          res.status(400).send(error)
           break
         }
 
         case 404: {
-          res.status(404).send(error).end()
+          res.status(404).send(error)
           break
         }
 
         default: {
-          res.status(500).send(error).end()
+          res.status(500).send(error)
           break
         }
       }
@@ -47,15 +44,23 @@ const discoverAllDevicesRequestHandler = (req, res) => {
 /**
  * _discoverAllDevices function
  *
- * Makes a call to the
+ * Makes a call to the opentrv server that is connected to all the devices and retrieves the information of the devices
+ * @returns {Promise} with an array of JSON objects on the action of retrieving the device information from the opentrv server
  * @private
  */
 const _discoverAllDevices = () => {
   logger.info('Entered into the _discoverAllDevices internal function')
 }
 
-const _saveDeviceBasicInformation = () => {
-  logger.info('Entered into the _saveDeviceBasicInformation internal function')
+/**
+ * _saveDeviceBasicInformation function
+ *
+ * @param {Array} devices - array of JSON objects retrieved from the opentrv server
+ * @returns {Promise} on the action of saving device information to cloudant
+ * @private
+ */
+const _saveDeviceBasicInformation = (devices) => {
+  logger.info('Entered into the _saveDeviceBasicInformation internal function with', devices)
 }
 
 module.exports = {

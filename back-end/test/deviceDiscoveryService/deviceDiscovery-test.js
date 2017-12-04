@@ -1,7 +1,8 @@
 'use strict'
 
-const httpMocks = require('node-mocks-http')
 import toBeType from 'jest-tobetype'
+
+const httpMocks = require('node-mocks-http')
 expect.extend(toBeType)
 
 describe('deviceDiscovery.js', () => {
@@ -38,38 +39,34 @@ describe('deviceDiscovery.js', () => {
       discoverAllDevicesSpy.mockReturnValue(Promise.resolve())
 
       res.on('end', () => {
-        expect(discoverAllDevicesSpy).toHaveBeenCalledTimes(1)
-        done()
+        try {
+          expect(discoverAllDevicesSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
       })
 
       deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
     })
 
     describe('when the discoverAllDevices internal function succeeds', () => {
-      let saveDeviceBasicInformationSpy
-
       beforeEach(() => {
-        saveDeviceBasicInformationSpy = jest.spyOn(deviceDiscovery.internal, '_saveDeviceBasicInformation')
-      })
-
-      afterEach(() => {
-        saveDeviceBasicInformationSpy.mockReset()
-        saveDeviceBasicInformationSpy.mockRestore()
-      })
-
-      it('calls the _saveDeviceBasicInformation internal function', (done) => {
         discoverAllDevicesSpy.mockReturnValue(Promise.resolve())
-        saveDeviceBasicInformationSpy.mockReturnValue(Promise.resolve())
+      })
 
+      it('returns 200', (done) => {
         res.on('end', () => {
-          expect(saveDeviceBasicInformationSpy).toHaveBeenCalledTimes(1)
-          done()
+          try {
+            expect(res._getStatusCode()).toEqual(200)
+            done()
+          } catch (e) {
+            done(e)
+          }
         })
 
         deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
       })
-
-      it('calls the _saveDeviceBasicInformation internal function with the result from ')
     })
 
     describe('when the discoverAllDevices internal function fails', () => {
@@ -82,8 +79,12 @@ describe('deviceDiscovery.js', () => {
           discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
-            expect(res._getStatusCode()).toEqual(400)
-            done()
+            try {
+              expect(res._getStatusCode()).toEqual(400)
+              done()
+            } catch (e) {
+              done(e)
+            }
           })
 
           deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
@@ -98,8 +99,12 @@ describe('deviceDiscovery.js', () => {
         discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
 
         res.on('end', () => {
-          expect(res._getData()).toEqual(error)
-          done()
+          try {
+            expect(res._getData()).toEqual(error)
+            done()
+          } catch (e) {
+            done(e)
+          }
         })
 
         deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
