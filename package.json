@@ -122,6 +122,9 @@
   "devDependencies": {
     "concurrently": "^3.5.0",
     "enzyme": "^2.9.1",
+    "events": "^1.1.1",
+    "jest-tobetype": "^1.1.0",
+    "node-mocks-http": "^1.6.6",
     "node-sass": "^4.5.3",
     "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.6",
