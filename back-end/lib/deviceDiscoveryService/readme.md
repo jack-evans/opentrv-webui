@@ -4,7 +4,7 @@
 
 This readme details the API for the deviceDiscoveryService.
 
-The deviceDiscoveryService is responsible for locating the devices for the user, storing the basic information of the devices in Cloudant, and returning the data to the user so they can view and edit some of the information.
+The deviceDiscoveryService is responsible for locating the devices for the user, storing the basic information of the devices in IBM Cloudant, and returning the data to the user so they can view and edit some of the information.
 
 
 ## API
@@ -21,7 +21,7 @@ Responses:
 
 ### GET /devices/:id
 
-Interrogates the OpenTRV server to get a specific device registered on it4
+Interrogates the OpenTRV server to get a specific device registered on it
 
 Responses:
 - 200, device object
@@ -42,7 +42,7 @@ Responses:
 ### DELETE /devices/:id
 
 Deletes an OpenTRV unit from the IBM Cloudant database.
-__Should it ddelete it from the OpenTRV server as well?__  
+__Should it delete it from the OpenTRV server as well?__  
  
 Responses:
 - 204
