@@ -16,7 +16,7 @@ describe('deviceDiscovery.js', () => {
     delete require.cache[require.resolve('../../lib/deviceDiscoveryService/deviceDiscovery')]
   })
 
-  describe.only('discoverAllDevicesRequestHandler', () => {
+  describe('discoverAllDevicesRequestHandler', () => {
     let discoverAllDevicesSpy
     let req
     let res
@@ -51,14 +51,42 @@ describe('deviceDiscovery.js', () => {
     })
 
     describe('when the discoverAllDevices internal function succeeds', () => {
-      beforeEach(() => {
-        discoverAllDevicesSpy.mockReturnValue(Promise.resolve())
-      })
-
       it('returns 200', (done) => {
+        discoverAllDevicesSpy.mockReturnValue(Promise.resolve())
+
         res.on('end', () => {
           try {
             expect(res._getStatusCode()).toEqual(200)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
+      })
+
+      it('returns the array of devices', (done) => {
+        let devices = [
+          {
+            serialNum: '1a',
+            temp: 23
+          }, {
+            serialNum: '2b',
+            temp: 34
+          }, {
+            serialNum: '3c',
+            temp: 12
+          }
+        ]
+        discoverAllDevicesSpy.mockReturnValue(Promise.resolve(devices))
+
+        res.on('end', () => {
+          let result = res._getData()
+          try {
+            for (let i = 0; i < devices.length; i++) {
+              expect(result[i]).toEqual(devices[i])
+            }
             done()
           } catch (e) {
             done(e)
@@ -113,6 +141,30 @@ describe('deviceDiscovery.js', () => {
   })
 
   describe('internal functions', () => {
+    describe('_discoverAllDevices', () => {
+      it('returns a resolved promise', () => {
+        return deviceDiscovery.internal._discoverAllDevices()
+          .then(() => {
+            expect(1).toEqual(1)
+          })
+      })
 
+      it('returns an array in the resolved promise', () => {
+        return deviceDiscovery.internal._discoverAllDevices()
+          .then(result => {
+            expect(result).toBeType('array')
+          })
+      })
+
+      it('returns an array containing objects in the resolved promise', () => {
+        expect.assertions(5)
+        return deviceDiscovery.internal._discoverAllDevices()
+          .then(result => {
+            for (let i = 0; i < result.length; i++) {
+              expect(result[i]).toBeType('object')
+            }
+          })
+      })
+    })
   })
 })

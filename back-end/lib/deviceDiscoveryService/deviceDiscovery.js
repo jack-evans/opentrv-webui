@@ -17,8 +17,8 @@ const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
   module.exports.internal._discoverAllDevices()
-    .then(() => {
-      res.status(200).end()
+    .then((devices) => {
+      res.status(200).send(devices)
     })
     .catch(error => {
       switch (error.statusCode) {
@@ -29,11 +29,13 @@ const discoverAllDevicesRequestHandler = (req, res) => {
         }
 
         case 404: {
+          logger.error('Encountered not found in the discoverAllDevicesRequestHandler, reason: ', error)
           res.status(404).send(error)
           break
         }
 
         default: {
+          logger.error('Encountered an unexpected error in the discoverAllDevicesRequestHandler, reason: ', error)
           res.status(500).send(error)
           break
         }
@@ -50,10 +52,15 @@ const discoverAllDevicesRequestHandler = (req, res) => {
  */
 const _discoverAllDevices = () => {
   logger.info('Entered into the _discoverAllDevices internal function')
+
+  // TODO: Remove and replace with request to opentrv server to get information
+  return Promise.resolve([{}, {}, {}, {}, {}])
 }
 
 /**
  * _saveDeviceBasicInformation function
+ *
+ * Saves the basic information of the devices to the IBM Cloudant database instance
  *
  * @param {Array} devices - array of JSON objects retrieved from the opentrv server
  * @returns {Promise} on the action of saving device information to cloudant

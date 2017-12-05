@@ -1,20 +1,21 @@
 'use strict'
 
 const cloudantRequestHelper = require('../../lib/utilities/cloudantRequestHelper')
-const DeviceDatabase = require('../../lib/deviceDiscoveryService/deviceDatabase')
 const Promise = require('bluebird')
 
 describe('deviceDatabase.js', () => {
   let createCloudantConnectionSpy
+  let DeviceDatabase
   let deviceDatabase
 
   beforeEach(() => {
     createCloudantConnectionSpy = jest.spyOn(cloudantRequestHelper, 'createCloudantConnection').mockReturnValue('SUCCESS')
+    DeviceDatabase = require('../../lib/deviceDiscoveryService/deviceDatabase')
   })
 
   afterEach(() => {
     createCloudantConnectionSpy.mockReset()
-    createCloudantConnectionSpy.mockRestore()
+    delete require.cache[require.resolve('../../lib/deviceDiscoveryService/deviceDatabase')]
   })
 
   describe('deviceDatabase constructor', () => {
@@ -47,9 +48,7 @@ describe('deviceDatabase.js', () => {
 
     afterEach(() => {
       createDatabaseSpy.mockReset()
-      createDatabaseSpy.mockRestore()
       useDatabaseSpy.mockReset()
-      useDatabaseSpy.mockRestore()
     })
 
     it('makes a call to create a database in cloudant', () => {
