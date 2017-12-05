@@ -14,7 +14,7 @@ The deviceDiscoveryService is responsible for locating the devices for the user,
 Creates a new device in the cloudant database
 
 Responses:
-- 200, device object
+- 201, device object
 - 400, bad request
 - 409, conflict
 - 500, internal server error
