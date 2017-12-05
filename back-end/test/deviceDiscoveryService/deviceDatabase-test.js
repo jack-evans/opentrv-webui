@@ -70,6 +70,7 @@ describe('deviceDatabase.js', () => {
     describe('when the call to create a database in cloudant is unsuccessful', () => {
       it('returns a rejected promise with the error in the body', () => {
         createDatabaseSpy.mockReturnValue(Promise.reject(new Error('Bang in the createDatabase function')))
+        expect.assertions(1)
         return deviceDatabase.initialise()
           .catch(error => {
             expect(error.message).toEqual('Bang in the createDatabase function')
@@ -137,7 +138,7 @@ describe('deviceDatabase.js', () => {
       })
 
       describe('when createDocument resolves', () => {
-        it('returns the document in the body of the resolved prommise', () => {
+        it('returns the document in the body of the resolved promise', () => {
           createDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
 
           return deviceDatabase.createDevice(deviceDocument)
