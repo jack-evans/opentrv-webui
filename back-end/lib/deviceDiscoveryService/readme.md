@@ -9,6 +9,16 @@ The deviceDiscoveryService is responsible for locating the devices for the user,
 
 ## API
 
+### POST /devices
+
+Creates a new device in the cloudant database
+
+Responses:
+- 200, device object
+- 400, bad request
+- 409, conflict
+- 500, internal server error
+
 ### GET /devices
 
 Interrogates the OpenTRV server to gather the devices that are registered to the server
