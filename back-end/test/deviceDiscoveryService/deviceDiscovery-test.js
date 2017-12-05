@@ -73,6 +73,128 @@ describe('deviceDiscovery.js', () => {
         deviceDiscovery.createDeviceRequestHandler(req, res)
       })
     })
+
+    describe('when the saveDeviceBasicInformation internal function fails', () => {
+      describe('with a 400', () => {
+        it('returns a 400', (done) => {
+          const error = {
+            statusCode: 400,
+            message: 'bad request'
+          }
+          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(400)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.createDeviceRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 400,
+            message: 'bad request'
+          }
+          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.createDeviceRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 409', () => {
+        it('returns a 409', (done) => {
+          const error = {
+            statusCode: 409,
+            message: 'conflict'
+          }
+          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(409)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.createDeviceRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 409,
+            message: 'conflict'
+          }
+          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.createDeviceRequestHandler(req, res)
+        })
+      })
+
+      describe('with an unexpeccted error', () => {
+        it('returns a 500', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.createDeviceRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.createDeviceRequestHandler(req, res)
+        })
+      })
+    })
   })
 
   describe('discoverAllDevicesRequestHandler', () => {

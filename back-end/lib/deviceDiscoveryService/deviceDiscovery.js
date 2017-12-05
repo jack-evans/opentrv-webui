@@ -20,6 +20,27 @@ const createDeviceRequestHandler = (req, res) => {
     .then(() => {
       res.status(201).end()
     })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the createDeviceRequestHandler, reason: ', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 409: {
+          logger.error('Encountered conflict in the createDeviceRequestHandler, reason: ', error)
+          res.status(409).send(error)
+          break
+        }
+
+        default: {
+          logger.error('Encountered unexpected error in the createDeviceRequestHandler, reason: ', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
 }
 
 /**
