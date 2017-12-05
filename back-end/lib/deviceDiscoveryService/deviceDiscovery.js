@@ -6,6 +6,35 @@ const bunyan = require('bunyan')
 const logger = bunyan.createLogger({name: 'device-discovery-service-db', serializers: bunyan.stdSerializers})
 
 /**
+ * POST /devices
+ *
+ * Request handler responsible for storing the basic information of the opentrv units in the IBM Cloudant database
+ * @param {Object} req - the HTTP request object
+ * @param {Object} res - the HTTP response object
+ */
+const createDeviceRequestHandler = (req, res) => {
+  logger.info('Entered into the createDeviceRequestHandler function')
+
+  const devices = req.body.devices
+  module.exports.internal._saveDeviceBasicInformation(devices)
+    .then(() => {
+      res.status(201).end()
+    })
+}
+
+/**
+ * _saveDeviceBasicInformation function
+ *
+ * Saves the basic information of the devices to the IBM Cloudant database instance
+ * @param {Array} devices - array of JSON objects retrieved from the opentrv server
+ * @returns {Promise} on the action of saving device information to cloudant
+ * @private
+ */
+const _saveDeviceBasicInformation = (devices) => {
+  logger.info('Entered into the _saveDeviceBasicInformation internal function with', devices)
+}
+
+/**
  * GET /devices
  *
  * Makes a call to the opentrv server and gets the information of all the devices
@@ -57,24 +86,12 @@ const _discoverAllDevices = () => {
   return Promise.resolve([{}, {}, {}, {}, {}])
 }
 
-/**
- * _saveDeviceBasicInformation function
- *
- * Saves the basic information of the devices to the IBM Cloudant database instance
- *
- * @param {Array} devices - array of JSON objects retrieved from the opentrv server
- * @returns {Promise} on the action of saving device information to cloudant
- * @private
- */
-const _saveDeviceBasicInformation = (devices) => {
-  logger.info('Entered into the _saveDeviceBasicInformation internal function with', devices)
-}
-
 module.exports = {
+  createDeviceRequestHandler: createDeviceRequestHandler,
   discoverAllDevicesRequestHandler: discoverAllDevicesRequestHandler
 }
 
 module.exports.internal = {
-  _discoverAllDevices: _discoverAllDevices,
-  _saveDeviceBasicInformation: _saveDeviceBasicInformation
+  _saveDeviceBasicInformation: _saveDeviceBasicInformation,
+  _discoverAllDevices: _discoverAllDevices
 }

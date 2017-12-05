@@ -16,6 +16,65 @@ describe('deviceDiscovery.js', () => {
     delete require.cache[require.resolve('../../lib/deviceDiscoveryService/deviceDiscovery')]
   })
 
+  describe('createDeviceRequestHandler', () => {
+    let req
+    let res
+    let saveDeviceBasicInformationSpy
+
+    beforeEach(() => {
+      req = httpMocks.createRequest({
+        method: 'POST',
+        path: '/devices',
+        body: {
+          devices: [{
+            serialNum: 'OTRV-1a2b3c4d5e',
+            author: '1a2b3c4d'
+          }]
+        }
+      })
+      res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
+      saveDeviceBasicInformationSpy = jest.spyOn(deviceDiscovery.internal, '_saveDeviceBasicInformation')
+    })
+
+    afterEach(() => {
+      saveDeviceBasicInformationSpy.mockReset()
+    })
+
+    it('calls the saveDeviceBasicInformation internal function', (done) => {
+      saveDeviceBasicInformationSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(saveDeviceBasicInformationSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      deviceDiscovery.createDeviceRequestHandler(req, res)
+    })
+
+    describe('when the saveDeviceBasicInformation internal function succeeds', () => {
+      beforeEach(() => {
+        saveDeviceBasicInformationSpy.mockReturnValue(Promise.resolve())
+      })
+
+      it('returns 201', (done) => {
+        res.on('end', () => {
+          try {
+            expect(res._getStatusCode()).toEqual(201)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        deviceDiscovery.createDeviceRequestHandler(req, res)
+      })
+    })
+  })
+
   describe('discoverAllDevicesRequestHandler', () => {
     let discoverAllDevicesSpy
     let req
@@ -117,25 +176,105 @@ describe('deviceDiscovery.js', () => {
 
           deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
         })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            message: 'bad request',
+            statusCode: 400
+          }
+          discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
+        })
       })
 
-      it('returns the error in the body', (done) => {
-        const error = {
-          message: 'bad request',
-          statusCode: 400
-        }
-        discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
-
-        res.on('end', () => {
-          try {
-            expect(res._getData()).toEqual(error)
-            done()
-          } catch (e) {
-            done(e)
+      describe('with a 404', () => {
+        it('returns a 404', (done) => {
+          const error = {
+            statusCode: 404,
+            message: 'not found'
           }
+          discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(404)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
         })
 
-        deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
+        it('returns an error in the body', (done) => {
+          const error = {
+            statusCode: 404,
+            message: 'not found'
+          }
+          discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
+        })
+      })
+
+      describe('with an unexpected error', () => {
+        it('returns a 500', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
+        })
+
+        it('returns an error in the body', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          discoverAllDevicesSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
+        })
       })
     })
   })
