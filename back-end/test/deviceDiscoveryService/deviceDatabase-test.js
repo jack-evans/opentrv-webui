@@ -136,8 +136,8 @@ describe('deviceDatabase.js', () => {
           })
       })
 
-      describe('when createDocument returns a resolved promise with the document in the body', () => {
-        it('returns a resolved promise with the document in the body', () => {
+      describe('when createDocument resolves', () => {
+        it('returns the document in the body of the resolved prommise', () => {
           createDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
 
           return deviceDatabase.createDevice(deviceDocument)
@@ -147,8 +147,8 @@ describe('deviceDatabase.js', () => {
         })
       })
 
-      describe('when createDocument returns a rejected promise with the error in the body', () => {
-        it('returns a rejected promise with the error in the body', () => {
+      describe('when createDocument rejects', () => {
+        it('returns the error in the body of the rejected promise', () => {
           createDocumentSpy.mockReturnValue(Promise.reject(new Error('Bang in the createDevice method')))
 
           return deviceDatabase.createDevice(deviceDocument)
