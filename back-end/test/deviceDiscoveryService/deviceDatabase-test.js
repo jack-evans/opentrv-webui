@@ -110,13 +110,15 @@ describe('deviceDatabase.js', () => {
       })
 
       it('does not call the createDocument function', () => {
-        deviceDatabase.createDevice(deviceDocument)
+        expect.assertions(1)
+        return deviceDatabase.createDevice(deviceDocument)
           .catch(() => {
             expect(createDocumentSpy).toHaveBeenCalledTimes(0)
           })
       })
 
       it('returns a rejected promise', () => {
+        expect.assertions(1)
         return deviceDatabase.createDevice(deviceDocument)
           .catch(error => {
             expect(error.message).toEqual('Bang!')
@@ -151,7 +153,7 @@ describe('deviceDatabase.js', () => {
       describe('when createDocument rejects', () => {
         it('returns the error in the body of the rejected promise', () => {
           createDocumentSpy.mockReturnValue(Promise.reject(new Error('Bang in the createDevice method')))
-
+          expect.assertions(1)
           return deviceDatabase.createDevice(deviceDocument)
             .catch(error => {
               expect(error.message).toEqual('Bang in the createDevice method')
