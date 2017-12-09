@@ -4,7 +4,7 @@
 const bunyan = require('bunyan')
 const Promise = require('bluebird')
 
-const logger = bunyan.createLogger({name: 'device-discovery-service-db', serializers: bunyan.stdSerializers})
+const logger = bunyan.createLogger({name: 'device-discovery-service', serializers: bunyan.stdSerializers})
 
 /**
  * POST /devices
