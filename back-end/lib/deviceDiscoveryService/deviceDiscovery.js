@@ -2,6 +2,7 @@
 
 // Device request helper
 const bunyan = require('bunyan')
+const Promise = require('bluebird')
 
 const logger = bunyan.createLogger({name: 'device-discovery-service-db', serializers: bunyan.stdSerializers})
 
@@ -13,11 +14,13 @@ const logger = bunyan.createLogger({name: 'device-discovery-service-db', seriali
  * @param {Object} res - the HTTP response object
  */
 const createDeviceRequestHandler = (req, res) => {
-  logger.info('Entered into the createDeviceRequestHandler function')
+  logger.info('Entered into the createDeviceRequestHandler function', req.body)
 
+  let deviceDatabase = req.deviceDb
   const devices = req.body.devices
-  module.exports.internal._saveDeviceBasicInformation(devices)
+  module.exports.internal._saveDeviceBasicInformation(deviceDatabase, devices)
     .then(() => {
+      logger.info('Successfully created device(s) in the Cloudant instance')
       res.status(201).end()
     })
     .catch(error => {
@@ -47,12 +50,28 @@ const createDeviceRequestHandler = (req, res) => {
  * _saveDeviceBasicInformation function
  *
  * Saves the basic information of the devices to the IBM Cloudant database instance
+ * @param {Object} database - the device database
  * @param {Array} devices - array of JSON objects retrieved from the opentrv server
  * @returns {Promise} on the action of saving device information to cloudant
  * @private
  */
-const _saveDeviceBasicInformation = (devices) => {
+const _saveDeviceBasicInformation = (database, devices) => {
   logger.info('Entered into the _saveDeviceBasicInformation internal function with', devices)
+
+  if (!devices) {
+    const error = {
+      statusCode: 400,
+      message: 'The devices array is undefined'
+    }
+    return Promise.reject(error)
+  }
+
+  let promises = []
+  devices.forEach((device) => {
+    promises.push(database.createDevice(device))
+  })
+
+  return Promise.all(promises)
 }
 
 /**
@@ -68,6 +87,7 @@ const discoverAllDevicesRequestHandler = (req, res) => {
 
   module.exports.internal._discoverAllDevices()
     .then((devices) => {
+      logger.info('Successfully retrieved device(s) from the server', devices)
       res.status(200).send(devices)
     })
     .catch(error => {

@@ -3,6 +3,7 @@
 import toBeType from 'jest-tobetype'
 
 const httpMocks = require('node-mocks-http')
+const Promise = require('bluebird')
 expect.extend(toBeType)
 
 describe('deviceDiscovery.js', () => {
@@ -38,6 +39,10 @@ describe('deviceDiscovery.js', () => {
 
     afterEach(() => {
       saveDeviceBasicInformationSpy.mockReset()
+    })
+
+    afterAll(() => {
+      saveDeviceBasicInformationSpy.mockRestore()
     })
 
     it('calls the saveDeviceBasicInformation internal function', (done) => {
@@ -213,6 +218,9 @@ describe('deviceDiscovery.js', () => {
 
     afterEach(() => {
       discoverAllDevicesSpy.mockReset()
+    })
+
+    afterAll(() => {
       discoverAllDevicesSpy.mockRestore()
     })
 
@@ -402,6 +410,48 @@ describe('deviceDiscovery.js', () => {
   })
 
   describe('internal functions', () => {
+    describe('_saveDeviceBasicInformation', () => {
+      describe('when the devices array is undefined', () => {
+        it('returns a 400 error', () => {
+          expect.assertions(1)
+          return deviceDiscovery.internal._saveDeviceBasicInformation()
+            .catch(error => {
+              expect(error.statusCode).toEqual(400)
+            })
+        })
+      })
+
+      describe('when the devices array is empty', () => {
+        it('returns a resolved promise', () => {
+          return deviceDiscovery.internal._saveDeviceBasicInformation(null, [])
+        })
+      })
+
+      describe('when the devices array is not empty', () => {
+        let database
+        let createDeviceSpy
+
+        beforeEach(() => {
+          database = {
+            createDevice: () => {}
+          }
+          createDeviceSpy = jest.spyOn(database, 'createDevice').mockReturnValue(Promise.resolve())
+        })
+
+        afterEach(() => {
+          createDeviceSpy.mockReset()
+        })
+
+        it('calls the createDevice method in the database for the number of devices', () => {
+          const devices = [{}, {}, {}, {}]
+          return deviceDiscovery.internal._saveDeviceBasicInformation(database, devices)
+            .then(() => {
+              expect(createDeviceSpy).toHaveBeenCalledTimes(devices.length)
+            })
+        })
+      })
+    })
+
     describe('_discoverAllDevices', () => {
       it('returns a resolved promise', () => {
         return deviceDiscovery.internal._discoverAllDevices()
