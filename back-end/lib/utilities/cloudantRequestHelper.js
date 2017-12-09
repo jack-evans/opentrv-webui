@@ -4,7 +4,7 @@ const bunyan = require('bunyan')
 const Cloudant = require('cloudant')
 const Promise = require('bluebird')
 
-const logger = bunyan.createLogger({name: 'opentrv-webui', serializers: bunyan.stdSerializers})
+const logger = bunyan.createLogger({name: 'utilities-cloudantRequestHelper', serializers: bunyan.stdSerializers})
 
 /**
  * createCloudantConnection function
