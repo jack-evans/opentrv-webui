@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import OverviewHeader from '../OverviewHeader/OverviewHeader'
+import './Overview.scss'
 
 class Overview extends Component {
   /**
@@ -9,10 +11,8 @@ class Overview extends Component {
    */
   render () {
     return (
-      <div>
-        <p>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className='Overview'>
+        <OverviewHeader />
       </div>
     )
   }

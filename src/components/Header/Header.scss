@@ -1,11 +1,12 @@
-$header-background-color: #222;
+@import '../../../node_modules/carbon-components/scss/globals/scss/styles.scss';
+
 $header-height: 60px;
 $header-padding-top-bottom: 10px;
 $header-padding-left-right: 10px;
 $header-logo-height-width: $header-height;
 
 .Header {
-  background-color: $header-background-color;
+  background-color: #222;
   display: flex;
   height: $header-height;
 
@@ -22,7 +23,7 @@ $header-logo-height-width: $header-height;
   }
 
   .Header__left-nav-toggle-container {
-    background-color: #ccc;
+    background-color: $brand-01;
     height: $header-logo-height-width;
     width: $header-logo-height-width;
 
