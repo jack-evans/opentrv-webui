@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './OverviewHeader.scss'
 
 class OverviewHeader extends Component {
-
   render () {
     return (
       <div className='OverviewHeader'>
