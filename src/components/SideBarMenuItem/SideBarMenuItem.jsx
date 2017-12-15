@@ -11,11 +11,11 @@ class SideBarMenuItem extends Component {
    */
   render () {
     return (
-      <div className='SideBarMenuItem'>
-        <a className='SideBarMenuItem__content' href={this.props.href} target='_blank' rel='noopener'>
+      <a className='SideBarMenuItem' href={this.props.href} target='_blank' rel='noopener'>
+        <span className='SideBarMenuItem__content'>
           <h3>{this.props.text}</h3>
-        </a>
-      </div>
+        </span>
+      </a>
     )
   }
 }
