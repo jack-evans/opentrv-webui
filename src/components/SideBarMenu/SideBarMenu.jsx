@@ -5,12 +5,24 @@ import './SideBarMenu.scss'
 // Content to be populated in the side bar menu
 const sideBarMenuContent = [
   {
-    href: 'https://facebook.github.io/react/',
-    text: 'About React'
+    href: 'http://opentrv.org.uk/what-is-opentrv/',
+    text: 'About OpenTRV'
   },
   {
-    href: 'https://httpbin.org',
-    text: 'httpbin.org'
+    href: 'http://opentrv.org.uk/principles/',
+    text: 'OpenTRV principles'
+  },
+  {
+    href: 'https://twitter.com/OpenTRV',
+    text: 'OpenTRV Twitter'
+  },
+  {
+    href: 'http://opentrv.org.uk/documents/',
+    text: 'TRV documentation'
+  },
+  {
+    href: 'https://github.com/jack-evans/opentrv-webui/issues',
+    text: 'Report Issue'
   }
 ]
 
