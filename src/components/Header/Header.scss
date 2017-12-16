@@ -1,16 +1,17 @@
-$header-background-color: #222;
+@import '../../../node_modules/carbon-components/scss/globals/scss/styles.scss';
+
 $header-height: 60px;
 $header-padding-top-bottom: 10px;
 $header-padding-left-right: 10px;
 $header-logo-height-width: $header-height;
 
 .Header {
-  background-color: $header-background-color;
+  background-color: #222;
   display: flex;
   height: $header-height;
 
   .Header__title {
-    color: white;
+    color: #fff;
     display: inherit;
     height: 100%;
     padding-left: $header-padding-left-right;
@@ -22,8 +23,9 @@ $header-logo-height-width: $header-height;
   }
 
   .Header__left-nav-toggle-container {
-    background-color: #ccc;
+    background-color: $brand-01;
     height: $header-logo-height-width;
+    transition: all 0.3s ease-in-out;
     width: $header-logo-height-width;
 
     .Header__left-nav-toggle {
@@ -39,7 +41,7 @@ $header-logo-height-width: $header-height;
       .Header__left-nav-icon, .Header__left-nav-icon:after, .Header__left-nav-icon:before {
         width: 20px;
         height: 2px;
-        background: #000;
+        background: #fff;
         position: absolute;
         left: 20px;
         transition: all 0.3s ease-in-out
@@ -66,18 +68,16 @@ $header-logo-height-width: $header-height;
       }
 
       .Header__left-nav-icon:before {
-        -webkit-transform: translateY(-8px) rotate(45deg);
-        -ms-transform: translateY(-8px) rotate(45deg);
-        -o-transform: translateY(-8px) rotate(45deg);
         transform: translateY(-8px) rotate(45deg);
       }
 
       .Header__left-nav-icon:after {
-        -webkit-transform: translateY(8px) rotate(-45deg);
-        -ms-transform: translateY(8px) rotate(-45deg);
-        -o-transform: translateY(8px) rotate(-45deg);
         transform: translateY(8px) rotate(-45deg);
       }
     }
+  }
+
+  .Header__left-nav-toggle-container:hover {
+    background-color: $brand-02;
   }
 }

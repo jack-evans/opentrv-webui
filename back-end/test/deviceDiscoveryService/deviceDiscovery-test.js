@@ -423,7 +423,8 @@ describe('deviceDiscovery.js', () => {
 
       describe('when the devices array is empty', () => {
         it('returns a resolved promise', () => {
-          return deviceDiscovery.internal._saveDeviceBasicInformation(null, [])
+          return expect(deviceDiscovery.internal._saveDeviceBasicInformation(null, []))
+            .resolves.toEqual([])
         })
       })
 

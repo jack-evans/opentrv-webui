@@ -1,7 +1,9 @@
-$sideBarMenu-width: 250px;
+@import '../../../node_modules/carbon-components/scss/globals/scss/styles.scss';
+
+$sideBarMenu-width: 300px;
 
 .SideBarMenu {
-  background-color: white;
+  background-color: $ui-03;
   height: 100%;
   left: -$sideBarMenu-width;
   position: absolute;

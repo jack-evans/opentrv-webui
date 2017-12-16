@@ -18,7 +18,7 @@ class Header extends Component {
           </button>
         </div>
         <a className='Header__title' href='/'>
-          <h3>Welcome to React</h3>
+          <h3>OpenTRV</h3>
         </a>
       </header>
     )
