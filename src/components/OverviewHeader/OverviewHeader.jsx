@@ -1,14 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './OverviewHeader.scss'
 
-class OverviewHeader extends Component {
-  render () {
-    return (
-      <div className='OverviewHeader'>
-        <h1>Device Overview</h1>
-      </div>
-    )
-  }
+function OverviewHeader () {
+  return (
+    <div className='OverviewHeader'>
+      <h1>Device Overview</h1>
+    </div>
+  )
 }
 
 export default OverviewHeader

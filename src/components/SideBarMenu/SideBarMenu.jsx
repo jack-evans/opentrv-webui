@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import SideBarMenuItem from '../SideBarMenuItem/SideBarMenuItem'
 import './SideBarMenu.scss'
 
@@ -26,25 +26,17 @@ const sideBarMenuContent = [
   }
 ]
 
-class SideBarMenu extends Component {
-  /**
-   * render method
-   *
-   * renders the side bar menu component of the UI experience
-   * @returns {HTML} - SideBarMenu component
-   */
-  render () {
-    const sideBarMenuClassName = this.props.isOpen ? 'SideBarMenu SideBarMenu__open' : 'SideBarMenu'
-    const sideBarMenuItems = sideBarMenuContent.map((sideBarMenuItem, index) => {
-      return (<SideBarMenuItem key={index} href={sideBarMenuItem.href} text={sideBarMenuItem.text} />)
-    })
+function SideBarMenu ({ isOpen }) {
+  const sideBarMenuClassName = isOpen ? 'SideBarMenu SideBarMenu__open' : 'SideBarMenu'
+  const sideBarMenuItems = sideBarMenuContent.map((sideBarMenuItem, index) => {
+    return (<SideBarMenuItem key={index} href={sideBarMenuItem.href} text={sideBarMenuItem.text} />)
+  })
 
-    return (
-      <div className={sideBarMenuClassName}>
-        {sideBarMenuItems}
-      </div>
-    )
-  }
+  return (
+    <div className={sideBarMenuClassName}>
+      {sideBarMenuItems}
+    </div>
+  )
 }
 
 export default SideBarMenu
