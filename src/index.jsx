@@ -6,11 +6,13 @@ import registerServiceWorker from './registerServiceWorker'
 import './index.scss'
 
 // Have to export and create element to be able to test
-ReactDOM.render(
+const app = ReactDOM.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById('root') || document.createElement('div')
 )
 
 registerServiceWorker()
+
+export default app

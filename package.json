@@ -70,8 +70,7 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/src/registerServiceWorker.js",
-      "<rootDir>/src/index.jsx"
+      "/src/registerServiceWorker.js"
     ],
     "coverageThreshold": {
       "global": {
