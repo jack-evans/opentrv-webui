@@ -8,11 +8,11 @@ Enzyme.configure({ adapter: new Adapter() })
 describe('SideBarMenuItem.jsx', () => {
   it('renders without crashing', () => {
     const expectedRender = (
-      <div className='SideBarMenuItem'>
-        <a className='SideBarMenuItem__content' href='https://test.com' target='_blank' rel='noopener'>
+      <a className='SideBarMenuItem' href='https://test.com' target='_blank' rel='noopener'>
+        <span className='SideBarMenuItem__content'>
           <h3>this is a test</h3>
-        </a>
-      </div>
+        </span>
+      </a>
     )
     expect(shallow(<SideBarMenuItem href='https://test.com' text='this is a test' />).contains(expectedRender)).toBe(true)
   })

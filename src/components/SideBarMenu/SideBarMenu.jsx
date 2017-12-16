@@ -22,7 +22,7 @@ const sideBarMenuContent = [
   },
   {
     href: 'https://github.com/jack-evans/opentrv-webui/issues',
-    text: 'Report Issue'
+    text: 'Report an Issue'
   }
 ]
 

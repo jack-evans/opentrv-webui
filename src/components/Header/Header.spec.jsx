@@ -17,7 +17,7 @@ describe('Header..jsx', () => {
           </button>
         </div>
         <a className='Header__title' href='/'>
-          <h3>Welcome to React</h3>
+          <h3>OpenTRV</h3>
         </a>
       </header>
     )
@@ -26,6 +26,8 @@ describe('Header..jsx', () => {
 
   describe('when the button is clicked', () => {
     it('calls the callback function', () => {
+      expect.assertions(1)
+
       const cbFunction = () => {
         expect(1).toEqual(1)
       }
@@ -47,7 +49,7 @@ describe('Header..jsx', () => {
             </button>
           </div>
           <a className='Header__title' href='/'>
-            <h3>Welcome to React</h3>
+            <h3>OpenTRV</h3>
           </a>
         </header>
       )
