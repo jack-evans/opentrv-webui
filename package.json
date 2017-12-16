@@ -52,17 +52,16 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "lint": "standard --fix --verbose",
+    "lint": "standard --verbose | snazzy",
     "prestart": "yarn lint",
     "prebuild": "yarn lint",
     "pretest": "yarn lint",
-    "pretest-travis": "standard --verbose",
     "server": "node back-end/server.js",
     "start": "concurrently \"node scripts/start.js\" \"yarn server\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom --coverage",
     "test-no-coverage": "node scripts/test.js --env=jsdom",
-    "test-travis": "node scripts/test.js --env=jsdom --coverage --updateSnapshot"
+    "test-travis": "yarn lint && node scripts/test.js --env=jsdom --coverage --updateSnapshot"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -130,6 +129,7 @@
     "node-sass": "^4.5.3",
     "react-test-renderer": "^16.2.0",
     "sass-loader": "^6.0.6",
+    "snazzy": "^7.0.0",
     "standard": "^10.0.3",
     "svgxuse": "^1.2.4"
   },
