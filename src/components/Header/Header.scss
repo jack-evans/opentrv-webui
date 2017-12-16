@@ -25,6 +25,7 @@ $header-logo-height-width: $header-height;
   .Header__left-nav-toggle-container {
     background-color: $brand-01;
     height: $header-logo-height-width;
+    transition: all 0.3s ease-in-out;
     width: $header-logo-height-width;
 
     .Header__left-nav-toggle {
@@ -74,5 +75,9 @@ $header-logo-height-width: $header-height;
         transform: translateY(8px) rotate(-45deg);
       }
     }
+  }
+
+  .Header__left-nav-toggle-container:hover {
+    background-color: $brand-02;
   }
 }
