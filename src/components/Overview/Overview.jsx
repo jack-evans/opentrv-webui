@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
-import './Overview.scss'
 
 class Overview extends Component {
   /**

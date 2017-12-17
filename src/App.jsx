@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Header from './components/Header/Header'
-import './App.scss'
 import SideBarMenu from './components/SideBarMenu/SideBarMenu'
 import MainContent from './components/MainContent/MainContent'
 
