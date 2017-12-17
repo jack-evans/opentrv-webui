@@ -1,4 +1,27 @@
 
 .Overview {
 
+  .Overview__search-bar-container {
+    border-bottom: 2px solid $ui-04;
+    display: flex;
+    justify-content: center;
+
+    .Overview__search-bar {
+      padding: 30px 0 30px 0;
+      width: 500px;
+    }
+  }
+
+  .Overview__content {
+    justify-content: center;
+    height: 300px;
+
+    .Overview__discover-button {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      margin-top: -10px;
+      margin-left: -100px;
+    }
+  }
 }

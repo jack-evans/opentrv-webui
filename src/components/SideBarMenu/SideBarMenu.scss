@@ -2,7 +2,7 @@ $sideBarMenu-width: 300px;
 
 .SideBarMenu {
   background-color: $ui-03;
-  height: 100%;
+  height: calc(100vh - 60px);
   left: -$sideBarMenu-width;
   position: absolute;
   top: 60px;
