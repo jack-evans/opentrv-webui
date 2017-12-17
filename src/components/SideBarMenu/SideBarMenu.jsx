@@ -1,6 +1,5 @@
 import React from 'react'
 import SideBarMenuItem from '../SideBarMenuItem/SideBarMenuItem'
-import './SideBarMenu.scss'
 
 // Content to be populated in the side bar menu
 const sideBarMenuContent = [

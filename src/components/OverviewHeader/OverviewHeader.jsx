@@ -1,5 +1,4 @@
 import React from 'react'
-import './OverviewHeader.scss'
 
 function OverviewHeader () {
   return (

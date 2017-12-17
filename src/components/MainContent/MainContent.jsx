@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Overview from '../Overview/Overview'
 import AnotherDisplay from '../AnotherDisplay/AnotherDisplay'
-import './MainContent.scss'
 
 class MainContent extends Component {
   /**
