@@ -7,21 +7,18 @@
     justify-content: center;
 
     .Overview__search-bar {
+      max-height: 100px;
       padding: 30px 0 30px 0;
       width: 500px;
     }
   }
 
   .Overview__content {
+    align-content: center;
+    display: flex;
+    flex: 1 1 auto;
+    flex-flow: column;
+    height: calc(100vh - 255px);
     justify-content: center;
-    height: 300px;
-
-    .Overview__discover-button {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      margin-top: -10px;
-      margin-left: -100px;
-    }
   }
 }

@@ -11,6 +11,10 @@ class Overview extends Component {
     }
   }
 
+  searchOnChangeHandler (event) {
+    console.log(event.target.value)
+  }
+
   static retrieveDevices () {
     return []
   }
@@ -26,14 +30,19 @@ class Overview extends Component {
 
     if (this.state.visibleDevices.length < 1) {
       overviewContent = (
-        <Button
-          className='Overview__discover-button'
-          icon='add--outline'
-          iconDescription='Add devices'
-          onClick={() => console.log('button clicked')}
-        >
-          Discover my devices
-        </Button>
+        <div>
+          <div>
+            <span>You currently do not have any devices registered</span>
+          </div>
+          <Button
+            className='Overview__discover-button'
+            icon='add--outline'
+            iconDescription='Add devices'
+            onClick={() => console.log('button clicked')}
+          >
+            Discover my devices
+          </Button>
+        </div>
       )
     } else {
       // This is where the tiles for each device are build up
@@ -49,6 +58,7 @@ class Overview extends Component {
             id='device-search'
             labelText='Search'
             placeHolderText='Search Devices'
+            onChange={this.searchOnChangeHandler}
           />
         </div>
         <div className='Overview__content'>
