@@ -4,21 +4,28 @@
   .Overview__search-bar-container {
     border-bottom: 2px solid $ui-04;
     display: flex;
+    height: 100px;
     justify-content: center;
+    padding: 30px 0 30px 0;
 
     .Overview__search-bar {
-      max-height: 100px;
-      padding: 30px 0 30px 0;
       width: 500px;
     }
   }
 
   .Overview__content {
+    height: calc(100vh - 260px);
+  }
+
+  .Overview__content-empty {
     align-content: center;
     display: flex;
     flex: 1 1 auto;
     flex-flow: column;
-    height: calc(100vh - 255px);
     justify-content: center;
+
+    .Overview__content-empty-message {
+      padding-bottom: 10px;
+    }
   }
 }
