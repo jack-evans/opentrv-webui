@@ -1,7 +1,7 @@
 import React from 'react'
 import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react'
 
-export const DeviceTile = ({ name, temp, active }) => {
+const DeviceTile = ({ name, temp, active }) => {
   return (
     <div className='DeviceTile'>
       <div className='DeviceTile__overflow-container'>
@@ -17,3 +17,5 @@ export const DeviceTile = ({ name, temp, active }) => {
     </div>
   )
 }
+
+export default DeviceTile

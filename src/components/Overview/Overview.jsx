@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Search } from 'carbon-components-react'
-import { DeviceTile } from '../DeviceTile/DeviceTile'
+import DeviceTile from '../DeviceTile/DeviceTile'
 
 const returnedDevices = [{
   name: 'Device 1',
