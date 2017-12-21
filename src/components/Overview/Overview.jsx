@@ -2,23 +2,23 @@ import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Search } from 'carbon-components-react'
 
-const returnedDevices = [{
-  name: 'Device 1',
-  active: true,
-  currentTemperature: 26.2
-}, {
-  name: 'Device 2',
-  active: false,
-  currentTemperature: 23.5
-}, {
-  name: 'Device 3',
-  active: true,
-  currentTemperature: 21.9
-}, {
-  name: 'Device 4',
-  active: true,
-  currentTemperature: 25.2
-}]
+// const returnedDevices = [{
+//   name: 'Device 1',
+//   active: true,
+//   currentTemperature: 26.2
+// }, {
+//   name: 'Device 2',
+//   active: false,
+//   currentTemperature: 23.5
+// }, {
+//   name: 'Device 3',
+//   active: true,
+//   currentTemperature: 21.9
+// }, {
+//   name: 'Device 4',
+//   active: true,
+//   currentTemperature: 25.2
+// }]
 
 class Overview extends Component {
   constructor (props) {

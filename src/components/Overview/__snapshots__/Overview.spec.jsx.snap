@@ -1,0 +1,541 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overview.jsx renders without crashing 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Overview />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <OverviewHeader />,
+        <div
+          className="Overview__search-bar-container"
+        >
+          <div>
+            <Search
+              className="Overview__search-bar"
+              id="device-search"
+              labelText="Search"
+              onChange={[Function]}
+              placeHolderText="Search Devices"
+              small={true}
+              type="text"
+            />
+          </div>
+        </div>,
+        <div
+          className="Overview__content Overview__content-empty"
+        >
+          <div>
+            <div
+              className="Overview__content-empty-message"
+            >
+              <h3>
+                You currently do not have any devices registered
+              </h3>
+            </div>
+            <div>
+              <Button
+                className="Overview__discover_button"
+                disabled={false}
+                icon="add--outline"
+                iconDescription="Add devices"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                tabIndex={0}
+                type="button"
+              >
+                Discover my devices
+              </Button>
+            </div>
+          </div>
+        </div>,
+      ],
+      "className": "Overview",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <div>
+            <Search
+              className="Overview__search-bar"
+              id="device-search"
+              labelText="Search"
+              onChange={[Function]}
+              placeHolderText="Search Devices"
+              small={true}
+              type="text"
+            />
+          </div>,
+          "className": "Overview__search-bar-container",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <Search
+              className="Overview__search-bar"
+              id="device-search"
+              labelText="Search"
+              onChange={[Function]}
+              placeHolderText="Search Devices"
+              small={true}
+              type="text"
+            />,
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "className": "Overview__search-bar",
+              "id": "device-search",
+              "labelText": "Search",
+              "onChange": [Function],
+              "placeHolderText": "Search Devices",
+              "small": true,
+              "type": "text",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": "div",
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <div>
+            <div
+              className="Overview__content-empty-message"
+            >
+              <h3>
+                You currently do not have any devices registered
+              </h3>
+            </div>
+            <div>
+              <Button
+                className="Overview__discover_button"
+                disabled={false}
+                icon="add--outline"
+                iconDescription="Add devices"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                tabIndex={0}
+                type="button"
+              >
+                Discover my devices
+              </Button>
+            </div>
+          </div>,
+          "className": "Overview__content Overview__content-empty",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="Overview__content-empty-message"
+              >
+                <h3>
+                  You currently do not have any devices registered
+                </h3>
+              </div>,
+              <div>
+                <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>
+              </div>,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <h3>
+                  You currently do not have any devices registered
+                </h3>,
+                "className": "Overview__content-empty-message",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "You currently do not have any devices registered",
+                },
+                "ref": null,
+                "rendered": "You currently do not have any devices registered",
+                "type": "h3",
+              },
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>,
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Discover my devices",
+                  "className": "Overview__discover_button",
+                  "disabled": false,
+                  "icon": "add--outline",
+                  "iconDescription": "Add devices",
+                  "kind": "primary",
+                  "onClick": [Function],
+                  "small": false,
+                  "tabIndex": 0,
+                  "type": "button",
+                },
+                "ref": null,
+                "rendered": "Discover my devices",
+                "type": [Function],
+              },
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        "type": "div",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <OverviewHeader />,
+          <div
+            className="Overview__search-bar-container"
+          >
+            <div>
+              <Search
+                className="Overview__search-bar"
+                id="device-search"
+                labelText="Search"
+                onChange={[Function]}
+                placeHolderText="Search Devices"
+                small={true}
+                type="text"
+              />
+            </div>
+          </div>,
+          <div
+            className="Overview__content Overview__content-empty"
+          >
+            <div>
+              <div
+                className="Overview__content-empty-message"
+              >
+                <h3>
+                  You currently do not have any devices registered
+                </h3>
+              </div>
+              <div>
+                <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>
+              </div>
+            </div>
+          </div>,
+        ],
+        "className": "Overview",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <div>
+              <Search
+                className="Overview__search-bar"
+                id="device-search"
+                labelText="Search"
+                onChange={[Function]}
+                placeHolderText="Search Devices"
+                small={true}
+                type="text"
+              />
+            </div>,
+            "className": "Overview__search-bar-container",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <Search
+                className="Overview__search-bar"
+                id="device-search"
+                labelText="Search"
+                onChange={[Function]}
+                placeHolderText="Search Devices"
+                small={true}
+                type="text"
+              />,
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "className": "Overview__search-bar",
+                "id": "device-search",
+                "labelText": "Search",
+                "onChange": [Function],
+                "placeHolderText": "Search Devices",
+                "small": true,
+                "type": "text",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            "type": "div",
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <div>
+              <div
+                className="Overview__content-empty-message"
+              >
+                <h3>
+                  You currently do not have any devices registered
+                </h3>
+              </div>
+              <div>
+                <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>
+              </div>
+            </div>,
+            "className": "Overview__content Overview__content-empty",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="Overview__content-empty-message"
+                >
+                  <h3>
+                    You currently do not have any devices registered
+                  </h3>
+                </div>,
+                <div>
+                  <Button
+                    className="Overview__discover_button"
+                    disabled={false}
+                    icon="add--outline"
+                    iconDescription="Add devices"
+                    kind="primary"
+                    onClick={[Function]}
+                    small={false}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    Discover my devices
+                  </Button>
+                </div>,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <h3>
+                    You currently do not have any devices registered
+                  </h3>,
+                  "className": "Overview__content-empty-message",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "You currently do not have any devices registered",
+                  },
+                  "ref": null,
+                  "rendered": "You currently do not have any devices registered",
+                  "type": "h3",
+                },
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <Button
+                    className="Overview__discover_button"
+                    disabled={false}
+                    icon="add--outline"
+                    iconDescription="Add devices"
+                    kind="primary"
+                    onClick={[Function]}
+                    small={false}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    Discover my devices
+                  </Button>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "Discover my devices",
+                    "className": "Overview__discover_button",
+                    "disabled": false,
+                    "icon": "add--outline",
+                    "iconDescription": "Add devices",
+                    "kind": "primary",
+                    "onClick": [Function],
+                    "small": false,
+                    "tabIndex": 0,
+                    "type": "button",
+                  },
+                  "ref": null,
+                  "rendered": "Discover my devices",
+                  "type": [Function],
+                },
+                "type": "div",
+              },
+            ],
+            "type": "div",
+          },
+          "type": "div",
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
