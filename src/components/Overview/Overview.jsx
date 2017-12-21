@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Search } from 'carbon-components-react'
+import { DeviceTile } from '../DeviceTile/DeviceTile'
 
-// const returnedDevices = [{
-//   name: 'Device 1',
-//   active: true,
-//   currentTemperature: 26.2
-// }, {
-//   name: 'Device 2',
-//   active: false,
-//   currentTemperature: 23.5
-// }, {
-//   name: 'Device 3',
-//   active: true,
-//   currentTemperature: 21.9
-// }, {
-//   name: 'Device 4',
-//   active: true,
-//   currentTemperature: 25.2
-// }]
+const returnedDevices = [{
+  name: 'Device 1',
+  active: true,
+  currentTemperature: 26.2
+}, {
+  name: 'Device 2',
+  active: false,
+  currentTemperature: 23.5
+}, {
+  name: 'Device 3',
+  active: true,
+  currentTemperature: 21.9
+}, {
+  name: 'Device 4',
+  active: true,
+  currentTemperature: 25.2
+}]
 
 class Overview extends Component {
   constructor (props) {
@@ -35,11 +36,10 @@ class Overview extends Component {
   }
 
   static discoverDevicesButtonOnClickHandler () {
-
   }
 
   static retrieveDevices () {
-    return []
+    return returnedDevices
   }
 
   /**
@@ -74,7 +74,11 @@ class Overview extends Component {
     } else {
       // This is where the tiles for each device are build up
       this.state.visibleDevices.forEach(device => {
-        overviewContent = (<div>1</div>)
+        overviewContent = (
+          <div>
+            <DeviceTile name={device.name} temp={device.currentTemperature} active={device.active} />
+          </div>
+        )
       })
     }
 

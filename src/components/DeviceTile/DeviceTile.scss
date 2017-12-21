@@ -1,0 +1,21 @@
+
+.DeviceTile {
+  border: 1px solid $ui-04;
+  height: 250px;
+  margin: 40px;
+  padding: 10px;
+  width: 280px;
+
+  .DeviceTile__overflow-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .DeviceTile__overflow-menu {
+      outline: none;
+    }
+  }
+
+  .DeviceTile__name-container {
+
+  }
+}
