@@ -37,13 +37,61 @@ ShallowWrapper {
         <div
           className="Overview__content"
         >
-          <div>
-            <DeviceTile
-              active={true}
-              name="Device 4"
-              temp={25.2}
-            />
-          </div>
+          <DeviceTile
+            active={true}
+            name="Device 1"
+            temp={26.2}
+          />
+          <DeviceTile
+            active={false}
+            name="Device 2"
+            temp={23.5}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 3"
+            temp={21.9}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 4"
+            temp={25.2}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 5"
+            temp={25.2}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 5"
+            temp={25.2}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 5"
+            temp={25.2}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 5"
+            temp={25.2}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 5"
+            temp={25.2}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 5"
+            temp={25.2}
+          />
+          <DeviceTile
+            active={true}
+            name="Device 5"
+            temp={25.2}
+          />
         </div>,
       ],
       "className": "Overview",
@@ -120,31 +168,109 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": <div>
+          "children": Array [
+            <DeviceTile
+              active={true}
+              name="Device 1"
+              temp={26.2}
+            />,
+            <DeviceTile
+              active={false}
+              name="Device 2"
+              temp={23.5}
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 3"
+              temp={21.9}
+            />,
             <DeviceTile
               active={true}
               name="Device 4"
               temp={25.2}
-            />
-          </div>,
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />,
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />,
+          ],
           "className": "Overview__content",
         },
         "ref": null,
-        "rendered": Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": <DeviceTile
-              active={true}
-              name="Device 4"
-              temp={25.2}
-            />,
-          },
-          "ref": null,
-          "rendered": Object {
+        "rendered": Array [
+          Object {
             "instance": null,
-            "key": undefined,
+            "key": "1230",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 1",
+              "temp": 26.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1231",
+            "nodeType": "function",
+            "props": Object {
+              "active": false,
+              "name": "Device 2",
+              "temp": 23.5,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1232",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 3",
+              "temp": 21.9,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1233",
             "nodeType": "function",
             "props": Object {
               "active": true,
@@ -155,8 +281,98 @@ ShallowWrapper {
             "rendered": null,
             "type": [Function],
           },
-          "type": "div",
-        },
+          Object {
+            "instance": null,
+            "key": "1234",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 5",
+              "temp": 25.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1235",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 5",
+              "temp": 25.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1236",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 5",
+              "temp": 25.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1237",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 5",
+              "temp": 25.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1238",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 5",
+              "temp": 25.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1239",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 5",
+              "temp": 25.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1240",
+            "nodeType": "function",
+            "props": Object {
+              "active": true,
+              "name": "Device 5",
+              "temp": 25.2,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
         "type": "div",
       },
     ],
@@ -188,13 +404,61 @@ ShallowWrapper {
           <div
             className="Overview__content"
           >
-            <div>
-              <DeviceTile
-                active={true}
-                name="Device 4"
-                temp={25.2}
-              />
-            </div>
+            <DeviceTile
+              active={true}
+              name="Device 1"
+              temp={26.2}
+            />
+            <DeviceTile
+              active={false}
+              name="Device 2"
+              temp={23.5}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 3"
+              temp={21.9}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 4"
+              temp={25.2}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />
+            <DeviceTile
+              active={true}
+              name="Device 5"
+              temp={25.2}
+            />
           </div>,
         ],
         "className": "Overview",
@@ -271,31 +535,109 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": <div>
+            "children": Array [
+              <DeviceTile
+                active={true}
+                name="Device 1"
+                temp={26.2}
+              />,
+              <DeviceTile
+                active={false}
+                name="Device 2"
+                temp={23.5}
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 3"
+                temp={21.9}
+              />,
               <DeviceTile
                 active={true}
                 name="Device 4"
                 temp={25.2}
-              />
-            </div>,
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 5"
+                temp={25.2}
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 5"
+                temp={25.2}
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 5"
+                temp={25.2}
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 5"
+                temp={25.2}
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 5"
+                temp={25.2}
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 5"
+                temp={25.2}
+              />,
+              <DeviceTile
+                active={true}
+                name="Device 5"
+                temp={25.2}
+              />,
+            ],
             "className": "Overview__content",
           },
           "ref": null,
-          "rendered": Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": <DeviceTile
-                active={true}
-                name="Device 4"
-                temp={25.2}
-              />,
-            },
-            "ref": null,
-            "rendered": Object {
+          "rendered": Array [
+            Object {
               "instance": null,
-              "key": undefined,
+              "key": "1230",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 1",
+                "temp": 26.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1231",
+              "nodeType": "function",
+              "props": Object {
+                "active": false,
+                "name": "Device 2",
+                "temp": 23.5,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1232",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 3",
+                "temp": 21.9,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1233",
               "nodeType": "function",
               "props": Object {
                 "active": true,
@@ -306,8 +648,98 @@ ShallowWrapper {
               "rendered": null,
               "type": [Function],
             },
-            "type": "div",
-          },
+            Object {
+              "instance": null,
+              "key": "1234",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 5",
+                "temp": 25.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1235",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 5",
+                "temp": 25.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1236",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 5",
+                "temp": 25.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1237",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 5",
+                "temp": 25.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1238",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 5",
+                "temp": 25.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1239",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 5",
+                "temp": 25.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1240",
+              "nodeType": "function",
+              "props": Object {
+                "active": true,
+                "name": "Device 5",
+                "temp": 25.2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
           "type": "div",
         },
       ],
