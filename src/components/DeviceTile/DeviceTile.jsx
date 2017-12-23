@@ -2,23 +2,9 @@ import React from 'react'
 import { Icon, OverflowMenu, OverflowMenuItem } from 'carbon-components-react'
 
 const DeviceTile = ({ name, temp, active }) => {
-  let activity
-
-  if (active) {
-    activity = (
-      <div className='DeviceTile__footer-active'>
-        <div className='DeviceTile__footer-active-circle' />
-        <h3>Active</h3>
-      </div>
-    )
-  } else {
-    activity = (
-      <div className='DeviceTile__footer-idle'>
-        <div className='DeviceTile__footer-idle-circle' />
-        <h3>Idle</h3>
-      </div>
-    )
-  }
+  let activityClassName = active ? 'DeviceTile__footer-active' : 'DeviceTile__footer-idle'
+  let activityCircleClassName = active ? 'DeviceTile__footer-active-circle' : 'DeviceTile__footer-idle-circle'
+  let activityContent = active ? 'Active' : 'Idle'
 
   return (
     <div className='DeviceTile'>
@@ -38,7 +24,10 @@ const DeviceTile = ({ name, temp, active }) => {
         </div>
       </div>
       <div className='DeviceTile__footer'>
-        {activity}
+        <div className={activityClassName}>
+          <div className={activityCircleClassName} />
+          <h3>{activityContent}</h3>
+        </div>
         <div className='DeviceTile__footer-temp'>
           <h3>{temp}&#176;C</h3>
         </div>
