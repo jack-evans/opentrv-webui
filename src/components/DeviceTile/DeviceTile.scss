@@ -8,9 +8,9 @@
   width: 280px;
 
   .DeviceTile__overflow-container {
+    border-bottom: 1px solid $ui-04;
     display: flex;
     justify-content: flex-end;
-    border-bottom: 1px solid $ui-04;
 
     .DeviceTile__overflow-menu {
       outline: none;
