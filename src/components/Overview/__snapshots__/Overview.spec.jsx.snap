@@ -35,63 +35,32 @@ ShallowWrapper {
           </div>
         </div>,
         <div
-          className="Overview__content"
+          className="Overview__content Overview__content-empty"
         >
-          <DeviceTile
-            active={true}
-            name="Device 1"
-            temp={26.2}
-          />
-          <DeviceTile
-            active={false}
-            name="Device 2"
-            temp={23.5}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 3"
-            temp={21.9}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 4"
-            temp={25.2}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 5"
-            temp={25.2}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 5"
-            temp={25.2}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 5"
-            temp={25.2}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 5"
-            temp={25.2}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 5"
-            temp={25.2}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 5"
-            temp={25.2}
-          />
-          <DeviceTile
-            active={true}
-            name="Device 5"
-            temp={25.2}
-          />
+          <div>
+            <div
+              className="Overview__content-empty-message"
+            >
+              <h3>
+                You currently do not have any devices registered
+              </h3>
+            </div>
+            <div>
+              <Button
+                className="Overview__discover_button"
+                disabled={false}
+                icon="add--outline"
+                iconDescription="Add devices"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                tabIndex={0}
+                type="button"
+              >
+                Discover my devices
+              </Button>
+            </div>
+          </div>
         </div>,
       ],
       "className": "Overview",
@@ -168,211 +137,134 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "host",
         "props": Object {
-          "children": Array [
-            <DeviceTile
-              active={true}
-              name="Device 1"
-              temp={26.2}
-            />,
-            <DeviceTile
-              active={false}
-              name="Device 2"
-              temp={23.5}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 3"
-              temp={21.9}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 4"
-              temp={25.2}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />,
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />,
-          ],
-          "className": "Overview__content",
+          "children": <div>
+            <div
+              className="Overview__content-empty-message"
+            >
+              <h3>
+                You currently do not have any devices registered
+              </h3>
+            </div>
+            <div>
+              <Button
+                className="Overview__discover_button"
+                disabled={false}
+                icon="add--outline"
+                iconDescription="Add devices"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                tabIndex={0}
+                type="button"
+              >
+                Discover my devices
+              </Button>
+            </div>
+          </div>,
+          "className": "Overview__content Overview__content-empty",
         },
         "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": "1230",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 1",
-              "temp": 26.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="Overview__content-empty-message"
+              >
+                <h3>
+                  You currently do not have any devices registered
+                </h3>
+              </div>,
+              <div>
+                <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>
+              </div>,
+            ],
           },
-          Object {
-            "instance": null,
-            "key": "1231",
-            "nodeType": "function",
-            "props": Object {
-              "active": false,
-              "name": "Device 2",
-              "temp": 23.5,
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <h3>
+                  You currently do not have any devices registered
+                </h3>,
+                "className": "Overview__content-empty-message",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "You currently do not have any devices registered",
+                },
+                "ref": null,
+                "rendered": "You currently do not have any devices registered",
+                "type": "h3",
+              },
+              "type": "div",
             },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1232",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 3",
-              "temp": 21.9,
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>,
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Discover my devices",
+                  "className": "Overview__discover_button",
+                  "disabled": false,
+                  "icon": "add--outline",
+                  "iconDescription": "Add devices",
+                  "kind": "primary",
+                  "onClick": [Function],
+                  "small": false,
+                  "tabIndex": 0,
+                  "type": "button",
+                },
+                "ref": null,
+                "rendered": "Discover my devices",
+                "type": [Function],
+              },
+              "type": "div",
             },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1233",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 4",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1234",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 5",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1235",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 5",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1236",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 5",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1237",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 5",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1238",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 5",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1239",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 5",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1240",
-            "nodeType": "function",
-            "props": Object {
-              "active": true,
-              "name": "Device 5",
-              "temp": 25.2,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-        ],
+          ],
+          "type": "div",
+        },
         "type": "div",
       },
     ],
@@ -402,63 +294,32 @@ ShallowWrapper {
             </div>
           </div>,
           <div
-            className="Overview__content"
+            className="Overview__content Overview__content-empty"
           >
-            <DeviceTile
-              active={true}
-              name="Device 1"
-              temp={26.2}
-            />
-            <DeviceTile
-              active={false}
-              name="Device 2"
-              temp={23.5}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 3"
-              temp={21.9}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 4"
-              temp={25.2}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />
-            <DeviceTile
-              active={true}
-              name="Device 5"
-              temp={25.2}
-            />
+            <div>
+              <div
+                className="Overview__content-empty-message"
+              >
+                <h3>
+                  You currently do not have any devices registered
+                </h3>
+              </div>
+              <div>
+                <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>
+              </div>
+            </div>
           </div>,
         ],
         "className": "Overview",
@@ -535,211 +396,134 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "host",
           "props": Object {
-            "children": Array [
-              <DeviceTile
-                active={true}
-                name="Device 1"
-                temp={26.2}
-              />,
-              <DeviceTile
-                active={false}
-                name="Device 2"
-                temp={23.5}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 3"
-                temp={21.9}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 4"
-                temp={25.2}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 5"
-                temp={25.2}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 5"
-                temp={25.2}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 5"
-                temp={25.2}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 5"
-                temp={25.2}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 5"
-                temp={25.2}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 5"
-                temp={25.2}
-              />,
-              <DeviceTile
-                active={true}
-                name="Device 5"
-                temp={25.2}
-              />,
-            ],
-            "className": "Overview__content",
+            "children": <div>
+              <div
+                className="Overview__content-empty-message"
+              >
+                <h3>
+                  You currently do not have any devices registered
+                </h3>
+              </div>
+              <div>
+                <Button
+                  className="Overview__discover_button"
+                  disabled={false}
+                  icon="add--outline"
+                  iconDescription="Add devices"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  tabIndex={0}
+                  type="button"
+                >
+                  Discover my devices
+                </Button>
+              </div>
+            </div>,
+            "className": "Overview__content Overview__content-empty",
           },
           "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": "1230",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 1",
-                "temp": 26.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="Overview__content-empty-message"
+                >
+                  <h3>
+                    You currently do not have any devices registered
+                  </h3>
+                </div>,
+                <div>
+                  <Button
+                    className="Overview__discover_button"
+                    disabled={false}
+                    icon="add--outline"
+                    iconDescription="Add devices"
+                    kind="primary"
+                    onClick={[Function]}
+                    small={false}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    Discover my devices
+                  </Button>
+                </div>,
+              ],
             },
-            Object {
-              "instance": null,
-              "key": "1231",
-              "nodeType": "function",
-              "props": Object {
-                "active": false,
-                "name": "Device 2",
-                "temp": 23.5,
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <h3>
+                    You currently do not have any devices registered
+                  </h3>,
+                  "className": "Overview__content-empty-message",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "You currently do not have any devices registered",
+                  },
+                  "ref": null,
+                  "rendered": "You currently do not have any devices registered",
+                  "type": "h3",
+                },
+                "type": "div",
               },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1232",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 3",
-                "temp": 21.9,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <Button
+                    className="Overview__discover_button"
+                    disabled={false}
+                    icon="add--outline"
+                    iconDescription="Add devices"
+                    kind="primary"
+                    onClick={[Function]}
+                    small={false}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    Discover my devices
+                  </Button>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "children": "Discover my devices",
+                    "className": "Overview__discover_button",
+                    "disabled": false,
+                    "icon": "add--outline",
+                    "iconDescription": "Add devices",
+                    "kind": "primary",
+                    "onClick": [Function],
+                    "small": false,
+                    "tabIndex": 0,
+                    "type": "button",
+                  },
+                  "ref": null,
+                  "rendered": "Discover my devices",
+                  "type": [Function],
+                },
+                "type": "div",
               },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1233",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 4",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1234",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 5",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1235",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 5",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1236",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 5",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1237",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 5",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1238",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 5",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1239",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 5",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1240",
-              "nodeType": "function",
-              "props": Object {
-                "active": true,
-                "name": "Device 5",
-                "temp": 25.2,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-          ],
+            ],
+            "type": "div",
+          },
           "type": "div",
         },
       ],

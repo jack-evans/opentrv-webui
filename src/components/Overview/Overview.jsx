@@ -55,7 +55,7 @@ const returnedDevices = [{
   currentTemperature: 25.2
 }, {
   id: '1240',
-  name: 'Device 5',
+  name: 'jeff',
   active: true,
   currentTemperature: 25.2
 }]
@@ -64,21 +64,40 @@ class Overview extends Component {
   constructor (props) {
     super(props)
     let devices = Overview.retrieveDevices()
+    this.search = ''
     this.state = {
       devices: devices,
       visibleDevices: devices
     }
+
+    this.discoverDevicesButtonOnClick = this.discoverDevicesButtonOnClickHandler.bind(this)
+    this.searchOnChange = this.searchOnChangeHandler.bind(this)
+    this.searchDevices = this.filterDevices.bind(this)
   }
 
-  static searchOnChangeHandler (event) {
-    console.log(event.target.value)
+  searchOnChangeHandler (event) {
+    this.search = event.target.value
+    this.setState({visibleDevices: this.state.devices.filter(this.searchDevices)})
   }
 
-  static discoverDevicesButtonOnClickHandler () {
+  filterDevices (device) {
+    const searchTerm = this.search.toLowerCase()
+
+    return (
+      (device.name.toLowerCase().indexOf(searchTerm) !== -1) ||
+      (device.currentTemperature.toString().indexOf(searchTerm) !== -1)
+    )
+  }
+
+  discoverDevicesButtonOnClickHandler () {
+    this.setState({
+      devices: returnedDevices,
+      visibleDevices: returnedDevices
+    })
   }
 
   static retrieveDevices () {
-    return returnedDevices
+    return []
   }
 
   /**
@@ -103,7 +122,7 @@ class Overview extends Component {
               className='Overview__discover_button'
               icon='add--outline'
               iconDescription='Add devices'
-              onClick={() => console.log('button clicked')}
+              onClick={this.discoverDevicesButtonOnClick}
             >
               Discover my devices
             </Button>
@@ -130,7 +149,7 @@ class Overview extends Component {
               id='device-search'
               labelText='Search'
               placeHolderText='Search Devices'
-              onChange={Overview.searchOnChangeHandler}
+              onChange={this.searchOnChange}
             />
           </div>
         </div>
