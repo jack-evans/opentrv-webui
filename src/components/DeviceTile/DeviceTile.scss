@@ -2,6 +2,7 @@
 .DeviceTile {
   background-color: $ui-02;
   border: 1px solid $ui-04;
+  box-shadow: 0 1px 3px 0 $ui-04;
   height: 250px;
   margin: 40px;
   padding: 10px;
@@ -31,12 +32,12 @@
 
     .DeviceTile__icon-circle {
       align-self: center;
-      border: 1px solid $ui-05;
+      border: 1px solid $ui-04;
       border-radius: 50%;
       display: flex;
-      height: 80px;
+      height: 60px;
       justify-content: center;
-      width: 80px;
+      width: 60px;
 
       div {
         align-self: center;
@@ -86,4 +87,8 @@
       justify-content: flex-end;
     }
   }
+}
+
+.DeviceTile:hover {
+  box-shadow: 0 4px 8px 0 $ui-05;
 }
