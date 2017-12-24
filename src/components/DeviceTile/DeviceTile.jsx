@@ -1,25 +1,29 @@
 import React from 'react'
 import { Icon, OverflowMenu, OverflowMenuItem } from 'carbon-components-react'
 
-const DeviceTile = ({ name, temp, active }) => {
+const DeviceTile = ({ id, name, temp, active }) => {
   let activityClassName = active ? 'DeviceTile__footer-active' : 'DeviceTile__footer-idle'
   let activityCircleClassName = active ? 'DeviceTile__footer-active-circle' : 'DeviceTile__footer-idle-circle'
   let activityContent = active ? 'Active' : 'Idle'
 
+  let href = `/devices/${id}`
   return (
     <div className='DeviceTile'>
       <div className='DeviceTile__overflow-container'>
         <OverflowMenu className='DeviceTile__overflow-menu'>
-          <OverflowMenuItem />
+          <OverflowMenuItem itemText='View' onClick={() => { window.location.href = href }} />
+          <OverflowMenuItem itemText='Delete' hasDivider isDelete />
         </OverflowMenu>
       </div>
-      <div className='DeviceTile__name-container'>
-        <h3>{name}</h3>
-      </div>
-      <div className='DeviceTile__icon-container'>
-        <div className='DeviceTile__icon-circle'>
-          <div>
-            <Icon name='devices' />
+      <div style={{cursor: 'pointer'}} onClick={() => { window.location.href = href }}>
+        <div className='DeviceTile__name-container'>
+          <h3>{name}</h3>
+        </div>
+        <div className='DeviceTile__icon-container'>
+          <div className='DeviceTile__icon-circle'>
+            <div>
+              <Icon name='devices' />
+            </div>
           </div>
         </div>
       </div>
