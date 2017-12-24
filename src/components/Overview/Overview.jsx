@@ -133,7 +133,7 @@ class Overview extends Component {
       // This is where the tiles for each device are build up
       overviewContent = this.state.visibleDevices.map(device => {
         return (
-          <DeviceTile key={device.id} name={device.name} temp={device.currentTemperature} active={device.active} />
+          <DeviceTile key={device.id} id={device.id} name={device.name} temp={device.currentTemperature} active={device.active} />
         )
       })
     }
