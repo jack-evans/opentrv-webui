@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 
 class AnotherDisplay extends Component {
+  constructor (props) {
+    super(props)
+    this.deviceId = props.match.params.id
+  }
+
   /**
    * render method
    *
@@ -11,7 +16,7 @@ class AnotherDisplay extends Component {
     return (
       <div>
         <p>
-          I'm another display panel
+          I'm another display panel for display: {this.deviceId}
         </p>
       </div>
     )

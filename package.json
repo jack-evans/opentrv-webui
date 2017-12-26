@@ -63,6 +63,7 @@
     "test-no-coverage": "node scripts/test.js --env=jsdom",
     "test-travis": "yarn lint && node scripts/test.js --env=jsdom --coverage --updateSnapshot"
   },
+  "proxy": "http://localhost:3001",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",

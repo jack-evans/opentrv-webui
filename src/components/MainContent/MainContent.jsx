@@ -14,7 +14,7 @@ class MainContent extends Component {
     return (
       <Switch className='MainContent'>
         <Route exact path='/' component={Overview} />
-        <Route path='/route2' component={AnotherDisplay} />
+        <Route path='/devices/:id' component={AnotherDisplay} />
       </Switch>
     )
   }

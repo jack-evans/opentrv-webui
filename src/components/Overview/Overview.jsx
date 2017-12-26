@@ -2,63 +2,9 @@ import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
+import 'isomorphic-fetch'
 
-const returnedDevices = [{
-  id: '1230',
-  name: 'Device 1',
-  active: true,
-  currentTemperature: 26.2
-}, {
-  id: '1231',
-  name: 'Device 2',
-  active: false,
-  currentTemperature: 23.5
-}, {
-  id: '1232',
-  name: 'Device 3',
-  active: true,
-  currentTemperature: 21.9
-}, {
-  id: '1233',
-  name: 'Device 4',
-  active: true,
-  currentTemperature: 25.2
-}, {
-  id: '1234',
-  name: 'Device 5',
-  active: true,
-  currentTemperature: 25.2
-}, {
-  id: '1235',
-  name: 'Device 5',
-  active: true,
-  currentTemperature: 25.2
-}, {
-  id: '1236',
-  name: 'Device 5',
-  active: true,
-  currentTemperature: 25.2
-}, {
-  id: '1237',
-  name: 'Device 5',
-  active: true,
-  currentTemperature: 25.2
-}, {
-  id: '1238',
-  name: 'Device 5',
-  active: true,
-  currentTemperature: 25.2
-}, {
-  id: '1239',
-  name: 'Device 5',
-  active: true,
-  currentTemperature: 25.2
-}, {
-  id: '1240',
-  name: 'jeff',
-  active: true,
-  currentTemperature: 25.2
-}]
+// const returnedDevices = []
 
 class Overview extends Component {
   constructor (props) {
@@ -89,11 +35,21 @@ class Overview extends Component {
     )
   }
 
-  discoverDevicesButtonOnClickHandler () {
+  async discoverDevicesButtonOnClickHandler () {
+    let retrievedDevices = await Overview.discoverDevices()
+    console.log(retrievedDevices)
     this.setState({
-      devices: returnedDevices,
-      visibleDevices: returnedDevices
+      devices: retrievedDevices,
+      visibleDevices: retrievedDevices
     })
+  }
+
+  static discoverDevices () {
+    // eslint-disable-next-line no-undef
+    return fetch('/api/v1/devices', {
+      method: 'GET',
+      json: true
+    }).then(results => results.json())
   }
 
   static retrieveDevices () {
