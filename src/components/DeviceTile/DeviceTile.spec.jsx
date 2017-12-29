@@ -63,4 +63,26 @@ describe('DeviceTile.jsx', () => {
       expect(global.location.assign).toHaveBeenCalledWith('/devices/1234')
     })
   })
+
+  describe('when the DeviceTile overflow menu is clicked on', () => {
+    describe('when view is clicked on', () => {
+      it('calls the assign method for window.location', () => {
+        global.location.assign = jest.fn()
+
+        const wrapper = shallow(<DeviceTile id='1234' name='test' temp={26.3} active />)
+        wrapper.find('.DeviceTile__overflow-menu-view').simulate('click')
+
+        expect(global.location.assign).toHaveBeenCalledTimes(1)
+      })
+
+      it('calls the assign method for window.location', () => {
+        global.location.assign = jest.fn()
+
+        const wrapper = shallow(<DeviceTile id='1234' name='test' temp={26.3} active />)
+        wrapper.find('.DeviceTile__overflow-menu-view').simulate('click')
+
+        expect(global.location.assign).toHaveBeenCalledWith('/devices/1234')
+      })
+    })
+  })
 })

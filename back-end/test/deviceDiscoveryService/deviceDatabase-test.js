@@ -162,4 +162,40 @@ describe('deviceDatabase.js', () => {
       })
     })
   })
+
+  describe('getDeviceInformation', () => {
+    let retrieveDocumentSpy
+
+    beforeEach(() => {
+      retrieveDocumentSpy = jest.spyOn(cloudantRequestHelper, 'retrieveDocument')
+      deviceDatabase = new DeviceDatabase()
+    })
+
+    afterEach(() => {
+      retrieveDocumentSpy.mockReset()
+      retrieveDocumentSpy.mockRestore()
+    })
+
+    describe('when initPromise is a rejected promise', () => {
+      beforeEach(() => {
+        deviceDatabase.initPromise = Promise.reject(new Error('Bang!'))
+      })
+
+      it('does not call the retrieveDocument function', () => {
+        expect.assertions(1)
+        return deviceDatabase.getDeviceInformation('1234')
+          .catch(() => {
+            expect(retrieveDocumentSpy).toHaveBeenCalledTimes(0)
+          })
+      })
+
+      it('returns a rejected promise', () => {
+        expect.assertions(1)
+        return deviceDatabase.getDeviceInformation('1234')
+          .catch(error => {
+            expect(error.message).toEqual('Bang!')
+          })
+      })
+    })
+  })
 })

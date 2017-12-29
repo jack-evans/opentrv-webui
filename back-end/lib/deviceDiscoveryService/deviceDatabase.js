@@ -66,11 +66,17 @@ DeviceDatabase.prototype.createDevice = function (deviceDocument) {
     })
 }
 
-/*
+/**
+ * getDeviceInformation method
+ *
+ * Retrieves a device document from the device database
+ * @param deviceDocumentId
+ * @returns {Promise} on the action of retrieving a document from the device database
+ */
 DeviceDatabase.prototype.getDeviceInformation = function (deviceDocumentId) {
   let self = this
 
-  self.initPromise
+  return self.initPromise
     .then(function () {
       return cloudantRequestHelper.retrieveDocument(self.database, databaseName, deviceDocumentId)
     })
@@ -79,7 +85,7 @@ DeviceDatabase.prototype.getDeviceInformation = function (deviceDocumentId) {
       return Promise.reject(error)
     })
 }
-
+/*
 DeviceDatabase.prototype.getAllDevices = function () {
   let self = this
 
