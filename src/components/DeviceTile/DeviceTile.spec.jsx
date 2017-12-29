@@ -43,4 +43,24 @@ describe('DeviceTile.jsx', () => {
       expect(wrapper.text()).toContain('Active')
     })
   })
+
+  describe('when the DeviceTile is clicked on', () => {
+    it('calls the assign method for window.location', () => {
+      global.location.assign = jest.fn()
+
+      const wrapper = shallow(<DeviceTile id='1234' name='test' temp={26.3} active />)
+      wrapper.find('.DeviceTile__center-container').simulate('click')
+
+      expect(global.location.assign).toHaveBeenCalledTimes(1)
+    })
+
+    it('calls the assign method for window.location', () => {
+      global.location.assign = jest.fn()
+
+      const wrapper = shallow(<DeviceTile id='1234' name='test' temp={26.3} active />)
+      wrapper.find('.DeviceTile__center-container').simulate('click')
+
+      expect(global.location.assign).toHaveBeenCalledWith('/devices/1234')
+    })
+  })
 })

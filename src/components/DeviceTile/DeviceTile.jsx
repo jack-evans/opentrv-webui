@@ -1,6 +1,5 @@
 import React from 'react'
 import { Icon, OverflowMenu, OverflowMenuItem } from 'carbon-components-react'
-import { Link } from 'react-router-dom'
 
 const DeviceTile = ({ id, name, temp, active }) => {
   let activityClassName = active ? 'DeviceTile__footer-active' : 'DeviceTile__footer-idle'
@@ -12,11 +11,11 @@ const DeviceTile = ({ id, name, temp, active }) => {
     <div className='DeviceTile'>
       <div className='DeviceTile__overflow-container'>
         <OverflowMenu className='DeviceTile__overflow-menu'>
-          <OverflowMenuItem className='DeviceTile__overflow-menu-view' itemText='View' onClick={() => (<Link to={href} />)} />
+          <OverflowMenuItem className='DeviceTile__overflow-menu-view' itemText='View' onClick={() => { window.location.assign(href) }} />
           <OverflowMenuItem itemText='Delete' hasDivider isDelete />
         </OverflowMenu>
       </div>
-      <div className='DeviceTile__center-container' style={{cursor: 'pointer'}} onClick={() => (<Link to={href} />)}>
+      <div className='DeviceTile__center-container' style={{cursor: 'pointer'}} onClick={() => { window.location.assign(href) }}>
         <div className='DeviceTile__name-container'>
           <h3>{name}</h3>
         </div>
