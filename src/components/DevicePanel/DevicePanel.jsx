@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { Icon } from 'carbon-components-react'
 
-class AnotherDisplay extends Component {
+class DevicePanel extends Component {
   constructor (props) {
     super(props)
     this.deviceId = props.match.params.id
@@ -14,13 +15,16 @@ class AnotherDisplay extends Component {
    */
   render () {
     return (
-      <div>
-        <p>
-          I'm another display panel for display: {this.deviceId}
-        </p>
+      <div className='DevicePanel'>
+        <div className='DevicePanel__header-container'>
+          <a className='DevicePanel__header-back-button' href='/'>
+            <Icon name='arrow--left' />
+            <h3>Device Overview</h3>
+          </a>
+        </div>
       </div>
     )
   }
 }
 
-export default AnotherDisplay
+export default DevicePanel
