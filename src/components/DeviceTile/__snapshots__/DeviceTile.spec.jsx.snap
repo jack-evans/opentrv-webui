@@ -6,6 +6,7 @@ ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <DeviceTile
     active={false}
+    id="1234"
     name="test"
     temp={26.3}
   />,
@@ -49,6 +50,7 @@ ShallowWrapper {
             tabIndex={0}
           >
             <OverflowMenuItem
+              className="DeviceTile__overflow-menu-view"
               hasDivider={false}
               isDelete={false}
               itemText="View"
@@ -63,6 +65,7 @@ ShallowWrapper {
           </OverflowMenu>
         </div>,
         <div
+          className="DeviceTile__center-container"
           onClick={[Function]}
           style={
             Object {
@@ -150,6 +153,7 @@ ShallowWrapper {
             tabIndex={0}
           >
             <OverflowMenuItem
+              className="DeviceTile__overflow-menu-view"
               hasDivider={false}
               isDelete={false}
               itemText="View"
@@ -173,6 +177,7 @@ ShallowWrapper {
             "ariaLabel": "list of options",
             "children": Array [
               <OverflowMenuItem
+                className="DeviceTile__overflow-menu-view"
                 hasDivider={false}
                 isDelete={false}
                 itemText="View"
@@ -209,6 +214,7 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "function",
               "props": Object {
+                "className": "DeviceTile__overflow-menu-view",
                 "hasDivider": false,
                 "isDelete": false,
                 "itemText": "View",
@@ -267,6 +273,7 @@ ShallowWrapper {
               </div>
             </div>,
           ],
+          "className": "DeviceTile__center-container",
           "onClick": [Function],
           "style": Object {
             "cursor": "pointer",
@@ -512,6 +519,7 @@ ShallowWrapper {
               tabIndex={0}
             >
               <OverflowMenuItem
+                className="DeviceTile__overflow-menu-view"
                 hasDivider={false}
                 isDelete={false}
                 itemText="View"
@@ -526,6 +534,7 @@ ShallowWrapper {
             </OverflowMenu>
           </div>,
           <div
+            className="DeviceTile__center-container"
             onClick={[Function]}
             style={
               Object {
@@ -613,6 +622,7 @@ ShallowWrapper {
               tabIndex={0}
             >
               <OverflowMenuItem
+                className="DeviceTile__overflow-menu-view"
                 hasDivider={false}
                 isDelete={false}
                 itemText="View"
@@ -636,6 +646,7 @@ ShallowWrapper {
               "ariaLabel": "list of options",
               "children": Array [
                 <OverflowMenuItem
+                  className="DeviceTile__overflow-menu-view"
                   hasDivider={false}
                   isDelete={false}
                   itemText="View"
@@ -672,6 +683,7 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
+                  "className": "DeviceTile__overflow-menu-view",
                   "hasDivider": false,
                   "isDelete": false,
                   "itemText": "View",
@@ -730,6 +742,7 @@ ShallowWrapper {
                 </div>
               </div>,
             ],
+            "className": "DeviceTile__center-container",
             "onClick": [Function],
             "style": Object {
               "cursor": "pointer",
