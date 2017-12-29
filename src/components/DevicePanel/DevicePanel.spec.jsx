@@ -1,5 +1,5 @@
 import React from 'react'
-import AnotherDisplay from './AnotherDisplay'
+import AnotherDisplay from './DevicePanel'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
@@ -10,11 +10,17 @@ describe('AnotherDisplay.jsx', () => {
     const expectedRender = (
       <div>
         <p>
-          I'm another display panel
+          I'm another display panel for display: {'1234'}
         </p>
       </div>
     )
 
-    expect(shallow(<AnotherDisplay />).contains(expectedRender)).toBe(true)
+    const match = {
+      params: {
+        id: '1234'
+      }
+    }
+
+    expect(shallow(<AnotherDisplay match={match} />).contains(expectedRender)).toBe(true)
   })
 })

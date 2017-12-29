@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Overview from '../Overview/Overview'
-import AnotherDisplay from '../AnotherDisplay/AnotherDisplay'
+import DevicePanel from '../DevicePanel/DevicePanel'
 
 class MainContent extends Component {
   /**
@@ -14,7 +14,7 @@ class MainContent extends Component {
     return (
       <Switch className='MainContent'>
         <Route exact path='/' component={Overview} />
-        <Route path='/devices/:id' component={AnotherDisplay} />
+        <Route path='/devices/:id' component={DevicePanel} />
       </Switch>
     )
   }

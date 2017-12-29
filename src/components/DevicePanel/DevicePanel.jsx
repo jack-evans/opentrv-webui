@@ -10,7 +10,7 @@ class AnotherDisplay extends Component {
    * render method
    *
    * renders Another display panel component of the UI experience
-   * @returns {HTML} - AnotherDisplay component
+   * @returns {HTML} - DevicePanel component
    */
   render () {
     return (

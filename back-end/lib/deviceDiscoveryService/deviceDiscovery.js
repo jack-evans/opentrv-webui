@@ -124,7 +124,32 @@ const _discoverAllDevices = () => {
   logger.info('Entered into the _discoverAllDevices internal function')
 
   // TODO: Remove and replace with request to opentrv server to get information
-  return Promise.resolve([{}, {}, {}, {}, {}])
+  return Promise.resolve([{
+    id: '1230',
+    name: 'Device 1',
+    active: true,
+    currentTemperature: 26.2
+  }, {
+    id: '1231',
+    name: 'Device 2',
+    active: false,
+    currentTemperature: 23.5
+  }, {
+    id: '1232',
+    name: 'Device 3',
+    active: true,
+    currentTemperature: 21.9
+  }, {
+    id: '1233',
+    name: 'Device 4',
+    active: true,
+    currentTemperature: 25.2
+  }, {
+    id: '1234',
+    name: 'Device 5',
+    active: true,
+    currentTemperature: 25.2
+  }])
 }
 
 module.exports = {
