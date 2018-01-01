@@ -22,7 +22,10 @@ const DeviceTile = ({ id, name, temp, active }) => {
         <div className='DeviceTile__icon-container'>
           <div className='DeviceTile__icon-circle'>
             <div>
-              <Icon name='devices' />
+              <Icon
+                name='devices'
+                description='Devices icon'
+              />
             </div>
           </div>
         </div>

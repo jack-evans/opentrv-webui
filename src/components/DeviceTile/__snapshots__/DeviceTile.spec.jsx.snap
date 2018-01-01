@@ -88,7 +88,7 @@ ShallowWrapper {
             >
               <div>
                 <Icon
-                  description="Provide a description that will be used as the title"
+                  description="Devices icon"
                   fillRule="evenodd"
                   name="devices"
                   role="img"
@@ -264,7 +264,7 @@ ShallowWrapper {
               >
                 <div>
                   <Icon
-                    description="Provide a description that will be used as the title"
+                    description="Devices icon"
                     fillRule="evenodd"
                     name="devices"
                     role="img"
@@ -315,7 +315,7 @@ ShallowWrapper {
               >
                 <div>
                   <Icon
-                    description="Provide a description that will be used as the title"
+                    description="Devices icon"
                     fillRule="evenodd"
                     name="devices"
                     role="img"
@@ -332,7 +332,7 @@ ShallowWrapper {
               "props": Object {
                 "children": <div>
                   <Icon
-                    description="Provide a description that will be used as the title"
+                    description="Devices icon"
                     fillRule="evenodd"
                     name="devices"
                     role="img"
@@ -347,7 +347,7 @@ ShallowWrapper {
                 "nodeType": "host",
                 "props": Object {
                   "children": <Icon
-                    description="Provide a description that will be used as the title"
+                    description="Devices icon"
                     fillRule="evenodd"
                     name="devices"
                     role="img"
@@ -359,7 +359,7 @@ ShallowWrapper {
                   "key": undefined,
                   "nodeType": "function",
                   "props": Object {
-                    "description": "Provide a description that will be used as the title",
+                    "description": "Devices icon",
                     "fillRule": "evenodd",
                     "name": "devices",
                     "role": "img",
@@ -557,7 +557,7 @@ ShallowWrapper {
               >
                 <div>
                   <Icon
-                    description="Provide a description that will be used as the title"
+                    description="Devices icon"
                     fillRule="evenodd"
                     name="devices"
                     role="img"
@@ -733,7 +733,7 @@ ShallowWrapper {
                 >
                   <div>
                     <Icon
-                      description="Provide a description that will be used as the title"
+                      description="Devices icon"
                       fillRule="evenodd"
                       name="devices"
                       role="img"
@@ -784,7 +784,7 @@ ShallowWrapper {
                 >
                   <div>
                     <Icon
-                      description="Provide a description that will be used as the title"
+                      description="Devices icon"
                       fillRule="evenodd"
                       name="devices"
                       role="img"
@@ -801,7 +801,7 @@ ShallowWrapper {
                 "props": Object {
                   "children": <div>
                     <Icon
-                      description="Provide a description that will be used as the title"
+                      description="Devices icon"
                       fillRule="evenodd"
                       name="devices"
                       role="img"
@@ -816,7 +816,7 @@ ShallowWrapper {
                   "nodeType": "host",
                   "props": Object {
                     "children": <Icon
-                      description="Provide a description that will be used as the title"
+                      description="Devices icon"
                       fillRule="evenodd"
                       name="devices"
                       role="img"
@@ -828,7 +828,7 @@ ShallowWrapper {
                     "key": undefined,
                     "nodeType": "function",
                     "props": Object {
-                      "description": "Provide a description that will be used as the title",
+                      "description": "Devices icon",
                       "fillRule": "evenodd",
                       "name": "devices",
                       "role": "img",
