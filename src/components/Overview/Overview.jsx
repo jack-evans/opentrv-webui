@@ -4,21 +4,28 @@ import { Button, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
 import 'isomorphic-fetch'
 
-// const returnedDevices = []
-
 class Overview extends Component {
   constructor (props) {
     super(props)
-    let devices = Overview.retrieveDevices()
-    this.search = ''
     this.state = {
-      devices: devices,
-      visibleDevices: devices
+      devices: [],
+      visibleDevices: []
     }
+    this.search = ''
 
     this.discoverDevicesButtonOnClick = this.discoverDevicesButtonOnClickHandler.bind(this)
     this.searchOnChange = this.searchOnChangeHandler.bind(this)
     this.searchDevices = this.filterDevices.bind(this)
+  }
+
+  componentWillMount () {
+    return Overview.retrieveDevices()
+      .then(devices => {
+        this.setState({
+          devices: devices,
+          visibleDevices: devices
+        })
+      })
   }
 
   searchOnChangeHandler (event) {
@@ -37,23 +44,21 @@ class Overview extends Component {
 
   async discoverDevicesButtonOnClickHandler () {
     let retrievedDevices = await Overview.discoverDevices()
-    console.log(retrievedDevices)
     this.setState({
       devices: retrievedDevices,
       visibleDevices: retrievedDevices
     })
   }
 
-  static discoverDevices () {
-    // eslint-disable-next-line no-undef
-    return fetch('/api/v1/devices', {
-      method: 'GET',
-      json: true
-    }).then(results => results.json())
+  static retrieveDevices () {
+    return Overview.discoverDevices()
   }
 
-  static retrieveDevices () {
-    return []
+  static discoverDevices () {
+    return window.fetch('/api/v1/devices', {
+      method: 'GET',
+      json: true
+    }).then(response => response.json())
   }
 
   /**
@@ -77,7 +82,7 @@ class Overview extends Component {
             <Button
               className='Overview__discover_button'
               icon='add--outline'
-              iconDescription='Add devices'
+              iconDescription='Find devices that are on your network'
               onClick={this.discoverDevicesButtonOnClick}
             >
               Discover my devices
