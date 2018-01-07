@@ -6,6 +6,8 @@ const Promise = require('bluebird')
 
 const logger = bunyan.createLogger({name: 'device-discovery-service', serializers: bunyan.stdSerializers})
 
+let firstTimeCalled = true
+
 /**
  * POST /devices
  *
@@ -85,7 +87,8 @@ const _saveDeviceBasicInformation = (database, devices) => {
 const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
-  module.exports.internal._discoverAllDevices()
+  let deviceDatabase = req.deviceDb
+  module.exports.internal._discoverAllDevices(deviceDatabase)
     .then((devices) => {
       logger.info('Successfully retrieved device(s) from the server', devices)
       res.status(200).send(devices)
@@ -117,39 +120,81 @@ const discoverAllDevicesRequestHandler = (req, res) => {
  * _discoverAllDevices function
  *
  * Makes a call to the opentrv server that is connected to all the devices and retrieves the information of the devices
+ * @param {Object} database - the device database
  * @returns {Promise} with an array of JSON objects on the action of retrieving the device information from the opentrv server
  * @private
  */
-const _discoverAllDevices = () => {
+const _discoverAllDevices = (database) => {
   logger.info('Entered into the _discoverAllDevices internal function')
 
-  // TODO: Remove and replace with request to opentrv server to get information
-  return Promise.resolve([{
-    id: '1230',
-    name: 'Device 1',
-    active: true,
-    currentTemperature: 26.2
-  }, {
-    id: '1231',
-    name: 'Device 2',
-    active: false,
-    currentTemperature: 23.5
-  }, {
-    id: '1232',
-    name: 'Device 3',
-    active: true,
-    currentTemperature: 21.9
-  }, {
-    id: '1233',
-    name: 'Device 4',
-    active: true,
-    currentTemperature: 25.2
-  }, {
-    id: '1234',
-    name: 'Device 5',
-    active: true,
-    currentTemperature: 25.2
-  }])
+  return database.getAllDevices()
+    .then((devices) => {
+      const numOfDevices = devices.length
+
+      if (firstTimeCalled && numOfDevices < 1) {
+        firstTimeCalled = false
+        return Promise.resolve([])
+      } else if (numOfDevices > 0) {
+        return devices
+      } else {
+        // Gives number of devices between 0 and 10
+        let randomNumberOfDevices = Math.round((Math.random() * 10))
+        let arrayOfDevices = []
+
+        for (let i = 0; i < randomNumberOfDevices; i++) {
+          const deviceName = `Device ${i + 1}`
+
+          // Defines currentTemperature to be between 0 to 35 degrees celcius
+          const deviceCurrentTemperature = _roundToOneDP(Math.random() * 35)
+          const deviceSerialId = _generateSerialId()
+          // If round produces 0 then activity is false and if 1 then activity is true
+          const deviceActivity = !!Math.round(Math.random())
+
+          arrayOfDevices.push({
+            name: deviceName,
+            currentTemperature: deviceCurrentTemperature,
+            serialId: deviceSerialId,
+            active: deviceActivity
+          })
+        }
+        return Promise.resolve(arrayOfDevices)
+      }
+    })
+}
+
+/**
+ * _generateSerialId method
+ *
+ * Generates a 16 character alphanumeric unique string for the device
+ * @returns {string} - "OTRV-" plus 16 alphanumeric values
+ * @private
+ */
+const _generateSerialId = () => {
+  let serialId = 'OTRV-'
+  const possibleValues = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+  for (let i = 0; i < 10; i++) {
+    serialId += possibleValues.charAt(Math.floor(Math.random() * possibleValues.length))
+  }
+  return serialId
+}
+
+/**
+ * _roundToOneDP method
+ *
+ * Rounds the value passed in to 1 decimal place
+ * @param number
+ * @returns {number}
+ * @private
+ */
+const _roundToOneDP = (number) => {
+  return Math.round(number * 10) / 10
+}
+
+/* TEST HELPER FUNCTIONS */
+
+const _setFirstTimeCalled = (value) => {
+  firstTimeCalled = value
 }
 
 module.exports = {
@@ -159,5 +204,8 @@ module.exports = {
 
 module.exports.internal = {
   _saveDeviceBasicInformation: _saveDeviceBasicInformation,
-  _discoverAllDevices: _discoverAllDevices
+  _discoverAllDevices: _discoverAllDevices,
+  _generateSerialId: _generateSerialId,
+  _roundToOneDP: _roundToOneDP,
+  _setFirstTimeCalled: _setFirstTimeCalled
 }

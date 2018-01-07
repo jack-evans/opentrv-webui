@@ -454,28 +454,131 @@ describe('deviceDiscovery.js', () => {
     })
 
     describe('_discoverAllDevices', () => {
-      it('returns a resolved promise', () => {
-        return deviceDiscovery.internal._discoverAllDevices()
+      it('calls the getAllDevices database function', () => {
+        let fakeDB = {
+          getAllDevices: () => (Promise.resolve([]))
+        }
+
+        let getAllDevicesSpy = jest.spyOn(fakeDB, 'getAllDevices')
+
+        deviceDiscovery.internal._setFirstTimeCalled(true)
+        return deviceDiscovery.internal._discoverAllDevices(fakeDB)
           .then(() => {
-            expect(1).toEqual(1)
+            expect(getAllDevicesSpy).toHaveBeenCalledTimes(1)
+            getAllDevicesSpy.mockReset()
+            getAllDevicesSpy.mockRestore()
           })
       })
 
-      it('returns an array in the resolved promise', () => {
-        return deviceDiscovery.internal._discoverAllDevices()
-          .then(result => {
-            expect(result).toBeType('array')
+      describe('when getAllDevices returns an empty array', () => {
+        describe('and firstTimeCalled is true', () => {
+          beforeEach(() => {
+            deviceDiscovery.internal._setFirstTimeCalled(true)
           })
-      })
 
-      it('returns an array containing objects in the resolved promise', () => {
-        expect.assertions(5)
-        return deviceDiscovery.internal._discoverAllDevices()
-          .then(result => {
-            for (let i = 0; i < result.length; i++) {
-              expect(result[i]).toBeType('object')
+          it('returns a resolved promise with an empty array in the body', () => {
+            let fakeDB = {
+              getAllDevices: () => (Promise.resolve([]))
             }
+
+            return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+              .then(result => {
+                expect(result).toBeType('array')
+              })
           })
+        })
+
+        describe('and firstTimeCalled is false', () => {
+          let mathRandomSpy
+
+          beforeEach(() => {
+            deviceDiscovery.internal._setFirstTimeCalled(false)
+            mathRandomSpy = jest.spyOn(Math, 'random')
+          })
+
+          afterEach(() => {
+            mathRandomSpy.mockReset()
+          })
+
+          it('returns a random number of devices', () => {
+            mathRandomSpy.mockReturnValue(1)
+            let fakeDB = {
+              getAllDevices: () => (Promise.resolve([]))
+            }
+
+            return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+              .then(result => {
+                expect(result.length).toEqual(10)
+              })
+          })
+        })
+      })
+
+      describe('when getAllDevices returns an array of devices', () => {
+        it('returns a resolved promise with the array of devices in the body', () => {
+          let arrayOfDevices = [{
+            id: '1',
+            temp: 23
+          }, {
+            id: '2',
+            temp: 26
+          }, {
+            id: '3',
+            temp: 19
+          }]
+
+          let fakeDB = {
+            getAllDevices: () => (Promise.resolve(arrayOfDevices))
+          }
+
+          return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+            .then(result => {
+              expect(result.length).toEqual(arrayOfDevices.length)
+            })
+        })
+      })
+    })
+
+    describe('_generateSerialId', () => {
+      let mathRandomSpy
+
+      beforeEach(() => {
+        mathRandomSpy = jest.spyOn(Math, 'random')
+      })
+
+      afterEach(() => {
+        mathRandomSpy.mockReset()
+      })
+
+      afterAll(() => {
+        mathRandomSpy.mockRestore()
+      })
+
+      it('returns a string', () => {
+        const serialId = deviceDiscovery.internal._generateSerialId()
+        expect(serialId).toBeType('string')
+      })
+
+      it('returns a string 15 characters long', () => {
+        const serialId = deviceDiscovery.internal._generateSerialId()
+        expect(serialId.length).toEqual(15)
+      })
+
+      it('returns a string with OTRV- at the start', () => {
+        const serialId = deviceDiscovery.internal._generateSerialId()
+        expect(serialId.startsWith('OTRV-')).toBe(true)
+      })
+
+      it('calls math.random 10 times', () => {
+        deviceDiscovery.internal._generateSerialId()
+        expect(mathRandomSpy).toHaveBeenCalledTimes(10)
+      })
+    })
+
+    describe('_roundToOneDP', () => {
+      it('rounds the number passed in to 1 decimal place', () => {
+        const number = deviceDiscovery.internal._roundToOneDP(12.3456789)
+        expect(number).toEqual(12.3)
       })
     })
   })
