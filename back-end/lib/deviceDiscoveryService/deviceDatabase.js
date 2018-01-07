@@ -85,11 +85,17 @@ DeviceDatabase.prototype.getDeviceInformation = function (deviceDocumentId) {
       return Promise.reject(error)
     })
 }
-/*
+
+/**
+ * getAllDevices method
+ *
+ * Retrieves all device documents stored in the device database
+ * @returns {Promise} on the action of retrieving a document from the device database
+ */
 DeviceDatabase.prototype.getAllDevices = function () {
   let self = this
 
-  self.initPromise
+  return self.initPromise
     .then(function () {
       return cloudantRequestHelper.retrieveAllDocuments(self.database, databaseName)
     })
@@ -99,6 +105,7 @@ DeviceDatabase.prototype.getAllDevices = function () {
     })
 }
 
+/*
 DeviceDatabase.prototype.updateDevice = function (deviceDocument) {
   let self = this
 
