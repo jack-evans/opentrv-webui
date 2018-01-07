@@ -1,11 +1,11 @@
 import React from 'react'
-import AnotherDisplay from './DevicePanel'
+import DevicePanel from './DevicePanel'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-describe('AnotherDisplay.jsx', () => {
+describe('DevicePanel.jsx', () => {
   it('renders without crashing', () => {
     const match = {
       params: {
@@ -13,6 +13,6 @@ describe('AnotherDisplay.jsx', () => {
       }
     }
 
-    expect(shallow(<AnotherDisplay match={match} />)).toMatchSnapshot()
+    expect(shallow(<DevicePanel match={match} />)).toMatchSnapshot()
   })
 })

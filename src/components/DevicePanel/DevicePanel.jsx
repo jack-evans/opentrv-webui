@@ -4,7 +4,26 @@ import { Breadcrumb, BreadcrumbItem, DetailPageHeader, Icon } from 'carbon-compo
 class DevicePanel extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      statusColor: '#5aa700',
+      statusText: 'Active'
+    }
     this.deviceId = props.match.params.id
+  }
+
+  componentDidMount () {
+    return window.fetch(`/api/v1/devices/${this.deviceId}`, {
+      method: 'GET',
+      json: 'true'
+    }).then(device => {
+      this.deviceName = device.name
+      if (!device.active) {
+        this.setState({
+          statusColor: '#e71d32',
+          statusText: 'Idle'
+        })
+      }
+    })
   }
 
   /**
@@ -16,26 +35,19 @@ class DevicePanel extends Component {
   render () {
     return (
       <div>
-        <DetailPageHeader title='Detail Page Header'>
+        <DetailPageHeader
+          title={this.deviceName}
+          statusColor={this.state.statusColor}
+          statusText={this.state.statusText}>
           <Icon name='devices' />
           <Breadcrumb>
-            <BreadcrumbItem href='www.google.com'>
-              Breadcrumb 1
+            <BreadcrumbItem href='/'>
+              Device Overview
             </BreadcrumbItem>
           </Breadcrumb>
         </DetailPageHeader>
       </div>
     )
-    /* return (
-      <div className='DevicePanel'>
-        <div className='DevicePanel__header-container'>
-          <a className='DevicePanel__header-back-button' href='/'>
-            <Icon name='arrow--left' />
-            <h3>Device Overview</h3>
-          </a>
-        </div>
-      </div>
-    ) */
   }
 }
 
