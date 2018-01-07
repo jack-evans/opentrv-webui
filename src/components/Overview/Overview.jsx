@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
-import { Button, Search } from 'carbon-components-react'
+import { Button, Loading, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
 import 'isomorphic-fetch'
+
+const Promise = require('bluebird')
 
 class Overview extends Component {
   constructor (props) {
     super(props)
     this.state = {
       devices: [],
-      visibleDevices: []
+      visibleDevices: [],
+      isLoading: true
     }
     this.search = ''
 
@@ -18,12 +21,18 @@ class Overview extends Component {
     this.searchDevices = this.filterDevices.bind(this)
   }
 
-  componentWillMount () {
-    return Overview.retrieveDevices()
+  componentDidMount () {
+    const promise = Promise.resolve()
+
+    promise.delay(2000)
+      .then(() => {
+        return Overview.retrieveDevices()
+      })
       .then(devices => {
         this.setState({
           devices: devices,
-          visibleDevices: devices
+          visibleDevices: devices,
+          isLoading: false
         })
       })
   }
@@ -71,7 +80,9 @@ class Overview extends Component {
     let overviewContent
     let overviewContentClass = 'Overview__content'
 
-    if (this.state.devices.length < 1) {
+    if (this.state.isLoading) {
+      overviewContent = <Loading withOverlay />
+    } else if (this.state.devices.length < 1) {
       overviewContentClass += ' Overview__content-empty'
       overviewContent = (
         <div>
