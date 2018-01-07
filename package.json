@@ -13,6 +13,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "bunyan": "^1.8.12",
+    "carbon-addons-bluemix": "^0.2.0",
     "carbon-components": "^8.1.13",
     "carbon-components-react": "^5.0.11",
     "carbon-icons": "^6.1.0",
