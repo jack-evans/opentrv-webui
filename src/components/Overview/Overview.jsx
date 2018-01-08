@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Loading, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
-import 'isomorphic-fetch'
+import axios from 'axios'
 
 const Promise = require('bluebird')
 
@@ -53,6 +53,7 @@ class Overview extends Component {
 
   async discoverDevicesButtonOnClickHandler () {
     let retrievedDevices = await Overview.discoverDevices()
+    await Overview.registerDevices(retrievedDevices)
     this.setState({
       devices: retrievedDevices,
       visibleDevices: retrievedDevices
@@ -64,10 +65,21 @@ class Overview extends Component {
   }
 
   static discoverDevices () {
-    return window.fetch('/api/v1/devices', {
+    return axios({
+      url: '/api/v1/devices',
       method: 'GET',
       json: true
-    }).then(response => response.json())
+    }).then(response => response.data)
+  }
+
+  static registerDevices (devices) {
+    return axios({
+      url: '/api/v1/devices',
+      method: 'POST',
+      data: {
+        devices: devices
+      }
+    })
   }
 
   /**
@@ -105,7 +117,7 @@ class Overview extends Component {
       // This is where the tiles for each device are build up
       overviewContent = this.state.visibleDevices.map(device => {
         return (
-          <DeviceTile key={device.id} id={device.id} name={device.name} temp={device.currentTemperature} active={device.active} />
+          <DeviceTile key={device.doc.id} id={device.doc.id} name={device.doc.name} temp={device.doc.currentTemperature} active={device.doc.active} />
         )
       })
     }

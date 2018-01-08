@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Breadcrumb, BreadcrumbItem, DetailPageHeader, Icon } from 'carbon-components-react'
+import axios from 'axios'
 
 class DevicePanel extends Component {
   constructor (props) {
@@ -12,7 +13,8 @@ class DevicePanel extends Component {
   }
 
   componentDidMount () {
-    return window.fetch(`/api/v1/devices/${this.deviceId}`, {
+    return axios({
+      url: `/api/v1/devices/${this.deviceId}`,
       method: 'GET',
       json: 'true'
     }).then(device => {
