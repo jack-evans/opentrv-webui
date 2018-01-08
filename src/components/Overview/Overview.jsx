@@ -93,7 +93,8 @@ class Overview extends Component {
     let overviewContentClass = 'Overview__content'
 
     if (this.state.isLoading) {
-      overviewContent = <Loading withOverlay />
+      overviewContentClass += ' Overview__content-loading'
+      overviewContent = <Loading small withOverlay={false} />
     } else if (this.state.devices.length < 1) {
       overviewContentClass += ' Overview__content-empty'
       overviewContent = (
