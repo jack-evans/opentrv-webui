@@ -9,12 +9,12 @@ const DeviceDatabase = require('./lib/deviceDiscoveryService/deviceDatabase')
 const deviceDb = new DeviceDatabase()
 deviceDb.initialise()
 
+app.use(bodyParser.json())
+
 app.use((req, res, next) => {
   req.deviceDb = deviceDb
   next()
 })
-
-app.use(bodyParser.json())
 
 const router = require('./router.js')
 app.use('/api/v1', router)
