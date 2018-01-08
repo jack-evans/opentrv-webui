@@ -20,7 +20,7 @@ const createDeviceRequestHandler = (req, res) => {
 
   let deviceDatabase = req.deviceDb
   const devices = req.body.devices
-  module.exports.internal._saveDeviceBasicInformation(deviceDatabase, devices)
+  module.exports.internal._createDevices(deviceDatabase, devices)
     .then(() => {
       logger.info('Successfully created device(s) in the Cloudant instance')
       res.status(201).end()
@@ -49,7 +49,7 @@ const createDeviceRequestHandler = (req, res) => {
 }
 
 /**
- * _saveDeviceBasicInformation function
+ * _createDevices function
  *
  * Saves the basic information of the devices to the IBM Cloudant database instance
  * @param {Object} database - the device database
@@ -57,8 +57,8 @@ const createDeviceRequestHandler = (req, res) => {
  * @returns {Promise} on the action of saving device information to cloudant
  * @private
  */
-const _saveDeviceBasicInformation = (database, devices) => {
-  logger.info('Entered into the _saveDeviceBasicInformation internal function with', devices)
+const _createDevices = (database, devices) => {
+  logger.info('Entered into the _createDevices internal function with', devices)
 
   if (!devices) {
     const error = {
@@ -89,7 +89,7 @@ const discoverAllDevicesRequestHandler = (req, res) => {
 
   let deviceDatabase = req.deviceDb
   module.exports.internal._discoverAllDevices(deviceDatabase)
-    .then((devices) => {
+    .then(devices => {
       logger.info('Successfully retrieved device(s) from the server', devices)
       res.status(200).send(devices)
     })
@@ -162,6 +162,60 @@ const _discoverAllDevices = (database) => {
     })
 }
 
+const getDeviceRequestHandler = (req, res) => {
+  logger.info('Entered into the getDeviceRequestHandler function')
+
+  let deviceId = req.params.id
+  let database = req.deviceDb
+  module.exports.internal._getDevice(database, deviceId)
+    .then(device => {
+      logger.info('Successfully retrieved device from the cloudant database', device)
+      res.status(200).send(device)
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the getDeviceRequestHandler, reason: ', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the getDeviceRequestHandler, reason: ', error)
+          res.status(404).send(error)
+          break
+        }
+
+        default: {
+          logger.error('Encountered an unexpected error in the getDeviceRequestHandler, reason: ', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
+}
+
+const _getDevice = (database, deviceId) => {
+  logger.info('Entered into the _getDevice internal function with device id:', deviceId)
+  return database.getDeviceInformation(deviceId)
+}
+
+const updateDeviceRequestHandler = (req, res) => {
+
+}
+
+const _updateDevice = (database, device) => {
+
+}
+
+const deleteDeviceRequestHandler = (req, res) => {
+
+}
+
+const _deleteDevice = (req, res) => {
+
+}
+
 /**
  * _generateSerialId method
  *
@@ -199,12 +253,18 @@ const _setFirstTimeCalled = (value) => {
 
 module.exports = {
   createDeviceRequestHandler: createDeviceRequestHandler,
-  discoverAllDevicesRequestHandler: discoverAllDevicesRequestHandler
+  discoverAllDevicesRequestHandler: discoverAllDevicesRequestHandler,
+  getDeviceRequestHandler: getDeviceRequestHandler,
+  updateDeviceRequestHandler: updateDeviceRequestHandler,
+  deleteDeviceRequestHandler: deleteDeviceRequestHandler
 }
 
 module.exports.internal = {
-  _saveDeviceBasicInformation: _saveDeviceBasicInformation,
+  _createDevices: _createDevices,
   _discoverAllDevices: _discoverAllDevices,
+  _getDevice: _getDevice,
+  _updateDevice: _updateDevice,
+  _deleteDevice: _deleteDevice,
   _generateSerialId: _generateSerialId,
   _roundToOneDP: _roundToOneDP,
   _setFirstTimeCalled: _setFirstTimeCalled

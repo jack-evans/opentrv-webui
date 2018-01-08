@@ -214,6 +214,74 @@ describe('cloudantRequestHelper.js', () => {
     })
   })
 
+  describe('createIndex', () => {
+    let fakeCloudantInstance
+    const goodDatabaseName = 'gooddb'
+    const badDatabaseName = 'baddb'
+
+    let fakeDdoc = {
+      name: 'first-name',
+      type: 'json',
+      index: {
+        fields: ['name']
+      }
+    }
+
+    beforeEach(() => {
+      process.env = {
+        CDB_USER: 'admin',
+        CDB_PASS: 'pass'
+      }
+
+      fakeCloudantInstance = cloudantRequestHelper.createCloudantConnection()
+
+      fakeCloudantInstance.db = {
+        use: (databaseName) => {
+          if (databaseName === 'gooddb') {
+            return {
+              name: databaseName,
+              index: (document, callback) => {
+                callback(null, document)
+              }
+            }
+          }
+
+          return {
+            name: databaseName,
+            index: (document, callback) => {
+              const error = new Error('Bang in index document function')
+              callback(error)
+            }
+          }
+        }
+      }
+    })
+
+    afterEach(() => {
+      process.env = {}
+    })
+
+    describe('when it successfully creates a design document in the database', () => {
+      it('returns a resolved promise with the document in the body', () => {
+        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
+        return cloudantRequestHelper.createIndex(database, goodDatabaseName, fakeDdoc)
+          .then(document => {
+            expect(document).toEqual(fakeDdoc)
+          })
+      })
+    })
+
+    describe('when it fails to create a design document in the database', () => {
+      it('returns a rejected promise with the error in the body', () => {
+        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        return cloudantRequestHelper.createIndex(database, badDatabaseName, fakeDdoc)
+          .catch(error => {
+            expect(error.message).toEqual('Bang in index document function')
+          })
+      })
+    })
+  })
+
   describe('createDocument', () => {
     let fakeCloudantInstance
     const goodDatabaseName = 'gooddb'
@@ -391,7 +459,7 @@ describe('cloudantRequestHelper.js', () => {
           if (databaseName === 'gooddb') {
             return {
               name: databaseName,
-              list: (callback) => {
+              list: (params, callback) => {
                 const documentArray = {
                   rows: [{
                     id: '4321',
@@ -418,7 +486,7 @@ describe('cloudantRequestHelper.js', () => {
 
           return {
             name: databaseName,
-            list: (callback) => {
+            list: (params, callback) => {
               const error = new Error('Bang in list documents function')
               callback(error)
             }

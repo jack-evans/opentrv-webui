@@ -20,7 +20,7 @@ describe('deviceDiscovery.js', () => {
   describe('createDeviceRequestHandler', () => {
     let req
     let res
-    let saveDeviceBasicInformationSpy
+    let createDevicesSpy
 
     beforeEach(() => {
       req = httpMocks.createRequest({
@@ -34,23 +34,23 @@ describe('deviceDiscovery.js', () => {
         }
       })
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
-      saveDeviceBasicInformationSpy = jest.spyOn(deviceDiscovery.internal, '_saveDeviceBasicInformation')
+      createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices')
     })
 
     afterEach(() => {
-      saveDeviceBasicInformationSpy.mockReset()
+      createDevicesSpy.mockReset()
     })
 
     afterAll(() => {
-      saveDeviceBasicInformationSpy.mockRestore()
+      createDevicesSpy.mockRestore()
     })
 
     it('calls the saveDeviceBasicInformation internal function', (done) => {
-      saveDeviceBasicInformationSpy.mockReturnValue(Promise.resolve())
+      createDevicesSpy.mockReturnValue(Promise.resolve())
 
       res.on('end', () => {
         try {
-          expect(saveDeviceBasicInformationSpy).toHaveBeenCalledTimes(1)
+          expect(createDevicesSpy).toHaveBeenCalledTimes(1)
           done()
         } catch (e) {
           done(e)
@@ -62,7 +62,7 @@ describe('deviceDiscovery.js', () => {
 
     describe('when the saveDeviceBasicInformation internal function succeeds', () => {
       beforeEach(() => {
-        saveDeviceBasicInformationSpy.mockReturnValue(Promise.resolve())
+        createDevicesSpy.mockReturnValue(Promise.resolve())
       })
 
       it('returns 201', (done) => {
@@ -86,7 +86,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 400,
             message: 'bad request'
           }
-          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+          createDevicesSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -105,7 +105,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 400,
             message: 'bad request'
           }
-          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+          createDevicesSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -126,7 +126,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 409,
             message: 'conflict'
           }
-          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+          createDevicesSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -145,7 +145,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 409,
             message: 'conflict'
           }
-          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+          createDevicesSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -166,7 +166,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 500,
             message: 'internal server error'
           }
-          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+          createDevicesSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -185,7 +185,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 500,
             message: 'internal server error'
           }
-          saveDeviceBasicInformationSpy.mockReturnValue(Promise.reject(error))
+          createDevicesSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -409,12 +409,82 @@ describe('deviceDiscovery.js', () => {
     })
   })
 
+  describe('getDevicesRequestHandler', () => {
+    let getDeviceSpy
+    let req
+    let res
+
+    beforeEach(() => {
+      req = httpMocks.createRequest({
+        method: 'GET',
+        path: '/devices'
+      })
+      res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
+      getDeviceSpy = jest.spyOn(deviceDiscovery.internal, '_getDevice')
+    })
+
+    afterEach(() => {
+      getDeviceSpy.mockReset()
+    })
+
+    afterAll(() => {
+      getDeviceSpy.mockRestore()
+    })
+
+    it('calls the getDevice internal function', (done) => {
+      getDeviceSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(getDeviceSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      deviceDiscovery.getDeviceRequestHandler(req, res)
+    })
+
+    describe('when the getDevice internal function succeeds', () => {
+      it('returns 200', (done) => {
+        getDeviceSpy.mockReturnValue(Promise.resolve())
+
+        res.on('end', () => {
+          try {
+            expect(getDeviceSpy).toHaveBeenCalledTimes(1)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        deviceDiscovery.getDeviceRequestHandler(req, res)
+      })
+
+      it('returns an object', (done) => {
+        getDeviceSpy.mockReturnValue(Promise.resolve({}))
+
+        res.on('end', () => {
+          try {
+            expect(res._getData()).toBeType('object')
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        deviceDiscovery.getDeviceRequestHandler(req, res)
+      })
+    })
+  })
+
   describe('internal functions', () => {
-    describe('_saveDeviceBasicInformation', () => {
+    describe('_createDevices', () => {
       describe('when the devices array is undefined', () => {
         it('returns a 400 error', () => {
           expect.assertions(1)
-          return deviceDiscovery.internal._saveDeviceBasicInformation()
+          return deviceDiscovery.internal._createDevices()
             .catch(error => {
               expect(error.statusCode).toEqual(400)
             })
@@ -423,7 +493,7 @@ describe('deviceDiscovery.js', () => {
 
       describe('when the devices array is empty', () => {
         it('returns a resolved promise', () => {
-          return expect(deviceDiscovery.internal._saveDeviceBasicInformation(null, []))
+          return expect(deviceDiscovery.internal._createDevices(null, []))
             .resolves.toEqual([])
         })
       })
@@ -445,7 +515,7 @@ describe('deviceDiscovery.js', () => {
 
         it('calls the createDevice method in the database for the number of devices', () => {
           const devices = [{}, {}, {}, {}]
-          return deviceDiscovery.internal._saveDeviceBasicInformation(database, devices)
+          return deviceDiscovery.internal._createDevices(database, devices)
             .then(() => {
               expect(createDeviceSpy).toHaveBeenCalledTimes(devices.length)
             })

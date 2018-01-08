@@ -80,6 +80,28 @@ module.exports.useDatabase = (cloudantInstance, databaseName) => {
 }
 
 /**
+ * createIndex function
+ *
+ * Creates a design document that can be used to filter through a database
+ * @param database - the cloudant database to insert the document into
+ * @param databaseName - the name of the database being interacted with
+ * @param ddoc - design document
+ * @returns {*} Promise on the action of creating a design document
+ */
+module.exports.createIndex = (database, databaseName, ddoc) => {
+  return new Promise((resolve, reject) => {
+    database.index(ddoc, (err, body) => {
+      if (err) {
+        logger.info(`Unable to create design document in the '${databaseName}' database. Error received from cloudant: `, err)
+        reject(err)
+      } else {
+        resolve(body)
+      }
+    })
+  })
+}
+
+/**
  * createDocument function
  *
  * Inserts a document into the database specified
@@ -136,7 +158,7 @@ module.exports.retrieveDocument = (database, databaseName, documentId) => {
  */
 module.exports.retrieveAllDocuments = (database, databaseName) => {
   return new Promise((resolve, reject) => {
-    database.list((err, body) => {
+    database.list({include_docs: true}, (err, body) => {
       if (err) {
         logger.info(`Unable to retrieve documents from the '${databaseName}' database. Error received from cloudant: `, err)
         reject(err)
