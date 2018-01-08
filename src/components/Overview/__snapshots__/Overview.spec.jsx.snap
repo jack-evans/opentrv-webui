@@ -35,12 +35,12 @@ ShallowWrapper {
           </div>
         </div>,
         <div
-          className="Overview__content"
+          className="Overview__content Overview__content-loading"
         >
           <Loading
             active={true}
-            small={false}
-            withOverlay={true}
+            small={true}
+            withOverlay={false}
           />
         </div>,
       ],
@@ -120,10 +120,10 @@ ShallowWrapper {
         "props": Object {
           "children": <Loading
             active={true}
-            small={false}
-            withOverlay={true}
+            small={true}
+            withOverlay={false}
           />,
-          "className": "Overview__content",
+          "className": "Overview__content Overview__content-loading",
         },
         "ref": null,
         "rendered": Object {
@@ -132,8 +132,8 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "active": true,
-            "small": false,
-            "withOverlay": true,
+            "small": true,
+            "withOverlay": false,
           },
           "ref": null,
           "rendered": null,
@@ -168,12 +168,12 @@ ShallowWrapper {
             </div>
           </div>,
           <div
-            className="Overview__content"
+            className="Overview__content Overview__content-loading"
           >
             <Loading
               active={true}
-              small={false}
-              withOverlay={true}
+              small={true}
+              withOverlay={false}
             />
           </div>,
         ],
@@ -253,10 +253,10 @@ ShallowWrapper {
           "props": Object {
             "children": <Loading
               active={true}
-              small={false}
-              withOverlay={true}
+              small={true}
+              withOverlay={false}
             />,
-            "className": "Overview__content",
+            "className": "Overview__content Overview__content-loading",
           },
           "ref": null,
           "rendered": Object {
@@ -265,8 +265,8 @@ ShallowWrapper {
             "nodeType": "class",
             "props": Object {
               "active": true,
-              "small": false,
-              "withOverlay": true,
+              "small": true,
+              "withOverlay": false,
             },
             "ref": null,
             "rendered": null,
