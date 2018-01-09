@@ -414,7 +414,7 @@ describe('deviceDiscovery.js', () => {
     let req
     let res
     let id = '1234'
-    
+
     const fakeDb = {}
 
     beforeEach(() => {
@@ -449,10 +449,10 @@ describe('deviceDiscovery.js', () => {
 
       deviceDiscovery.getDeviceRequestHandler(req, res)
     })
-    
-    it('calls the getDevice internal function with an id', () => {
+
+    it('calls the getDevice internal function with an id', (done) => {
       getDeviceSpy.mockReturnValue(Promise.resolve())
-      
+
       res.on('end', () => {
         try {
           expect(getDeviceSpy).toHaveBeenCalledWith(fakeDb, id)
