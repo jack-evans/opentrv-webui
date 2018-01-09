@@ -420,7 +420,10 @@ describe('deviceDiscovery.js', () => {
     beforeEach(() => {
       req = httpMocks.createRequest({
         method: 'GET',
-        path: `/devices/${id}`
+        path: `/devices/${id}`,
+        params: {
+          id: id
+        }
       })
       req.deviceDb = fakeDb
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
