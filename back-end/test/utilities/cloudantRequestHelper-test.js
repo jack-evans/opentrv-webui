@@ -167,6 +167,7 @@ describe('cloudantRequestHelper.js', () => {
       })
 
       it('returns a rejected promise', () => {
+        expect.assertions(1)
         return cloudantRequestHelper.createDatabase(fakeCloudantInstance, fakeDatabaseName)
           .catch(error => {
             expect(error.message).toEqual(`Bang when creating ${fakeDatabaseName}`)
@@ -273,6 +274,7 @@ describe('cloudantRequestHelper.js', () => {
 
     describe('when it fails to create a design document in the database', () => {
       it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
         return cloudantRequestHelper.createIndex(database, badDatabaseName, fakeDdoc)
           .catch(error => {
@@ -343,6 +345,7 @@ describe('cloudantRequestHelper.js', () => {
 
     describe('when it fails to create a document in the database', () => {
       it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
         return cloudantRequestHelper.createDocument(database, badDatabaseName, fakeDocument)
           .catch(error => {
@@ -432,6 +435,7 @@ describe('cloudantRequestHelper.js', () => {
 
     describe('when it fails to retrieve a document from the database', () => {
       it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
         return cloudantRequestHelper.retrieveDocument(database, badDatabaseName, '1234')
           .catch(error => {
@@ -511,6 +515,7 @@ describe('cloudantRequestHelper.js', () => {
 
     describe('when it fails to retrieve all documents from the database', () => {
       it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
         return cloudantRequestHelper.retrieveAllDocuments(database, badDatabaseName)
           .catch(error => {
@@ -629,6 +634,7 @@ describe('cloudantRequestHelper.js', () => {
 
       describe('when it fails to update a document in the database', () => {
         it('returns a rejected promise with the error in the body', () => {
+          expect.assertions(1)
           const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
           return cloudantRequestHelper.updateDocument(database, badDatabaseName, fakeDocument)
             .catch(error => {
@@ -639,6 +645,9 @@ describe('cloudantRequestHelper.js', () => {
     })
 
     describe('when it fails to retrieve the document to be updated', () => {
+      let insertSpy
+      let database
+
       beforeEach(() => {
         fakeCloudantInstance.db = {
           use: (databaseName) => {
@@ -647,17 +656,34 @@ describe('cloudantRequestHelper.js', () => {
               get: (id, callback) => {
                 const error = new Error('Bang in get document function')
                 callback(error)
-              }
+              },
+              insert: () => {}
             }
           }
         }
+
+        database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        insertSpy = jest.spyOn(database, 'insert')
+      })
+
+      afterEach(() => {
+        insertSpy.mockReset()
+        insertSpy.mockRestore()
       })
 
       it('returns a rejected promise with the error in the body', () => {
-        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        expect.assertions(1)
         return cloudantRequestHelper.updateDocument(database, badDatabaseName, fakeDocument)
           .catch(error => {
             expect(error.message).toEqual('Bang in get document function')
+          })
+      })
+
+      it('does not call the insert function', () => {
+        expect.assertions(1)
+        return cloudantRequestHelper.updateDocument(database, badDatabaseName, fakeDocument)
+          .catch(() => {
+            expect(insertSpy).not.toHaveBeenCalled()
           })
       })
     })
@@ -737,6 +763,7 @@ describe('cloudantRequestHelper.js', () => {
 
       describe('when it fails to delete a document from the database', () => {
         it('returns a rejected promise with the error in the body', () => {
+          expect.assertions(1)
           const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
           return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
             .catch(error => {
@@ -747,6 +774,9 @@ describe('cloudantRequestHelper.js', () => {
     })
 
     describe('when it fails to retrieve the document to be deleted', () => {
+      let deleteSpy
+      let database
+
       beforeEach(() => {
         fakeCloudantInstance.db = {
           use: (databaseName) => {
@@ -755,17 +785,29 @@ describe('cloudantRequestHelper.js', () => {
               get: (id, callback) => {
                 const error = new Error('Bang in get document function')
                 callback(error)
-              }
+              },
+              delete: () => {}
             }
           }
         }
+
+        database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        deleteSpy = jest.spyOn(database, 'delete')
       })
 
       it('returns a rejected promise with the error in the body', () => {
-        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        expect.assertions(1)
         return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
           .catch(error => {
             expect(error.message).toEqual('Bang in get document function')
+          })
+      })
+
+      it('does not call the delete function', () => {
+        expect.assertions(1)
+        return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
+          .catch(() => {
+            expect(deleteSpy).not.toHaveBeenCalled()
           })
       })
     })

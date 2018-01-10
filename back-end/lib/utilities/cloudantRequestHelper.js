@@ -83,9 +83,9 @@ module.exports.useDatabase = (cloudantInstance, databaseName) => {
  * createIndex function
  *
  * Creates a design document that can be used to filter through a database
- * @param database - the cloudant database to insert the document into
- * @param databaseName - the name of the database being interacted with
- * @param ddoc - design document
+ * @param {Object} database - the cloudant database to insert the document into
+ * @param {String} databaseName - the name of the database being interacted with
+ * @param {Object} ddoc - design document
  * @returns {*} Promise on the action of creating a design document
  */
 module.exports.createIndex = (database, databaseName, ddoc) => {
@@ -183,17 +183,18 @@ module.exports.updateDocument = (database, databaseName, newDocument) => {
     database.get(newDocument.id, (err, body) => {
       if (err) {
         reject(err)
+      } else {
+        newDocument._rev = body._rev
+        newDocument._id = body._id
+        database.insert(newDocument, (err, body) => {
+          if (err) {
+            logger.info(`Unable to update document in the '${databaseName}' database. Error received from cloudant: `, err)
+            reject(err)
+          } else {
+            resolve(body)
+          }
+        })
       }
-      newDocument._rev = body._rev
-      newDocument._id = body._id
-      database.insert(newDocument, (err, body) => {
-        if (err) {
-          logger.info(`Unable to update document in the '${databaseName}' database. Error received from cloudant: `, err)
-          reject(err)
-        } else {
-          resolve(body)
-        }
-      })
     })
   })
 }
@@ -212,16 +213,16 @@ module.exports.deleteDocument = (database, databaseName, documentId) => {
     database.get(documentId, (err, body) => {
       if (err) {
         reject(err)
+      } else {
+        database.destroy(documentId, body._rev, (err, body) => {
+          if (err) {
+            logger.info(`Unable to delete document in the '${databaseName}' database. Error received from cloudant: `, err)
+            reject(err)
+          } else {
+            resolve(body)
+          }
+        })
       }
-
-      database.destroy(documentId, body._rev, (err, body) => {
-        if (err) {
-          logger.info(`Unable to delete document in the '${databaseName}' database. Error received from cloudant: `, err)
-          reject(err)
-        } else {
-          resolve(body)
-        }
-      })
     })
   })
 }
