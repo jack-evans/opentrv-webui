@@ -325,4 +325,74 @@ describe('deviceDatabase.js', () => {
       })
     })
   })
+
+  describe('deviceDatabase deleteDevice method', () => {
+    let deleteDocumentSpy
+    let id = '1234-abcd-5678-efgh'
+
+    beforeEach(() => {
+      deleteDocumentSpy = jest.spyOn(cloudantRequestHelper, 'deleteDocument')
+      deviceDatabase = new DeviceDatabase()
+    })
+
+    afterEach(() => {
+      deleteDocumentSpy.mockReset()
+      deleteDocumentSpy.mockRestore()
+    })
+
+    describe('when initPromise is a rejected promise', () => {
+      beforeEach(() => {
+        deviceDatabase.initPromise = Promise.reject(new Error('Bang!'))
+      })
+
+      it('does not call the retrieveAllDocuments function', () => {
+        expect.assertions(1)
+        return deviceDatabase.deleteDevice(id)
+          .catch(() => {
+            expect(deleteDocumentSpy).not.toHaveBeenCalled()
+          })
+      })
+
+      it('returns a rejected promise', () => {
+        expect.assertions(1)
+        return deviceDatabase.deleteDevice(id)
+          .catch(error => {
+            expect(error.message).toEqual('Bang!')
+          })
+      })
+    })
+
+    describe('when initPromise is a resolved promise', () => {
+      beforeEach(() => {
+        deviceDatabase.initPromise = Promise.resolve()
+      })
+
+      it('calls the deleteDocument function', () => {
+        deleteDocumentSpy.mockReturnValue(Promise.resolve())
+        return deviceDatabase.deleteDevice(id)
+          .then(() => {
+            expect(deleteDocumentSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when deleteDocument resolves', () => {
+        it('returns a resolved promise', () => {
+          deleteDocumentSpy.mockReturnValue(Promise.resolve())
+
+          return deviceDatabase.deleteDevice(id)
+        })
+      })
+
+      describe('when deleteDocument rejects', () => {
+        it('returns the error in the body of the rejected promise', () => {
+          deleteDocumentSpy.mockReturnValue(Promise.reject(new Error('Bang in the deleteDevice method')))
+          expect.assertions(1)
+          return deviceDatabase.deleteDevice(id)
+            .catch(error => {
+              expect(error.message).toEqual('Bang in the deleteDevice method')
+            })
+        })
+      })
+    })
+  })
 })
