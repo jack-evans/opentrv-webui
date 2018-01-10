@@ -774,7 +774,7 @@ describe('cloudantRequestHelper.js', () => {
     })
 
     describe('when it fails to retrieve the document to be deleted', () => {
-      let deleteSpy
+      let destroySpy
       let database
 
       beforeEach(() => {
@@ -786,18 +786,18 @@ describe('cloudantRequestHelper.js', () => {
                 const error = new Error('Bang in get document function')
                 callback(error)
               },
-              delete: () => {}
+              destroy: () => {}
             }
           }
         }
 
         database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
-        deleteSpy = jest.spyOn(database, 'delete')
+        destroySpy = jest.spyOn(database, 'destroy')
       })
 
       afterEach(() => {
-        deleteSpy.mockReset()
-        deleteSpy.mockRestore()
+        destroySpy.mockReset()
+        destroySpy.mockRestore()
       })
 
       it('returns a rejected promise with the error in the body', () => {
@@ -808,11 +808,11 @@ describe('cloudantRequestHelper.js', () => {
           })
       })
 
-      it('does not call the delete function', () => {
+      it('does not call the destroy function', () => {
         expect.assertions(1)
         return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
           .catch(() => {
-            expect(deleteSpy).not.toHaveBeenCalled()
+            expect(destroySpy).not.toHaveBeenCalled()
           })
       })
     })
