@@ -753,6 +753,58 @@ describe('deviceDiscovery.js', () => {
       })
     })
 
+    describe('_getDevice', () => {
+      let getDeviceInformationSpy
+      let fakeDatabase
+
+      beforeEach(() => {
+        fakeDatabase = {
+          getDeviceInformation: () => {}
+        }
+        getDeviceInformationSpy = jest.spyOn(fakeDatabase, 'getDeviceInformation')
+      })
+
+      afterEach(() => {
+        getDeviceInformationSpy.mockReset()
+        getDeviceInformationSpy.mockRestore()
+      })
+
+      it('calls the getDeviceInformation method', () => {
+        getDeviceInformationSpy.mockReturnValue(Promise.resolve())
+        return deviceDiscovery.internal._getDevice(fakeDatabase, '1234')
+          .then(() => {
+            expect(getDeviceInformationSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when the getDeviceInformation returns a resolved promise with some contents', () => {
+        beforeEach(() => {
+          getDeviceInformationSpy.mockReturnValue(Promise.resolve({content: 'some content'}))
+        })
+
+        it('returns the resolved promise with the content', () => {
+          return deviceDiscovery.internal._getDevice(fakeDatabase, '1234')
+            .then(data => {
+              expect(data).toBeType('object')
+            })
+        })
+      })
+
+      describe('when the getDeviceInformation returns a rejected promise with an error in the body', () => {
+        beforeEach(() => {
+          getDeviceInformationSpy.mockReturnValue(Promise.reject(new Error('bang')))
+        })
+
+        it('returns the error in the body of the rejected promise', () => {
+          expect.assertions(1)
+          return deviceDiscovery.internal._getDevice(fakeDatabase, '1234')
+            .catch(error => {
+              expect(error.message).toEqual('bang')
+            })
+        })
+      })
+    })
+
     describe('_generateSerialId', () => {
       let mathRandomSpy
 
