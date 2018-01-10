@@ -474,7 +474,7 @@ describe('deviceDiscovery.js', () => {
 
         res.on('end', () => {
           try {
-            expect(getDeviceSpy).toHaveBeenCalledTimes(1)
+            expect(res._getStatusCode()).toEqual(200)
             done()
           } catch (e) {
             done(e)
@@ -618,6 +618,205 @@ describe('deviceDiscovery.js', () => {
           })
 
           deviceDiscovery.getDeviceRequestHandler(req, res)
+        })
+      })
+    })
+  })
+
+  describe('deleteDeviceRequestHandler', () => {
+    let deleteDeviceSpy
+    let req
+    let res
+    let id = '1234'
+
+    const fakeDb = {}
+
+    beforeEach(() => {
+      req = httpMocks.createRequest({
+        method: 'GET',
+        path: `/devices/${id}`,
+        params: {
+          id: id
+        }
+      })
+      req.deviceDb = fakeDb
+      res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
+      deleteDeviceSpy = jest.spyOn(deviceDiscovery.internal, '_deleteDevice')
+    })
+
+    afterEach(() => {
+      deleteDeviceSpy.mockReset()
+    })
+
+    afterAll(() => {
+      deleteDeviceSpy.mockRestore()
+    })
+
+    it('calls the deleteDevice internal function', (done) => {
+      deleteDeviceSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(deleteDeviceSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      deviceDiscovery.deleteDeviceRequestHandler(req, res)
+    })
+
+    it('calls the deleteDevice internal function with an id', (done) => {
+      deleteDeviceSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(deleteDeviceSpy).toHaveBeenCalledWith(fakeDb, id)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      deviceDiscovery.deleteDeviceRequestHandler(req, res)
+    })
+
+    describe('when the deleteDevice internal function succeeds', () => {
+      it('returns 204', (done) => {
+        deleteDeviceSpy.mockReturnValue(Promise.resolve())
+
+        res.on('end', () => {
+          try {
+            expect(res._getStatusCode()).toEqual(204)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        deviceDiscovery.deleteDeviceRequestHandler(req, res)
+      })
+    })
+
+    describe('when the deleteDevice internal function fails', () => {
+      describe('with a 400', () => {
+        it('returns 400', (done) => {
+          const error = {
+            statusCode: 400,
+            message: 'bad request'
+          }
+          deleteDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(400)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.deleteDeviceRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            message: 'bad request',
+            statusCode: 400
+          }
+          deleteDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.deleteDeviceRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 404', () => {
+        it('returns a 404', (done) => {
+          const error = {
+            statusCode: 404,
+            message: 'not found'
+          }
+          deleteDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(404)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.deleteDeviceRequestHandler(req, res)
+        })
+
+        it('returns an error in the body', (done) => {
+          const error = {
+            statusCode: 404,
+            message: 'not found'
+          }
+          deleteDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.deleteDeviceRequestHandler(req, res)
+        })
+      })
+
+      describe('with an unexpected error', () => {
+        it('returns a 500', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          deleteDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.deleteDeviceRequestHandler(req, res)
+        })
+
+        it('returns an error in the body', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          deleteDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.deleteDeviceRequestHandler(req, res)
         })
       })
     })
