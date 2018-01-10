@@ -795,6 +795,11 @@ describe('cloudantRequestHelper.js', () => {
         deleteSpy = jest.spyOn(database, 'delete')
       })
 
+      afterEach(() => {
+        deleteSpy.mockReset()
+        deleteSpy.mockRestore()
+      })
+
       it('returns a rejected promise with the error in the body', () => {
         expect.assertions(1)
         return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
