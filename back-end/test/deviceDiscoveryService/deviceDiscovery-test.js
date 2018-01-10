@@ -413,12 +413,19 @@ describe('deviceDiscovery.js', () => {
     let getDeviceSpy
     let req
     let res
+    let id = '1234'
+
+    const fakeDb = {}
 
     beforeEach(() => {
       req = httpMocks.createRequest({
         method: 'GET',
-        path: '/devices'
+        path: `/devices/${id}`,
+        params: {
+          id: id
+        }
       })
+      req.deviceDb = fakeDb
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
       getDeviceSpy = jest.spyOn(deviceDiscovery.internal, '_getDevice')
     })
@@ -437,6 +444,21 @@ describe('deviceDiscovery.js', () => {
       res.on('end', () => {
         try {
           expect(getDeviceSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      deviceDiscovery.getDeviceRequestHandler(req, res)
+    })
+
+    it('calls the getDevice internal function with an id', (done) => {
+      getDeviceSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(getDeviceSpy).toHaveBeenCalledWith(fakeDb, id)
           done()
         } catch (e) {
           done(e)
