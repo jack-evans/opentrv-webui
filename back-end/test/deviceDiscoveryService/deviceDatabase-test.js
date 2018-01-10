@@ -345,7 +345,7 @@ describe('deviceDatabase.js', () => {
         deviceDatabase.initPromise = Promise.reject(new Error('Bang!'))
       })
 
-      it('does not call the retrieveAllDocuments function', () => {
+      it('does not call the deleteDocument function', () => {
         expect.assertions(1)
         return deviceDatabase.deleteDevice(id)
           .catch(() => {
