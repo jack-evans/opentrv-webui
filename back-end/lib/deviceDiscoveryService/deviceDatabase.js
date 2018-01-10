@@ -116,4 +116,17 @@ DeviceDatabase.prototype.updateDevice = function (deviceDocument) {
 }
 */
 
+DeviceDatabase.prototype.deleteDevice = function (deviceDocumentId) {
+  let self = this
+
+  return self.initPromise
+    .then(function () {
+      return cloudantRequestHelper.deleteDocument(self.database, databaseName, deviceDocumentId)
+    })
+    .catch(function (error) {
+      logger.error(`Encountered error when deleting a document in the '${databaseName}' database, reason: `, error)
+      return Promise.reject(error)
+    })
+}
+
 module.exports = DeviceDatabase

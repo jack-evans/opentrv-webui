@@ -9,7 +9,7 @@ router.post('/devices', deviceDiscoveryService.createDeviceRequestHandler)
 router.get('/devices', deviceDiscoveryService.discoverAllDevicesRequestHandler)
 router.get('/devices/:id', deviceDiscoveryService.getDeviceRequestHandler)
 // router.put('/devices/:id', deviceDiscoveryService.updateDeviceRequestHandler)
-// router.delete('/devices/:id', deviceDiscoveryService.deleteDeviceRequestHandler)
+router.delete('/devices/:id', deviceDiscoveryService.deleteDeviceRequestHandler)
 
 router.get('/test', (req, res) => {
   res.status(200).send({'time': new Date(), 'name': packageJson.name, 'version': packageJson.version})

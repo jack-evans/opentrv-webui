@@ -162,6 +162,13 @@ const _discoverAllDevices = (database) => {
     })
 }
 
+/**
+ * GET /devices/:id
+ *
+ * Makes a call to the cloudant instance and returns the information for a specific device
+ * @param {Object} req - the HTTP request object
+ * @param {Object} res - the HTTP response object
+ */
 const getDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the getDeviceRequestHandler function')
 
@@ -195,11 +202,27 @@ const getDeviceRequestHandler = (req, res) => {
     })
 }
 
+/**
+ * _getDevice function
+ *
+ * Calls the device database to retrieve the device information
+ * @param {Object} database - the device database
+ * @param {String} deviceId - the id for the device document
+ * @returns {Promise} on the action of retrieving the data from cloudant
+ * @private
+ */
 const _getDevice = (database, deviceId) => {
   logger.info('Entered into the _getDevice internal function with device id:', deviceId)
   return database.getDeviceInformation(deviceId)
 }
 
+/**
+ * PUT /devices/:id
+ *
+ * Updates the information for a device in the cloudant database
+ * @param {Object} req - the HTTP request object
+ * @param {Object} res - the HTTP response object
+ */
 const updateDeviceRequestHandler = (req, res) => {
 
 }
@@ -208,12 +231,49 @@ const _updateDevice = (database, device) => {
 
 }
 
+/**
+ * DELETE /devices/:id
+ *
+ * Deletes a device from the cloudant database
+ * @param {Object} req - the HTTP request object
+ * @param {Object} res - the HTTP response object
+ */
 const deleteDeviceRequestHandler = (req, res) => {
+  logger.info('Entered into the deleteDeviceRequestHandler function')
 
+  let deviceId = req.params.id
+  let database = req.deviceDb
+  module.exports.internal._deleteDevice(database, deviceId)
+    .then(() => {
+      logger.info('Successfully deleted device from the cloudant database')
+      res.status(204).end()
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the deleteDeviceRequestHandler, reason: ', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the deleteDeviceRequestHandler, reason: ', error)
+          res.status(404).send(error)
+          break
+        }
+
+        default: {
+          logger.error('Encountered an unexpected error in the deleteDeviceRequestHandler, reason: ', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
 }
 
-const _deleteDevice = (req, res) => {
-
+const _deleteDevice = (database, deviceId) => {
+  logger.info('Entered into the _deleteDevice internal function with the device id: ', deviceId)
+  return database.deleteDevice(deviceId)
 }
 
 /**
