@@ -4,8 +4,6 @@ import { Button, Loading, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
 import axios from 'axios'
 
-const Promise = require('bluebird')
-
 class Overview extends Component {
   constructor (props) {
     super(props)
@@ -24,7 +22,6 @@ class Overview extends Component {
 
   componentDidMount () {
     const tick = () => {
-      console.log(new Date())
       return Overview.retrieveDevices()
         .then(devices => {
           this.setState({
@@ -139,7 +136,6 @@ class Overview extends Component {
     } else {
       // This is where the tiles for each device are build up
       overviewContent = this.state.visibleDevices.map(device => {
-        console.log(device)
         return (
           <DeviceTile
             key={device.doc.id}
