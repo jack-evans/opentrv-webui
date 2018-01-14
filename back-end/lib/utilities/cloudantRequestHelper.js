@@ -14,7 +14,7 @@ const logger = bunyan.createLogger({name: 'utilities-cloudantRequestHelper', ser
  * @param {Number} retryAttempts - number of attempts to be made
  * @returns {Cloudant} authenticated IBM Cloudant instance
  */
-module.exports.createCloudantConnection = (retryTimeout = 1000, retryAttempts = 3) => {
+module.exports.createCloudantConnection = (retryTimeout = 2000, retryAttempts = 10) => {
   let username
   let password
 

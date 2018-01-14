@@ -20,8 +20,8 @@ describe('cloudantRequestHelper.js', () => {
           account: process.env.CDB_USER,
           password: process.env.CDB_PASS,
           plugin: 'retry',
-          retryAttempts: 3,
-          retryTimeout: 1000
+          retryAttempts: 10,
+          retryTimeout: 2000
         }
 
         const cloudant = cloudantRequestHelper.createCloudantConnection()
@@ -40,7 +40,7 @@ describe('cloudantRequestHelper.js', () => {
           account: process.env.CDB_USER,
           password: process.env.CDB_PASS,
           plugin: 'retry',
-          retryAttempts: 3,
+          retryAttempts: 10,
           retryTimeout: 3000
         }
 
@@ -60,7 +60,7 @@ describe('cloudantRequestHelper.js', () => {
           account: process.env.CDB_USER,
           password: process.env.CDB_PASS,
           plugin: 'retry',
-          retryAttempts: 3,
+          retryAttempts: 10,
           retryTimeout: 3000
         }
 
