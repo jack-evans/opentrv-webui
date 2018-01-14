@@ -88,7 +88,8 @@ const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
   let deviceDatabase = req.deviceDb
-  module.exports.internal._discoverAllDevices(deviceDatabase)
+  let userTriggered = req.query.user
+  module.exports.internal._discoverAllDevices(deviceDatabase, userTriggered)
     .then(devices => {
       logger.info('Successfully retrieved device(s) from the server', devices)
       res.status(200).send(devices)
@@ -121,14 +122,18 @@ const discoverAllDevicesRequestHandler = (req, res) => {
  *
  * Makes a call to the opentrv server that is connected to all the devices and retrieves the information of the devices
  * @param {Object} database - the device database
+ * @param {Boolean} userFlag - determine if user triggers discovery or not
  * @returns {Promise} with an array of JSON objects on the action of retrieving the device information from the opentrv server
  * @private
  */
-const _discoverAllDevices = (database) => {
-  logger.info('Entered into the _discoverAllDevices internal function')
+const _discoverAllDevices = (database, userFlag) => {
+  logger.info('Entered into the _discoverAllDevices internal function', userFlag)
 
+  userFlag = userFlag === 'yes'
+
+  let createDevicesCalled = false
   return database.getAllDevices()
-    .then((devices) => {
+    .then(devices => {
       const numOfDevices = devices.length
 
       if (firstTimeCalled && numOfDevices < 1) {
@@ -136,7 +141,7 @@ const _discoverAllDevices = (database) => {
         return Promise.resolve([])
       } else if (numOfDevices > 0) {
         return devices
-      } else {
+      } else if (userFlag === true) {
         // Gives number of devices between 0 and 10
         let randomNumberOfDevices = Math.round((Math.random() * 10))
         let arrayOfDevices = []
@@ -158,6 +163,23 @@ const _discoverAllDevices = (database) => {
           })
         }
         return Promise.resolve(arrayOfDevices)
+      } else {
+        return Promise.resolve([])
+      }
+    })
+    .then(devices => {
+      if (!devices || devices.length < 1 || devices[0].id) {
+        return devices
+      } else {
+        createDevicesCalled = true
+        return module.exports.internal._createDevices(database, devices)
+      }
+    })
+    .then(devices => {
+      if (createDevicesCalled) {
+        return module.exports.internal._discoverAllDevices(database, false)
+      } else {
+        return devices
       }
     })
 }
@@ -224,11 +246,55 @@ const _getDevice = (database, deviceId) => {
  * @param {Object} res - the HTTP response object
  */
 const updateDeviceRequestHandler = (req, res) => {
+  logger.info('Entered into the updateDeviceRequestHandler function')
 
+  let device = req.body.device
+  let database = req.deviceDb
+  module.exports.internal._updateDevice(database, device)
+    .then(() => {
+      logger.info('Successfully updated device')
+      res.status(200).end()
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the updateDeviceRequestHandler, reason: ', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the updateDeviceRequestHandler, reason: ', error)
+          res.status(404).send(error)
+          break
+        }
+
+        case 409: {
+          logger.error('Encountered conflict in the updateDeviceRequestHandler, reason: ', error)
+          res.status(409).send(error)
+          break
+        }
+
+        default: {
+          logger.error('Encountered an unexpected error in the updateDeviceRequestHandler, reason: ', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
 }
 
+/**
+ * _updateDevice function
+ *
+ * Calls the device database to update the device information in cloudant with the data provided
+ * @param {Object} database - the device database
+ * @param {Object} device - data of the device to update with
+ * @returns {Promise} on the action of updating device information to cloudant
+ */
 const _updateDevice = (database, device) => {
-
+  logger.info('Entered into the _updateDevice internal function with the device: ', device)
+  return database.updateDevice(device)
 }
 
 /**
@@ -271,6 +337,15 @@ const deleteDeviceRequestHandler = (req, res) => {
     })
 }
 
+/**
+ * deleteDevice function
+ *
+ * Calls the device database to delete a device from the database
+ * @param {Object} database - the device database
+ * @param {Array} deviceId - the id of the device to be deleted
+ * @returns {Promise} on the action of deleting a device in cloudant
+ * @private
+ */
 const _deleteDevice = (database, deviceId) => {
   logger.info('Entered into the _deleteDevice internal function with the device id: ', deviceId)
   return database.deleteDevice(deviceId)

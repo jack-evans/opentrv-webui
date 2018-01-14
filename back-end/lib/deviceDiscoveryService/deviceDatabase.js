@@ -70,7 +70,7 @@ DeviceDatabase.prototype.createDevice = function (deviceDocument) {
  * getDeviceInformation method
  *
  * Retrieves a device document from the device database
- * @param deviceDocumentId
+ * @param {String} deviceDocumentId - the id of the device document to be retrieved
  * @returns {Promise} on the action of retrieving a document from the device database
  */
 DeviceDatabase.prototype.getDeviceInformation = function (deviceDocumentId) {
@@ -105,17 +105,33 @@ DeviceDatabase.prototype.getAllDevices = function () {
     })
 }
 
-/*
+/**
+ * updateDevice method
+ *
+ * Update a device in the devices database
+ * @param {Object} deviceDocument - the new content for the device
+ * @returns {Promise} on the action of updating a device in the devices database
+ */
 DeviceDatabase.prototype.updateDevice = function (deviceDocument) {
   let self = this
 
-  self.initPromise
+  return self.initPromise
     .then(function () {
       return cloudantRequestHelper.updateDocument(self.database, databaseName, deviceDocument)
     })
+    .catch(function (error) {
+      logger.error(`Encountered error when updating a document in the '${databaseName}' database, reason: `, error)
+      return Promise.reject(error)
+    })
 }
-*/
 
+/**
+ * deleteDevice method
+ *
+ * Delete device document in the devices database
+ * @param {String} deviceDocumentId - the id of the document to delete
+ * @returns {Promise} on the action of deleting a device in the devices database
+ */
 DeviceDatabase.prototype.deleteDevice = function (deviceDocumentId) {
   let self = this
 

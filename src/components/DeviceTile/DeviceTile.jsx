@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, OverflowMenu, OverflowMenuItem } from 'carbon-components-react'
 
-const DeviceTile = ({ id, name, temp, active }) => {
+const DeviceTile = ({ id, name, temp, active, handleDelete }) => {
   let activityClassName = active ? 'DeviceTile__footer-active' : 'DeviceTile__footer-idle'
   let activityCircleClassName = active ? 'DeviceTile__footer-active-circle' : 'DeviceTile__footer-idle-circle'
   let activityContent = active ? 'Active' : 'Idle'
@@ -12,7 +12,7 @@ const DeviceTile = ({ id, name, temp, active }) => {
       <div className='DeviceTile__overflow-container'>
         <OverflowMenu className='DeviceTile__overflow-menu'>
           <OverflowMenuItem className='DeviceTile__overflow-menu-view' itemText='View' onClick={() => { window.location.assign(href) }} />
-          <OverflowMenuItem itemText='Delete' hasDivider isDelete />
+          <OverflowMenuItem itemText='Delete' hasDivider isDelete onClick={handleDelete} />
         </OverflowMenu>
       </div>
       <div className='DeviceTile__center-container' style={{cursor: 'pointer'}} onClick={() => { window.location.assign(href) }}>

@@ -15,6 +15,7 @@ class Overview extends Component {
       isLoading: true
     }
     this.search = ''
+    this.timer = {}
 
     this.discoverDevicesButtonOnClick = this.discoverDevicesButtonOnClickHandler.bind(this)
     this.searchOnChange = this.searchOnChangeHandler.bind(this)
@@ -22,19 +23,24 @@ class Overview extends Component {
   }
 
   componentDidMount () {
-    const promise = Promise.resolve()
+    const tick = () => {
+      console.log(new Date())
+      return Overview.retrieveDevices()
+        .then(devices => {
+          this.setState({
+            devices: devices,
+            visibleDevices: devices,
+            isLoading: false
+          })
 
-    promise.delay(2000)
-      .then(() => {
-        return Overview.retrieveDevices()
-      })
-      .then(devices => {
-        this.setState({
-          devices: devices,
-          visibleDevices: devices,
-          isLoading: false
+          this.timer = setTimeout(tick, 1000)
         })
-      })
+    }
+    tick()
+  }
+
+  componentWillUnmount () {
+    clearTimeout(this.timer)
   }
 
   searchOnChangeHandler (event) {
@@ -46,14 +52,13 @@ class Overview extends Component {
     const searchTerm = this.search.toLowerCase()
 
     return (
-      (device.name.toLowerCase().indexOf(searchTerm) !== -1) ||
-      (device.currentTemperature.toString().indexOf(searchTerm) !== -1)
+      (device.doc.name.toLowerCase().indexOf(searchTerm) !== -1) ||
+      (device.doc.currentTemperature.toString().indexOf(searchTerm) !== -1)
     )
   }
 
   async discoverDevicesButtonOnClickHandler () {
-    let retrievedDevices = await Overview.discoverDevices()
-    await Overview.registerDevices(retrievedDevices)
+    let retrievedDevices = await Overview.discoverDevices('yes')
     this.setState({
       devices: retrievedDevices,
       visibleDevices: retrievedDevices
@@ -61,24 +66,32 @@ class Overview extends Component {
   }
 
   static retrieveDevices () {
-    return Overview.discoverDevices()
+    return Overview.discoverDevices('no')
   }
 
-  static discoverDevices () {
-    return axios({
-      url: '/api/v1/devices',
+  static discoverDevices (userFlag) {
+    let options = {
+      url: `/api/v1/devices?user=${userFlag}`,
       method: 'GET',
       json: true
-    }).then(response => response.data)
+    }
+
+    return axios(options)
+      .then(response => response.data)
   }
 
-  static registerDevices (devices) {
+  deleteDevice (id) {
     return axios({
-      url: '/api/v1/devices',
-      method: 'POST',
-      data: {
-        devices: devices
-      }
+      url: `/api/v1/devices/${id}`,
+      method: 'DELETE',
+      json: 'true'
+    }).then(() => {
+      return Overview.discoverDevices('no')
+    }).then(retrievedDevices => {
+      this.setState({
+        devices: retrievedDevices,
+        visibleDevices: retrievedDevices
+      })
     })
   }
 
@@ -94,7 +107,16 @@ class Overview extends Component {
 
     if (this.state.isLoading) {
       overviewContentClass += ' Overview__content-loading'
-      overviewContent = <Loading small withOverlay={false} />
+      overviewContent = (
+        <div>
+          <div>
+            <Loading small withOverlay={false} />
+          </div>
+          <div>
+            Loading. Please Wait...
+          </div>
+        </div>
+      )
     } else if (this.state.devices.length < 1) {
       overviewContentClass += ' Overview__content-empty'
       overviewContent = (
@@ -117,8 +139,16 @@ class Overview extends Component {
     } else {
       // This is where the tiles for each device are build up
       overviewContent = this.state.visibleDevices.map(device => {
+        console.log(device)
         return (
-          <DeviceTile key={device.doc.id} id={device.doc.id} name={device.doc.name} temp={device.doc.currentTemperature} active={device.doc.active} />
+          <DeviceTile
+            key={device.doc.id}
+            id={device.doc.id}
+            name={device.doc.name}
+            temp={device.doc.currentTemperature}
+            active={device.doc.active}
+            handleDelete={() => { this.deleteDevice(device.doc.id) }}
+          />
         )
       })
     }
