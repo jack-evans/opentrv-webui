@@ -688,7 +688,7 @@ describe('deviceDiscovery.js', () => {
       })
     })
 
-    describe('when the _createDevice internal function fails', () => {
+    describe('when the _updateDevice internal function fails', () => {
       describe('with a 400', () => {
         it('returns a 400', (done) => {
           const error = {
