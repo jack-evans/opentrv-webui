@@ -326,6 +326,80 @@ describe('deviceDatabase.js', () => {
     })
   })
 
+  describe('deviceDatabase updateDevice method', () => {
+    let updateDocumentSpy
+
+    let newDeviceDocument = {
+      serialNum: 'OTRV-1a2b3c4d5e',
+      name: 'Living room'
+    }
+
+    beforeEach(() => {
+      updateDocumentSpy = jest.spyOn(cloudantRequestHelper, 'updateDocument')
+      deviceDatabase = new DeviceDatabase()
+    })
+
+    afterEach(() => {
+      updateDocumentSpy.mockReset()
+      updateDocumentSpy.mockRestore()
+    })
+
+    describe('when initPromise is a rejected promise', () => {
+      beforeEach(() => {
+        deviceDatabase.initPromise = Promise.reject(new Error('Bang!'))
+      })
+
+      it('does not call the updateDevice method', () => {
+        expect.assertions(1)
+        return deviceDatabase.updateDevice(newDeviceDocument)
+          .catch(() => {
+            expect(updateDocumentSpy).not.toHaveBeenCalled()
+          })
+      })
+
+      it('returns a rejected promise with an error in the body', () => {
+        expect.assertions(1)
+        return deviceDatabase.updateDevice(newDeviceDocument)
+          .catch(error => {
+            expect(error.message).toEqual('Bang!')
+          })
+      })
+    })
+
+    describe('when initPromise is a resolved promise', () => {
+      beforeEach(() => {
+        deviceDatabase.initPromise = Promise.resolve()
+      })
+
+      it('calls the updateDocument function', () => {
+        updateDocumentSpy.mockReturnValue(Promise.resolve())
+        return deviceDatabase.updateDevice(newDeviceDocument)
+          .then(() => {
+            expect(updateDocumentSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when updateDocument resolves', () => {
+        it('returns a resolved promise', () => {
+          updateDocumentSpy.mockReturnValue(Promise.resolve())
+
+          return deviceDatabase.updateDevice(newDeviceDocument)
+        })
+      })
+
+      describe('when updateDocument rejects', () => {
+        it('returns the error in the body of the rejected promise', () => {
+          updateDocumentSpy.mockReturnValue(Promise.reject(new Error('Bang in the updateDevice method')))
+          expect.assertions(1)
+          return deviceDatabase.updateDevice(newDeviceDocument)
+            .catch(error => {
+              expect(error.message).toEqual('Bang in the updateDevice method')
+            })
+        })
+      })
+    })
+  })
+
   describe('deviceDatabase deleteDevice method', () => {
     let deleteDocumentSpy
     let id = '1234-abcd-5678-efgh'
@@ -353,7 +427,7 @@ describe('deviceDatabase.js', () => {
           })
       })
 
-      it('returns a rejected promise', () => {
+      it('returns a rejected promise with the error in the body', () => {
         expect.assertions(1)
         return deviceDatabase.deleteDevice(id)
           .catch(error => {
