@@ -252,7 +252,7 @@ const updateDeviceRequestHandler = (req, res) => {
   let database = req.deviceDb
   module.exports.internal._updateDevice(database, device)
     .then(() => {
-      logger.info('Successfully updated device')
+      logger.info('Successfully updated device document in the cloudant database')
       res.status(200).end()
     })
     .catch(error => {
@@ -260,12 +260,6 @@ const updateDeviceRequestHandler = (req, res) => {
         case 400: {
           logger.error('Encountered bad request in the updateDeviceRequestHandler, reason: ', error)
           res.status(400).send(error)
-          break
-        }
-
-        case 404: {
-          logger.error('Encountered not found in the updateDeviceRequestHandler, reason: ', error)
-          res.status(404).send(error)
           break
         }
 
