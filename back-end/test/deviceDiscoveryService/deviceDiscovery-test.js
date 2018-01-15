@@ -45,7 +45,7 @@ describe('deviceDiscovery.js', () => {
       createDevicesSpy.mockRestore()
     })
 
-    it('calls the saveDeviceBasicInformation internal function', (done) => {
+    it('calls the _updateDevice internal function', (done) => {
       createDevicesSpy.mockReturnValue(Promise.resolve())
 
       res.on('end', () => {
@@ -60,7 +60,7 @@ describe('deviceDiscovery.js', () => {
       deviceDiscovery.createDeviceRequestHandler(req, res)
     })
 
-    describe('when the saveDeviceBasicInformation internal function succeeds', () => {
+    describe('when the _createDevice internal function succeeds', () => {
       beforeEach(() => {
         createDevicesSpy.mockReturnValue(Promise.resolve())
       })
@@ -79,7 +79,7 @@ describe('deviceDiscovery.js', () => {
       })
     })
 
-    describe('when the saveDeviceBasicInformation internal function fails', () => {
+    describe('when the _createDevice internal function fails', () => {
       describe('with a 400', () => {
         it('returns a 400', (done) => {
           const error = {
@@ -160,7 +160,7 @@ describe('deviceDiscovery.js', () => {
         })
       })
 
-      describe('with an unexpeccted error', () => {
+      describe('with an unexpected error', () => {
         it('returns a 500', (done) => {
           const error = {
             statusCode: 500,
@@ -618,6 +618,194 @@ describe('deviceDiscovery.js', () => {
           })
 
           deviceDiscovery.getDeviceRequestHandler(req, res)
+        })
+      })
+    })
+  })
+
+  describe('updateDeviceRequestHandler', () => {
+    let req
+    let res
+    let updateDeviceSpy
+
+    beforeEach(() => {
+      req = httpMocks.createRequest({
+        method: 'PUT',
+        path: '/devices/1234',
+        params: {
+          id: '1234'
+        },
+        body: {
+          device: {
+            serialNum: 'OTRV-1a2b3c4d5e',
+            author: '1a2b3c4d'
+          }
+        }
+      })
+      res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
+      updateDeviceSpy = jest.spyOn(deviceDiscovery.internal, '_updateDevice')
+    })
+
+    afterEach(() => {
+      updateDeviceSpy.mockReset()
+    })
+
+    afterAll(() => {
+      updateDeviceSpy.mockRestore()
+    })
+
+    it('calls the _updateDevice internal function', (done) => {
+      updateDeviceSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(updateDeviceSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      deviceDiscovery.updateDeviceRequestHandler(req, res)
+    })
+
+    describe('when the _updateDevice internal function succeeds', () => {
+      beforeEach(() => {
+        updateDeviceSpy.mockReturnValue(Promise.resolve())
+      })
+
+      it('returns 200', (done) => {
+        res.on('end', () => {
+          try {
+            expect(res._getStatusCode()).toEqual(200)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        deviceDiscovery.updateDeviceRequestHandler(req, res)
+      })
+    })
+
+    describe('when the _createDevice internal function fails', () => {
+      describe('with a 400', () => {
+        it('returns a 400', (done) => {
+          const error = {
+            statusCode: 400,
+            message: 'bad request'
+          }
+          updateDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(400)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.updateDeviceRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 400,
+            message: 'bad request'
+          }
+          updateDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.updateDeviceRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 409', () => {
+        it('returns a 409', (done) => {
+          const error = {
+            statusCode: 409,
+            message: 'conflict'
+          }
+          updateDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(409)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.updateDeviceRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 409,
+            message: 'conflict'
+          }
+          updateDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.updateDeviceRequestHandler(req, res)
+        })
+      })
+
+      describe('with an unexpected error', () => {
+        it('returns a 500', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          updateDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.updateDeviceRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          updateDeviceSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.updateDeviceRequestHandler(req, res)
         })
       })
     })
