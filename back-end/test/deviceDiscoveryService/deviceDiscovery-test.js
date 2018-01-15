@@ -1192,6 +1192,55 @@ describe('deviceDiscovery.js', () => {
       })
     })
 
+    describe('_updateDevice', () => {
+      let updateDeviceSpy
+      let fakeDatabase
+
+      beforeEach(() => {
+        fakeDatabase = {
+          updateDevice: () => {}
+        }
+        updateDeviceSpy = jest.spyOn(fakeDatabase, 'updateDevice')
+      })
+
+      afterEach(() => {
+        updateDeviceSpy.mockReset()
+        updateDeviceSpy.mockRestore()
+      })
+
+      it('calls the updateDevice method', () => {
+        updateDeviceSpy.mockReturnValue(Promise.resolve())
+        return deviceDiscovery.internal._updateDevice(fakeDatabase, {content: 'some content'})
+          .then(() => {
+            expect(updateDeviceSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when the updateDevice method returns a resolved promise', () => {
+        beforeEach(() => {
+          updateDeviceSpy.mockReturnValue(Promise.resolve({content: 'some content'}))
+        })
+
+        it('returns the resolved promise', () => {
+          return deviceDiscovery.internal._updateDevice(fakeDatabase, {content: 'some content'})
+        })
+      })
+
+      describe('when the updateDevice method returns a rejected promise with an error in the body', () => {
+        beforeEach(() => {
+          updateDeviceSpy.mockReturnValue(Promise.reject(new Error('bang')))
+        })
+
+        it('returns the error in the body of the rejected promise', () => {
+          expect.assertions(1)
+          return deviceDiscovery.internal._updateDevice(fakeDatabase, {content: 'bad content'})
+            .catch(error => {
+              expect(error.message).toEqual('bang')
+            })
+        })
+      })
+    })
+
     describe('_deleteDevice', () => {
       let deleteDeviceSpy
       let fakeDatabase
