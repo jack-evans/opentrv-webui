@@ -8,7 +8,7 @@ const packageJson = require('../package.json')
 router.post('/devices', deviceDiscoveryService.createDeviceRequestHandler)
 router.get('/devices', deviceDiscoveryService.discoverAllDevicesRequestHandler)
 router.get('/devices/:id', deviceDiscoveryService.getDeviceRequestHandler)
-// router.put('/devices/:id', deviceDiscoveryService.updateDeviceRequestHandler)
+router.put('/devices/:id', deviceDiscoveryService.updateDeviceRequestHandler)
 router.delete('/devices/:id', deviceDiscoveryService.deleteDeviceRequestHandler)
 
 router.get('/test', (req, res) => {
