@@ -140,6 +140,7 @@ const _discoverAllDevices = (database, userFlag) => {
         firstTimeCalled = false
         return Promise.resolve([])
       } else if (numOfDevices > 0) {
+        logger.info('Found devices in the database', devices)
         return devices
       } else if (userFlag === true) {
         // Gives number of devices between 0 and 10
@@ -162,6 +163,7 @@ const _discoverAllDevices = (database, userFlag) => {
             active: deviceActivity
           })
         }
+        logger.info('Created an array of devices', arrayOfDevices)
         return Promise.resolve(arrayOfDevices)
       } else {
         return Promise.resolve([])
@@ -169,18 +171,24 @@ const _discoverAllDevices = (database, userFlag) => {
     })
     .then(devices => {
       if (!devices || devices.length < 1 || devices[0].id) {
-        return devices
+        return Promise.resolve(devices)
       } else {
         createDevicesCalled = true
+        logger.info('Calling the _createDevices internal function with: ', devices)
         return module.exports.internal._createDevices(database, devices)
       }
     })
     .then(devices => {
       if (createDevicesCalled) {
+        logger.info('_createDevices internal function was called so now need to call the _discoverAllDevices internal function again')
         return module.exports.internal._discoverAllDevices(database, false)
       } else {
-        return devices
+        return Promise.resolve(devices)
       }
+    })
+    .catch(error => {
+      logger.error('Encountered error in the _discoverAllDevices function', error)
+      return Promise.reject(error)
     })
 }
 

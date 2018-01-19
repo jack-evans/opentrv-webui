@@ -1089,16 +1089,29 @@ describe('deviceDiscovery.js', () => {
           })
         })
 
-        describe('and firstTimeCalled is false', () => {
+        describe('and userFlag is true', () => {
           let mathRandomSpy
+          let createDevicesSpy
+          let discoverAllDevicesSpy
+          let returnedDevices
 
           beforeEach(() => {
             deviceDiscovery.internal._setFirstTimeCalled(false)
             mathRandomSpy = jest.spyOn(Math, 'random')
+            discoverAllDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_discoverAllDevices')
+            createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices').mockImplementation((database, devices) => {
+              discoverAllDevicesSpy.mockReturnValue(Promise.resolve(devices))
+              return Promise.resolve(devices)
+            })
           })
 
           afterEach(() => {
             mathRandomSpy.mockReset()
+            mathRandomSpy.mockRestore()
+            createDevicesSpy.mockReset()
+            createDevicesSpy.mockRestore()
+            discoverAllDevicesSpy.mockReset()
+            discoverAllDevicesSpy.mockRestore()
           })
 
           it('returns a random number of devices', () => {
@@ -1107,9 +1120,55 @@ describe('deviceDiscovery.js', () => {
               getAllDevices: () => (Promise.resolve([]))
             }
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+            let getAllDevicesSpy = jest.spyOn(fakeDB, 'getAllDevices')
+              .mockReturnValue(Promise.resolve(returnedDevices))
+              .mockReturnValueOnce(Promise.resolve([]))
+
+            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'yes')
               .then(result => {
                 expect(result.length).toEqual(10)
+                getAllDevicesSpy.mockReset()
+                getAllDevicesSpy.mockRestore()
+              })
+          })
+
+          describe('when non of the above conditions are met', () => {
+            it('returns a resolved promise with an empty array in the body', () => {
+              deviceDiscovery.internal._setFirstTimeCalled(false)
+              let fakeDB = {
+                getAllDevices: () => (Promise.resolve([]))
+              }
+
+              return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'no')
+                .then(devices => {
+                  expect(devices.length).toEqual(0)
+                })
+            })
+          })
+
+          it('calls the createDevice internal function', () => {
+            mathRandomSpy.mockReturnValue(1)
+            let fakeDB = {
+              getAllDevices: () => (Promise.resolve([]))
+            }
+
+            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'yes')
+              .then(() => {
+                expect(createDevicesSpy).toHaveBeenCalledTimes(1)
+              })
+          })
+        })
+
+        describe('when getAllDevices returns a rejected promise', () => {
+          it('returns a rejected promise in the error of the body', () => {
+            expect.assertions(1)
+            let fakeDB = {
+              getAllDevices: () => (Promise.reject(new Error('Bang!')))
+            }
+
+            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'no')
+              .catch(error => {
+                expect(error.message).toEqual('Bang!')
               })
           })
         })
