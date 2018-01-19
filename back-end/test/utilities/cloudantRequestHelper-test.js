@@ -20,8 +20,8 @@ describe('cloudantRequestHelper.js', () => {
           account: process.env.CDB_USER,
           password: process.env.CDB_PASS,
           plugin: 'retry',
-          retryAttempts: 3,
-          retryTimeout: 1000
+          retryAttempts: 10,
+          retryTimeout: 2000
         }
 
         const cloudant = cloudantRequestHelper.createCloudantConnection()
@@ -40,7 +40,7 @@ describe('cloudantRequestHelper.js', () => {
           account: process.env.CDB_USER,
           password: process.env.CDB_PASS,
           plugin: 'retry',
-          retryAttempts: 3,
+          retryAttempts: 10,
           retryTimeout: 3000
         }
 
@@ -60,7 +60,7 @@ describe('cloudantRequestHelper.js', () => {
           account: process.env.CDB_USER,
           password: process.env.CDB_PASS,
           plugin: 'retry',
-          retryAttempts: 3,
+          retryAttempts: 10,
           retryTimeout: 3000
         }
 
@@ -167,6 +167,7 @@ describe('cloudantRequestHelper.js', () => {
       })
 
       it('returns a rejected promise', () => {
+        expect.assertions(1)
         return cloudantRequestHelper.createDatabase(fakeCloudantInstance, fakeDatabaseName)
           .catch(error => {
             expect(error.message).toEqual(`Bang when creating ${fakeDatabaseName}`)
@@ -211,6 +212,75 @@ describe('cloudantRequestHelper.js', () => {
       expect(database).toHaveProperty('get')
       expect(database).toHaveProperty('list')
       expect(database).toHaveProperty('destroy')
+    })
+  })
+
+  describe('createIndex', () => {
+    let fakeCloudantInstance
+    const goodDatabaseName = 'gooddb'
+    const badDatabaseName = 'baddb'
+
+    let fakeDdoc = {
+      name: 'first-name',
+      type: 'json',
+      index: {
+        fields: ['name']
+      }
+    }
+
+    beforeEach(() => {
+      process.env = {
+        CDB_USER: 'admin',
+        CDB_PASS: 'pass'
+      }
+
+      fakeCloudantInstance = cloudantRequestHelper.createCloudantConnection()
+
+      fakeCloudantInstance.db = {
+        use: (databaseName) => {
+          if (databaseName === 'gooddb') {
+            return {
+              name: databaseName,
+              index: (document, callback) => {
+                callback(null, document)
+              }
+            }
+          }
+
+          return {
+            name: databaseName,
+            index: (document, callback) => {
+              const error = new Error('Bang in index document function')
+              callback(error)
+            }
+          }
+        }
+      }
+    })
+
+    afterEach(() => {
+      process.env = {}
+    })
+
+    describe('when it successfully creates a design document in the database', () => {
+      it('returns a resolved promise with the document in the body', () => {
+        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
+        return cloudantRequestHelper.createIndex(database, goodDatabaseName, fakeDdoc)
+          .then(document => {
+            expect(document).toEqual(fakeDdoc)
+          })
+      })
+    })
+
+    describe('when it fails to create a design document in the database', () => {
+      it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
+        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        return cloudantRequestHelper.createIndex(database, badDatabaseName, fakeDdoc)
+          .catch(error => {
+            expect(error.message).toEqual('Bang in index document function')
+          })
+      })
     })
   })
 
@@ -275,6 +345,7 @@ describe('cloudantRequestHelper.js', () => {
 
     describe('when it fails to create a document in the database', () => {
       it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
         return cloudantRequestHelper.createDocument(database, badDatabaseName, fakeDocument)
           .catch(error => {
@@ -364,6 +435,7 @@ describe('cloudantRequestHelper.js', () => {
 
     describe('when it fails to retrieve a document from the database', () => {
       it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
         return cloudantRequestHelper.retrieveDocument(database, badDatabaseName, '1234')
           .catch(error => {
@@ -391,7 +463,7 @@ describe('cloudantRequestHelper.js', () => {
           if (databaseName === 'gooddb') {
             return {
               name: databaseName,
-              list: (callback) => {
+              list: (params, callback) => {
                 const documentArray = {
                   rows: [{
                     id: '4321',
@@ -418,7 +490,7 @@ describe('cloudantRequestHelper.js', () => {
 
           return {
             name: databaseName,
-            list: (callback) => {
+            list: (params, callback) => {
               const error = new Error('Bang in list documents function')
               callback(error)
             }
@@ -443,6 +515,7 @@ describe('cloudantRequestHelper.js', () => {
 
     describe('when it fails to retrieve all documents from the database', () => {
       it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
         const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
         return cloudantRequestHelper.retrieveAllDocuments(database, badDatabaseName)
           .catch(error => {
@@ -561,6 +634,7 @@ describe('cloudantRequestHelper.js', () => {
 
       describe('when it fails to update a document in the database', () => {
         it('returns a rejected promise with the error in the body', () => {
+          expect.assertions(1)
           const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
           return cloudantRequestHelper.updateDocument(database, badDatabaseName, fakeDocument)
             .catch(error => {
@@ -571,6 +645,9 @@ describe('cloudantRequestHelper.js', () => {
     })
 
     describe('when it fails to retrieve the document to be updated', () => {
+      let insertSpy
+      let database
+
       beforeEach(() => {
         fakeCloudantInstance.db = {
           use: (databaseName) => {
@@ -579,17 +656,34 @@ describe('cloudantRequestHelper.js', () => {
               get: (id, callback) => {
                 const error = new Error('Bang in get document function')
                 callback(error)
-              }
+              },
+              insert: () => {}
             }
           }
         }
+
+        database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        insertSpy = jest.spyOn(database, 'insert')
+      })
+
+      afterEach(() => {
+        insertSpy.mockReset()
+        insertSpy.mockRestore()
       })
 
       it('returns a rejected promise with the error in the body', () => {
-        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        expect.assertions(1)
         return cloudantRequestHelper.updateDocument(database, badDatabaseName, fakeDocument)
           .catch(error => {
             expect(error.message).toEqual('Bang in get document function')
+          })
+      })
+
+      it('does not call the insert function', () => {
+        expect.assertions(1)
+        return cloudantRequestHelper.updateDocument(database, badDatabaseName, fakeDocument)
+          .catch(() => {
+            expect(insertSpy).not.toHaveBeenCalled()
           })
       })
     })
@@ -669,6 +763,7 @@ describe('cloudantRequestHelper.js', () => {
 
       describe('when it fails to delete a document from the database', () => {
         it('returns a rejected promise with the error in the body', () => {
+          expect.assertions(1)
           const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
           return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
             .catch(error => {
@@ -679,6 +774,9 @@ describe('cloudantRequestHelper.js', () => {
     })
 
     describe('when it fails to retrieve the document to be deleted', () => {
+      let destroySpy
+      let database
+
       beforeEach(() => {
         fakeCloudantInstance.db = {
           use: (databaseName) => {
@@ -687,17 +785,34 @@ describe('cloudantRequestHelper.js', () => {
               get: (id, callback) => {
                 const error = new Error('Bang in get document function')
                 callback(error)
-              }
+              },
+              destroy: () => {}
             }
           }
         }
+
+        database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        destroySpy = jest.spyOn(database, 'destroy')
+      })
+
+      afterEach(() => {
+        destroySpy.mockReset()
+        destroySpy.mockRestore()
       })
 
       it('returns a rejected promise with the error in the body', () => {
-        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        expect.assertions(1)
         return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
           .catch(error => {
             expect(error.message).toEqual('Bang in get document function')
+          })
+      })
+
+      it('does not call the destroy function', () => {
+        expect.assertions(1)
+        return cloudantRequestHelper.deleteDocument(database, badDatabaseName, '1234')
+          .catch(() => {
+            expect(destroySpy).not.toHaveBeenCalled()
           })
       })
     })

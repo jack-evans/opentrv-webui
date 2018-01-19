@@ -2,13 +2,13 @@ $sideBarMenu-width: 300px;
 
 .SideBarMenu {
   background-color: $ui-03;
-  height: 100%;
+  height: calc(100vh - 60px);
   left: -$sideBarMenu-width;
   position: absolute;
   top: 60px;
   transition: left .3s ease-in-out;
   width: $sideBarMenu-width;
-  z-index: 1;
+  z-index: 10000;
 }
 
 .SideBarMenu__open {

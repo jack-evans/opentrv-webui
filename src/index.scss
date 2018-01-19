@@ -8,6 +8,8 @@ body {
 
 // Components
 @import './App.scss';
+@import './components/DevicePanel/DevicePanel.scss';
+@import './components/DeviceTile/DeviceTile.scss';
 @import './components/Header/Header.scss';
 @import './components/MainContent/MainContent.scss';
 @import './components/Overview/Overview.scss';

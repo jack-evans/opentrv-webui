@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.2",
+    "axios": "^0.17.1",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "^21.2.0",
@@ -13,6 +14,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "bunyan": "^1.8.12",
+    "carbon-addons-bluemix": "^0.2.0",
     "carbon-components": "^8.1.13",
     "carbon-components-react": "^5.0.11",
     "carbon-icons": "^6.1.0",
@@ -33,6 +35,7 @@
     "file-loader": "0.11.2",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
+    "isomorphic-fetch": "^2.2.1",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
@@ -63,6 +66,7 @@
     "test-no-coverage": "node scripts/test.js --env=jsdom",
     "test-travis": "yarn lint && node scripts/test.js --env=jsdom --coverage --updateSnapshot"
   },
+  "proxy": "http://localhost:3001",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
@@ -74,10 +78,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
       }
     },
     "setupFiles": [
@@ -123,7 +127,7 @@
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "events": "^1.1.1",
-    "jest": "21.3.0-beta.11",
+    "jest": "22.0.4",
     "jest-tobetype": "^1.1.0",
     "node-mocks-http": "^1.6.6",
     "node-sass": "^4.5.3",

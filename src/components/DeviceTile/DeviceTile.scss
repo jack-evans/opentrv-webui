@@ -1,0 +1,94 @@
+
+.DeviceTile {
+  background-color: $ui-02;
+  border: 1px solid $ui-04;
+  box-shadow: 0 1px 3px 0 $ui-04;
+  height: 250px;
+  margin: 40px;
+  padding: 10px;
+  width: 280px;
+
+  .DeviceTile__overflow-container {
+    border-bottom: 1px solid $ui-04;
+    display: flex;
+    justify-content: flex-end;
+
+    .DeviceTile__overflow-menu {
+      outline: none;
+    }
+  }
+
+  .DeviceTile__name-container {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 5px;
+  }
+
+  .DeviceTile__icon-container {
+    align-items: center;
+    display: flex;
+    height: 120px;
+    justify-content: center;
+
+    .DeviceTile__icon-circle {
+      align-self: center;
+      border: 1px solid $ui-04;
+      border-radius: 50%;
+      display: flex;
+      height: 60px;
+      justify-content: center;
+      width: 60px;
+
+      div {
+        align-self: center;
+      }
+    }
+  }
+
+  .DeviceTile__footer {
+    border-top: 1px solid $ui-04;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+
+    .DeviceTile__footer-active {
+      display: flex;
+
+      .DeviceTile__footer-active-circle {
+        align-self: center;
+        background-color: $support-02;
+        border-radius: 50%;
+        height: 20px;
+        width: 20px;
+      }
+
+      h3 {
+        padding-left: 5px;
+      }
+    }
+
+    .DeviceTile__footer-idle {
+      display: flex;
+
+      .DeviceTile__footer-idle-circle {
+        align-self: center;
+        background-color: $support-01;
+        border-radius: 50%;
+        height: 20px;
+        width: 20px;
+      }
+
+      h3 {
+        padding-left: 5px;
+      }
+    }
+
+    .DeviceTile__footer-temp {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.DeviceTile:hover {
+  box-shadow: 0 4px 8px 0 $ui-05;
+}
