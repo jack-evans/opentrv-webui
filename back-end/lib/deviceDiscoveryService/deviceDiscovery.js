@@ -374,8 +374,8 @@ const _generateSerialId = () => {
  * _roundToOneDP method
  *
  * Rounds the value passed in to 1 decimal place
- * @param number
- * @returns {number}
+ * @param number - the number to be rounded
+ * @returns {number} a number with 1 decimal place
  * @private
  */
 const _roundToOneDP = (number) => {
