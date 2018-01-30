@@ -26,7 +26,7 @@ class Overview extends Component {
         .then(devices => {
           this.setState({
             devices: devices,
-            visibleDevices: devices,
+            visibleDevices: devices.filter(this.searchDevices),
             isLoading: false
           })
 
