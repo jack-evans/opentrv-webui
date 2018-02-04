@@ -3,6 +3,7 @@
 // Device request helper
 const bunyan = require('bunyan')
 const Promise = require('bluebird')
+const rp = require('request-promise')
 
 const logger = bunyan.createLogger({name: 'device-discovery-service', serializers: bunyan.stdSerializers})
 
@@ -70,7 +71,15 @@ const _createDevices = (database, devices) => {
 
   let promises = []
   devices.forEach((device) => {
-    promises.push(database.createDevice(device))
+    let options = {
+      url: 'http://localhost:3002/api/v1/trv',
+      method: 'POST',
+      json: true,
+      body: {
+        trv: device
+      }
+    }
+    promises.push(rp(options))
   })
 
   return Promise.all(promises)
@@ -129,10 +138,17 @@ const discoverAllDevicesRequestHandler = (req, res) => {
 const _discoverAllDevices = (database, userFlag) => {
   logger.info('Entered into the _discoverAllDevices internal function', userFlag)
 
+  let options = {
+    url: 'http://localhost:3002/api/v1/trv',
+    method: 'GET',
+    json: true
+  }
+
   userFlag = userFlag === 'yes'
 
   let createDevicesCalled = false
-  return database.getAllDevices()
+
+  return rp(options)
     .then(devices => {
       const numOfDevices = devices.length
 
