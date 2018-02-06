@@ -7,8 +7,8 @@ class DevicePanel extends Component {
     super(props)
     this.state = {
       isLoading: true,
-      statusColor: '#5aa700',
-      statusText: 'Active',
+      statusColor: '',
+      statusText: '',
       deviceName: ''
     }
     this.deviceId = props.match.params.id
@@ -23,14 +23,10 @@ class DevicePanel extends Component {
       let device = response.data
       this.setState({
         isLoading: false,
-        deviceName: device.name
+        deviceName: device.name,
+        statusColor: device.active ? '#5aa700' : '#e71d32',
+        statusText: device.active ? 'Active' : 'Idle'
       })
-      if (!device.active) {
-        this.setState({
-          statusColor: '#e71d32',
-          statusText: 'Idle'
-        })
-      }
     })
   }
 
@@ -45,18 +41,25 @@ class DevicePanel extends Component {
       return null
     } else {
       return (
-        <div>
-          <DetailPageHeader
-            title={this.state.deviceName}
-            statusColor={this.state.statusColor}
-            statusText={this.state.statusText}>
-            <Icon name='devices' />
-            <Breadcrumb>
-              <BreadcrumbItem href='/'>
-                Device Overview
-              </BreadcrumbItem>
-            </Breadcrumb>
-          </DetailPageHeader>
+        <div className='DevicePanel'>
+          <div className='DevicePanel__header'>
+            <DetailPageHeader
+              title={this.state.deviceName}
+              statusColor={this.state.statusColor}
+              statusText={this.state.statusText}>
+              <Icon name='devices' />
+              <Breadcrumb>
+                <BreadcrumbItem href='/'>
+                  Device Overview
+                </BreadcrumbItem>
+              </Breadcrumb>
+            </DetailPageHeader>
+          </div>
+          <div className='DevicePanel__content'>
+            <div className='DevicePanel__basic-info'>
+              hello
+            </div>
+          </div>
         </div>
       )
     }

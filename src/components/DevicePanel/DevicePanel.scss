@@ -1,24 +1,25 @@
 
 .DevicePanel {
+  height: calc(100vh - 60px);
 
-  .DevicePanel__header-container {
-    align-items: center;
-    background-color: $ui-04;
+  .DevicePanel__header {
+    height: 150px;
+    background-color: $ui-02;
+    border-bottom: 2px solid $ui-04;
+  }
+
+  .DevicePanel__content {
     display: flex;
-    height: 80px;
-    padding: 0 60px 0 60px;
+    justify-content: center;
+    padding-top: 30px;    
 
-    .DevicePanel__header-back-button {
-      align-items: center;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      text-decoration: none;
-
-      h3 {
-        padding-left: 10px;
-        text-decoration: none;
-      }
+    .DevicePanel__basic-info {
+      height: 400px;
+      width: 1200px;
+      border: 1px solid $ui-04;
+      box-shadow: 1px 2px 4px 1px $ui-05;
+      padding-left: 20px;
+      padding-right: 20px;
     }
   }
 }
