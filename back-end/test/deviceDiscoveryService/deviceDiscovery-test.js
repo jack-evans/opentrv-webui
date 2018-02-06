@@ -1,9 +1,8 @@
-'use strict'
-
 import toBeType from 'jest-tobetype'
 
 const httpMocks = require('node-mocks-http')
 const Promise = require('bluebird')
+const rp = require('request-promise')
 expect.extend(toBeType)
 
 describe('deviceDiscovery.js', () => {
@@ -1011,6 +1010,7 @@ describe('deviceDiscovery.js', () => {
   })
 
   describe('internal functions', () => {
+    const GATEWAY_URL = 'http://localhost:3002'
     describe('_createDevices', () => {
       describe('when the devices array is undefined', () => {
         it('returns a 400 error', () => {
@@ -1030,25 +1030,28 @@ describe('deviceDiscovery.js', () => {
       })
 
       describe('when the devices array is not empty', () => {
-        let database
-        let createDeviceSpy
+        let postNock
+        let rpSpy
 
         beforeEach(() => {
-          database = {
-            createDevice: () => {}
-          }
-          createDeviceSpy = jest.spyOn(database, 'createDevice').mockReturnValue(Promise.resolve())
+          postNock = nock(GATEWAY_URL)
+            .post('/api/v1/trv', {})
+            .reply(201, {})
+
+          rpSpy = jest.spyOn(rp)
         })
 
         afterEach(() => {
-          createDeviceSpy.mockReset()
+          nock.cleanAll()
+          rpSpy.mockReset()
+          rpSpy.mockRestore()
         })
 
         it('calls the createDevice method in the database for the number of devices', () => {
           const devices = [{}, {}, {}, {}]
           return deviceDiscovery.internal._createDevices(database, devices)
             .then(() => {
-              expect(createDeviceSpy).toHaveBeenCalledTimes(devices.length)
+              expect(rpSpy).toHaveBeenCalledTimes(devices.length)
             })
         })
       })
