@@ -92,9 +92,8 @@ const _createDevices = (devices) => {
 const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
-  let deviceDatabase = req.deviceDb
   let userTriggered = req.query.user
-  module.exports.internal._discoverAllDevices(deviceDatabase, userTriggered)
+  module.exports.internal._discoverAllDevices(userTriggered)
     .then(devices => {
       logger.info('Successfully retrieved device(s) from the server', devices)
       res.status(200).send(devices)
@@ -164,15 +163,10 @@ const _discoverAllDevices = (userFlag) => {
 
           // Defines currentTemperature to be between 0 to 35 degrees celcius
           const deviceCurrentTemperature = _roundToOneDP(Math.random() * 35)
-          const deviceSerialId = _generateSerialId()
-          // If round produces 0 then activity is false and if 1 then activity is true
-          const deviceActivity = !!Math.round(Math.random())
 
           arrayOfDevices.push({
             name: deviceName,
-            currentTemperature: deviceCurrentTemperature,
-            serialId: deviceSerialId,
-            active: deviceActivity
+            currentTemperature: deviceCurrentTemperature
           })
         }
         logger.info('Created an array of devices', arrayOfDevices)
