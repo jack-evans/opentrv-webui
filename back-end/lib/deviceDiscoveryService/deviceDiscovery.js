@@ -12,16 +12,15 @@ let firstTimeCalled = true
 /**
  * POST /devices
  *
- * Request handler responsible for storing the basic information of the opentrv units in the IBM Cloudant database
+ * Request handler responsible for storing the basic information of the opentrv units
  * @param {Object} req - the HTTP request object
  * @param {Object} res - the HTTP response object
  */
 const createDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the createDeviceRequestHandler function', req.body)
 
-  let deviceDatabase = req.deviceDb
   const devices = req.body.devices
-  module.exports.internal._createDevices(deviceDatabase, devices)
+  module.exports.internal._createDevices(devices)
     .then(() => {
       logger.info('Successfully created device(s) in the Cloudant instance')
       res.status(201).end()
@@ -52,13 +51,12 @@ const createDeviceRequestHandler = (req, res) => {
 /**
  * _createDevices function
  *
- * Saves the basic information of the devices to the IBM Cloudant database instance
- * @param {Object} database - the device database
+ * Saves the basic information of the devices
  * @param {Array} devices - array of JSON objects retrieved from the opentrv server
- * @returns {Promise} on the action of saving device information to cloudant
+ * @returns {Promise} on the action of saving device information
  * @private
  */
-const _createDevices = (database, devices) => {
+const _createDevices = (devices) => {
   logger.info('Entered into the _createDevices internal function with', devices)
 
   if (!devices) {
@@ -75,9 +73,7 @@ const _createDevices = (database, devices) => {
       url: 'http://localhost:3002/api/v1/trv',
       method: 'POST',
       json: true,
-      body: {
-        trv: device
-      }
+      body: device
     }
     promises.push(rp(options))
   })
@@ -130,12 +126,11 @@ const discoverAllDevicesRequestHandler = (req, res) => {
  * _discoverAllDevices function
  *
  * Makes a call to the opentrv server that is connected to all the devices and retrieves the information of the devices
- * @param {Object} database - the device database
  * @param {Boolean} userFlag - determine if user triggers discovery or not
  * @returns {Promise} with an array of JSON objects on the action of retrieving the device information from the opentrv server
  * @private
  */
-const _discoverAllDevices = (database, userFlag) => {
+const _discoverAllDevices = (userFlag) => {
   logger.info('Entered into the _discoverAllDevices internal function', userFlag)
 
   let options = {
@@ -148,6 +143,7 @@ const _discoverAllDevices = (database, userFlag) => {
 
   let createDevicesCalled = false
 
+  logger.info('Making GET request to the gateway')
   return rp(options)
     .then(devices => {
       const numOfDevices = devices.length
@@ -156,7 +152,7 @@ const _discoverAllDevices = (database, userFlag) => {
         firstTimeCalled = false
         return Promise.resolve([])
       } else if (numOfDevices > 0) {
-        logger.info('Found devices in the database', devices)
+        logger.info('Found devices on the gateway', devices)
         return devices
       } else if (userFlag === true) {
         // Gives number of devices between 0 and 10
@@ -191,13 +187,13 @@ const _discoverAllDevices = (database, userFlag) => {
       } else {
         createDevicesCalled = true
         logger.info('Calling the _createDevices internal function with: ', devices)
-        return module.exports.internal._createDevices(database, devices)
+        return module.exports.internal._createDevices(devices)
       }
     })
     .then(devices => {
       if (createDevicesCalled) {
         logger.info('_createDevices internal function was called so now need to call the _discoverAllDevices internal function again')
-        return module.exports.internal._discoverAllDevices(database, false)
+        return module.exports.internal._discoverAllDevices('no')
       } else {
         return Promise.resolve(devices)
       }

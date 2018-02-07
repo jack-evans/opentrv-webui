@@ -1,8 +1,8 @@
 import toBeType from 'jest-tobetype'
 
 const httpMocks = require('node-mocks-http')
+const nock = require('nock')
 const Promise = require('bluebird')
-const rp = require('request-promise')
 expect.extend(toBeType)
 
 describe('deviceDiscovery.js', () => {
@@ -1010,7 +1010,9 @@ describe('deviceDiscovery.js', () => {
   })
 
   describe('internal functions', () => {
+    // URL for  the Gateway
     const GATEWAY_URL = 'http://localhost:3002'
+
     describe('_createDevices', () => {
       describe('when the devices array is undefined', () => {
         it('returns a 400 error', () => {
@@ -1024,53 +1026,56 @@ describe('deviceDiscovery.js', () => {
 
       describe('when the devices array is empty', () => {
         it('returns a resolved promise', () => {
-          return expect(deviceDiscovery.internal._createDevices(null, []))
+          return expect(deviceDiscovery.internal._createDevices([]))
             .resolves.toEqual([])
         })
       })
 
       describe('when the devices array is not empty', () => {
+        let count
         let postNock
-        let rpSpy
 
         beforeEach(() => {
-          postNock = nock(GATEWAY_URL)
-            .post('/api/v1/trv', {})
-            .reply(201, {})
+          nock.cleanAll()
+          count = 0
 
-          rpSpy = jest.spyOn(rp)
+          postNock = nock(GATEWAY_URL)
+            .persist()
+            .post('/api/v1/trv', {})
+            .reply(201, function () {
+              count += 1
+            })
         })
 
         afterEach(() => {
-          nock.cleanAll()
-          rpSpy.mockReset()
-          rpSpy.mockRestore()
+          postNock.persist(false)
         })
 
-        it('calls the createDevice method in the database for the number of devices', () => {
+        it('makes a POST request to the gateway for the number of devices', () => {
           const devices = [{}, {}, {}, {}]
-          return deviceDiscovery.internal._createDevices(database, devices)
+          return deviceDiscovery.internal._createDevices(devices)
             .then(() => {
-              expect(rpSpy).toHaveBeenCalledTimes(devices.length)
+              expect(count).toEqual(devices.length)
             })
         })
       })
     })
 
     describe('_discoverAllDevices', () => {
-      it('calls the getAllDevices database function', () => {
-        let fakeDB = {
-          getAllDevices: () => (Promise.resolve([]))
-        }
-
-        let getAllDevicesSpy = jest.spyOn(fakeDB, 'getAllDevices')
+      it('calls GET /trv on the gateway function', () => {
+        let count = 0
+        nock(GATEWAY_URL)
+          .get('/api/v1/trv')
+          .reply(200, function () {
+            count += 1
+            return []
+          })
 
         deviceDiscovery.internal._setFirstTimeCalled(true)
-        return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+        return deviceDiscovery.internal._discoverAllDevices()
           .then(() => {
-            expect(getAllDevicesSpy).toHaveBeenCalledTimes(1)
-            getAllDevicesSpy.mockReset()
-            getAllDevicesSpy.mockRestore()
+            expect(count).toEqual(1)
+            nock.cleanAll()
           })
       })
 
@@ -1081,13 +1086,14 @@ describe('deviceDiscovery.js', () => {
           })
 
           it('returns a resolved promise with an empty array in the body', () => {
-            let fakeDB = {
-              getAllDevices: () => (Promise.resolve([]))
-            }
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+            return deviceDiscovery.internal._discoverAllDevices()
               .then(result => {
                 expect(result).toBeType('array')
+                nock.cleanAll()
               })
           })
         })
@@ -1096,13 +1102,12 @@ describe('deviceDiscovery.js', () => {
           let mathRandomSpy
           let createDevicesSpy
           let discoverAllDevicesSpy
-          let returnedDevices
 
           beforeEach(() => {
             deviceDiscovery.internal._setFirstTimeCalled(false)
             mathRandomSpy = jest.spyOn(Math, 'random')
             discoverAllDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_discoverAllDevices')
-            createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices').mockImplementation((database, devices) => {
+            createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices').mockImplementation(devices => {
               discoverAllDevicesSpy.mockReturnValue(Promise.resolve(devices))
               return Promise.resolve(devices)
             })
@@ -1115,49 +1120,47 @@ describe('deviceDiscovery.js', () => {
             createDevicesSpy.mockRestore()
             discoverAllDevicesSpy.mockReset()
             discoverAllDevicesSpy.mockRestore()
+            nock.cleanAll()
           })
 
           it('returns a random number of devices', () => {
             mathRandomSpy.mockReturnValue(1)
-            let fakeDB = {
-              getAllDevices: () => (Promise.resolve([]))
-            }
 
-            let getAllDevicesSpy = jest.spyOn(fakeDB, 'getAllDevices')
-              .mockReturnValue(Promise.resolve(returnedDevices))
-              .mockReturnValueOnce(Promise.resolve([]))
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'yes')
+            return deviceDiscovery.internal._discoverAllDevices('yes')
               .then(result => {
                 expect(result.length).toEqual(10)
-                getAllDevicesSpy.mockReset()
-                getAllDevicesSpy.mockRestore()
               })
-          })
-
-          describe('when non of the above conditions are met', () => {
-            it('returns a resolved promise with an empty array in the body', () => {
-              deviceDiscovery.internal._setFirstTimeCalled(false)
-              let fakeDB = {
-                getAllDevices: () => (Promise.resolve([]))
-              }
-
-              return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'no')
-                .then(devices => {
-                  expect(devices.length).toEqual(0)
-                })
-            })
           })
 
           it('calls the createDevice internal function', () => {
             mathRandomSpy.mockReturnValue(1)
-            let fakeDB = {
-              getAllDevices: () => (Promise.resolve([]))
-            }
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'yes')
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
+
+            return deviceDiscovery.internal._discoverAllDevices('yes')
               .then(() => {
                 expect(createDevicesSpy).toHaveBeenCalledTimes(1)
+              })
+          })
+        })
+
+        describe('when none of the above conditions are met', () => {
+          it('returns a resolved promise with an empty array in the body', () => {
+            deviceDiscovery.internal._setFirstTimeCalled(false)
+
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
+
+            return deviceDiscovery.internal._discoverAllDevices('no')
+              .then(devices => {
+                expect(devices.length).toEqual(0)
               })
           })
         })
@@ -1165,13 +1168,14 @@ describe('deviceDiscovery.js', () => {
         describe('when getAllDevices returns a rejected promise', () => {
           it('returns a rejected promise in the error of the body', () => {
             expect.assertions(1)
-            let fakeDB = {
-              getAllDevices: () => (Promise.reject(new Error('Bang!')))
-            }
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'no')
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .replyWithError('Bang!')
+
+            return deviceDiscovery.internal._discoverAllDevices('no')
               .catch(error => {
-                expect(error.message).toEqual('Bang!')
+                expect(error.message).toEqual('Error: Bang!')
               })
           })
         })
@@ -1190,11 +1194,11 @@ describe('deviceDiscovery.js', () => {
             temp: 19
           }]
 
-          let fakeDB = {
-            getAllDevices: () => (Promise.resolve(arrayOfDevices))
-          }
+          nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, arrayOfDevices)
 
-          return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+          return deviceDiscovery.internal._discoverAllDevices()
             .then(result => {
               expect(result.length).toEqual(arrayOfDevices.length)
             })

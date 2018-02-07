@@ -106,7 +106,7 @@ class Overview extends Component {
       overviewContentClass += ' Overview__content-loading'
       overviewContent = (
         <div>
-          <div style={{'display': 'flex', 'justify-content': 'center'}}>
+          <div style={{'display': 'flex', 'justifyContent': 'center'}}>
             <Loading small withOverlay={false} />
           </div>
           <div>
