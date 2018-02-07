@@ -49,8 +49,8 @@ class Overview extends Component {
     const searchTerm = this.search.toLowerCase()
 
     return (
-      (device.doc.name.toLowerCase().indexOf(searchTerm) !== -1) ||
-      (device.doc.currentTemperature.toString().indexOf(searchTerm) !== -1)
+      (device.name.toLowerCase().indexOf(searchTerm) !== -1) ||
+      (device.currentTemperature.toString().indexOf(searchTerm) !== -1)
     )
   }
 
@@ -138,12 +138,12 @@ class Overview extends Component {
       overviewContent = this.state.visibleDevices.map(device => {
         return (
           <DeviceTile
-            key={device.doc.id}
-            id={device.doc.id}
-            name={device.doc.name}
-            temp={device.doc.currentTemperature}
-            active={device.doc.active}
-            handleDelete={() => { this.deleteDevice(device.doc.id) }}
+            key={device.id}
+            id={device.id}
+            name={device.name}
+            temp={device.currentTemperature}
+            active={device.active}
+            handleDelete={() => { this.deleteDevice(device.id) }}
           />
         )
       })
