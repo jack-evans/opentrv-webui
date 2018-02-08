@@ -209,8 +209,7 @@ const getDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the getDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  let database = req.deviceDb
-  module.exports.internal._getDevice(database, deviceId)
+  module.exports.internal._getDevice(deviceId)
     .then(device => {
       logger.info('Successfully retrieved device from the cloudant database', device)
       res.status(200).send(device)
@@ -242,14 +241,20 @@ const getDeviceRequestHandler = (req, res) => {
  * _getDevice function
  *
  * Calls the device database to retrieve the device information
- * @param {Object} database - the device database
  * @param {String} deviceId - the id for the device document
  * @returns {Promise} on the action of retrieving the data from cloudant
  * @private
  */
-const _getDevice = (database, deviceId) => {
+const _getDevice = (deviceId) => {
   logger.info('Entered into the _getDevice internal function with device id:', deviceId)
-  return database.getDeviceInformation(deviceId)
+  let options = {
+    url: 'http://localhost:3002/api/v1/trv/' + deviceId,
+    method: 'GET',
+    json: true
+  }
+
+  logger.info('Making GET request to retrieve ' + deviceId + ' from the gateway')
+  return rp(options)
 }
 
 /**
@@ -316,8 +321,7 @@ const deleteDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the deleteDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  let database = req.deviceDb
-  module.exports.internal._deleteDevice(database, deviceId)
+  module.exports.internal._deleteDevice(deviceId)
     .then(() => {
       logger.info('Successfully deleted device from the cloudant database')
       res.status(204).end()
@@ -349,31 +353,20 @@ const deleteDeviceRequestHandler = (req, res) => {
  * deleteDevice function
  *
  * Calls the device database to delete a device from the database
- * @param {Object} database - the device database
  * @param {Array} deviceId - the id of the device to be deleted
  * @returns {Promise} on the action of deleting a device in cloudant
  * @private
  */
-const _deleteDevice = (database, deviceId) => {
+const _deleteDevice = (deviceId) => {
   logger.info('Entered into the _deleteDevice internal function with the device id: ', deviceId)
-  return database.deleteDevice(deviceId)
-}
 
-/**
- * _generateSerialId method
- *
- * Generates a 16 character alphanumeric unique string for the device
- * @returns {string} - "OTRV-" plus 16 alphanumeric values
- * @private
- */
-const _generateSerialId = () => {
-  let serialId = 'OTRV-'
-  const possibleValues = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-  for (let i = 0; i < 10; i++) {
-    serialId += possibleValues.charAt(Math.floor(Math.random() * possibleValues.length))
+  let options = {
+    url: 'http://localhost:3002/api/v1/trv/' + deviceId,
+    method: 'DELETE',
+    json: true
   }
-  return serialId
+  logger.info('Making DELETE request to remove ' + deviceId + ' from the gateway')
+  return rp(options)
 }
 
 /**
@@ -408,7 +401,6 @@ module.exports.internal = {
   _getDevice: _getDevice,
   _updateDevice: _updateDevice,
   _deleteDevice: _deleteDevice,
-  _generateSerialId: _generateSerialId,
   _roundToOneDP: _roundToOneDP,
   _setFirstTimeCalled: _setFirstTimeCalled
 }
