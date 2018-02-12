@@ -1,8 +1,7 @@
-'use strict'
-
 import toBeType from 'jest-tobetype'
 
 const httpMocks = require('node-mocks-http')
+const nock = require('nock')
 const Promise = require('bluebird')
 expect.extend(toBeType)
 
@@ -415,8 +414,6 @@ describe('deviceDiscovery.js', () => {
     let res
     let id = '1234'
 
-    const fakeDb = {}
-
     beforeEach(() => {
       req = httpMocks.createRequest({
         method: 'GET',
@@ -425,7 +422,6 @@ describe('deviceDiscovery.js', () => {
           id: id
         }
       })
-      req.deviceDb = fakeDb
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
       getDeviceSpy = jest.spyOn(deviceDiscovery.internal, '_getDevice')
     })
@@ -458,7 +454,7 @@ describe('deviceDiscovery.js', () => {
 
       res.on('end', () => {
         try {
-          expect(getDeviceSpy).toHaveBeenCalledWith(fakeDb, id)
+          expect(getDeviceSpy).toHaveBeenCalledWith(id)
           done()
         } catch (e) {
           done(e)
@@ -817,8 +813,6 @@ describe('deviceDiscovery.js', () => {
     let res
     let id = '1234'
 
-    const fakeDb = {}
-
     beforeEach(() => {
       req = httpMocks.createRequest({
         method: 'GET',
@@ -827,7 +821,6 @@ describe('deviceDiscovery.js', () => {
           id: id
         }
       })
-      req.deviceDb = fakeDb
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
       deleteDeviceSpy = jest.spyOn(deviceDiscovery.internal, '_deleteDevice')
     })
@@ -860,7 +853,7 @@ describe('deviceDiscovery.js', () => {
 
       res.on('end', () => {
         try {
-          expect(deleteDeviceSpy).toHaveBeenCalledWith(fakeDb, id)
+          expect(deleteDeviceSpy).toHaveBeenCalledWith(id)
           done()
         } catch (e) {
           done(e)
@@ -1011,6 +1004,9 @@ describe('deviceDiscovery.js', () => {
   })
 
   describe('internal functions', () => {
+    // URL for  the Gateway
+    const GATEWAY_URL = 'http://localhost:3002'
+
     describe('_createDevices', () => {
       describe('when the devices array is undefined', () => {
         it('returns a 400 error', () => {
@@ -1024,50 +1020,56 @@ describe('deviceDiscovery.js', () => {
 
       describe('when the devices array is empty', () => {
         it('returns a resolved promise', () => {
-          return expect(deviceDiscovery.internal._createDevices(null, []))
+          return expect(deviceDiscovery.internal._createDevices([]))
             .resolves.toEqual([])
         })
       })
 
       describe('when the devices array is not empty', () => {
-        let database
-        let createDeviceSpy
+        let count
+        let postNock
 
         beforeEach(() => {
-          database = {
-            createDevice: () => {}
-          }
-          createDeviceSpy = jest.spyOn(database, 'createDevice').mockReturnValue(Promise.resolve())
+          nock.cleanAll()
+          count = 0
+
+          postNock = nock(GATEWAY_URL)
+            .persist()
+            .post('/api/v1/trv', {})
+            .reply(201, function () {
+              count += 1
+            })
         })
 
         afterEach(() => {
-          createDeviceSpy.mockReset()
+          postNock.persist(false)
         })
 
-        it('calls the createDevice method in the database for the number of devices', () => {
+        it('makes a POST request to the gateway for the number of devices', () => {
           const devices = [{}, {}, {}, {}]
-          return deviceDiscovery.internal._createDevices(database, devices)
+          return deviceDiscovery.internal._createDevices(devices)
             .then(() => {
-              expect(createDeviceSpy).toHaveBeenCalledTimes(devices.length)
+              expect(count).toEqual(devices.length)
             })
         })
       })
     })
 
     describe('_discoverAllDevices', () => {
-      it('calls the getAllDevices database function', () => {
-        let fakeDB = {
-          getAllDevices: () => (Promise.resolve([]))
-        }
-
-        let getAllDevicesSpy = jest.spyOn(fakeDB, 'getAllDevices')
+      it('calls GET /trv on the gateway function', () => {
+        let count = 0
+        nock(GATEWAY_URL)
+          .get('/api/v1/trv')
+          .reply(200, function () {
+            count += 1
+            return []
+          })
 
         deviceDiscovery.internal._setFirstTimeCalled(true)
-        return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+        return deviceDiscovery.internal._discoverAllDevices()
           .then(() => {
-            expect(getAllDevicesSpy).toHaveBeenCalledTimes(1)
-            getAllDevicesSpy.mockReset()
-            getAllDevicesSpy.mockRestore()
+            expect(count).toEqual(1)
+            nock.cleanAll()
           })
       })
 
@@ -1078,13 +1080,14 @@ describe('deviceDiscovery.js', () => {
           })
 
           it('returns a resolved promise with an empty array in the body', () => {
-            let fakeDB = {
-              getAllDevices: () => (Promise.resolve([]))
-            }
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+            return deviceDiscovery.internal._discoverAllDevices()
               .then(result => {
                 expect(result).toBeType('array')
+                nock.cleanAll()
               })
           })
         })
@@ -1093,13 +1096,12 @@ describe('deviceDiscovery.js', () => {
           let mathRandomSpy
           let createDevicesSpy
           let discoverAllDevicesSpy
-          let returnedDevices
 
           beforeEach(() => {
             deviceDiscovery.internal._setFirstTimeCalled(false)
             mathRandomSpy = jest.spyOn(Math, 'random')
             discoverAllDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_discoverAllDevices')
-            createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices').mockImplementation((database, devices) => {
+            createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices').mockImplementation(devices => {
               discoverAllDevicesSpy.mockReturnValue(Promise.resolve(devices))
               return Promise.resolve(devices)
             })
@@ -1112,49 +1114,47 @@ describe('deviceDiscovery.js', () => {
             createDevicesSpy.mockRestore()
             discoverAllDevicesSpy.mockReset()
             discoverAllDevicesSpy.mockRestore()
+            nock.cleanAll()
           })
 
           it('returns a random number of devices', () => {
             mathRandomSpy.mockReturnValue(1)
-            let fakeDB = {
-              getAllDevices: () => (Promise.resolve([]))
-            }
 
-            let getAllDevicesSpy = jest.spyOn(fakeDB, 'getAllDevices')
-              .mockReturnValue(Promise.resolve(returnedDevices))
-              .mockReturnValueOnce(Promise.resolve([]))
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'yes')
+            return deviceDiscovery.internal._discoverAllDevices('yes')
               .then(result => {
                 expect(result.length).toEqual(10)
-                getAllDevicesSpy.mockReset()
-                getAllDevicesSpy.mockRestore()
               })
-          })
-
-          describe('when non of the above conditions are met', () => {
-            it('returns a resolved promise with an empty array in the body', () => {
-              deviceDiscovery.internal._setFirstTimeCalled(false)
-              let fakeDB = {
-                getAllDevices: () => (Promise.resolve([]))
-              }
-
-              return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'no')
-                .then(devices => {
-                  expect(devices.length).toEqual(0)
-                })
-            })
           })
 
           it('calls the createDevice internal function', () => {
             mathRandomSpy.mockReturnValue(1)
-            let fakeDB = {
-              getAllDevices: () => (Promise.resolve([]))
-            }
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'yes')
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
+
+            return deviceDiscovery.internal._discoverAllDevices('yes')
               .then(() => {
                 expect(createDevicesSpy).toHaveBeenCalledTimes(1)
+              })
+          })
+        })
+
+        describe('when none of the above conditions are met', () => {
+          it('returns a resolved promise with an empty array in the body', () => {
+            deviceDiscovery.internal._setFirstTimeCalled(false)
+
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, [])
+
+            return deviceDiscovery.internal._discoverAllDevices('no')
+              .then(devices => {
+                expect(devices.length).toEqual(0)
               })
           })
         })
@@ -1162,13 +1162,14 @@ describe('deviceDiscovery.js', () => {
         describe('when getAllDevices returns a rejected promise', () => {
           it('returns a rejected promise in the error of the body', () => {
             expect.assertions(1)
-            let fakeDB = {
-              getAllDevices: () => (Promise.reject(new Error('Bang!')))
-            }
 
-            return deviceDiscovery.internal._discoverAllDevices(fakeDB, 'no')
+            nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .replyWithError('Bang!')
+
+            return deviceDiscovery.internal._discoverAllDevices('no')
               .catch(error => {
-                expect(error.message).toEqual('Bang!')
+                expect(error.message).toEqual('Error: Bang!')
               })
           })
         })
@@ -1187,11 +1188,11 @@ describe('deviceDiscovery.js', () => {
             temp: 19
           }]
 
-          let fakeDB = {
-            getAllDevices: () => (Promise.resolve(arrayOfDevices))
-          }
+          nock(GATEWAY_URL)
+              .get('/api/v1/trv')
+              .reply(200, arrayOfDevices)
 
-          return deviceDiscovery.internal._discoverAllDevices(fakeDB)
+          return deviceDiscovery.internal._discoverAllDevices()
             .then(result => {
               expect(result.length).toEqual(arrayOfDevices.length)
             })
@@ -1200,36 +1201,31 @@ describe('deviceDiscovery.js', () => {
     })
 
     describe('_getDevice', () => {
-      let getDeviceInformationSpy
-      let fakeDatabase
-
       beforeEach(() => {
-        fakeDatabase = {
-          getDeviceInformation: () => {}
-        }
-        getDeviceInformationSpy = jest.spyOn(fakeDatabase, 'getDeviceInformation')
-      })
-
-      afterEach(() => {
-        getDeviceInformationSpy.mockReset()
-        getDeviceInformationSpy.mockRestore()
+        nock.cleanAll()
       })
 
       it('calls the getDeviceInformation method', () => {
-        getDeviceInformationSpy.mockReturnValue(Promise.resolve())
-        return deviceDiscovery.internal._getDevice(fakeDatabase, '1234')
+        let count = 0
+        nock(GATEWAY_URL)
+          .get('/api/v1/trv/1234')
+          .reply(200, function () {
+            count += 1
+          })
+
+        return deviceDiscovery.internal._getDevice('1234')
           .then(() => {
-            expect(getDeviceInformationSpy).toHaveBeenCalledTimes(1)
+            expect(count).toEqual(1)
           })
       })
 
       describe('when the getDeviceInformation returns a resolved promise with some contents', () => {
-        beforeEach(() => {
-          getDeviceInformationSpy.mockReturnValue(Promise.resolve({content: 'some content'}))
-        })
-
         it('returns the resolved promise with the content', () => {
-          return deviceDiscovery.internal._getDevice(fakeDatabase, '1234')
+          nock(GATEWAY_URL)
+            .get('/api/v1/trv/1234')
+            .reply(200, {content: 'some content'})
+
+          return deviceDiscovery.internal._getDevice('1234')
             .then(data => {
               expect(data).toBeType('object')
             })
@@ -1237,15 +1233,14 @@ describe('deviceDiscovery.js', () => {
       })
 
       describe('when the getDeviceInformation returns a rejected promise with an error in the body', () => {
-        beforeEach(() => {
-          getDeviceInformationSpy.mockReturnValue(Promise.reject(new Error('bang')))
-        })
-
         it('returns the error in the body of the rejected promise', () => {
+          nock(GATEWAY_URL)
+            .get('/api/v1/trv/1234')
+            .replyWithError('Bang!')
           expect.assertions(1)
-          return deviceDiscovery.internal._getDevice(fakeDatabase, '1234')
+          return deviceDiscovery.internal._getDevice('1234')
             .catch(error => {
-              expect(error.message).toEqual('bang')
+              expect(error.message).toEqual('Error: Bang!')
             })
         })
       })
@@ -1301,87 +1296,46 @@ describe('deviceDiscovery.js', () => {
     })
 
     describe('_deleteDevice', () => {
-      let deleteDeviceSpy
-      let fakeDatabase
-
       beforeEach(() => {
-        fakeDatabase = {
-          deleteDevice: () => {}
-        }
-        deleteDeviceSpy = jest.spyOn(fakeDatabase, 'deleteDevice')
-      })
-
-      afterEach(() => {
-        deleteDeviceSpy.mockReset()
-        deleteDeviceSpy.mockRestore()
+        nock.cleanAll()
       })
 
       it('calls the deleteDevice method', () => {
-        deleteDeviceSpy.mockReturnValue(Promise.resolve())
-        return deviceDiscovery.internal._deleteDevice(fakeDatabase, '1234')
+        let count = 0
+        nock(GATEWAY_URL)
+          .delete('/api/v1/trv/1234')
+          .reply(204, function () {
+            count += 1
+          })
+
+        return deviceDiscovery.internal._deleteDevice('1234')
           .then(() => {
-            expect(deleteDeviceSpy).toHaveBeenCalledTimes(1)
+            expect(count).toEqual(1)
           })
       })
 
       describe('when the deleteDevice method returns a resolved promise', () => {
-        beforeEach(() => {
-          deleteDeviceSpy.mockReturnValue(Promise.resolve({content: 'some content'}))
-        })
-
         it('returns the resolved promise', () => {
-          return deviceDiscovery.internal._deleteDevice(fakeDatabase, '1234')
+          nock(GATEWAY_URL)
+            .delete('/api/v1/trv/1234')
+            .reply(204)
+
+          return deviceDiscovery.internal._deleteDevice('1234')
         })
       })
 
       describe('when the deleteDevice method returns a rejected promise with an error in the body', () => {
-        beforeEach(() => {
-          deleteDeviceSpy.mockReturnValue(Promise.reject(new Error('bang')))
-        })
-
         it('returns the error in the body of the rejected promise', () => {
+          nock(GATEWAY_URL)
+            .delete('/api/v1/trv/1234')
+            .replyWithError('Bang!')
+
           expect.assertions(1)
-          return deviceDiscovery.internal._deleteDevice(fakeDatabase, '1234')
+          return deviceDiscovery.internal._deleteDevice('1234')
             .catch(error => {
-              expect(error.message).toEqual('bang')
+              expect(error.message).toEqual('Error: Bang!')
             })
         })
-      })
-    })
-
-    describe('_generateSerialId', () => {
-      let mathRandomSpy
-
-      beforeEach(() => {
-        mathRandomSpy = jest.spyOn(Math, 'random')
-      })
-
-      afterEach(() => {
-        mathRandomSpy.mockReset()
-      })
-
-      afterAll(() => {
-        mathRandomSpy.mockRestore()
-      })
-
-      it('returns a string', () => {
-        const serialId = deviceDiscovery.internal._generateSerialId()
-        expect(serialId).toBeType('string')
-      })
-
-      it('returns a string 15 characters long', () => {
-        const serialId = deviceDiscovery.internal._generateSerialId()
-        expect(serialId.length).toEqual(15)
-      })
-
-      it('returns a string with OTRV- at the start', () => {
-        const serialId = deviceDiscovery.internal._generateSerialId()
-        expect(serialId.startsWith('OTRV-')).toBe(true)
-      })
-
-      it('calls math.random 10 times', () => {
-        deviceDiscovery.internal._generateSerialId()
-        expect(mathRandomSpy).toHaveBeenCalledTimes(10)
       })
     })
 

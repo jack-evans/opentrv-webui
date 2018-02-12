@@ -38,7 +38,14 @@ ShallowWrapper {
           className="Overview__content Overview__content-loading"
         >
           <div>
-            <div>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                  "justifyContent": "center",
+                }
+              }
+            >
               <Loading
                 active={true}
                 small={true}
@@ -126,7 +133,14 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": <div>
-            <div>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                  "justifyContent": "center",
+                }
+              }
+            >
               <Loading
                 active={true}
                 small={true}
@@ -146,7 +160,14 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              <div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  }
+                }
+              >
                 <Loading
                   active={true}
                   small={true}
@@ -170,6 +191,10 @@ ShallowWrapper {
                   small={true}
                   withOverlay={false}
                 />,
+                "style": Object {
+                  "display": "flex",
+                  "justifyContent": "center",
+                },
               },
               "ref": null,
               "rendered": Object {
@@ -233,7 +258,14 @@ ShallowWrapper {
             className="Overview__content Overview__content-loading"
           >
             <div>
-              <div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  }
+                }
+              >
                 <Loading
                   active={true}
                   small={true}
@@ -321,7 +353,14 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": <div>
-              <div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  }
+                }
+              >
                 <Loading
                   active={true}
                   small={true}
@@ -341,7 +380,14 @@ ShallowWrapper {
             "nodeType": "host",
             "props": Object {
               "children": Array [
-                <div>
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
                   <Loading
                     active={true}
                     small={true}
@@ -365,6 +411,10 @@ ShallowWrapper {
                     small={true}
                     withOverlay={false}
                   />,
+                  "style": Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  },
                 },
                 "ref": null,
                 "rendered": Object {

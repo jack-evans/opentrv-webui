@@ -3,6 +3,7 @@
 // Device request helper
 const bunyan = require('bunyan')
 const Promise = require('bluebird')
+const rp = require('request-promise')
 
 const logger = bunyan.createLogger({name: 'device-discovery-service', serializers: bunyan.stdSerializers})
 
@@ -11,16 +12,15 @@ let firstTimeCalled = true
 /**
  * POST /devices
  *
- * Request handler responsible for storing the basic information of the opentrv units in the IBM Cloudant database
+ * Request handler responsible for storing the basic information of the opentrv units
  * @param {Object} req - the HTTP request object
  * @param {Object} res - the HTTP response object
  */
 const createDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the createDeviceRequestHandler function', req.body)
 
-  let deviceDatabase = req.deviceDb
   const devices = req.body.devices
-  module.exports.internal._createDevices(deviceDatabase, devices)
+  module.exports.internal._createDevices(devices)
     .then(() => {
       logger.info('Successfully created device(s) in the Cloudant instance')
       res.status(201).end()
@@ -51,13 +51,12 @@ const createDeviceRequestHandler = (req, res) => {
 /**
  * _createDevices function
  *
- * Saves the basic information of the devices to the IBM Cloudant database instance
- * @param {Object} database - the device database
+ * Saves the basic information of the devices
  * @param {Array} devices - array of JSON objects retrieved from the opentrv server
- * @returns {Promise} on the action of saving device information to cloudant
+ * @returns {Promise} on the action of saving device information
  * @private
  */
-const _createDevices = (database, devices) => {
+const _createDevices = (devices) => {
   logger.info('Entered into the _createDevices internal function with', devices)
 
   if (!devices) {
@@ -70,7 +69,13 @@ const _createDevices = (database, devices) => {
 
   let promises = []
   devices.forEach((device) => {
-    promises.push(database.createDevice(device))
+    let options = {
+      url: 'http://localhost:3002/api/v1/trv',
+      method: 'POST',
+      json: true,
+      body: device
+    }
+    promises.push(rp(options))
   })
 
   return Promise.all(promises)
@@ -87,9 +92,8 @@ const _createDevices = (database, devices) => {
 const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
-  let deviceDatabase = req.deviceDb
   let userTriggered = req.query.user
-  module.exports.internal._discoverAllDevices(deviceDatabase, userTriggered)
+  module.exports.internal._discoverAllDevices(userTriggered)
     .then(devices => {
       logger.info('Successfully retrieved device(s) from the server', devices)
       res.status(200).send(devices)
@@ -121,18 +125,25 @@ const discoverAllDevicesRequestHandler = (req, res) => {
  * _discoverAllDevices function
  *
  * Makes a call to the opentrv server that is connected to all the devices and retrieves the information of the devices
- * @param {Object} database - the device database
  * @param {Boolean} userFlag - determine if user triggers discovery or not
  * @returns {Promise} with an array of JSON objects on the action of retrieving the device information from the opentrv server
  * @private
  */
-const _discoverAllDevices = (database, userFlag) => {
+const _discoverAllDevices = (userFlag) => {
   logger.info('Entered into the _discoverAllDevices internal function', userFlag)
+
+  let options = {
+    url: 'http://localhost:3002/api/v1/trv',
+    method: 'GET',
+    json: true
+  }
 
   userFlag = userFlag === 'yes'
 
   let createDevicesCalled = false
-  return database.getAllDevices()
+
+  logger.info('Making GET request to the gateway')
+  return rp(options)
     .then(devices => {
       const numOfDevices = devices.length
 
@@ -140,7 +151,7 @@ const _discoverAllDevices = (database, userFlag) => {
         firstTimeCalled = false
         return Promise.resolve([])
       } else if (numOfDevices > 0) {
-        logger.info('Found devices in the database', devices)
+        logger.info('Found devices on the gateway', devices)
         return devices
       } else if (userFlag === true) {
         // Gives number of devices between 0 and 10
@@ -152,15 +163,10 @@ const _discoverAllDevices = (database, userFlag) => {
 
           // Defines currentTemperature to be between 0 to 35 degrees celcius
           const deviceCurrentTemperature = _roundToOneDP(Math.random() * 35)
-          const deviceSerialId = _generateSerialId()
-          // If round produces 0 then activity is false and if 1 then activity is true
-          const deviceActivity = !!Math.round(Math.random())
 
           arrayOfDevices.push({
             name: deviceName,
-            currentTemperature: deviceCurrentTemperature,
-            serialId: deviceSerialId,
-            active: deviceActivity
+            currentTemperature: deviceCurrentTemperature
           })
         }
         logger.info('Created an array of devices', arrayOfDevices)
@@ -175,13 +181,13 @@ const _discoverAllDevices = (database, userFlag) => {
       } else {
         createDevicesCalled = true
         logger.info('Calling the _createDevices internal function with: ', devices)
-        return module.exports.internal._createDevices(database, devices)
+        return module.exports.internal._createDevices(devices)
       }
     })
     .then(devices => {
       if (createDevicesCalled) {
         logger.info('_createDevices internal function was called so now need to call the _discoverAllDevices internal function again')
-        return module.exports.internal._discoverAllDevices(database, false)
+        return module.exports.internal._discoverAllDevices('no')
       } else {
         return Promise.resolve(devices)
       }
@@ -203,8 +209,7 @@ const getDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the getDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  let database = req.deviceDb
-  module.exports.internal._getDevice(database, deviceId)
+  module.exports.internal._getDevice(deviceId)
     .then(device => {
       logger.info('Successfully retrieved device from the cloudant database', device)
       res.status(200).send(device)
@@ -236,14 +241,20 @@ const getDeviceRequestHandler = (req, res) => {
  * _getDevice function
  *
  * Calls the device database to retrieve the device information
- * @param {Object} database - the device database
  * @param {String} deviceId - the id for the device document
  * @returns {Promise} on the action of retrieving the data from cloudant
  * @private
  */
-const _getDevice = (database, deviceId) => {
+const _getDevice = (deviceId) => {
   logger.info('Entered into the _getDevice internal function with device id:', deviceId)
-  return database.getDeviceInformation(deviceId)
+  let options = {
+    url: 'http://localhost:3002/api/v1/trv/' + deviceId,
+    method: 'GET',
+    json: true
+  }
+
+  logger.info('Making GET request to retrieve ' + deviceId + ' from the gateway')
+  return rp(options)
 }
 
 /**
@@ -310,8 +321,7 @@ const deleteDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the deleteDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  let database = req.deviceDb
-  module.exports.internal._deleteDevice(database, deviceId)
+  module.exports.internal._deleteDevice(deviceId)
     .then(() => {
       logger.info('Successfully deleted device from the cloudant database')
       res.status(204).end()
@@ -343,31 +353,20 @@ const deleteDeviceRequestHandler = (req, res) => {
  * deleteDevice function
  *
  * Calls the device database to delete a device from the database
- * @param {Object} database - the device database
  * @param {Array} deviceId - the id of the device to be deleted
  * @returns {Promise} on the action of deleting a device in cloudant
  * @private
  */
-const _deleteDevice = (database, deviceId) => {
+const _deleteDevice = (deviceId) => {
   logger.info('Entered into the _deleteDevice internal function with the device id: ', deviceId)
-  return database.deleteDevice(deviceId)
-}
 
-/**
- * _generateSerialId method
- *
- * Generates a 16 character alphanumeric unique string for the device
- * @returns {string} - "OTRV-" plus 16 alphanumeric values
- * @private
- */
-const _generateSerialId = () => {
-  let serialId = 'OTRV-'
-  const possibleValues = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-  for (let i = 0; i < 10; i++) {
-    serialId += possibleValues.charAt(Math.floor(Math.random() * possibleValues.length))
+  let options = {
+    url: 'http://localhost:3002/api/v1/trv/' + deviceId,
+    method: 'DELETE',
+    json: true
   }
-  return serialId
+  logger.info('Making DELETE request to remove ' + deviceId + ' from the gateway')
+  return rp(options)
 }
 
 /**
@@ -402,7 +401,6 @@ module.exports.internal = {
   _getDevice: _getDevice,
   _updateDevice: _updateDevice,
   _deleteDevice: _deleteDevice,
-  _generateSerialId: _generateSerialId,
   _roundToOneDP: _roundToOneDP,
   _setFirstTimeCalled: _setFirstTimeCalled
 }
