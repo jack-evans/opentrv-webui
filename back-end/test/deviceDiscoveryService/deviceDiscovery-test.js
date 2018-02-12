@@ -1205,7 +1205,7 @@ describe('deviceDiscovery.js', () => {
         nock.cleanAll()
       })
 
-      it('calls the getDeviceInformation method', () => {
+      it('calls the gateway', () => {
         let count = 0
         nock(GATEWAY_URL)
           .get('/api/v1/trv/1234')
@@ -1251,7 +1251,7 @@ describe('deviceDiscovery.js', () => {
         nock.cleanAll()
       })
 
-      it('calls the updateDevice method', () => {
+      it('calls the gateway', () => {
         let count = 0
         nock(GATEWAY_URL)
           .put('/api/v1/trv/1234')
@@ -1295,7 +1295,7 @@ describe('deviceDiscovery.js', () => {
         nock.cleanAll()
       })
 
-      it('calls the deleteDevice method', () => {
+      it('calls the gateway', () => {
         let count = 0
         nock(GATEWAY_URL)
           .delete('/api/v1/trv/1234')
