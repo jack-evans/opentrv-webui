@@ -57,7 +57,9 @@ class DevicePanel extends Component {
           </div>
           <div className='DevicePanel__content'>
             <div className='DevicePanel__basic-info'>
-              hello
+              <div className='DevicePanel__serial-id'>
+                <h3>Device Serial Number: </h3>
+              </div>
             </div>
           </div>
         </div>
