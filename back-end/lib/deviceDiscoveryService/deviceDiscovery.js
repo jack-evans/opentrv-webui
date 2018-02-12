@@ -161,7 +161,7 @@ const _discoverAllDevices = (userFlag) => {
         for (let i = 0; i < randomNumberOfDevices; i++) {
           const deviceName = `Device ${i + 1}`
 
-          // Defines currentTemperature to be between 0 to 35 degrees celcius
+          // Defines currentTemperature to be between 10 to 35 degrees celcius
           const deviceCurrentTemperature = _roundToOneDP((Math.random() * 25) + 10)
 
           arrayOfDevices.push({
