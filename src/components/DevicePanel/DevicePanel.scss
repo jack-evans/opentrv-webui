@@ -9,7 +9,7 @@
   }
 
   .DevicePanel__content {
-    display: flex;
+    display: grid;
     justify-content: center;
     padding-top: 30px;    
 
@@ -20,10 +20,30 @@
       padding-left: 20px;
       padding-right: 20px;
 
-      .DevicePanel__serial-id {
+      h3 {
+        border-bottom: 2px solid $ui-03;
+        display: flex;
+        justify-self: flex-start;
+        padding-bottom: 5px;
+        padding-left: 30px;
+        padding-top: 10px;
+      }
+
+
+      .DevicePanel__serial-id .DevicePanel__name {
         display: flex;
         justify-self: flex-start;
         padding: 20px 30px 10px 30px;
+      }
+    }
+
+    .DevicePanel__buttons {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 15px;
+
+      .DevicePanel__cancel-button .DevicePanel__save-button {
+        width: 100px;
       }
     }
   }
