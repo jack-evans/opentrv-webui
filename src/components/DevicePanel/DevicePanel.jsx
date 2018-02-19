@@ -12,6 +12,9 @@ class DevicePanel extends Component {
       device: {}
     }
     this.deviceId = props.match.params.id
+
+    this.saveOnClickEvent = this.handleSaveOnClick.bind(this)
+    this.deviceNameChangeEvent = this.handleDeviceNameChangeEvent.bind(this)
   }
 
   componentDidMount () {
@@ -28,6 +31,26 @@ class DevicePanel extends Component {
         statusText: device.active ? 'Active' : 'Idle'
       })
     })
+  }
+
+  handleSaveOnClick () {
+    let device = this.state.device
+    return axios({
+      url: `/api/v1/devices/${device.id}`,
+      method: 'PUT',
+      json: 'true',
+      data: {
+        device: device
+      }
+    }).then(() => {
+      this.forceUpdate()
+    })
+  }
+
+  handleDeviceNameChangeEvent (event) {
+    let device = this.state.device
+    device.name = event.target.value
+    this.setState({device: device})
   }
 
   /**
@@ -62,7 +85,8 @@ class DevicePanel extends Component {
                 <TextInput
                   id='device-name'
                   labelText='Device Name'
-                  defaultValue={this.state.device.name}
+                  value={this.state.device.name}
+                  onChange={this.deviceNameChangeEvent}
                 />
               </div>
               <div className='DevicePanel__serial-id' style={{paddingTop: '10px'}}>
@@ -81,7 +105,10 @@ class DevicePanel extends Component {
               >
                 Cancel
               </Button>
-              <Button className='DevicePanel__save-button'>
+              <Button
+                className='DevicePanel__save-button'
+                onClick={this.saveOnClickEvent}
+              >
                 Save
               </Button>
             </div>
