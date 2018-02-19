@@ -1205,7 +1205,7 @@ describe('deviceDiscovery.js', () => {
         nock.cleanAll()
       })
 
-      it('calls the getDeviceInformation method', () => {
+      it('calls the gateway', () => {
         let count = 0
         nock(GATEWAY_URL)
           .get('/api/v1/trv/1234')
@@ -1247,49 +1247,44 @@ describe('deviceDiscovery.js', () => {
     })
 
     describe('_updateDevice', () => {
-      let updateDeviceSpy
-      let fakeDatabase
-
       beforeEach(() => {
-        fakeDatabase = {
-          updateDevice: () => {}
-        }
-        updateDeviceSpy = jest.spyOn(fakeDatabase, 'updateDevice')
+        nock.cleanAll()
       })
 
-      afterEach(() => {
-        updateDeviceSpy.mockReset()
-        updateDeviceSpy.mockRestore()
-      })
+      it('calls the gateway', () => {
+        let count = 0
+        nock(GATEWAY_URL)
+          .put('/api/v1/trv/1234')
+          .reply(200, function () {
+            count += 1
+          })
 
-      it('calls the updateDevice method', () => {
-        updateDeviceSpy.mockReturnValue(Promise.resolve())
-        return deviceDiscovery.internal._updateDevice(fakeDatabase, {content: 'some content'})
+        return deviceDiscovery.internal._updateDevice({id: '1234', content: 'some content'})
           .then(() => {
-            expect(updateDeviceSpy).toHaveBeenCalledTimes(1)
+            expect(count).toEqual(1)
           })
       })
 
       describe('when the updateDevice method returns a resolved promise', () => {
-        beforeEach(() => {
-          updateDeviceSpy.mockReturnValue(Promise.resolve({content: 'some content'}))
-        })
-
         it('returns the resolved promise', () => {
-          return deviceDiscovery.internal._updateDevice(fakeDatabase, {content: 'some content'})
+          nock(GATEWAY_URL)
+            .put('/api/v1/trv/1234')
+            .reply(200)
+
+          return deviceDiscovery.internal._updateDevice({id: '1234', content: 'some content'})
         })
       })
 
       describe('when the updateDevice method returns a rejected promise with an error in the body', () => {
-        beforeEach(() => {
-          updateDeviceSpy.mockReturnValue(Promise.reject(new Error('bang')))
-        })
-
         it('returns the error in the body of the rejected promise', () => {
+          nock(GATEWAY_URL)
+            .put('/api/v1/trv/1234')
+            .replyWithError('Bang!')
+
           expect.assertions(1)
-          return deviceDiscovery.internal._updateDevice(fakeDatabase, {content: 'bad content'})
+          return deviceDiscovery.internal._updateDevice({id: '1234', content: 'bad content'})
             .catch(error => {
-              expect(error.message).toEqual('bang')
+              expect(error.message).toEqual('Error: Bang!')
             })
         })
       })
@@ -1300,7 +1295,7 @@ describe('deviceDiscovery.js', () => {
         nock.cleanAll()
       })
 
-      it('calls the deleteDevice method', () => {
+      it('calls the gateway', () => {
         let count = 0
         nock(GATEWAY_URL)
           .delete('/api/v1/trv/1234')

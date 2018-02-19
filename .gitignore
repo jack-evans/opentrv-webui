@@ -9,6 +9,9 @@
 # production
 /build
 
+# webpack analysis
+stat.json
+
 # misc
 .DS_Store
 .env.local

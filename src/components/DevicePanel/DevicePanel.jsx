@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Breadcrumb, BreadcrumbItem, DetailPageHeader, Icon } from 'carbon-components-react'
+import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, TextInput } from 'carbon-components-react'
 import axios from 'axios'
 
 class DevicePanel extends Component {
@@ -7,9 +7,9 @@ class DevicePanel extends Component {
     super(props)
     this.state = {
       isLoading: true,
-      statusColor: '#5aa700',
-      statusText: 'Active',
-      deviceName: ''
+      statusColor: '',
+      statusText: '',
+      device: {}
     }
     this.deviceId = props.match.params.id
   }
@@ -23,14 +23,10 @@ class DevicePanel extends Component {
       let device = response.data
       this.setState({
         isLoading: false,
-        deviceName: device.name
+        device: device,
+        statusColor: device.active ? '#5aa700' : '#e71d32',
+        statusText: device.active ? 'Active' : 'Idle'
       })
-      if (!device.active) {
-        this.setState({
-          statusColor: '#e71d32',
-          statusText: 'Idle'
-        })
-      }
     })
   }
 
@@ -45,18 +41,51 @@ class DevicePanel extends Component {
       return null
     } else {
       return (
-        <div>
-          <DetailPageHeader
-            title={this.state.deviceName}
-            statusColor={this.state.statusColor}
-            statusText={this.state.statusText}>
-            <Icon name='devices' />
-            <Breadcrumb>
-              <BreadcrumbItem href='/'>
-                Device Overview
-              </BreadcrumbItem>
-            </Breadcrumb>
-          </DetailPageHeader>
+        <div className='DevicePanel'>
+          <div className='DevicePanel__header'>
+            <DetailPageHeader
+              title={this.state.device.name}
+              statusColor={this.state.statusColor}
+              statusText={this.state.statusText}>
+              <Icon name='devices' />
+              <Breadcrumb>
+                <BreadcrumbItem href='/'>
+                  Device Overview
+                </BreadcrumbItem>
+              </Breadcrumb>
+            </DetailPageHeader>
+          </div>
+          <div className='DevicePanel__content'>
+            <div className='DevicePanel__basic-info'>
+              <h3>Basic Information</h3>
+              <div className='DevicePanel__name' style={{paddingTop: '10px'}}>
+                <TextInput
+                  id='device-name'
+                  labelText='Device Name'
+                  defaultValue={this.state.device.name}
+                />
+              </div>
+              <div className='DevicePanel__serial-id' style={{paddingTop: '10px'}}>
+                <TextInput
+                  disabled
+                  id='device-serial-number'
+                  labelText='Device Serial Number'
+                  defaultValue={this.state.device.serialId}
+                />
+              </div>
+            </div>
+            <div className='DevicePanel__buttons'>
+              <Button
+                kind='secondary'
+                className='DevicePanel__cancel-button'
+              >
+                Cancel
+              </Button>
+              <Button className='DevicePanel__save-button'>
+                Save
+              </Button>
+            </div>
+          </div>
         </div>
       )
     }

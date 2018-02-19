@@ -161,8 +161,8 @@ const _discoverAllDevices = (userFlag) => {
         for (let i = 0; i < randomNumberOfDevices; i++) {
           const deviceName = `Device ${i + 1}`
 
-          // Defines currentTemperature to be between 0 to 35 degrees celcius
-          const deviceCurrentTemperature = _roundToOneDP(Math.random() * 35)
+          // Defines currentTemperature to be between 10 to 35 degrees celcius
+          const deviceCurrentTemperature = _roundToOneDP((Math.random() * 25) + 10)
 
           arrayOfDevices.push({
             name: deviceName,
@@ -268,8 +268,7 @@ const updateDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the updateDeviceRequestHandler function')
 
   let device = req.body.device
-  let database = req.deviceDb
-  module.exports.internal._updateDevice(database, device)
+  module.exports.internal._updateDevice(device)
     .then(() => {
       logger.info('Successfully updated device document in the cloudant database')
       res.status(200).end()
@@ -300,14 +299,22 @@ const updateDeviceRequestHandler = (req, res) => {
 /**
  * _updateDevice function
  *
- * Calls the device database to update the device information in cloudant with the data provided
- * @param {Object} database - the device database
+ * Calls the device database to update the device information with the data provided
  * @param {Object} device - data of the device to update with
  * @returns {Promise} on the action of updating device information to cloudant
  */
-const _updateDevice = (database, device) => {
+const _updateDevice = (device) => {
   logger.info('Entered into the _updateDevice internal function with the device: ', device)
-  return database.updateDevice(device)
+
+  let options = {
+    url: 'http://localhost:3002/api/v1/trv/' + device.id,
+    method: 'PUT',
+    json: true,
+    body: device
+  }
+
+  logger.info('Making PUT request to the internet gateway')
+  return rp(options)
 }
 
 /**

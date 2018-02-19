@@ -65,7 +65,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom --coverage",
     "test-no-coverage": "node scripts/test.js --env=jsdom",
-    "test-travis": "yarn lint && node scripts/test.js --env=jsdom --coverage --updateSnapshot"
+    "test-travis": "yarn lint && node scripts/test.js --env=jsdom --coverage --updateSnapshot",
+    "bundle-analysis": "webpack --config './config/webpack.config.prod.js' --json > stat.json"
   },
   "proxy": "http://localhost:3001",
   "jest": {
