@@ -59,16 +59,11 @@ class DevicePanel extends Component {
       json: 'true'
     }).then(response => {
       let devices = response.data
-      console.log('devices', devices)
 
       devices = devices.filter((trv) => trv.id !== device.id)
 
-      console.log('devices after filter', devices)
       for (let i = 0; i < devices.length; i++) {
-        console.log('devices name', devices[i].name)
-        console.log('changed name', changedName)
         if (devices[i].name === changedName) {
-          console.log('here')
           this.setState({
             invalid: {
               id: 'device-name',
