@@ -9,7 +9,8 @@ class DevicePanel extends Component {
       isLoading: true,
       statusColor: '',
       statusText: '',
-      device: {}
+      device: {},
+      invalid: {}
     }
     this.deviceId = props.match.params.id
 
@@ -49,8 +50,40 @@ class DevicePanel extends Component {
 
   handleDeviceNameChangeEvent (event) {
     let device = this.state.device
-    device.name = event.target.value
-    this.setState({device: device})
+
+    let changedName = event.target.value
+
+    return axios({
+      url: `/api/v1/devices`,
+      method: 'GET',
+      json: 'true'
+    }).then(response => {
+      let devices = response.data
+      console.log('devices', devices)
+
+      devices = devices.filter((trv) => trv.id !== device.id)
+
+      console.log('devices after filter', devices)
+      for (let i = 0; i < devices.length; i++) {
+        console.log('devices name', devices[i].name)
+        console.log('changed name', changedName)
+        if (devices[i].name === changedName) {
+          console.log('here')
+          this.setState({
+            invalid: {
+              id: 'device-name',
+              reason: 'The device name already exists'
+            }
+          })
+          break
+        } else if (this.state.invalid.id === 'device-name') {
+          this.setState({invalid: {}})
+        }
+      }
+
+      device.name = changedName
+      this.setState({device: device})
+    })
   }
 
   /**
@@ -87,6 +120,8 @@ class DevicePanel extends Component {
                   labelText='Device Name'
                   value={this.state.device.name}
                   onChange={this.deviceNameChangeEvent}
+                  invalid={this.state.invalid.id === 'device-name'}
+                  invalidText={this.state.invalid.reason}
                 />
               </div>
               <div className='DevicePanel__serial-id' style={{paddingTop: '10px'}}>
