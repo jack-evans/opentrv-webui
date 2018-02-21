@@ -17,6 +17,7 @@ class DevicePanel extends Component {
     this.originalDeviceName = ''
 
     this.saveOnClickEvent = this.handleSaveOnClick.bind(this)
+    this.cancelOnClickEvent = this.handleCancelOnClick.bind(this)
     this.deviceNameChangeEvent = this.handleDeviceNameChangeEvent.bind(this)
   }
 
@@ -49,6 +50,12 @@ class DevicePanel extends Component {
     }).then(() => {
       this.forceUpdate()
     })
+  }
+
+  handleCancelOnClick () {
+    let device = this.state.device
+    device.name = this.originalDeviceName
+    this.setState({device: device})
   }
 
   handleDeviceNameChangeEvent (event) {
@@ -141,6 +148,7 @@ class DevicePanel extends Component {
               <Button
                 kind='secondary'
                 className='DevicePanel__cancel-button'
+                onClick={this.cancelOnClickEvent}
                 disabled={this.state.isDisabled}
               >
                 Cancel
