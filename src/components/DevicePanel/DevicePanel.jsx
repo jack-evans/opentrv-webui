@@ -7,12 +7,14 @@ class DevicePanel extends Component {
     super(props)
     this.state = {
       isLoading: true,
+      isDisabled: true,
       statusColor: '',
       statusText: '',
       device: {},
       invalid: {}
     }
     this.deviceId = props.match.params.id
+    this.originalDeviceName = ''
 
     this.saveOnClickEvent = this.handleSaveOnClick.bind(this)
     this.deviceNameChangeEvent = this.handleDeviceNameChangeEvent.bind(this)
@@ -25,6 +27,7 @@ class DevicePanel extends Component {
       json: 'true'
     }).then(response => {
       let device = response.data
+      this.originalDeviceName = device.name
       this.setState({
         isLoading: false,
         device: device,
@@ -74,6 +77,12 @@ class DevicePanel extends Component {
         } else if (this.state.invalid.id === 'device-name') {
           this.setState({invalid: {}})
         }
+      }
+
+      if (this.originalDeviceName === nameToChangeTo) {
+        this.setState({isDisabled: true})
+      } else {
+        this.setState({isDisabled: false})
       }
 
       device.name = nameToChangeTo
@@ -132,12 +141,14 @@ class DevicePanel extends Component {
               <Button
                 kind='secondary'
                 className='DevicePanel__cancel-button'
+                disabled={this.state.isDisabled}
               >
                 Cancel
               </Button>
               <Button
                 className='DevicePanel__save-button'
                 onClick={this.saveOnClickEvent}
+                disabled={this.state.isDisabled}
               >
                 Save
               </Button>
