@@ -11,6 +11,14 @@ router.get('/devices/:id', deviceDiscoveryService.getDeviceRequestHandler)
 router.put('/devices/:id', deviceDiscoveryService.updateDeviceRequestHandler)
 router.delete('/devices/:id', deviceDiscoveryService.deleteDeviceRequestHandler)
 
+// UserService
+// router.post('/user')
+// router.get('/user/:id')
+// router.put('/user/:id')
+// router.delete('/user/:id')
+
+// AuthenticationService
+
 router.get('/test', (req, res) => {
   res.status(200).send({'time': new Date(), 'name': packageJson.name, 'version': packageJson.version})
 })
