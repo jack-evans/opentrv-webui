@@ -51,7 +51,7 @@ class DevicePanel extends Component {
   handleDeviceNameChangeEvent (event) {
     let device = this.state.device
 
-    let changedName = event.target.value
+    let nameToChangeTo = event.target.value
 
     return axios({
       url: `/api/v1/devices`,
@@ -63,7 +63,7 @@ class DevicePanel extends Component {
       devices = devices.filter((trv) => trv.id !== device.id)
 
       for (let i = 0; i < devices.length; i++) {
-        if (devices[i].name === changedName) {
+        if (devices[i].name === nameToChangeTo) {
           this.setState({
             invalid: {
               id: 'device-name',
@@ -76,7 +76,7 @@ class DevicePanel extends Component {
         }
       }
 
-      device.name = changedName
+      device.name = nameToChangeTo
       this.setState({device: device})
     })
   }
