@@ -3,6 +3,15 @@ const bunyan = require('bunyan')
 
 const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.stdSerializers})
 
+
+const logFunctionEntry = (functionName, isInternalFunction, options) => {
+  let logMessage = 'Entered into the ' + functionName
+  if (isInternalFunction) {
+    logMessage += ' internal '
+  }
+  logMessage += 'function'
+  logger.info(logMessage, options)
+}
 /**
  * POST /user
  *
@@ -10,7 +19,7 @@ const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.st
  * @param {Object} res - the HTTP response object
  */
 const createUserRequestHandler = (req, res) => {
-
+  logFunctionEntry('createUserRequestHandler', false, undefined)
 }
 
 /**
@@ -21,7 +30,7 @@ const createUserRequestHandler = (req, res) => {
  * @private
  */
 const _createUser = (userDB, user) => {
-
+  logFunctionEntry('_createUser', true, user)
 }
 
 /**
@@ -31,7 +40,7 @@ const _createUser = (userDB, user) => {
  * @param {Object} res - the HTTP response object
  */
 const getUserRequestHandler = (req, res) => {
-
+  logFunctionEntry('getUserRequestHandler', false, undefined)
 }
 
 /**
@@ -42,7 +51,7 @@ const getUserRequestHandler = (req, res) => {
  * @private
  */
 const _getUser = (userDB, userId) => {
-
+  logFunctionEntry('_getUser', true, {userId: userId})
 }
 
 /**
@@ -52,7 +61,7 @@ const _getUser = (userDB, userId) => {
  * @param {Object} res - the HTTP response object
  */
 const updateUserRequestHandler = (req, res) => {
-
+  logFunctionEntry('updateUserRequestHandler', false, undefined)
 }
 
 /**
@@ -63,7 +72,7 @@ const updateUserRequestHandler = (req, res) => {
  * @private
  */
 const _updateUser = (userDB, user) => {
-
+  logFunctionEntry('_updateUser', true, user)
 }
 
 /**
@@ -73,7 +82,7 @@ const _updateUser = (userDB, user) => {
  * @param {Object} res - the HTTP response object
  */
 const deleteUserRequestHandler = (req, res) => {
-
+  logFunctionEntry('deleteUserRequestHandler', false, undefined)
 }
 
 /**
@@ -84,7 +93,7 @@ const deleteUserRequestHandler = (req, res) => {
  * @private
  */
 const _deleteUser = (userDB, userId) => {
-
+  logFunctionEntry('_deleteUser', true, {userId: userId})
 }
 
 module.exports = {
