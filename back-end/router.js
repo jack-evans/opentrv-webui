@@ -1,8 +1,9 @@
 'use strict'
 
 const deviceDiscoveryService = require('./lib/deviceDiscoveryService/deviceDiscovery')
-const router = require('express').Router()
 const packageJson = require('../package.json')
+const router = require('express').Router()
+const userService = require('./lib/userService/user')
 
 // DeviceDiscoveryService
 router.post('/devices', deviceDiscoveryService.createDeviceRequestHandler)
@@ -12,10 +13,10 @@ router.put('/devices/:id', deviceDiscoveryService.updateDeviceRequestHandler)
 router.delete('/devices/:id', deviceDiscoveryService.deleteDeviceRequestHandler)
 
 // UserService
-// router.post('/user')
-// router.get('/user/:id')
-// router.put('/user/:id')
-// router.delete('/user/:id')
+router.post('/user', userService.createUserRequestHandler)
+router.get('/user/:id', userService.getUserRequestHandler)
+router.put('/user/:id', userService.updateUserRequestHandler)
+router.delete('/user/:id', userService.deleteUserRequestHandler)
 
 // AuthenticationService
 
