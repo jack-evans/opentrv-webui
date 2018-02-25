@@ -3,7 +3,6 @@ const bunyan = require('bunyan')
 
 const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.stdSerializers})
 
-
 const logFunctionEntry = (functionName, isInternalFunction, options) => {
   let logMessage = 'Entered into the ' + functionName
   if (isInternalFunction) {
