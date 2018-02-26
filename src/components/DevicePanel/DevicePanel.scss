@@ -14,11 +14,13 @@
     padding-top: 30px;    
 
     .DevicePanel__basic-info {
-      height: 400px;
-      width: 1200px;
       box-shadow: 1px 2px 4px 1px $ui-04;
+      height: 400px;
+      max-height: 400px;
+      max-width: 1200px;
       padding-left: 20px;
       padding-right: 20px;
+      width: 1200px;
 
       h3 {
         border-bottom: 2px solid $ui-03;
@@ -29,11 +31,24 @@
         padding-top: 10px;
       }
 
+      .DevicePanel__basic-info-left {
+        float: left;
+        height: 100%;
+        padding: 0 10px 0 10px;
+        width: 50%;
+        
+        .DevicePanel__serial-id .DevicePanel__name {
+          display: flex;
+          justify-self: flex-start;
+          padding: 30px 30px 10px 30px;
+        }
+      }
 
-      .DevicePanel__serial-id .DevicePanel__name {
-        display: flex;
-        justify-self: flex-start;
-        padding: 20px 30px 10px 30px;
+      .DevicePanel__basic-info-right {
+        float: right;
+        height: 100%;
+        padding: 0 10px 0 10px;
+        width: 50%;
       }
     }
 

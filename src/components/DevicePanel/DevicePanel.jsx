@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, TextInput } from 'carbon-components-react'
+import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, TextInput, Tile } from 'carbon-components-react'
 import axios from 'axios'
 
 class DevicePanel extends Component {
@@ -25,7 +25,7 @@ class DevicePanel extends Component {
     return axios({
       url: `/api/v1/devices/${this.deviceId}`,
       method: 'GET',
-      json: 'true'
+      json: true
     }).then(response => {
       let device = response.data
       this.originalDeviceName = device.name
@@ -43,7 +43,7 @@ class DevicePanel extends Component {
     return axios({
       url: `/api/v1/devices/${device.id}`,
       method: 'PUT',
-      json: 'true',
+      json: true,
       data: {
         device: device
       }
@@ -63,10 +63,22 @@ class DevicePanel extends Component {
 
     let nameToChangeTo = event.target.value
 
+    if (nameToChangeTo.length > 32) {
+      this.setState({
+        invalid: {
+          id: 'device-name',
+          reason: 'tooLong',
+          message: 'The device name is too long'
+        }
+      })
+    } else if (nameToChangeTo.length <= 32 && (this.state.invalid.id === 'device-name' && this.state.invalid.reason === 'tooLong')) {
+      this.setState({invalid: {}})
+    }
+
     return axios({
       url: `/api/v1/devices`,
       method: 'GET',
-      json: 'true'
+      json: true
     }).then(response => {
       let devices = response.data
 
@@ -77,16 +89,19 @@ class DevicePanel extends Component {
           this.setState({
             invalid: {
               id: 'device-name',
-              reason: 'The device name already exists'
+              reason: 'exists',
+              message: 'The device name already exists'
             }
           })
           break
-        } else if (this.state.invalid.id === 'device-name') {
+        } else if (this.state.invalid.id === 'device-name' && this.state.invalid.reason === 'exists') {
           this.setState({invalid: {}})
         }
       }
 
       if (this.originalDeviceName === nameToChangeTo) {
+        this.setState({isDisabled: true})
+      } else if (this.state.invalid.id) {
         this.setState({isDisabled: true})
       } else {
         this.setState({isDisabled: false})
@@ -125,23 +140,32 @@ class DevicePanel extends Component {
           <div className='DevicePanel__content'>
             <div className='DevicePanel__basic-info'>
               <h3>Basic Information</h3>
-              <div className='DevicePanel__name' style={{paddingTop: '10px'}}>
-                <TextInput
-                  id='device-name'
-                  labelText='Device Name'
-                  value={this.state.device.name}
-                  onChange={this.deviceNameChangeEvent}
-                  invalid={this.state.invalid.id === 'device-name'}
-                  invalidText={this.state.invalid.reason}
-                />
+              <div className='DevicePanel__basic-info-left'>
+                <div className='DevicePanel__name' style={{paddingTop: '10px'}}>
+                  <TextInput
+                    id='device-name'
+                    labelText='Device Name'
+                    value={this.state.device.name}
+                    onChange={this.deviceNameChangeEvent}
+                    invalid={this.state.invalid.id === 'device-name'}
+                    invalidText={this.state.invalid.message}
+                  />
+                </div>
+                <div className='DevicePanel__serial-id' style={{paddingTop: '10px'}}>
+                  <TextInput
+                    disabled
+                    id='device-serial-number'
+                    labelText='Device Serial Number'
+                    defaultValue={this.state.device.serialId}
+                  />
+                </div>
               </div>
-              <div className='DevicePanel__serial-id' style={{paddingTop: '10px'}}>
-                <TextInput
-                  disabled
-                  id='device-serial-number'
-                  labelText='Device Serial Number'
-                  defaultValue={this.state.device.serialId}
-                />
+              <div className='DevicePanel__basic-info-right'>
+                <div className='DevicePanel__current-temperature' style={{paddingTop: '10px'}}>
+                  <Tile>
+                    <h3>Current Temperature: {this.state.device.currentTemperature}&#176;C </h3>
+                  </Tile>
+                </div>
               </div>
             </div>
             <div className='DevicePanel__buttons'>
