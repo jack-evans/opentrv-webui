@@ -81,7 +81,7 @@ class Overview extends Component {
     return axios({
       url: `/api/v1/devices/${id}`,
       method: 'DELETE',
-      json: 'true'
+      json: true
     }).then(() => {
       return Overview.discoverDevices('no')
     }).then(retrievedDevices => {
