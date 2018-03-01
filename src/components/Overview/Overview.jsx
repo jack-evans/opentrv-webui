@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Loading, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
-import axios from 'axios'
 
 class Overview extends Component {
   constructor (props) {
@@ -24,7 +23,6 @@ class Overview extends Component {
     const tick = () => {
       return Overview.retrieveDevices()
         .then(devices => {
-          console.log('this: ', this)
           this.setState({
             devices: devices,
             visibleDevices: devices.filter(this.searchDevices),
@@ -79,18 +77,22 @@ class Overview extends Component {
   }
 
   deleteDevice (id) {
-    return axios({
-      url: `/api/v1/devices/${id}`,
+    let url = `/api/v1/devices/${id}`
+    let options = {
       method: 'DELETE',
       json: true
-    }).then(() => {
-      return Overview.discoverDevices('no')
-    }).then(retrievedDevices => {
-      this.setState({
-        devices: retrievedDevices,
-        visibleDevices: retrievedDevices
+    }
+
+    return global.fetch(url, options)
+      .then(() => {
+        return Overview.discoverDevices('no')
       })
-    })
+      .then(retrievedDevices => {
+        this.setState({
+          devices: retrievedDevices,
+          visibleDevices: retrievedDevices
+        })
+      })
   }
 
   /**

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, TextInput, Tile } from 'carbon-components-react'
-import axios from 'axios'
 
 class DevicePanel extends Component {
   constructor (props) {
@@ -22,34 +21,40 @@ class DevicePanel extends Component {
   }
 
   componentDidMount () {
-    return axios({
-      url: `/api/v1/devices/${this.deviceId}`,
+    let url = `/api/v1/devices/${this.deviceId}`
+    let options = {
       method: 'GET',
       json: true
-    }).then(response => {
-      let device = response.data
-      this.originalDeviceName = device.name
-      this.setState({
-        isLoading: false,
-        device: device,
-        statusColor: device.active ? '#5aa700' : '#e71d32',
-        statusText: device.active ? 'Active' : 'Idle'
+    }
+
+    return global.fetch(url, options)
+      .then(response => {
+        let device = response.data
+        this.originalDeviceName = device.name
+        this.setState({
+          isLoading: false,
+          device: device,
+          statusColor: device.active ? '#5aa700' : '#e71d32',
+          statusText: device.active ? 'Active' : 'Idle'
+        })
       })
-    })
   }
 
   handleSaveOnClick () {
     let device = this.state.device
-    return axios({
-      url: `/api/v1/devices/${device.id}`,
+    let url = `/api/v1/devices/${device.id}`
+    let options = {
       method: 'PUT',
       json: true,
       data: {
         device: device
       }
-    }).then(() => {
-      this.forceUpdate()
-    })
+    }
+
+    return global.fetch(url, options)
+      .then(() => {
+        this.forceUpdate()
+      })
   }
 
   handleCancelOnClick () {
@@ -75,41 +80,44 @@ class DevicePanel extends Component {
       this.setState({invalid: {}})
     }
 
-    return axios({
-      url: `/api/v1/devices`,
+    let url = `/api/v1/devices`
+    let options = {
       method: 'GET',
       json: true
-    }).then(response => {
-      let devices = response.data
+    }
 
-      devices = devices.filter((trv) => trv.id !== device.id)
+    return global.fetch(url, options)
+      .then(response => {
+        let devices = response.data
 
-      for (let i = 0; i < devices.length; i++) {
-        if (devices[i].name === nameToChangeTo) {
-          this.setState({
-            invalid: {
-              id: 'device-name',
-              reason: 'exists',
-              message: 'The device name already exists'
-            }
-          })
-          break
-        } else if (this.state.invalid.id === 'device-name' && this.state.invalid.reason === 'exists') {
-          this.setState({invalid: {}})
+        devices = devices.filter((trv) => trv.id !== device.id)
+
+        for (let i = 0; i < devices.length; i++) {
+          if (devices[i].name === nameToChangeTo) {
+            this.setState({
+              invalid: {
+                id: 'device-name',
+                reason: 'exists',
+                message: 'The device name already exists'
+              }
+            })
+            break
+          } else if (this.state.invalid.id === 'device-name' && this.state.invalid.reason === 'exists') {
+            this.setState({invalid: {}})
+          }
         }
-      }
 
-      if (this.originalDeviceName === nameToChangeTo) {
-        this.setState({isDisabled: true})
-      } else if (this.state.invalid.id) {
-        this.setState({isDisabled: true})
-      } else {
-        this.setState({isDisabled: false})
-      }
+        if (this.originalDeviceName === nameToChangeTo) {
+          this.setState({isDisabled: true})
+        } else if (this.state.invalid.id) {
+          this.setState({isDisabled: true})
+        } else {
+          this.setState({isDisabled: false})
+        }
 
-      device.name = nameToChangeTo
-      this.setState({device: device})
-    })
+        device.name = nameToChangeTo
+        this.setState({device: device})
+      })
   }
 
   /**
