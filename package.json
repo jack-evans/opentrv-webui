@@ -137,7 +137,7 @@
     "react-test-renderer": "^16.2.0",
     "sass-loader": "^6.0.6",
     "snazzy": "^7.0.0",
-    "standard": "^10.0.3",
+    "standard": "^11.0.0",
     "svgxuse": "^1.2.4"
   },
   "standard": {

@@ -163,7 +163,14 @@ class DevicePanel extends Component {
               <div className='DevicePanel__basic-info-right'>
                 <div className='DevicePanel__current-temperature' style={{paddingTop: '10px'}}>
                   <Tile>
-                    <h3>Current Temperature: {this.state.device.currentTemperature}&#176;C </h3>
+                    <h3>Current Temperature: </h3>
+                    <h3>{this.state.device.currentTemperature}&#176;C</h3>
+                  </Tile>
+                </div>
+                <div className='DevicePanel__ambient-temperature' style={{paddingTop: '10px'}}>
+                  <Tile>
+                    <h3>Ambient Temperature: </h3>
+                    <h3>{this.state.device.ambientTemperature}&#176;C</h3>
                   </Tile>
                 </div>
               </div>

@@ -33,19 +33,10 @@ ShallowWrapper {
             floatingMenu={false}
             iconDescription="open and close list of options"
             iconName="overflow-menu"
-            menuOffset={
-              Object {
-                "left": 60.5,
-                "top": 0,
-              }
-            }
-            menuOffsetFlip={
-              Object {
-                "left": -60.5,
-                "top": 0,
-              }
-            }
+            menuOffset={[Function]}
+            menuOffsetFlip={[Function]}
             onClick={[Function]}
+            onKeyDown={[Function]}
             open={false}
             tabIndex={0}
           >
@@ -136,19 +127,10 @@ ShallowWrapper {
             floatingMenu={false}
             iconDescription="open and close list of options"
             iconName="overflow-menu"
-            menuOffset={
-              Object {
-                "left": 60.5,
-                "top": 0,
-              }
-            }
-            menuOffsetFlip={
-              Object {
-                "left": -60.5,
-                "top": 0,
-              }
-            }
+            menuOffset={[Function]}
+            menuOffsetFlip={[Function]}
             onClick={[Function]}
+            onKeyDown={[Function]}
             open={false}
             tabIndex={0}
           >
@@ -195,15 +177,10 @@ ShallowWrapper {
             "floatingMenu": false,
             "iconDescription": "open and close list of options",
             "iconName": "overflow-menu",
-            "menuOffset": Object {
-              "left": 60.5,
-              "top": 0,
-            },
-            "menuOffsetFlip": Object {
-              "left": -60.5,
-              "top": 0,
-            },
+            "menuOffset": [Function],
+            "menuOffsetFlip": [Function],
             "onClick": [Function],
+            "onKeyDown": [Function],
             "open": false,
             "tabIndex": 0,
           },
@@ -502,19 +479,10 @@ ShallowWrapper {
               floatingMenu={false}
               iconDescription="open and close list of options"
               iconName="overflow-menu"
-              menuOffset={
-                Object {
-                  "left": 60.5,
-                  "top": 0,
-                }
-              }
-              menuOffsetFlip={
-                Object {
-                  "left": -60.5,
-                  "top": 0,
-                }
-              }
+              menuOffset={[Function]}
+              menuOffsetFlip={[Function]}
               onClick={[Function]}
+              onKeyDown={[Function]}
               open={false}
               tabIndex={0}
             >
@@ -605,19 +573,10 @@ ShallowWrapper {
               floatingMenu={false}
               iconDescription="open and close list of options"
               iconName="overflow-menu"
-              menuOffset={
-                Object {
-                  "left": 60.5,
-                  "top": 0,
-                }
-              }
-              menuOffsetFlip={
-                Object {
-                  "left": -60.5,
-                  "top": 0,
-                }
-              }
+              menuOffset={[Function]}
+              menuOffsetFlip={[Function]}
               onClick={[Function]}
+              onKeyDown={[Function]}
               open={false}
               tabIndex={0}
             >
@@ -664,15 +623,10 @@ ShallowWrapper {
               "floatingMenu": false,
               "iconDescription": "open and close list of options",
               "iconName": "overflow-menu",
-              "menuOffset": Object {
-                "left": 60.5,
-                "top": 0,
-              },
-              "menuOffsetFlip": Object {
-                "left": -60.5,
-                "top": 0,
-              },
+              "menuOffset": [Function],
+              "menuOffsetFlip": [Function],
               "onClick": [Function],
+              "onKeyDown": [Function],
               "open": false,
               "tabIndex": 0,
             },

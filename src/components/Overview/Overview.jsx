@@ -24,6 +24,7 @@ class Overview extends Component {
     const tick = () => {
       return Overview.retrieveDevices()
         .then(devices => {
+          console.log('this: ', this)
           this.setState({
             devices: devices,
             visibleDevices: devices.filter(this.searchDevices),
@@ -67,14 +68,14 @@ class Overview extends Component {
   }
 
   static discoverDevices (userFlag) {
+    let url = `/api/v1/devices?user=${userFlag}`
     let options = {
-      url: `/api/v1/devices?user=${userFlag}`,
       method: 'GET',
       json: true
     }
 
-    return axios(options)
-      .then(response => response.data)
+    return global.fetch(url, options)
+      .then(response => response.json())
   }
 
   deleteDevice (id) {
