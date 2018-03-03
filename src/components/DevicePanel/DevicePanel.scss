@@ -58,7 +58,7 @@ $device-panel-basic-info-width: 1200px;
         padding: 0 10px 0 10px;
         width: 50%;
         
-        .DevicePanel__serial-id .DevicePanel__name {
+        .DevicePanel__serial-id .DevicePanel__name .DevicePanel__target-temp {
           display: flex;
           justify-self: flex-start;
           padding: 30px 30px 10px 30px;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, TextInput, Tile } from 'carbon-components-react'
+import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, NumberInput, TextInput, Tile } from 'carbon-components-react'
 
 class DevicePanel extends Component {
   constructor (props) {
@@ -28,8 +28,8 @@ class DevicePanel extends Component {
     }
 
     return global.fetch(url, options)
-      .then(response => {
-        let device = response.data
+      .then(response => response.json())
+      .then(device => {
         this.originalDeviceName = device.name
         this.setState({
           isLoading: false,
@@ -149,7 +149,7 @@ class DevicePanel extends Component {
             <div className='DevicePanel__basic-info'>
               <h3>Basic Information</h3>
               <div className='DevicePanel__basic-info-left'>
-                <div className='DevicePanel__name' style={{paddingTop: '10px'}}>
+                <div className='DevicePanel__name' style={{paddingTop: '15px'}}>
                   <TextInput
                     id='device-name'
                     labelText='Device Name'
@@ -159,12 +159,22 @@ class DevicePanel extends Component {
                     invalidText={this.state.invalid.message}
                   />
                 </div>
-                <div className='DevicePanel__serial-id' style={{paddingTop: '10px'}}>
+                <div className='DevicePanel__serial-id' style={{paddingTop: '15px'}}>
                   <TextInput
                     disabled
                     id='device-serial-number'
                     labelText='Device Serial Number'
                     defaultValue={this.state.device.serialId}
+                  />
+                </div>
+                <div className='DevicePanel__target-temp' style={{paddingTop: '15px'}}>
+                  <NumberInput
+                    id='device-target-temperature'
+                    label='Device Target Temperature'
+                    min={10}
+                    max={35}
+                    step={0.2}
+                    value={this.state.device.ambientTemperature}
                   />
                 </div>
               </div>
