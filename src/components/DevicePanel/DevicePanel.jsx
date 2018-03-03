@@ -13,7 +13,7 @@ class DevicePanel extends Component {
       invalid: {}
     }
     this.deviceId = props.match.params.id
-    this.originalDeviceName = ''
+    this.originalDevice = {}
 
     this.saveOnClickEvent = this.handleSaveOnClick.bind(this)
     this.cancelOnClickEvent = this.handleCancelOnClick.bind(this)
@@ -30,7 +30,7 @@ class DevicePanel extends Component {
     return global.fetch(url, options)
       .then(response => response.json())
       .then(device => {
-        this.originalDeviceName = device.name
+        this.originalDevice = JSON.parse(JSON.stringify(device))
         this.setState({
           isLoading: false,
           device: device,
@@ -59,7 +59,7 @@ class DevicePanel extends Component {
 
   handleCancelOnClick () {
     let device = this.state.device
-    device.name = this.originalDeviceName
+    device = JSON.parse(JSON.stringify(this.originalDevice))
     this.setState({device: device})
   }
 
@@ -87,9 +87,8 @@ class DevicePanel extends Component {
     }
 
     return global.fetch(url, options)
-      .then(response => {
-        let devices = response.data
-
+      .then(response => response.json())
+      .then(devices => {
         devices = devices.filter((trv) => trv.id !== device.id)
 
         for (let i = 0; i < devices.length; i++) {
