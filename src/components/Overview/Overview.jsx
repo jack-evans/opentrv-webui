@@ -126,7 +126,7 @@ class Overview extends Component {
           </div>
           <div>
             <Button
-              className='Overview__discover_button'
+              className='Overview__discover-button'
               icon='add--outline'
               iconDescription='Find devices that are on your network'
               onClick={this.discoverDevicesButtonOnClick}
