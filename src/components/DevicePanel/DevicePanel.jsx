@@ -10,7 +10,7 @@ class DevicePanel extends Component {
       statusColor: '',
       statusText: '',
       device: {},
-      invalid: {}
+      invalid: []
     }
     this.deviceId = props.match.params.id
     this.originalDevice = {}
@@ -18,6 +18,7 @@ class DevicePanel extends Component {
     this.saveOnClickEvent = this.handleSaveOnClick.bind(this)
     this.cancelOnClickEvent = this.handleCancelOnClick.bind(this)
     this.deviceNameChangeEvent = this.handleDeviceNameChangeEvent.bind(this)
+    this.targetTempChangeEvent = this.handleTargetTemperatureChange.bind(this)
   }
 
   componentDidMount () {
@@ -63,19 +64,50 @@ class DevicePanel extends Component {
     this.setState({device: device})
   }
 
+  handleTargetTemperatureChange (event) {
+    // Handle both physical number input and button press at side of input box
+    let temperature = event.target.valueAsNumber || event.imaginaryTarget.valueAsNumber
+    let errors = this.state.invalid
+
+    if (isNaN(temperature)) {
+      errors.push({
+        id: 'device-target-temperature',
+        reason: 'NaN',
+        message: 'The value must be a number'
+      })
+      this.setState({
+        invalid: errors
+      })
+    } else {
+      if (errors.length > 0) {
+        errors.forEach((error, index) => {
+          if (error.id === 'device-target-temperature') {
+            errors = errors.splice(index, 1)
+          }
+        })
+      }
+
+      let device = this.state.device
+      device.targetTemperature = temperature
+      this.setState({
+        device: device
+      })
+    }
+  }
+
   handleDeviceNameChangeEvent (event) {
     let device = this.state.device
 
     let nameToChangeTo = event.target.value
 
     if (nameToChangeTo.length > 32) {
-      this.setState({
-        invalid: {
+      this.setState((prevState) => ({
+        invalid: prevState.invalid.push({
           id: 'device-name',
           reason: 'tooLong',
           message: 'The device name is too long'
-        }
-      })
+        })
+      }))
     } else if (nameToChangeTo.length <= 32 && (this.state.invalid.id === 'device-name' && this.state.invalid.reason === 'tooLong')) {
       this.setState({invalid: {}})
     }
@@ -117,6 +149,35 @@ class DevicePanel extends Component {
         device.name = nameToChangeTo
         this.setState({device: device})
       })
+  }
+
+  checkValid (id) {
+    let errors = this.state.invalid
+    let foundMatchingId = false
+
+    if (errors.length > 0) {
+      errors.forEach(error => {
+        if (error.id === id) {
+          foundMatchingId = true
+        }
+      })
+    }
+
+    return foundMatchingId
+  }
+
+  getErrorMessage (id) {
+    let errors = this.state.invalid
+    let errorMessage = ''
+
+    if (errors.length > 0) {
+      errors.forEach(error => {
+        if (error.id === id) {
+          errorMessage = error.message
+        }
+      })
+    }
+    return errorMessage
   }
 
   /**
@@ -174,6 +235,9 @@ class DevicePanel extends Component {
                     max={35}
                     step={0.2}
                     value={this.state.device.ambientTemperature}
+                    onChange={this.targetTempChangeEvent}
+                    invalid={this.checkValid('device-target-temperature')}
+                    invalidText={this.getErrorMessage('device-target-temperature')}
                   />
                 </div>
               </div>
