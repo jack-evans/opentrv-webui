@@ -11,6 +11,7 @@ const logFunctionEntry = (functionName, isInternalFunction, options) => {
   logMessage += 'function'
   logger.info(logMessage, options)
 }
+
 /**
  * POST /user
  *
@@ -19,6 +20,33 @@ const logFunctionEntry = (functionName, isInternalFunction, options) => {
  */
 const createUserRequestHandler = (req, res) => {
   logFunctionEntry('createUserRequestHandler', false, undefined)
+
+  module.exports.internal._createUser(req.userDb, req.body)
+    .then(() => {
+      logger.info('Successfully registered a new user')
+      res.status(201).end()
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the createUserRequestHandler function', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 409: {
+          logger.error('Encountered conflict in the createUserRequestHandler', error)
+          res.status(409).send(error)
+          break
+        }
+
+        case 500: {
+          logger.error('Encountered internal server error in the createUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
 }
 
 /**
@@ -40,6 +68,33 @@ const _createUser = (userDB, user) => {
  */
 const getUserRequestHandler = (req, res) => {
   logFunctionEntry('getUserRequestHandler', false, undefined)
+
+  module.exports.internal._getUser(req.userDb, req.params.id)
+    .then((user) => {
+      logger.info('Successfully registered a new user')
+      res.status(200).send(user)
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the getUserRequestHandler function', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the getUserRequestHandler', error)
+          res.status(404).send(error)
+          break
+        }
+
+        case 500: {
+          logger.error('Encountered internal server error in the getUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
 }
 
 /**
@@ -61,6 +116,39 @@ const _getUser = (userDB, userId) => {
  */
 const updateUserRequestHandler = (req, res) => {
   logFunctionEntry('updateUserRequestHandler', false, undefined)
+
+  module.exports.internal._updateUser(req.userDb, req.body)
+    .then((user) => {
+      logger.info('Successfully updated user')
+      res.status(200).send(user)
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the updateUserRequestHandler function', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the updateUserRequestHandler', error)
+          res.status(404).send(error)
+          break
+        }
+
+        case 409: {
+          logger.error('Encountered conflict in the updateUserRequestHandler', error)
+          res.status(409).send(error)
+          break
+        }
+
+        case 500: {
+          logger.error('Encountered internal server error in the updateUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
 }
 
 /**
@@ -82,6 +170,39 @@ const _updateUser = (userDB, user) => {
  */
 const deleteUserRequestHandler = (req, res) => {
   logFunctionEntry('deleteUserRequestHandler', false, undefined)
+
+  module.exports.internal._deleteUser(req.userDb, req.params.id)
+    .then((user) => {
+      logger.info('Successfully deleted user')
+      res.status(204).end()
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the deleteUserRequestHandler function', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the deleteUserRequestHandler', error)
+          res.status(404).send(error)
+          break
+        }
+
+        case 409: {
+          logger.error('Encountered conflict in the deleteUserRequestHandler', error)
+          res.status(409).send(error)
+          break
+        }
+
+        case 500: {
+          logger.error('Encountered internal server error in the deleteUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
 }
 
 /**
