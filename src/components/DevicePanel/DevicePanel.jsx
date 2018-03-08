@@ -10,7 +10,7 @@ class DevicePanel extends Component {
       statusColor: '',
       statusText: '',
       device: {},
-      invalid: []
+      invalid: {}
     }
     this.deviceId = props.match.params.id
     this.originalDevice = {}
@@ -70,28 +70,20 @@ class DevicePanel extends Component {
     let errors = this.state.invalid
 
     if (isNaN(temperature)) {
-      errors.push({
-        id: 'device-target-temperature',
+      errors['device-target-temperature'] = {
         reason: 'NaN',
         message: 'The value must be a number'
-      })
-      this.setState({
-        invalid: errors
-      })
+      }
+      this.setState({invalid: errors})
     } else {
-      if (errors.length > 0) {
-        errors.forEach((error, index) => {
-          if (error.id === 'device-target-temperature') {
-            errors = errors.splice(index, 1)
-          }
-        })
+      if (errors['device-target-temperature']) {
+        delete errors['device-target-temperature']
+        this.setState({invalid: errors})
       }
 
       let device = this.state.device
       device.targetTemperature = temperature
-      this.setState({
-        device: device
-      })
+      this.setState({device: device})
     }
   }
 
@@ -99,17 +91,19 @@ class DevicePanel extends Component {
     let device = this.state.device
 
     let nameToChangeTo = event.target.value
+    let errors = this.state.invalid
 
     if (nameToChangeTo.length > 32) {
-      this.setState((prevState) => ({
-        invalid: prevState.invalid.push({
-          id: 'device-name',
-          reason: 'tooLong',
-          message: 'The device name is too long'
-        })
-      }))
-    } else if (nameToChangeTo.length <= 32 && (this.state.invalid.id === 'device-name' && this.state.invalid.reason === 'tooLong')) {
-      this.setState({invalid: {}})
+      errors['device-name'] = {
+        reason: 'tooLong',
+        message: 'The device name is too long'
+      }
+      this.setState({invalid: errors})
+    } else {
+      if (errors['device-name'] && errors['device-name'].reason === 'tooLong') {
+        delete errors['device-name']
+      }
+      this.setState({invalid: errors})
     }
 
     let url = `/api/v1/devices`
@@ -125,22 +119,23 @@ class DevicePanel extends Component {
 
         for (let i = 0; i < devices.length; i++) {
           if (devices[i].name === nameToChangeTo) {
-            this.setState({
-              invalid: {
-                id: 'device-name',
-                reason: 'exists',
-                message: 'The device name already exists'
-              }
-            })
+            errors['device-name'] = {
+              reason: 'exists',
+              message: 'The device name already exists'
+            }
+            this.setState({invalid: errors})
             break
-          } else if (this.state.invalid.id === 'device-name' && this.state.invalid.reason === 'exists') {
-            this.setState({invalid: {}})
+          } else {
+            if (errors['device-name'] && errors['device-name'].reason === 'exists') {
+              delete errors['device-name']
+            }
+            this.setState({invalid: errors})
           }
         }
 
         if (this.originalDeviceName === nameToChangeTo) {
           this.setState({isDisabled: true})
-        } else if (this.state.invalid.id) {
+        } else if (this.state.invalid.length > 0) {
           this.setState({isDisabled: true})
         } else {
           this.setState({isDisabled: false})
@@ -155,14 +150,9 @@ class DevicePanel extends Component {
     let errors = this.state.invalid
     let foundMatchingId = false
 
-    if (errors.length > 0) {
-      errors.forEach(error => {
-        if (error.id === id) {
-          foundMatchingId = true
-        }
-      })
+    if (errors[id]) {
+      foundMatchingId = true
     }
-
     return foundMatchingId
   }
 
@@ -170,12 +160,8 @@ class DevicePanel extends Component {
     let errors = this.state.invalid
     let errorMessage = ''
 
-    if (errors.length > 0) {
-      errors.forEach(error => {
-        if (error.id === id) {
-          errorMessage = error.message
-        }
-      })
+    if (errors[id]) {
+      errorMessage = errors[id].message
     }
     return errorMessage
   }
@@ -215,8 +201,8 @@ class DevicePanel extends Component {
                     labelText='Device Name'
                     value={this.state.device.name}
                     onChange={this.deviceNameChangeEvent}
-                    invalid={this.state.invalid.id === 'device-name'}
-                    invalidText={this.state.invalid.message}
+                    invalid={this.checkValid('device-name')}
+                    invalidText={this.getErrorMessage('device-name')}
                   />
                 </div>
                 <div className='DevicePanel__serial-id' style={{paddingTop: '15px'}}>
