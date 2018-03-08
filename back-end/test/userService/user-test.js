@@ -495,7 +495,7 @@ describe('user.js', () => {
         userService.updateUserRequestHandler(req, res)
       })
 
-      it('returns the new user document', () => {
+      it('returns the new user document', (done) => {
         updateUserSpy.mockReturnValue(Promise.resolve(req.body))
 
         res.on('end', () => {
@@ -870,7 +870,7 @@ describe('user.js', () => {
             statusCode: 500,
             message: 'internal server error'
           }
-         deleteUserSpy.mockReturnValue(Promise.reject(error))
+          deleteUserSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
