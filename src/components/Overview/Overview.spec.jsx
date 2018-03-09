@@ -44,20 +44,21 @@ describe('Overview.jsx', () => {
       expect(wrapper.state('devices')).toEqual([])
     })
 
-    it.skip('sets the devices state to an array of devices when retrieve devices returns devices', () => {
-      getNock.reply(200, [{id: '1234'}])
+    it('sets the devices state to an array of devices when retrieve devices returns devices', () => {
+      let spy = jest.spyOn(Overview, 'retrieveDevices')
+        .mockReturnValueOnce(Promise.resolve([]))
+        .mockReturnValue(Promise.resolve([{id: '1234'}]))
       const wrapper = mount(<Overview />)
-      console.log(wrapper.debug())
 
       expect(wrapper.state('devices')).toEqual([])
       return Promise.resolve()
         .then(() => {
           jest.runAllTimers()
-          wrapper.update()
           let component = wrapper.instance()
           component.forceUpdate()
           console.log(wrapper.debug())
           expect(component.state.devices).toEqual([{id: '1234'}])
+          spy.mockRestore()
         })
     })
   })
