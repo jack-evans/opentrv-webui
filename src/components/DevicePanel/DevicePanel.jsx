@@ -85,6 +85,13 @@ class DevicePanel extends Component {
       device.targetTemperature = temperature
       this.setState({device: device})
     }
+    console.log('original:', this.originalDevice.targetTemperature)
+    console.log('new:', temperature)
+    if (this.originalDevice.targetTemperature === temperature) {
+      this.setState({isDisabled: true})
+    } else {
+      this.setState({isDisabled: false})
+    }
   }
 
   handleDeviceNameChangeEvent (event) {
@@ -133,9 +140,7 @@ class DevicePanel extends Component {
           }
         }
 
-        if (this.originalDeviceName === nameToChangeTo) {
-          this.setState({isDisabled: true})
-        } else if (this.state.invalid.length > 0) {
+        if (this.originalDevice.name === nameToChangeTo) {
           this.setState({isDisabled: true})
         } else {
           this.setState({isDisabled: false})
@@ -220,7 +225,7 @@ class DevicePanel extends Component {
                     min={10}
                     max={35}
                     step={0.2}
-                    value={this.state.device.ambientTemperature}
+                    value={this.state.device.targetTemperature}
                     onChange={this.targetTempChangeEvent}
                     invalid={this.checkValid('device-target-temperature')}
                     invalidText={this.getErrorMessage('device-target-temperature')}
