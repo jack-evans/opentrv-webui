@@ -44,11 +44,13 @@ class DevicePanel extends Component {
   handleSaveOnClick () {
     let device = this.state.device
     let url = `/api/v1/devices/${device.id}`
+
     let options = {
       method: 'PUT',
       json: true,
-      data: {
-        device: device
+      body: JSON.stringify(device),
+      headers: {
+        'content-type': 'application/json'
       }
     }
 

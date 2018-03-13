@@ -267,7 +267,7 @@ const _getDevice = (deviceId) => {
 const updateDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the updateDeviceRequestHandler function')
 
-  let device = req.body.device
+  let device = req.body
   module.exports.internal._updateDevice(device)
     .then(() => {
       logger.info('Successfully updated device document in the cloudant database')
