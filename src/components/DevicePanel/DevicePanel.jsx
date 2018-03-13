@@ -201,8 +201,7 @@ class DevicePanel extends Component {
               <h3>Basic Information</h3>
               <p>
                 The basic information for the TRV device is shown below.
-                In this panel you can rename the device to something more meaningful in terms of 
-                location of the device as well as set a temperature target for the device to increase to. 
+                In this panel you can rename the device as well as set a temperature target for the device to increase to.
               </p>
               <div className='DevicePanel__basic-info-left'>
                 <div className='DevicePanel__name' style={{paddingTop: '15px'}}>
