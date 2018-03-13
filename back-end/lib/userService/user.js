@@ -1,5 +1,6 @@
 
 const bunyan = require('bunyan')
+const Promise = require('bluebird')
 
 const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.stdSerializers})
 
@@ -58,6 +59,12 @@ const createUserRequestHandler = (req, res) => {
  */
 const _createUser = (userDB, user) => {
   logFunctionEntry('_createUser', true, user)
+
+  const userDocument = {
+
+  }
+
+  return userDB.createUser(userDocument)
 }
 
 /**
@@ -106,6 +113,34 @@ const getUserRequestHandler = (req, res) => {
  */
 const _getUser = (userDB, userId) => {
   logFunctionEntry('_getUser', true, {userId: userId})
+
+  let error = {}
+
+  if (!userId) {
+    error.statusCode = 400
+    error.message = 'The id provided was undefined'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  if (typeof userId !== 'string') {
+    error.statusCode = 400
+    error.message = 'The id provided was not in string format'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  // check uuid in following format [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
+  let regex = new RegExp('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+
+  if (!regex.test(userId)) {
+    error.statusCode = 400
+    error.message = 'Id did not match the following regex: ' + regex
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  return userDB.getUser(userId)
 }
 
 /**
@@ -214,17 +249,46 @@ const deleteUserRequestHandler = (req, res) => {
  */
 const _deleteUser = (userDB, userId) => {
   logFunctionEntry('_deleteUser', true, {userId: userId})
+
+  let error = {}
+
+  if (!userId) {
+    error.statusCode = 400
+    error.message = 'The id provided was undefined'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  if (typeof userId !== 'string') {
+    error.statusCode = 400
+    error.message = 'The id provided was not in string format'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  // check uuid in following format [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
+  let regex = new RegExp('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+
+  if (!regex.test(userId)) {
+    error.statusCode = 400
+    error.message = 'Id did not match the following regex: ' + regex
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  return userDB.deleteUser(userId)
 }
 
 module.exports = {
   createUserRequestHandler: createUserRequestHandler,
   getUserRequestHandler: getUserRequestHandler,
   updateUserRequestHandler: updateUserRequestHandler,
-  deleteUserRequestHandler: deleteUserRequestHandler,
-  internal: {
-    _createUser: _createUser,
-    _getUser: _getUser,
-    _updateUser: _updateUser,
-    _deleteUser: _deleteUser
-  }
+  deleteUserRequestHandler: deleteUserRequestHandler
+}
+
+module.exports.internal = {
+  _createUser: _createUser,
+  _getUser: _getUser,
+  _updateUser: _updateUser,
+  _deleteUser: _deleteUser
 }

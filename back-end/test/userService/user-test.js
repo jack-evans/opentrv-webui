@@ -38,6 +38,10 @@ describe('user.js', () => {
       createUserSpy.mockReset()
     })
 
+    afterAll(() => {
+      createUserSpy.mockRestore()
+    })
+
     it('calls the createUser internal function', (done) => {
       createUserSpy.mockReturnValue(Promise.resolve())
 
@@ -232,6 +236,10 @@ describe('user.js', () => {
 
     afterEach(() => {
       getUserSpy.mockReset()
+    })
+
+    afterAll(() => {
+      getUserSpy.mockRestore()
     })
 
     it('calls the getUser internal function', (done) => {
@@ -447,6 +455,10 @@ describe('user.js', () => {
 
     afterEach(() => {
       updateUserSpy.mockReset()
+    })
+
+    afterAll(() => {
+      updateUserSpy.mockRestore()
     })
 
     it('calls the updateUser internal function', (done) => {
@@ -696,6 +708,10 @@ describe('user.js', () => {
       deleteUserSpy.mockReset()
     })
 
+    afterAll(() => {
+      deleteUserSpy.mockRestore()
+    })
+
     it('calls the deleteUser internal function', (done) => {
       deleteUserSpy.mockReturnValue(Promise.resolve())
 
@@ -901,6 +917,269 @@ describe('user.js', () => {
           })
 
           userService.deleteUserRequestHandler(req, res)
+        })
+      })
+    })
+  })
+
+  describe('internal functions', () => {
+    describe('_getUser', () => {
+      let fakeDatabase
+      let getUserSpy
+
+      beforeEach(() => {
+        fakeDatabase = {
+          getUser: () => {}
+        }
+        getUserSpy = jest.spyOn(fakeDatabase, 'getUser')
+      })
+
+      afterEach(() => {
+        getUserSpy.mockReset()
+        getUserSpy.mockRestore()
+      })
+
+      describe('when the userId is undefined', () => {
+        it('does not call the getUser database method', () => {
+          expect.assertions(1)
+          return userService.internal._getUser(fakeDatabase, undefined)
+            .catch(() => {
+              expect(getUserSpy).toHaveBeenCalledTimes(0)
+            })
+        })
+
+        it('returns a rejected promise with an error', () => {
+          const expectedError = {
+            statusCode: 400,
+            message: 'The id provided was undefined',
+            name: 'bad request'
+          }
+          expect.assertions(1)
+          return userService.internal._getUser(fakeDatabase, undefined)
+            .catch(error => {
+              expect(error).toEqual(expectedError)
+            })
+        })
+      })
+
+      describe('when the userId is not a string', () => {
+        it('does not call the getUser database method', () => {
+          expect.assertions(1)
+          return userService.internal._getUser(fakeDatabase, 1234)
+            .catch(() => {
+              expect(getUserSpy).toHaveBeenCalledTimes(0)
+            })
+        })
+
+        it('returns a rejected promise with an error', () => {
+          const expectedError = {
+            statusCode: 400,
+            message: 'The id provided was not in string format',
+            name: 'bad request'
+          }
+          expect.assertions(1)
+          return userService.internal._getUser(fakeDatabase, 1234)
+            .catch(error => {
+              expect(error).toEqual(expectedError)
+            })
+        })
+      })
+
+      describe('when the userId does not match the regex', () => {
+        it('does not call the getUser database method', () => {
+          expect.assertions(1)
+          return userService.internal._getUser(fakeDatabase, '1234')
+            .catch(() => {
+              expect(getUserSpy).toHaveBeenCalledTimes(0)
+            })
+        })
+
+        it('returns a rejected promise with an error', () => {
+          const expectedError = {
+            statusCode: 400,
+            message: 'Id did not match the following regex: /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/',
+            name: 'bad request'
+          }
+          expect.assertions(1)
+          return userService.internal._getUser(fakeDatabase, '1234')
+            .catch(error => {
+              expect(error).toEqual(expectedError)
+            })
+        })
+      })
+
+      describe('the userId is valid', () => {
+        let regexSpy
+
+        beforeEach(() => {
+          regexSpy = jest.spyOn(RegExp.prototype, 'test').mockReturnValue(true)
+        })
+
+        afterEach(() => {
+          regexSpy.mockRestore()
+        })
+
+        it('calls the getUser database method', () => {
+          getUserSpy.mockReturnValue(Promise.resolve())
+          return userService.internal._getUser(fakeDatabase, '1234')
+            .then(() => {
+              expect(getUserSpy).toHaveBeenCalledTimes(1)
+            })
+        })
+
+        describe('when the getUser database method succeeds', () => {
+          const fakeUserDoc = {
+            id: '1234',
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            address: {
+              number: 12,
+              street: 'example street'
+            }
+          }
+
+          it('returns a resolved promise with the user document', () => {
+            getUserSpy.mockReturnValue(Promise.resolve(fakeUserDoc))
+            return userService.internal._getUser(fakeDatabase, '1234')
+              .then(userDoc => {
+                expect(userDoc).toEqual(fakeUserDoc)
+              })
+          })
+        })
+
+        describe('when the getUser database method fails', () => {
+          it('returns a rejected promise with the error in the body', () => {
+            expect.assertions(1)
+            getUserSpy.mockReturnValue(Promise.reject(new Error('Bang!')))
+            return userService.internal._getUser(fakeDatabase, '1234')
+              .catch(error => {
+                expect(error.message).toEqual('Bang!')
+              })
+          })
+        })
+      })
+    })
+
+    describe('_deleteUser', () => {
+      let fakeDatabase
+      let deleteUserSpy
+
+      beforeEach(() => {
+        fakeDatabase = {
+          deleteUser: () => {}
+        }
+        deleteUserSpy = jest.spyOn(fakeDatabase, 'deleteUser')
+      })
+
+      afterEach(() => {
+        deleteUserSpy.mockReset()
+        deleteUserSpy.mockRestore()
+      })
+
+      describe('when the userId is undefined', () => {
+        it('does not call the deleteUser database method', () => {
+          expect.assertions(1)
+          return userService.internal._deleteUser(fakeDatabase, undefined)
+            .catch(() => {
+              expect(deleteUserSpy).toHaveBeenCalledTimes(0)
+            })
+        })
+
+        it('returns a rejected promise with an error', () => {
+          const expectedError = {
+            statusCode: 400,
+            message: 'The id provided was undefined',
+            name: 'bad request'
+          }
+          expect.assertions(1)
+          return userService.internal._deleteUser(fakeDatabase, undefined)
+            .catch(error => {
+              expect(error).toEqual(expectedError)
+            })
+        })
+      })
+
+      describe('when the userId is not a string', () => {
+        it('does not call the deleteUser database method', () => {
+          expect.assertions(1)
+          return userService.internal._deleteUser(fakeDatabase, 1234)
+            .catch(() => {
+              expect(deleteUserSpy).toHaveBeenCalledTimes(0)
+            })
+        })
+
+        it('returns a rejected promise with an error', () => {
+          const expectedError = {
+            statusCode: 400,
+            message: 'The id provided was not in string format',
+            name: 'bad request'
+          }
+          expect.assertions(1)
+          return userService.internal._deleteUser(fakeDatabase, 1234)
+            .catch(error => {
+              expect(error).toEqual(expectedError)
+            })
+        })
+      })
+
+      describe('when the userId does not match the regex', () => {
+        it('does not call the deleteUser database method', () => {
+          expect.assertions(1)
+          return userService.internal._deleteUser(fakeDatabase, '1234')
+            .catch(() => {
+              expect(deleteUserSpy).toHaveBeenCalledTimes(0)
+            })
+        })
+
+        it('returns a rejected promise with an error', () => {
+          const expectedError = {
+            statusCode: 400,
+            message: 'Id did not match the following regex: /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/',
+            name: 'bad request'
+          }
+          expect.assertions(1)
+          return userService.internal._deleteUser(fakeDatabase, '1234')
+            .catch(error => {
+              expect(error).toEqual(expectedError)
+            })
+        })
+      })
+
+      describe('the userId is valid', () => {
+        let regexSpy
+
+        beforeEach(() => {
+          regexSpy = jest.spyOn(RegExp.prototype, 'test').mockReturnValue(true)
+        })
+
+        afterEach(() => {
+          regexSpy.mockRestore()
+        })
+
+        it('calls the deleteUser database method', () => {
+          deleteUserSpy.mockReturnValue(Promise.resolve())
+          return userService.internal._deleteUser(fakeDatabase, '1234')
+            .then(() => {
+              expect(deleteUserSpy).toHaveBeenCalledTimes(1)
+            })
+        })
+
+        describe('when the deleteUser database method succeeds', () => {
+          it('returns a resolved promise', () => {
+            deleteUserSpy.mockReturnValue(Promise.resolve())
+            return userService.internal._deleteUser(fakeDatabase, '1234')
+          })
+        })
+
+        describe('when the deleteUser database method fails', () => {
+          it('returns a rejected promise with the error in the body', () => {
+            expect.assertions(1)
+            deleteUserSpy.mockReturnValue(Promise.reject(new Error('Bang!')))
+            return userService.internal._deleteUser(fakeDatabase, '1234')
+              .catch(error => {
+                expect(error.message).toEqual('Bang!')
+              })
+          })
         })
       })
     })
