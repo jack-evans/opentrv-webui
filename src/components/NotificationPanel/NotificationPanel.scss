@@ -1,0 +1,13 @@
+$notification-panel-height: calc(100vh - 60px);
+$notification-panel-width: 300px;
+
+.NotificationPanel {
+  background-color: transparent;
+  float: right;
+  height: $notification-panel-height;
+  position: fixed;
+  right: 0px;
+  top: 60px;
+  width: $notification-panel-width;
+  z-index: 100000;
+}

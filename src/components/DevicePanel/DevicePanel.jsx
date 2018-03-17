@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, NumberInput, TextInput, Tile } from 'carbon-components-react'
+import NotificationPanel from '../NotificationPanel/NotificationPanel'
+import makeRequest from '../../utils/makeRequest'
 
 class DevicePanel extends Component {
   constructor (props) {
@@ -10,7 +12,8 @@ class DevicePanel extends Component {
       statusColor: '',
       statusText: '',
       device: {},
-      invalid: {}
+      invalid: {},
+      notifications: []
     }
     this.deviceId = props.match.params.id
     this.originalDevice = {}
@@ -28,8 +31,7 @@ class DevicePanel extends Component {
       json: true
     }
 
-    return global.fetch(url, options)
-      .then(response => response.json())
+    return makeRequest(url, options)
       .then(device => {
         this.originalDevice = JSON.parse(JSON.stringify(device))
         this.setState({
@@ -38,6 +40,9 @@ class DevicePanel extends Component {
           statusColor: device.active ? '#5aa700' : '#e71d32',
           statusText: device.active ? 'Active' : 'Idle'
         })
+      })
+      .catch(error => {
+        throw error
       })
   }
 
@@ -54,9 +59,27 @@ class DevicePanel extends Component {
       }
     }
 
-    return global.fetch(url, options)
-      .then(() => {
-        this.forceUpdate()
+    return makeRequest(url, options)
+      .then(device => {
+        this.originalDevice = device
+        let notifications = this.state.notifications
+        notifications.push({
+          title: 'Successfully Saved',
+          subtitle: 'The device was successfully updated',
+          timeStamp: new Date(),
+          kind: 'success'
+        })
+        this.setState({notifications: notifications})
+      })
+      .catch(error => {
+        let notifications = this.state.notifications
+        notifications.push({
+          title: 'Save Failed',
+          subtitle: `The device failed to save (${error.status})`,
+          timeStamp: new Date(),
+          kind: 'error'
+        })
+        this.setState({notifications: notifications})
       })
   }
 
@@ -87,8 +110,7 @@ class DevicePanel extends Component {
       device.targetTemperature = temperature
       this.setState({device: device})
     }
-    console.log('original:', this.originalDevice.targetTemperature)
-    console.log('new:', temperature)
+
     if (this.originalDevice.targetTemperature === temperature) {
       this.setState({isDisabled: true})
     } else {
@@ -121,8 +143,7 @@ class DevicePanel extends Component {
       json: true
     }
 
-    return global.fetch(url, options)
-      .then(response => response.json())
+    return makeRequest(url, options)
       .then(devices => {
         devices = devices.filter((trv) => trv.id !== device.id)
 
@@ -271,6 +292,7 @@ class DevicePanel extends Component {
               </Button>
             </div>
           </div>
+          <NotificationPanel notifications={this.state.notifications} />
         </div>
       )
     }
