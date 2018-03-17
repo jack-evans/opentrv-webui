@@ -269,9 +269,9 @@ const updateDeviceRequestHandler = (req, res) => {
 
   let device = req.body
   module.exports.internal._updateDevice(device)
-    .then(() => {
+    .then((result) => {
       logger.info('Successfully updated device document in the cloudant database')
-      res.status(200).end()
+      res.status(200).send(result)
     })
     .catch(error => {
       switch (error.statusCode) {
