@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Overview from '../Overview/Overview'
 import DevicePanel from '../DevicePanel/DevicePanel'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 class MainContent extends Component {
   /**
@@ -13,12 +13,10 @@ class MainContent extends Component {
    */
   render () {
     return (
-      <ErrorBoundary>
-        <Switch className='MainContent'>
-          <Route exact path='/' component={Overview} />
-          <Route path='/devices/:id' component={DevicePanel} />
-        </Switch>
-      </ErrorBoundary>
+      <Switch className='MainContent'>
+        <Route exact path='/' component={Overview} />
+        <Route path='/devices/:id' component={DevicePanel} />
+      </Switch>
     )
   }
 }
