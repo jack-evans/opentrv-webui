@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Overview from '../Overview/Overview'
 import DevicePanel from '../DevicePanel/DevicePanel'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 class MainContent extends Component {
   /**
