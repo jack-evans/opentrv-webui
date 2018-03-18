@@ -230,7 +230,7 @@ class DevicePanel extends Component {
                 <div className='DevicePanel__name' style={{paddingTop: '15px'}}>
                   <TextInput
                     id='device-name'
-                    labelText='Device Name'
+                    labelText='Name'
                     value={this.state.device.name}
                     onChange={this.deviceNameChangeEvent}
                     invalid={this.checkValid('device-name')}
@@ -241,14 +241,14 @@ class DevicePanel extends Component {
                   <TextInput
                     disabled
                     id='device-serial-number'
-                    labelText='Device Serial Number'
+                    labelText='Serial Number'
                     defaultValue={this.state.device.serialId}
                   />
                 </div>
                 <div className='DevicePanel__target-temp' style={{paddingTop: '15px'}}>
                   <NumberInput
                     id='device-target-temperature'
-                    label='Device Target Temperature'
+                    label='Target Temperature'
                     min={10}
                     max={35}
                     step={0.2}
