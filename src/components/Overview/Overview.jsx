@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Loading, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
+import makeRequest from '../../utils/makeRequest'
 
 class Overview extends Component {
   constructor (props) {
@@ -72,8 +73,7 @@ class Overview extends Component {
       json: true
     }
 
-    return global.fetch(url, options)
-      .then(response => response.json())
+    return makeRequest(url, options)
   }
 
   deleteDevice (id) {
@@ -83,7 +83,7 @@ class Overview extends Component {
       json: true
     }
 
-    return global.fetch(url, options)
+    return makeRequest(url, options)
       .then(() => {
         return Overview.discoverDevices('no')
       })
