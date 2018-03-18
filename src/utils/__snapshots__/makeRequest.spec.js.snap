@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`makeRequest.js internal functions checkStatus when the response is not between 200 and 300 throws an error 1`] = `"Internal server error"`;

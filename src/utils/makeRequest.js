@@ -1,11 +1,11 @@
 
 export default function makeRequest (url, options) {
   return global.fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON)
+    .then(internal.checkStatus)
+    .then(internal.parseJSON)
 }
 
-export function checkStatus (response) {
+function checkStatus (response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
@@ -15,6 +15,11 @@ export function checkStatus (response) {
   }
 }
 
-export function parseJSON (response) {
+function parseJSON (response) {
   return response.json()
+}
+
+export const internal = {
+  checkStatus: checkStatus,
+  parseJSON: parseJSON
 }
