@@ -69,5 +69,21 @@ describe('makeRequest.js', () => {
         })
       })
     })
+
+    describe('parseJSON', () => {
+      it('calls the json method within the response', () => {
+        const response = {
+          status: 200,
+          statusText: 'OK',
+          json: () => {}
+        }
+
+        const jsonSpy = jest.spyOn(response, 'json')
+
+        makeRequest.internal.parseJSON(response)
+        expect(jsonSpy).toHaveBeenCalledTimes(1)
+        jsonSpy.mockReset()
+      })
+    })
   })
 })
