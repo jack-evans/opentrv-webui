@@ -145,7 +145,7 @@ class DevicePanel extends Component {
 
     return makeRequest(url, options)
       .then(devices => {
-        devices = devices.filter((trv) => trv.id !== device.id)
+        devices = devices.filter(trv => trv.id !== device.id)
 
         for (let i = 0; i < devices.length; i++) {
           if (devices[i].name === nameToChangeTo) {
@@ -242,7 +242,7 @@ class DevicePanel extends Component {
                     disabled
                     id='device-serial-number'
                     labelText='Serial Number'
-                    defaultValue={this.state.device.serialId}
+                    value={this.state.device.serialId}
                   />
                 </div>
                 <div className='DevicePanel__target-temp' style={{paddingTop: '15px'}}>
@@ -263,13 +263,17 @@ class DevicePanel extends Component {
                 <div className='DevicePanel__current-temperature' style={{paddingTop: '10px'}}>
                   <Tile>
                     <h3>Current Temperature: </h3>
-                    <h3>{this.state.device.currentTemperature}&#176;C</h3>
+                    <h3 className='DevicePanel__current-temperature-display'>
+                      {this.state.device.currentTemperature}&#176;C
+                    </h3>
                   </Tile>
                 </div>
                 <div className='DevicePanel__ambient-temperature' style={{paddingTop: '10px'}}>
                   <Tile>
                     <h3>Ambient Temperature: </h3>
-                    <h3>{this.state.device.ambientTemperature}&#176;C</h3>
+                    <h3 className='DevicePanel__ambient-temperature-display'>
+                      {this.state.device.ambientTemperature}&#176;C
+                    </h3>
                   </Tile>
                 </div>
               </div>
