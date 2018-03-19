@@ -70,6 +70,7 @@ describe('DevicePanel.jsx', () => {
 
   describe('when a user edits the name input box', () => {
     let wrapper
+    let handleDeviceNameChangeEventSpy
     let device = {
       id: '1234',
       name: 'test',
@@ -80,19 +81,19 @@ describe('DevicePanel.jsx', () => {
     }
 
     beforeEach(() => {
+      handleDeviceNameChangeEventSpy = jest.spyOn(DevicePanel.prototype, 'handleDeviceNameChangeEvent')
       wrapper = mount(<DevicePanel match={match} />)
       wrapper.setState({isLoading: false, device: device})
       wrapper.find('input').at(0).simulate('change', { target: { value: 'my device' } })
     })
 
     afterEach(() => {
+      handleDeviceNameChangeEventSpy.mockReset()
       wrapper.unmount()
     })
 
     it('calls the handleDeviceNameChangeEvent', () => {
-      const handleDeviceNameChangeEventSpy = jest.spyOn(DevicePanel, 'deviceNameChangeEvent')
       expect(handleDeviceNameChangeEventSpy).toHaveBeenCalledTimes(1)
-      handleDeviceNameChangeEventSpy.mockReset()
     })
   })
 
