@@ -114,7 +114,7 @@ describe('Overview.jsx', () => {
       }
     ]
 
-    beforeAll(() => {
+    beforeEach(() => {
       wrapper = mount(<Overview />)
       wrapper.setState({devices: devicesFromServer, visibleDevices: devicesFromServer, isLoading: false})
     })
@@ -125,6 +125,96 @@ describe('Overview.jsx', () => {
 
     it('renders a matching number of DeviceTiles', () => {
       expect(wrapper.find('.DeviceTile')).toHaveLength(devicesFromServer.length)
+    })
+  })
+
+  describe('when a user searches through their devices', () => {
+    let wrapper
+    let devicesFromServer = [
+      {
+        'id': '6f710966-c2da-4998-9bce-d4ba8971068d',
+        'currentTemperature': 24.2,
+        'ambientTemperature': 18,
+        'name': 'living room - radiator 1',
+        'serialId': 'OTRV-BXTI97EO1I',
+        'active': false,
+        'activeSchedules': [],
+        'metadata': {}
+      }, {
+        'id': 'b9c23059-4e38-4e2f-b191-3c0ceec0cdcd',
+        'currentTemperature': 23.3,
+        'ambientTemperature': 18,
+        'name': 'Device 8',
+        'serialId': 'OTRV-2SHCM8CLUL',
+        'active': false,
+        'activeSchedules': [],
+        'metadata': {}
+      }, {
+        'id': 'cf2a7c5e-5fc9-420a-a8ca-0e59287c4b7e',
+        'currentTemperature': 31.9,
+        'ambientTemperature': 18,
+        'name': 'Device 2',
+        'serialId': 'OTRV-5GZ3VMLVY2',
+        'active': false,
+        'activeSchedules': [],
+        'metadata': {}
+      }
+    ]
+
+    beforeEach(() => {
+      wrapper = mount(<Overview />)
+      wrapper.setState({devices: devicesFromServer, visibleDevices: devicesFromServer, isLoading: false})
+      wrapper.find('input').simulate('change', { target: { value: 'device' } })
+    })
+
+    afterEach(() => {
+      wrapper.unmount()
+    })
+
+    it('sets visible devices to the 2 valid devices', () => {
+      expect(wrapper.state('visibleDevices').length).toEqual(2)
+    })
+
+    it('displays only 2 of the 3 DeviceTiles', () => {
+      expect(wrapper.find('.DeviceTile')).toHaveLength(2)
+    })
+  })
+
+  describe('when a user presses delete on a DeviceTile', () => {
+    let wrapper
+    let deleteDeviceSpy
+    let devicesFromServer = [
+      {
+        'id': '6f710966-c2da-4998-9bce-d4ba8971068d',
+        'currentTemperature': 24.2,
+        'ambientTemperature': 18,
+        'name': 'living room - radiator 1',
+        'serialId': 'OTRV-BXTI97EO1I',
+        'active': false,
+        'activeSchedules': [],
+        'metadata': {}
+      }
+    ]
+
+    beforeEach(() => {
+      wrapper = shallow(<Overview />)
+      wrapper.setState({devices: devicesFromServer, visibleDevices: devicesFromServer, isLoading: false})
+      deleteDeviceSpy = jest.spyOn(Overview.prototype, 'deleteDevice')
+
+      wrapper.find('DeviceTile').prop('handleDelete')()
+    })
+
+    afterEach(() => {
+      wrapper.unmount()
+      deleteDeviceSpy.mockReset()
+    })
+
+    it('calls the deleteDevice function', () => {
+      expect(deleteDeviceSpy).toHaveBeenCalledTimes(1)
+    })
+
+    it('calls the deleteDevice function with the id of the Device', () => {
+      expect(deleteDeviceSpy).toHaveBeenCalledWith(devicesFromServer[0].id)
     })
   })
 })
