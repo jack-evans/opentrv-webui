@@ -1189,8 +1189,8 @@ describe('deviceDiscovery.js', () => {
           }]
 
           nock(GATEWAY_URL)
-              .get('/api/v1/trv')
-              .reply(200, arrayOfDevices)
+            .get('/api/v1/trv')
+            .reply(200, arrayOfDevices)
 
           return deviceDiscovery.internal._discoverAllDevices()
             .then(result => {

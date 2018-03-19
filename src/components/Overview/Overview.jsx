@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Loading, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
-import axios from 'axios'
+import makeRequest from '../../utils/makeRequest'
 
 class Overview extends Component {
   constructor (props) {
@@ -67,29 +67,32 @@ class Overview extends Component {
   }
 
   static discoverDevices (userFlag) {
+    let url = `/api/v1/devices?user=${userFlag}`
     let options = {
-      url: `/api/v1/devices?user=${userFlag}`,
       method: 'GET',
       json: true
     }
 
-    return axios(options)
-      .then(response => response.data)
+    return makeRequest(url, options)
   }
 
   deleteDevice (id) {
-    return axios({
-      url: `/api/v1/devices/${id}`,
+    let url = `/api/v1/devices/${id}`
+    let options = {
       method: 'DELETE',
-      json: 'true'
-    }).then(() => {
-      return Overview.discoverDevices('no')
-    }).then(retrievedDevices => {
-      this.setState({
-        devices: retrievedDevices,
-        visibleDevices: retrievedDevices
+      json: true
+    }
+
+    return makeRequest(url, options)
+      .then(() => {
+        return Overview.discoverDevices('no')
       })
-    })
+      .then(retrievedDevices => {
+        this.setState({
+          devices: retrievedDevices,
+          visibleDevices: retrievedDevices
+        })
+      })
   }
 
   /**
@@ -123,7 +126,7 @@ class Overview extends Component {
           </div>
           <div>
             <Button
-              className='Overview__discover_button'
+              className='Overview__discover-button'
               icon='add--outline'
               iconDescription='Find devices that are on your network'
               onClick={this.discoverDevicesButtonOnClick}
