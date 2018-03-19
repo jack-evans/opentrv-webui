@@ -48,6 +48,7 @@ ShallowWrapper {
               onClick={[Function]}
             />
             <OverflowMenuItem
+              className="DeviceTile__overflow-menu-delete"
               hasDivider={true}
               isDelete={true}
               itemText="Delete"
@@ -142,6 +143,7 @@ ShallowWrapper {
               onClick={[Function]}
             />
             <OverflowMenuItem
+              className="DeviceTile__overflow-menu-delete"
               hasDivider={true}
               isDelete={true}
               itemText="Delete"
@@ -166,6 +168,7 @@ ShallowWrapper {
                 onClick={[Function]}
               />,
               <OverflowMenuItem
+                className="DeviceTile__overflow-menu-delete"
                 hasDivider={true}
                 isDelete={true}
                 itemText="Delete"
@@ -206,6 +209,7 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "function",
               "props": Object {
+                "className": "DeviceTile__overflow-menu-delete",
                 "hasDivider": true,
                 "isDelete": true,
                 "itemText": "Delete",
@@ -494,6 +498,7 @@ ShallowWrapper {
                 onClick={[Function]}
               />
               <OverflowMenuItem
+                className="DeviceTile__overflow-menu-delete"
                 hasDivider={true}
                 isDelete={true}
                 itemText="Delete"
@@ -588,6 +593,7 @@ ShallowWrapper {
                 onClick={[Function]}
               />
               <OverflowMenuItem
+                className="DeviceTile__overflow-menu-delete"
                 hasDivider={true}
                 isDelete={true}
                 itemText="Delete"
@@ -612,6 +618,7 @@ ShallowWrapper {
                   onClick={[Function]}
                 />,
                 <OverflowMenuItem
+                  className="DeviceTile__overflow-menu-delete"
                   hasDivider={true}
                   isDelete={true}
                   itemText="Delete"
@@ -652,6 +659,7 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
+                  "className": "DeviceTile__overflow-menu-delete",
                   "hasDivider": true,
                   "isDelete": true,
                   "itemText": "Delete",

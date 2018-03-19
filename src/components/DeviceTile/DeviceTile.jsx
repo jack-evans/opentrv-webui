@@ -12,7 +12,7 @@ const DeviceTile = ({ id, name, temp, active, handleDelete }) => {
       <div className='DeviceTile__overflow-container'>
         <OverflowMenu className='DeviceTile__overflow-menu'>
           <OverflowMenuItem className='DeviceTile__overflow-menu-view' itemText='View' onClick={() => { window.location.assign(href) }} />
-          <OverflowMenuItem itemText='Delete' hasDivider isDelete onClick={handleDelete} />
+          <OverflowMenuItem className='DeviceTile__overflow-menu-delete' itemText='Delete' hasDivider isDelete onClick={handleDelete} />
         </OverflowMenu>
       </div>
       <div className='DeviceTile__center-container' style={{cursor: 'pointer'}} onClick={() => { window.location.assign(href) }}>
