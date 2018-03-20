@@ -4,7 +4,7 @@ class Welcome extends Component {
   render () {
     return (
       <div>
-        Welcome
+        <img src={require('./opentrv.jpg')} alt='OpenTRV logo' />
       </div>
     )
   }
