@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class WelcomePanel extends Component {
+class Welcome extends Component {
   render () {
     return (
       <div>
@@ -10,4 +10,4 @@ class WelcomePanel extends Component {
   }
 }
 
-export default WelcomePanel
+export default Welcome
