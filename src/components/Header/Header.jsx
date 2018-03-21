@@ -9,7 +9,7 @@ const Header = ({isOpen, onClick}) => {
           <span className='Header__left-nav-icon' />
         </button>
       </div>
-      <a className='Header__title' href='/'>
+      <a className='Header__title' href='/overview'>
         <h3>OpenTRV</h3>
       </a>
     </header>
