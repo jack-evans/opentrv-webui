@@ -17,39 +17,45 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "host",
     "props": Object {
-      "children": <img
-        alt="OpenTRV logo"
-        src="opentrv.jpg"
-      />,
-    },
-    "ref": null,
-    "rendered": Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "host",
-      "props": Object {
-        "alt": "OpenTRV logo",
-        "src": "opentrv.jpg",
-      },
-      "ref": null,
-      "rendered": null,
-      "type": "img",
-    },
-    "type": "div",
-  },
-  Symbol(enzyme.__nodes__): Array [
-    Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "host",
-      "props": Object {
-        "children": <img
+      "children": Array [
+        <img
           alt="OpenTRV logo"
           src="opentrv.jpg"
         />,
-      },
-      "ref": null,
-      "rendered": Object {
+        <div
+          className="Welcome__buttons"
+        >
+          <Button
+            className="Welcome__register-button"
+            disabled={false}
+            iconDescription="Provide icon description if icon is used"
+            kind="secondary"
+            onClick={[Function]}
+            small={false}
+            tabIndex={0}
+            type="button"
+          >
+            Register
+          </Button>
+          <Button
+            className="Welcome__login-button"
+            disabled={false}
+            iconDescription="Provide icon description if icon is used"
+            kind="primary"
+            onClick={[Function]}
+            small={false}
+            tabIndex={0}
+            type="button"
+          >
+            Login
+          </Button>
+        </div>,
+      ],
+      "className": "Welcome",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
         "instance": null,
         "key": undefined,
         "nodeType": "host",
@@ -61,6 +67,218 @@ ShallowWrapper {
         "rendered": null,
         "type": "img",
       },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <Button
+              className="Welcome__register-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="secondary"
+              onClick={[Function]}
+              small={false}
+              tabIndex={0}
+              type="button"
+            >
+              Register
+            </Button>,
+            <Button
+              className="Welcome__login-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="primary"
+              onClick={[Function]}
+              small={false}
+              tabIndex={0}
+              type="button"
+            >
+              Login
+            </Button>,
+          ],
+          "className": "Welcome__buttons",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "Register",
+              "className": "Welcome__register-button",
+              "disabled": false,
+              "iconDescription": "Provide icon description if icon is used",
+              "kind": "secondary",
+              "onClick": [Function],
+              "small": false,
+              "tabIndex": 0,
+              "type": "button",
+            },
+            "ref": null,
+            "rendered": "Register",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "Login",
+              "className": "Welcome__login-button",
+              "disabled": false,
+              "iconDescription": "Provide icon description if icon is used",
+              "kind": "primary",
+              "onClick": [Function],
+              "small": false,
+              "tabIndex": 0,
+              "type": "button",
+            },
+            "ref": null,
+            "rendered": "Login",
+            "type": [Function],
+          },
+        ],
+        "type": "div",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <img
+            alt="OpenTRV logo"
+            src="opentrv.jpg"
+          />,
+          <div
+            className="Welcome__buttons"
+          >
+            <Button
+              className="Welcome__register-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="secondary"
+              onClick={[Function]}
+              small={false}
+              tabIndex={0}
+              type="button"
+            >
+              Register
+            </Button>
+            <Button
+              className="Welcome__login-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="primary"
+              onClick={[Function]}
+              small={false}
+              tabIndex={0}
+              type="button"
+            >
+              Login
+            </Button>
+          </div>,
+        ],
+        "className": "Welcome",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "alt": "OpenTRV logo",
+            "src": "opentrv.jpg",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "img",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <Button
+                className="Welcome__register-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="secondary"
+                onClick={[Function]}
+                small={false}
+                tabIndex={0}
+                type="button"
+              >
+                Register
+              </Button>,
+              <Button
+                className="Welcome__login-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                tabIndex={0}
+                type="button"
+              >
+                Login
+              </Button>,
+            ],
+            "className": "Welcome__buttons",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Register",
+                "className": "Welcome__register-button",
+                "disabled": false,
+                "iconDescription": "Provide icon description if icon is used",
+                "kind": "secondary",
+                "onClick": [Function],
+                "small": false,
+                "tabIndex": 0,
+                "type": "button",
+              },
+              "ref": null,
+              "rendered": "Register",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Login",
+                "className": "Welcome__login-button",
+                "disabled": false,
+                "iconDescription": "Provide icon description if icon is used",
+                "kind": "primary",
+                "onClick": [Function],
+                "small": false,
+                "tabIndex": 0,
+                "type": "button",
+              },
+              "ref": null,
+              "rendered": "Login",
+              "type": [Function],
+            },
+          ],
+          "type": "div",
+        },
+      ],
       "type": "div",
     },
   ],
