@@ -7,6 +7,14 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute'
 import Welcome from '../Welcome/Welcome'
 import Register from '../Register/Register'
 
+const NotFound = () => {
+  return (
+    <div>
+      <h1>404 - Not Found</h1>
+    </div>
+  )
+}
+
 class MainContent extends Component {
   /**
    * render method
@@ -22,6 +30,7 @@ class MainContent extends Component {
         <Route exact path='/register' component={Register} />
         <PrivateRoute path='/overview' component={Overview} />
         <PrivateRoute path='/devices/:id' component={DevicePanel} />
+        <Route component={NotFound} />
       </Switch>
     )
   }
