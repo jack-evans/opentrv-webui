@@ -213,7 +213,7 @@ class DevicePanel extends Component {
               statusText={this.state.statusText}>
               <Icon name='devices' />
               <Breadcrumb>
-                <BreadcrumbItem href='/'>
+                <BreadcrumbItem href='/overview'>
                   Device Overview
                 </BreadcrumbItem>
               </Breadcrumb>
