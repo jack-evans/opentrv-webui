@@ -22,6 +22,15 @@ ShallowWrapper {
           alt="OpenTRV logo"
           src="opentrv.jpg"
         />,
+        <h2>
+          Welcome to OpenTRV
+        </h2>,
+        <h3>
+          New User? Click Register to create an account
+        </h3>,
+        <h3>
+          Existing User? Login to view your TRV system
+        </h3>,
         <div
           className="Welcome__buttons"
         >
@@ -66,6 +75,39 @@ ShallowWrapper {
         "ref": null,
         "rendered": null,
         "type": "img",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Welcome to OpenTRV",
+        },
+        "ref": null,
+        "rendered": "Welcome to OpenTRV",
+        "type": "h2",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "New User? Click Register to create an account",
+        },
+        "ref": null,
+        "rendered": "New User? Click Register to create an account",
+        "type": "h3",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Existing User? Login to view your TRV system",
+        },
+        "ref": null,
+        "rendered": "Existing User? Login to view your TRV system",
+        "type": "h3",
       },
       Object {
         "instance": null,
@@ -157,6 +199,15 @@ ShallowWrapper {
             alt="OpenTRV logo"
             src="opentrv.jpg"
           />,
+          <h2>
+            Welcome to OpenTRV
+          </h2>,
+          <h3>
+            New User? Click Register to create an account
+          </h3>,
+          <h3>
+            Existing User? Login to view your TRV system
+          </h3>,
           <div
             className="Welcome__buttons"
           >
@@ -201,6 +252,39 @@ ShallowWrapper {
           "ref": null,
           "rendered": null,
           "type": "img",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Welcome to OpenTRV",
+          },
+          "ref": null,
+          "rendered": "Welcome to OpenTRV",
+          "type": "h2",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "New User? Click Register to create an account",
+          },
+          "ref": null,
+          "rendered": "New User? Click Register to create an account",
+          "type": "h3",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Existing User? Login to view your TRV system",
+          },
+          "ref": null,
+          "rendered": "Existing User? Login to view your TRV system",
+          "type": "h3",
         },
         Object {
           "instance": null,
