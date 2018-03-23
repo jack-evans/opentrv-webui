@@ -13,26 +13,4 @@ describe('App.jsx', () => {
       Object.assign({}, App, { _reactInternalInstance: 'censored' })
     )).toMatchSnapshot()
   })
-
-  describe.skip('when the menu button is clicked', () => {
-    it('changes the state of sideBarMenuOpen', () => {
-      const wrapper = shallow(<App />)
-      expect(wrapper.state().sideBarMenuOpen).toBe(false)
-      wrapper.find('Header').simulate('click')
-      expect(wrapper.state().sideBarMenuOpen).toBe(true)
-    })
-
-    describe('multiple times', () => {
-      it('changes the state of sideBarMenuOpen', () => {
-        const wrapper = shallow(<App />)
-        expect(wrapper.state().sideBarMenuOpen).toBe(false)
-        wrapper.find('Header').simulate('click')
-        expect(wrapper.state().sideBarMenuOpen).toBe(true)
-        wrapper.find('Header').simulate('click')
-        expect(wrapper.state().sideBarMenuOpen).toBe(false)
-        wrapper.find('Header').simulate('click')
-        expect(wrapper.state().sideBarMenuOpen).toBe(true)
-      })
-    })
-  })
 })
