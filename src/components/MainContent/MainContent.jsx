@@ -6,16 +6,44 @@ import Login from '../Login/Login'
 import PrivateRoute from '../PrivateRoute/PrivateRoute'
 import Welcome from '../Welcome/Welcome'
 import Register from '../Register/Register'
+import Header from '../Header/Header'
+import SideBarMenu from '../SideBarMenu/SideBarMenu'
 
 const NotFound = () => {
   return (
-    <div>
+    <div className='NotFound'>
       <h1>404 - Not Found</h1>
     </div>
   )
 }
 
 class MainContent extends Component {
+  /**
+   * Constructor
+   *
+   * Sets up the state and event callbacks before the rendering of the component
+   * @param props - properties for the class
+   */
+  constructor (props) {
+    super(props)
+    this.state = {
+      sideBarMenuOpen: false
+    }
+
+    this.sideBarMenuEvent = this.handleViewSideBarMenu.bind(this)
+  }
+
+  /**
+   * handleViewSideBarMenu method
+   *
+   * Changes the state of sideBarMenuOpen when the button in the header is clicked
+   */
+  handleViewSideBarMenu () {
+    this.setState({
+      sideBarMenuOpen: !this.state.sideBarMenuOpen
+    })
+  }
+
   /**
    * render method
    *
@@ -28,9 +56,27 @@ class MainContent extends Component {
         <Route exact path='/' component={Welcome} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
-        <PrivateRoute path='/overview' component={Overview} />
-        <PrivateRoute path='/devices/:id' component={DevicePanel} />
-        <Route component={NotFound} />
+        <Route render={(props) => {
+          if (props.location.pathname === '/overview') {
+            return (
+              <div>
+                <Header onClick={this.sideBarMenuEvent} isOpen={this.state.sideBarMenuOpen} />
+                <SideBarMenu isOpen={this.state.sideBarMenuOpen} />
+                <PrivateRoute path='/overview' component={Overview} />
+              </div>
+            )
+          } else if (props.location.pathname.startsWith('/devices/')) {
+            return (
+              <div>
+                <Header onClick={this.sideBarMenuEvent} isOpen={this.state.sideBarMenuOpen} />
+                <SideBarMenu isOpen={this.state.sideBarMenuOpen} />
+                <PrivateRoute path='/devices/:id' component={DevicePanel} />
+              </div>
+            )
+          } else {
+            return <Route component={NotFound} />
+          }
+        }} />
       </Switch>
     )
   }
