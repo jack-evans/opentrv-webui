@@ -101,7 +101,27 @@ ShallowWrapper {
             Login
           </Button>
         </div>
-        <div />
+        <Modal
+          iconDescription="close the modal"
+          modalHeading="Login Failed"
+          modalLabel=""
+          onKeyDown={[Function]}
+          onRequestClose={[Function]}
+          onRequestSubmit={[Function]}
+          open={false}
+          passiveModal={true}
+          primaryButtonDisabled={false}
+        >
+          <p>
+            Failed to Login to OpenTRV.
+          </p>
+          <p>
+            Please check your email and password was entered correctly.
+          </p>
+          <p>
+            If problem persists please contact support
+          </p>
+        </Modal>
       </div>,
       "className": "Login",
     },
@@ -193,7 +213,27 @@ ShallowWrapper {
               Login
             </Button>
           </div>,
-          <div />,
+          <Modal
+            iconDescription="close the modal"
+            modalHeading="Login Failed"
+            modalLabel=""
+            onKeyDown={[Function]}
+            onRequestClose={[Function]}
+            onRequestSubmit={[Function]}
+            open={false}
+            passiveModal={true}
+            primaryButtonDisabled={false}
+          >
+            <p>
+              Failed to Login to OpenTRV.
+            </p>
+            <p>
+              Please check your email and password was entered correctly.
+            </p>
+            <p>
+              If problem persists please contact support
+            </p>
+          </Modal>,
         ],
         "className": "Login__content",
       },
@@ -448,11 +488,66 @@ ShallowWrapper {
         Object {
           "instance": null,
           "key": undefined,
-          "nodeType": "host",
-          "props": Object {},
+          "nodeType": "class",
+          "props": Object {
+            "children": Array [
+              <p>
+                Failed to Login to OpenTRV.
+              </p>,
+              <p>
+                Please check your email and password was entered correctly.
+              </p>,
+              <p>
+                If problem persists please contact support
+              </p>,
+            ],
+            "iconDescription": "close the modal",
+            "modalHeading": "Login Failed",
+            "modalLabel": "",
+            "onKeyDown": [Function],
+            "onRequestClose": [Function],
+            "onRequestSubmit": [Function],
+            "open": false,
+            "passiveModal": true,
+            "primaryButtonDisabled": false,
+          },
           "ref": null,
-          "rendered": null,
-          "type": "div",
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Failed to Login to OpenTRV.",
+              },
+              "ref": null,
+              "rendered": "Failed to Login to OpenTRV.",
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Please check your email and password was entered correctly.",
+              },
+              "ref": null,
+              "rendered": "Please check your email and password was entered correctly.",
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "If problem persists please contact support",
+              },
+              "ref": null,
+              "rendered": "If problem persists please contact support",
+              "type": "p",
+            },
+          ],
+          "type": [Function],
         },
       ],
       "type": "div",
@@ -549,7 +644,27 @@ ShallowWrapper {
               Login
             </Button>
           </div>
-          <div />
+          <Modal
+            iconDescription="close the modal"
+            modalHeading="Login Failed"
+            modalLabel=""
+            onKeyDown={[Function]}
+            onRequestClose={[Function]}
+            onRequestSubmit={[Function]}
+            open={false}
+            passiveModal={true}
+            primaryButtonDisabled={false}
+          >
+            <p>
+              Failed to Login to OpenTRV.
+            </p>
+            <p>
+              Please check your email and password was entered correctly.
+            </p>
+            <p>
+              If problem persists please contact support
+            </p>
+          </Modal>
         </div>,
         "className": "Login",
       },
@@ -641,7 +756,27 @@ ShallowWrapper {
                 Login
               </Button>
             </div>,
-            <div />,
+            <Modal
+              iconDescription="close the modal"
+              modalHeading="Login Failed"
+              modalLabel=""
+              onKeyDown={[Function]}
+              onRequestClose={[Function]}
+              onRequestSubmit={[Function]}
+              open={false}
+              passiveModal={true}
+              primaryButtonDisabled={false}
+            >
+              <p>
+                Failed to Login to OpenTRV.
+              </p>
+              <p>
+                Please check your email and password was entered correctly.
+              </p>
+              <p>
+                If problem persists please contact support
+              </p>
+            </Modal>,
           ],
           "className": "Login__content",
         },
@@ -896,11 +1031,66 @@ ShallowWrapper {
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
-            "props": Object {},
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
+                <p>
+                  Failed to Login to OpenTRV.
+                </p>,
+                <p>
+                  Please check your email and password was entered correctly.
+                </p>,
+                <p>
+                  If problem persists please contact support
+                </p>,
+              ],
+              "iconDescription": "close the modal",
+              "modalHeading": "Login Failed",
+              "modalLabel": "",
+              "onKeyDown": [Function],
+              "onRequestClose": [Function],
+              "onRequestSubmit": [Function],
+              "open": false,
+              "passiveModal": true,
+              "primaryButtonDisabled": false,
+            },
             "ref": null,
-            "rendered": null,
-            "type": "div",
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Failed to Login to OpenTRV.",
+                },
+                "ref": null,
+                "rendered": "Failed to Login to OpenTRV.",
+                "type": "p",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Please check your email and password was entered correctly.",
+                },
+                "ref": null,
+                "rendered": "Please check your email and password was entered correctly.",
+                "type": "p",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "If problem persists please contact support",
+                },
+                "ref": null,
+                "rendered": "If problem persists please contact support",
+                "type": "p",
+              },
+            ],
+            "type": [Function],
           },
         ],
         "type": "div",

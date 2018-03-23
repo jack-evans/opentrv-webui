@@ -12,3 +12,11 @@ export function loginUser (user) {
   }
   return authenticated
 }
+
+/**
+ * Test helper
+ * @param {boolean} val - the value to set authenticated to
+ */
+export function setAuthenticated (val) {
+  authenticated = val
+}
