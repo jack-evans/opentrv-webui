@@ -91,6 +91,7 @@ class Login extends Component {
               </Button>
             </div>
             <Modal
+              className='Login__failed-modal'
               open={this.state.failedLogin}
               passiveModal
               modalHeading='Login Failed'

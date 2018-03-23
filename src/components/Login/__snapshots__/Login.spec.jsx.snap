@@ -102,6 +102,7 @@ ShallowWrapper {
           </Button>
         </div>
         <Modal
+          className="Login__failed-modal"
           iconDescription="close the modal"
           modalHeading="Login Failed"
           modalLabel=""
@@ -214,6 +215,7 @@ ShallowWrapper {
             </Button>
           </div>,
           <Modal
+            className="Login__failed-modal"
             iconDescription="close the modal"
             modalHeading="Login Failed"
             modalLabel=""
@@ -501,6 +503,7 @@ ShallowWrapper {
                 If problem persists please contact support
               </p>,
             ],
+            "className": "Login__failed-modal",
             "iconDescription": "close the modal",
             "modalHeading": "Login Failed",
             "modalLabel": "",
@@ -645,6 +648,7 @@ ShallowWrapper {
             </Button>
           </div>
           <Modal
+            className="Login__failed-modal"
             iconDescription="close the modal"
             modalHeading="Login Failed"
             modalLabel=""
@@ -757,6 +761,7 @@ ShallowWrapper {
               </Button>
             </div>,
             <Modal
+              className="Login__failed-modal"
               iconDescription="close the modal"
               modalHeading="Login Failed"
               modalLabel=""
@@ -1044,6 +1049,7 @@ ShallowWrapper {
                   If problem persists please contact support
                 </p>,
               ],
+              "className": "Login__failed-modal",
               "iconDescription": "close the modal",
               "modalHeading": "Login Failed",
               "modalLabel": "",
