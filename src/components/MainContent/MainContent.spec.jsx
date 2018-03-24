@@ -37,7 +37,7 @@ describe('MainContent.jsx', () => {
   })
 
   // not ready for this test
-  describe.skip('when the inital entry is "/register"', () => {
+  describe('when the inital entry is "/register"', () => {
     it('loads the Register page', () => {
       const wrapper = mount(
         <MemoryRouter initialEntries={['/register']}>

@@ -17,10 +17,136 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "host",
     "props": Object {
-      "children": "Register",
+      "children": Array [
+        <h2
+          className="Register__title"
+        >
+          Title
+        </h2>,
+        <Form
+          className="Register__form"
+        >
+          <TextInput
+            className="bx--text__input"
+            disabled={false}
+            id="register-first-name"
+            invalid={false}
+            invalidText=""
+            labelText="First"
+            onChange={[Function]}
+            onClick={[Function]}
+            placeholder="Enter first name"
+            type="text"
+          />
+          <TextInput
+            className="bx--text__input"
+            disabled={false}
+            id="register-last-name"
+            invalid={false}
+            invalidText=""
+            labelText="Last"
+            onChange={[Function]}
+            onClick={[Function]}
+            placeholder="Enter last name"
+            type="text"
+          />
+        </Form>,
+      ],
+      "className": "Register",
     },
     "ref": null,
-    "rendered": "Register",
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Title",
+          "className": "Register__title",
+        },
+        "ref": null,
+        "rendered": "Title",
+        "type": "h2",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            <TextInput
+              className="bx--text__input"
+              disabled={false}
+              id="register-first-name"
+              invalid={false}
+              invalidText=""
+              labelText="First"
+              onChange={[Function]}
+              onClick={[Function]}
+              placeholder="Enter first name"
+              type="text"
+            />,
+            <TextInput
+              className="bx--text__input"
+              disabled={false}
+              id="register-last-name"
+              invalid={false}
+              invalidText=""
+              labelText="Last"
+              onChange={[Function]}
+              onClick={[Function]}
+              placeholder="Enter last name"
+              type="text"
+            />,
+          ],
+          "className": "Register__form",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "className": "bx--text__input",
+              "disabled": false,
+              "id": "register-first-name",
+              "invalid": false,
+              "invalidText": "",
+              "labelText": "First",
+              "onChange": [Function],
+              "onClick": [Function],
+              "placeholder": "Enter first name",
+              "type": "text",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "className": "bx--text__input",
+              "disabled": false,
+              "id": "register-last-name",
+              "invalid": false,
+              "invalidText": "",
+              "labelText": "Last",
+              "onChange": [Function],
+              "onClick": [Function],
+              "placeholder": "Enter last name",
+              "type": "text",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+    ],
     "type": "div",
   },
   Symbol(enzyme.__nodes__): Array [
@@ -29,10 +155,136 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "host",
       "props": Object {
-        "children": "Register",
+        "children": Array [
+          <h2
+            className="Register__title"
+          >
+            Title
+          </h2>,
+          <Form
+            className="Register__form"
+          >
+            <TextInput
+              className="bx--text__input"
+              disabled={false}
+              id="register-first-name"
+              invalid={false}
+              invalidText=""
+              labelText="First"
+              onChange={[Function]}
+              onClick={[Function]}
+              placeholder="Enter first name"
+              type="text"
+            />
+            <TextInput
+              className="bx--text__input"
+              disabled={false}
+              id="register-last-name"
+              invalid={false}
+              invalidText=""
+              labelText="Last"
+              onChange={[Function]}
+              onClick={[Function]}
+              placeholder="Enter last name"
+              type="text"
+            />
+          </Form>,
+        ],
+        "className": "Register",
       },
       "ref": null,
-      "rendered": "Register",
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Title",
+            "className": "Register__title",
+          },
+          "ref": null,
+          "rendered": "Title",
+          "type": "h2",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-first-name"
+                invalid={false}
+                invalidText=""
+                labelText="First"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter first name"
+                type="text"
+              />,
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-last-name"
+                invalid={false}
+                invalidText=""
+                labelText="Last"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter last name"
+                type="text"
+              />,
+            ],
+            "className": "Register__form",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "className": "bx--text__input",
+                "disabled": false,
+                "id": "register-first-name",
+                "invalid": false,
+                "invalidText": "",
+                "labelText": "First",
+                "onChange": [Function],
+                "onClick": [Function],
+                "placeholder": "Enter first name",
+                "type": "text",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "className": "bx--text__input",
+                "disabled": false,
+                "id": "register-last-name",
+                "invalid": false,
+                "invalidText": "",
+                "labelText": "Last",
+                "onChange": [Function],
+                "onClick": [Function],
+                "placeholder": "Enter last name",
+                "type": "text",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+      ],
       "type": "div",
     },
   ],
