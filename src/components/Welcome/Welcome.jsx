@@ -4,7 +4,7 @@ import { Button } from 'carbon-components-react'
 const Welcome = () => (
   <div className='Welcome'>
     <div>
-      <img style={{paddingBottom: '100px', paddingTop: '100px'}} src={require('./opentrv.jpg')} alt='OpenTRV logo' />
+      <img style={{paddingBottom: '100px', paddingTop: '100px'}} src={require('../../images/opentrv.jpg')} alt='OpenTRV logo' />
       <h2 style={{paddingTop: '10px', paddingBottom: '10px'}}>Welcome to OpenTRV</h2>
       <p style={{paddingBottom: '10px'}}>New User? Click Register to create an account</p>
       <p style={{paddingBottom: '10px'}}>Existing User? Login to view your TRV system</p>
