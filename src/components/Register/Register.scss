@@ -4,10 +4,19 @@
   justify-content: center;
 
   .Register__title {
-    padding: 50px 0 20px 0;
+    padding: 40px 0 30px 0;
   }
 
   .Register__form {
     width: 500px;
+    text-align: start;
+
+    .Register__form-name {
+      display: flex;
+    }
+
+    .Register__form-address {
+      margin-right: unset;      
+    }
   }
 }
