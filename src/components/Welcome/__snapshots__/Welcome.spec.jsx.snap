@@ -23,7 +23,8 @@ ShallowWrapper {
           src="opentrv.jpg"
           style={
             Object {
-              "paddingBottom": "50px",
+              "paddingBottom": "100px",
+              "paddingTop": "100px",
             }
           }
         />
@@ -37,7 +38,7 @@ ShallowWrapper {
         >
           Welcome to OpenTRV
         </h2>
-        <h3
+        <p
           style={
             Object {
               "paddingBottom": "10px",
@@ -45,8 +46,8 @@ ShallowWrapper {
           }
         >
           New User? Click Register to create an account
-        </h3>
-        <h3
+        </p>
+        <p
           style={
             Object {
               "paddingBottom": "10px",
@@ -54,7 +55,7 @@ ShallowWrapper {
           }
         >
           Existing User? Login to view your TRV system
-        </h3>
+        </p>
         <div
           className="Welcome__buttons"
         >
@@ -108,7 +109,8 @@ ShallowWrapper {
             src="opentrv.jpg"
             style={
               Object {
-                "paddingBottom": "50px",
+                "paddingBottom": "100px",
+                "paddingTop": "100px",
               }
             }
           />,
@@ -122,7 +124,7 @@ ShallowWrapper {
           >
             Welcome to OpenTRV
           </h2>,
-          <h3
+          <p
             style={
               Object {
                 "paddingBottom": "10px",
@@ -130,8 +132,8 @@ ShallowWrapper {
             }
           >
             New User? Click Register to create an account
-          </h3>,
-          <h3
+          </p>,
+          <p
             style={
               Object {
                 "paddingBottom": "10px",
@@ -139,7 +141,7 @@ ShallowWrapper {
             }
           >
             Existing User? Login to view your TRV system
-          </h3>,
+          </p>,
           <div
             className="Welcome__buttons"
           >
@@ -190,7 +192,8 @@ ShallowWrapper {
             "alt": "OpenTRV logo",
             "src": "opentrv.jpg",
             "style": Object {
-              "paddingBottom": "50px",
+              "paddingBottom": "100px",
+              "paddingTop": "100px",
             },
           },
           "ref": null,
@@ -224,7 +227,7 @@ ShallowWrapper {
           },
           "ref": null,
           "rendered": "New User? Click Register to create an account",
-          "type": "h3",
+          "type": "p",
         },
         Object {
           "instance": null,
@@ -238,7 +241,7 @@ ShallowWrapper {
           },
           "ref": null,
           "rendered": "Existing User? Login to view your TRV system",
-          "type": "h3",
+          "type": "p",
         },
         Object {
           "instance": null,
@@ -349,7 +352,8 @@ ShallowWrapper {
             src="opentrv.jpg"
             style={
               Object {
-                "paddingBottom": "50px",
+                "paddingBottom": "100px",
+                "paddingTop": "100px",
               }
             }
           />
@@ -363,7 +367,7 @@ ShallowWrapper {
           >
             Welcome to OpenTRV
           </h2>
-          <h3
+          <p
             style={
               Object {
                 "paddingBottom": "10px",
@@ -371,8 +375,8 @@ ShallowWrapper {
             }
           >
             New User? Click Register to create an account
-          </h3>
-          <h3
+          </p>
+          <p
             style={
               Object {
                 "paddingBottom": "10px",
@@ -380,7 +384,7 @@ ShallowWrapper {
             }
           >
             Existing User? Login to view your TRV system
-          </h3>
+          </p>
           <div
             className="Welcome__buttons"
           >
@@ -434,7 +438,8 @@ ShallowWrapper {
               src="opentrv.jpg"
               style={
                 Object {
-                  "paddingBottom": "50px",
+                  "paddingBottom": "100px",
+                  "paddingTop": "100px",
                 }
               }
             />,
@@ -448,7 +453,7 @@ ShallowWrapper {
             >
               Welcome to OpenTRV
             </h2>,
-            <h3
+            <p
               style={
                 Object {
                   "paddingBottom": "10px",
@@ -456,8 +461,8 @@ ShallowWrapper {
               }
             >
               New User? Click Register to create an account
-            </h3>,
-            <h3
+            </p>,
+            <p
               style={
                 Object {
                   "paddingBottom": "10px",
@@ -465,7 +470,7 @@ ShallowWrapper {
               }
             >
               Existing User? Login to view your TRV system
-            </h3>,
+            </p>,
             <div
               className="Welcome__buttons"
             >
@@ -516,7 +521,8 @@ ShallowWrapper {
               "alt": "OpenTRV logo",
               "src": "opentrv.jpg",
               "style": Object {
-                "paddingBottom": "50px",
+                "paddingBottom": "100px",
+                "paddingTop": "100px",
               },
             },
             "ref": null,
@@ -550,7 +556,7 @@ ShallowWrapper {
             },
             "ref": null,
             "rendered": "New User? Click Register to create an account",
-            "type": "h3",
+            "type": "p",
           },
           Object {
             "instance": null,
@@ -564,7 +570,7 @@ ShallowWrapper {
             },
             "ref": null,
             "rendered": "Existing User? Login to view your TRV system",
-            "type": "h3",
+            "type": "p",
           },
           Object {
             "instance": null,
