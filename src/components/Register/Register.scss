@@ -18,5 +18,10 @@
     .Register__form-address {
       margin-right: unset;      
     }
+
+    .Register__form-buttons {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
