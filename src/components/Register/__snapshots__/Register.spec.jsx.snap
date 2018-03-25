@@ -25,6 +25,7 @@ ShallowWrapper {
         </h2>,
         <Form
           className="Register__form"
+          onSubmit={[Function]}
         >
           <FormGroup
             className="Register__form-name"
@@ -33,30 +34,58 @@ ShallowWrapper {
             message={false}
             messageText=""
           >
-            <TextInput
-              className="bx--text__input"
-              disabled={false}
-              id="register-first-name"
-              invalid={false}
-              invalidText=""
-              labelText="*First"
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder="First name"
-              type="text"
-            />
-            <TextInput
-              className="bx--text__input"
-              disabled={false}
-              id="register-last-name"
-              invalid={false}
-              invalidText=""
-              labelText="*Last"
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder="Last name"
-              type="text"
-            />
+            <FormItem>
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-first-name"
+                invalid={false}
+                invalidText=""
+                labelText="*First"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="First name"
+                type="text"
+                value=""
+              />
+            </FormItem>
+            <FormItem>
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-last-name"
+                invalid={false}
+                invalidText=""
+                labelText="*Last"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Last name"
+                type="text"
+                value=""
+              />
+            </FormItem>
+          </FormGroup>
+          <FormGroup
+            invalid={false}
+            legendText=""
+            message={false}
+            messageText=""
+          >
+            <FormItem>
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-email"
+                invalid={false}
+                invalidText=""
+                labelText="*Email"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Email address"
+                type="text"
+                value=""
+              />
+            </FormItem>
           </FormGroup>
           <FormGroup
             className="Register__form-address"
@@ -65,30 +94,53 @@ ShallowWrapper {
             message={false}
             messageText=""
           >
-            <TextInput
-              className="bx--text__input"
-              disabled={false}
-              id="register-house-firstline"
-              invalid={false}
-              invalidText=""
-              labelText="*Line 1"
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder="First line"
-              type="text"
-            />
-            <TextInput
-              className="bx--text__input"
-              disabled={false}
-              id="register-house-secondline"
-              invalid={false}
-              invalidText=""
-              labelText="Line 2"
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder="Second line"
-              type="text"
-            />
+            <FormItem
+              style={
+                Object {
+                  "marginRight": "unset",
+                }
+              }
+            >
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-address-firstline"
+                invalid={false}
+                invalidText=""
+                labelText="*Line 1"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="First line"
+                style={
+                  Object {
+                    "marginRight": "unset",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </FormItem>
+            <FormItem
+              style={
+                Object {
+                  "marginRight": "unset",
+                }
+              }
+            >
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-address-secondline"
+                invalid={false}
+                invalidText=""
+                labelText="Line 2"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Second line"
+                type="text"
+                value=""
+              />
+            </FormItem>
             <div
               style={
                 Object {
@@ -96,30 +148,36 @@ ShallowWrapper {
                 }
               }
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-city"
-                invalid={false}
-                invalidText=""
-                labelText="City"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="City"
-                type="text"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-county"
-                invalid={false}
-                invalidText=""
-                labelText="*County"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="County"
-                type="text"
-              />
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-city"
+                  invalid={false}
+                  invalidText=""
+                  labelText="City"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="City"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-county"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*County"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="County"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
             </div>
             <div
               style={
@@ -128,30 +186,36 @@ ShallowWrapper {
                 }
               }
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-country"
-                invalid={false}
-                invalidText=""
-                labelText="Country"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Country"
-                type="text"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-postcode"
-                invalid={false}
-                invalidText=""
-                labelText="*Postcode"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Postcode"
-                type="text"
-              />
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-country"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Country"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Country"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-postcode"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Postcode"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Postcode"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
             </div>
           </FormGroup>
           <FormGroup
@@ -160,33 +224,48 @@ ShallowWrapper {
             message={false}
             messageText=""
           >
-            <TextInput
-              className="bx--text__input"
-              disabled={false}
-              id="register-password"
-              invalid={false}
-              invalidText=""
-              labelText="*Password"
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder="Enter password"
-              type="password"
-            />
-            <TextInput
-              className="bx--text__input"
-              disabled={false}
-              id="register-password-confirm"
-              invalid={false}
-              invalidText=""
-              labelText="*Confirm Password"
-              onChange={[Function]}
-              onClick={[Function]}
-              placeholder="Enter password"
-              type="password"
-            />
+            <FormItem
+              style={
+                Object {
+                  "marginRight": "unset",
+                }
+              }
+            >
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-password"
+                invalid={false}
+                invalidText=""
+                labelText="*Password"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter password"
+                type="password"
+                value=""
+              />
+            </FormItem>
+            <FormItem>
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="register-password-confirm"
+                invalid={false}
+                invalidText=""
+                labelText="*Confirm Password"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter password"
+                type="password"
+              />
+            </FormItem>
           </FormGroup>
-          <div
+          <FormGroup
             className="Register__form-buttons"
+            invalid={false}
+            legendText=""
+            message={false}
+            messageText=""
           >
             <Button
               className="Register__back-button"
@@ -207,7 +286,7 @@ ShallowWrapper {
             </Button>
             <Button
               className="Register__register-button"
-              disabled={false}
+              disabled={true}
               iconDescription="Provide icon description if icon is used"
               kind="primary"
               small={false}
@@ -217,11 +296,11 @@ ShallowWrapper {
                 }
               }
               tabIndex={0}
-              type="button"
+              type="submit"
             >
               Register
             </Button>
-          </div>
+          </FormGroup>
         </Form>,
       ],
       "className": "Register",
@@ -253,30 +332,58 @@ ShallowWrapper {
               message={false}
               messageText=""
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-first-name"
-                invalid={false}
-                invalidText=""
-                labelText="*First"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="First name"
-                type="text"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-last-name"
-                invalid={false}
-                invalidText=""
-                labelText="*Last"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Last name"
-                type="text"
-              />
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-first-name"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*First"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="First name"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-last-name"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Last"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Last name"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+            </FormGroup>,
+            <FormGroup
+              invalid={false}
+              legendText=""
+              message={false}
+              messageText=""
+            >
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-email"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Email"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Email address"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
             </FormGroup>,
             <FormGroup
               className="Register__form-address"
@@ -285,30 +392,53 @@ ShallowWrapper {
               message={false}
               messageText=""
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-firstline"
-                invalid={false}
-                invalidText=""
-                labelText="*Line 1"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="First line"
-                type="text"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-secondline"
-                invalid={false}
-                invalidText=""
-                labelText="Line 2"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Second line"
-                type="text"
-              />
+              <FormItem
+                style={
+                  Object {
+                    "marginRight": "unset",
+                  }
+                }
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-firstline"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Line 1"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="First line"
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+              <FormItem
+                style={
+                  Object {
+                    "marginRight": "unset",
+                  }
+                }
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-secondline"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Line 2"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Second line"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
               <div
                 style={
                   Object {
@@ -316,30 +446,36 @@ ShallowWrapper {
                   }
                 }
               >
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-city"
-                  invalid={false}
-                  invalidText=""
-                  labelText="City"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="City"
-                  type="text"
-                />
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-county"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*County"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="County"
-                  type="text"
-                />
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-city"
+                    invalid={false}
+                    invalidText=""
+                    labelText="City"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="City"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-county"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*County"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="County"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
               </div>
               <div
                 style={
@@ -348,30 +484,36 @@ ShallowWrapper {
                   }
                 }
               >
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-country"
-                  invalid={false}
-                  invalidText=""
-                  labelText="Country"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Country"
-                  type="text"
-                />
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-postcode"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Postcode"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Postcode"
-                  type="text"
-                />
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-country"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Country"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Country"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-postcode"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Postcode"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Postcode"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
               </div>
             </FormGroup>,
             <FormGroup
@@ -380,33 +522,48 @@ ShallowWrapper {
               message={false}
               messageText=""
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-password"
-                invalid={false}
-                invalidText=""
-                labelText="*Password"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Enter password"
-                type="password"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-password-confirm"
-                invalid={false}
-                invalidText=""
-                labelText="*Confirm Password"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Enter password"
-                type="password"
-              />
+              <FormItem
+                style={
+                  Object {
+                    "marginRight": "unset",
+                  }
+                }
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-password"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Password"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter password"
+                  type="password"
+                  value=""
+                />
+              </FormItem>
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-password-confirm"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Confirm Password"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter password"
+                  type="password"
+                />
+              </FormItem>
             </FormGroup>,
-            <div
+            <FormGroup
               className="Register__form-buttons"
+              invalid={false}
+              legendText=""
+              message={false}
+              messageText=""
             >
               <Button
                 className="Register__back-button"
@@ -427,7 +584,7 @@ ShallowWrapper {
               </Button>
               <Button
                 className="Register__register-button"
-                disabled={false}
+                disabled={true}
                 iconDescription="Provide icon description if icon is used"
                 kind="primary"
                 small={false}
@@ -437,13 +594,14 @@ ShallowWrapper {
                   }
                 }
                 tabIndex={0}
-                type="button"
+                type="submit"
               >
                 Register
               </Button>
-            </div>,
+            </FormGroup>,
           ],
           "className": "Register__form",
+          "onSubmit": [Function],
         },
         "ref": null,
         "rendered": Array [
@@ -453,30 +611,36 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "children": Array [
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-first-name"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*First"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="First name"
-                  type="text"
-                />,
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-last-name"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Last"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Last name"
-                  type="text"
-                />,
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-first-name"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*First"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="First name"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>,
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-last-name"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Last"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Last name"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>,
               ],
               "className": "Register__form-name",
               "invalid": false,
@@ -491,19 +655,42 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
-                  "className": "bx--text__input",
-                  "disabled": false,
-                  "id": "register-first-name",
-                  "invalid": false,
-                  "invalidText": "",
-                  "labelText": "*First",
-                  "onChange": [Function],
-                  "onClick": [Function],
-                  "placeholder": "First name",
-                  "type": "text",
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-first-name"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*First"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="First name"
+                    type="text"
+                    value=""
+                  />,
                 },
                 "ref": null,
-                "rendered": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "register-first-name",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "*First",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "First name",
+                    "type": "text",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
                 "type": [Function],
               },
               Object {
@@ -511,19 +698,42 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
-                  "className": "bx--text__input",
-                  "disabled": false,
-                  "id": "register-last-name",
-                  "invalid": false,
-                  "invalidText": "",
-                  "labelText": "*Last",
-                  "onChange": [Function],
-                  "onClick": [Function],
-                  "placeholder": "Last name",
-                  "type": "text",
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-last-name"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Last"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Last name"
+                    type="text"
+                    value=""
+                  />,
                 },
                 "ref": null,
-                "rendered": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "register-last-name",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "*Last",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "Last name",
+                    "type": "text",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
                 "type": [Function],
               },
             ],
@@ -534,31 +744,125 @@ ShallowWrapper {
             "key": undefined,
             "nodeType": "function",
             "props": Object {
+              "children": <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-email"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Email"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Email address"
+                  type="text"
+                  value=""
+                />
+              </FormItem>,
+              "invalid": false,
+              "legendText": "",
+              "message": false,
+              "messageText": "",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-email"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Email"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Email address"
+                  type="text"
+                  value=""
+                />,
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "className": "bx--text__input",
+                  "disabled": false,
+                  "id": "register-email",
+                  "invalid": false,
+                  "invalidText": "",
+                  "labelText": "*Email",
+                  "onChange": [Function],
+                  "onClick": [Function],
+                  "placeholder": "Email address",
+                  "type": "text",
+                  "value": "",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
               "children": Array [
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-firstline"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Line 1"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="First line"
-                  type="text"
-                />,
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-secondline"
-                  invalid={false}
-                  invalidText=""
-                  labelText="Line 2"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Second line"
-                  type="text"
-                />,
+                <FormItem
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-firstline"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Line 1"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="First line"
+                    style={
+                      Object {
+                        "marginRight": "unset",
+                      }
+                    }
+                    type="text"
+                    value=""
+                  />
+                </FormItem>,
+                <FormItem
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-secondline"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Line 2"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Second line"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>,
                 <div
                   style={
                     Object {
@@ -566,30 +870,36 @@ ShallowWrapper {
                     }
                   }
                 >
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-city"
-                    invalid={false}
-                    invalidText=""
-                    labelText="City"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="City"
-                    type="text"
-                  />
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-county"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*County"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="County"
-                    type="text"
-                  />
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-city"
+                      invalid={false}
+                      invalidText=""
+                      labelText="City"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="City"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-county"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*County"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="County"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
                 </div>,
                 <div
                   style={
@@ -598,30 +908,36 @@ ShallowWrapper {
                     }
                   }
                 >
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-country"
-                    invalid={false}
-                    invalidText=""
-                    labelText="Country"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Country"
-                    type="text"
-                  />
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-postcode"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*Postcode"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Postcode"
-                    type="text"
-                  />
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-country"
+                      invalid={false}
+                      invalidText=""
+                      labelText="Country"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Country"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-postcode"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Postcode"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Postcode"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
                 </div>,
               ],
               "className": "Register__form-address",
@@ -637,19 +953,53 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
-                  "className": "bx--text__input",
-                  "disabled": false,
-                  "id": "register-house-firstline",
-                  "invalid": false,
-                  "invalidText": "",
-                  "labelText": "*Line 1",
-                  "onChange": [Function],
-                  "onClick": [Function],
-                  "placeholder": "First line",
-                  "type": "text",
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-firstline"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Line 1"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="First line"
+                    style={
+                      Object {
+                        "marginRight": "unset",
+                      }
+                    }
+                    type="text"
+                    value=""
+                  />,
+                  "style": Object {
+                    "marginRight": "unset",
+                  },
                 },
                 "ref": null,
-                "rendered": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "register-address-firstline",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "*Line 1",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "First line",
+                    "style": Object {
+                      "marginRight": "unset",
+                    },
+                    "type": "text",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
                 "type": [Function],
               },
               Object {
@@ -657,19 +1007,45 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
-                  "className": "bx--text__input",
-                  "disabled": false,
-                  "id": "register-house-secondline",
-                  "invalid": false,
-                  "invalidText": "",
-                  "labelText": "Line 2",
-                  "onChange": [Function],
-                  "onClick": [Function],
-                  "placeholder": "Second line",
-                  "type": "text",
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-secondline"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Line 2"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Second line"
+                    type="text"
+                    value=""
+                  />,
+                  "style": Object {
+                    "marginRight": "unset",
+                  },
                 },
                 "ref": null,
-                "rendered": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "register-address-secondline",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "Line 2",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "Second line",
+                    "type": "text",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
                 "type": [Function],
               },
               Object {
@@ -678,30 +1054,36 @@ ShallowWrapper {
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-city"
-                      invalid={false}
-                      invalidText=""
-                      labelText="City"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="City"
-                      type="text"
-                    />,
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-county"
-                      invalid={false}
-                      invalidText=""
-                      labelText="*County"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="County"
-                      type="text"
-                    />,
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-city"
+                        invalid={false}
+                        invalidText=""
+                        labelText="City"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="City"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>,
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-county"
+                        invalid={false}
+                        invalidText=""
+                        labelText="*County"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="County"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>,
                   ],
                   "style": Object {
                     "display": "flex",
@@ -714,19 +1096,42 @@ ShallowWrapper {
                     "key": undefined,
                     "nodeType": "function",
                     "props": Object {
-                      "className": "bx--text__input",
-                      "disabled": false,
-                      "id": "register-house-city",
-                      "invalid": false,
-                      "invalidText": "",
-                      "labelText": "City",
-                      "onChange": [Function],
-                      "onClick": [Function],
-                      "placeholder": "City",
-                      "type": "text",
+                      "children": <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-city"
+                        invalid={false}
+                        invalidText=""
+                        labelText="City"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="City"
+                        type="text"
+                        value=""
+                      />,
                     },
                     "ref": null,
-                    "rendered": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "function",
+                      "props": Object {
+                        "className": "bx--text__input",
+                        "disabled": false,
+                        "id": "register-address-city",
+                        "invalid": false,
+                        "invalidText": "",
+                        "labelText": "City",
+                        "onChange": [Function],
+                        "onClick": [Function],
+                        "placeholder": "City",
+                        "type": "text",
+                        "value": "",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
                     "type": [Function],
                   },
                   Object {
@@ -734,19 +1139,42 @@ ShallowWrapper {
                     "key": undefined,
                     "nodeType": "function",
                     "props": Object {
-                      "className": "bx--text__input",
-                      "disabled": false,
-                      "id": "register-house-county",
-                      "invalid": false,
-                      "invalidText": "",
-                      "labelText": "*County",
-                      "onChange": [Function],
-                      "onClick": [Function],
-                      "placeholder": "County",
-                      "type": "text",
+                      "children": <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-county"
+                        invalid={false}
+                        invalidText=""
+                        labelText="*County"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="County"
+                        type="text"
+                        value=""
+                      />,
                     },
                     "ref": null,
-                    "rendered": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "function",
+                      "props": Object {
+                        "className": "bx--text__input",
+                        "disabled": false,
+                        "id": "register-address-county",
+                        "invalid": false,
+                        "invalidText": "",
+                        "labelText": "*County",
+                        "onChange": [Function],
+                        "onClick": [Function],
+                        "placeholder": "County",
+                        "type": "text",
+                        "value": "",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
                     "type": [Function],
                   },
                 ],
@@ -758,30 +1186,36 @@ ShallowWrapper {
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-country"
-                      invalid={false}
-                      invalidText=""
-                      labelText="Country"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="Country"
-                      type="text"
-                    />,
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-postcode"
-                      invalid={false}
-                      invalidText=""
-                      labelText="*Postcode"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="Postcode"
-                      type="text"
-                    />,
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-country"
+                        invalid={false}
+                        invalidText=""
+                        labelText="Country"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="Country"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>,
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-postcode"
+                        invalid={false}
+                        invalidText=""
+                        labelText="*Postcode"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="Postcode"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>,
                   ],
                   "style": Object {
                     "display": "flex",
@@ -794,19 +1228,42 @@ ShallowWrapper {
                     "key": undefined,
                     "nodeType": "function",
                     "props": Object {
-                      "className": "bx--text__input",
-                      "disabled": false,
-                      "id": "register-house-country",
-                      "invalid": false,
-                      "invalidText": "",
-                      "labelText": "Country",
-                      "onChange": [Function],
-                      "onClick": [Function],
-                      "placeholder": "Country",
-                      "type": "text",
+                      "children": <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-country"
+                        invalid={false}
+                        invalidText=""
+                        labelText="Country"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="Country"
+                        type="text"
+                        value=""
+                      />,
                     },
                     "ref": null,
-                    "rendered": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "function",
+                      "props": Object {
+                        "className": "bx--text__input",
+                        "disabled": false,
+                        "id": "register-address-country",
+                        "invalid": false,
+                        "invalidText": "",
+                        "labelText": "Country",
+                        "onChange": [Function],
+                        "onClick": [Function],
+                        "placeholder": "Country",
+                        "type": "text",
+                        "value": "",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
                     "type": [Function],
                   },
                   Object {
@@ -814,19 +1271,42 @@ ShallowWrapper {
                     "key": undefined,
                     "nodeType": "function",
                     "props": Object {
-                      "className": "bx--text__input",
-                      "disabled": false,
-                      "id": "register-house-postcode",
-                      "invalid": false,
-                      "invalidText": "",
-                      "labelText": "*Postcode",
-                      "onChange": [Function],
-                      "onClick": [Function],
-                      "placeholder": "Postcode",
-                      "type": "text",
+                      "children": <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-postcode"
+                        invalid={false}
+                        invalidText=""
+                        labelText="*Postcode"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="Postcode"
+                        type="text"
+                        value=""
+                      />,
                     },
                     "ref": null,
-                    "rendered": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "function",
+                      "props": Object {
+                        "className": "bx--text__input",
+                        "disabled": false,
+                        "id": "register-address-postcode",
+                        "invalid": false,
+                        "invalidText": "",
+                        "labelText": "*Postcode",
+                        "onChange": [Function],
+                        "onClick": [Function],
+                        "placeholder": "Postcode",
+                        "type": "text",
+                        "value": "",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
                     "type": [Function],
                   },
                 ],
@@ -841,30 +1321,41 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "children": Array [
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-password"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Password"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Enter password"
-                  type="password"
-                />,
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-password-confirm"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Confirm Password"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Enter password"
-                  type="password"
-                />,
+                <FormItem
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-password"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    type="password"
+                    value=""
+                  />
+                </FormItem>,
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-password-confirm"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Confirm Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    type="password"
+                  />
+                </FormItem>,
               ],
               "invalid": false,
               "legendText": "",
@@ -878,19 +1369,45 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
-                  "className": "bx--text__input",
-                  "disabled": false,
-                  "id": "register-password",
-                  "invalid": false,
-                  "invalidText": "",
-                  "labelText": "*Password",
-                  "onChange": [Function],
-                  "onClick": [Function],
-                  "placeholder": "Enter password",
-                  "type": "password",
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-password"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    type="password"
+                    value=""
+                  />,
+                  "style": Object {
+                    "marginRight": "unset",
+                  },
                 },
                 "ref": null,
-                "rendered": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "register-password",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "*Password",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "Enter password",
+                    "type": "password",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
                 "type": [Function],
               },
               Object {
@@ -898,19 +1415,40 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "function",
                 "props": Object {
-                  "className": "bx--text__input",
-                  "disabled": false,
-                  "id": "register-password-confirm",
-                  "invalid": false,
-                  "invalidText": "",
-                  "labelText": "*Confirm Password",
-                  "onChange": [Function],
-                  "onClick": [Function],
-                  "placeholder": "Enter password",
-                  "type": "password",
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-password-confirm"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Confirm Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    type="password"
+                  />,
                 },
                 "ref": null,
-                "rendered": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "register-password-confirm",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "*Confirm Password",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "Enter password",
+                    "type": "password",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
                 "type": [Function],
               },
             ],
@@ -919,7 +1457,7 @@ ShallowWrapper {
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
+            "nodeType": "function",
             "props": Object {
               "children": Array [
                 <Button
@@ -941,7 +1479,7 @@ ShallowWrapper {
                 </Button>,
                 <Button
                   className="Register__register-button"
-                  disabled={false}
+                  disabled={true}
                   iconDescription="Provide icon description if icon is used"
                   kind="primary"
                   small={false}
@@ -951,12 +1489,16 @@ ShallowWrapper {
                     }
                   }
                   tabIndex={0}
-                  type="button"
+                  type="submit"
                 >
                   Register
                 </Button>,
               ],
               "className": "Register__form-buttons",
+              "invalid": false,
+              "legendText": "",
+              "message": false,
+              "messageText": "",
             },
             "ref": null,
             "rendered": Array [
@@ -989,7 +1531,7 @@ ShallowWrapper {
                 "props": Object {
                   "children": "Register",
                   "className": "Register__register-button",
-                  "disabled": false,
+                  "disabled": true,
                   "iconDescription": "Provide icon description if icon is used",
                   "kind": "primary",
                   "small": false,
@@ -997,14 +1539,14 @@ ShallowWrapper {
                     "width": "120px",
                   },
                   "tabIndex": 0,
-                  "type": "button",
+                  "type": "submit",
                 },
                 "ref": null,
                 "rendered": "Register",
                 "type": [Function],
               },
             ],
-            "type": "div",
+            "type": [Function],
           },
         ],
         "type": [Function],
@@ -1026,6 +1568,7 @@ ShallowWrapper {
           </h2>,
           <Form
             className="Register__form"
+            onSubmit={[Function]}
           >
             <FormGroup
               className="Register__form-name"
@@ -1034,30 +1577,58 @@ ShallowWrapper {
               message={false}
               messageText=""
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-first-name"
-                invalid={false}
-                invalidText=""
-                labelText="*First"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="First name"
-                type="text"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-last-name"
-                invalid={false}
-                invalidText=""
-                labelText="*Last"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Last name"
-                type="text"
-              />
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-first-name"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*First"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="First name"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-last-name"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Last"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Last name"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+            </FormGroup>
+            <FormGroup
+              invalid={false}
+              legendText=""
+              message={false}
+              messageText=""
+            >
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-email"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Email"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Email address"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
             </FormGroup>
             <FormGroup
               className="Register__form-address"
@@ -1066,30 +1637,53 @@ ShallowWrapper {
               message={false}
               messageText=""
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-firstline"
-                invalid={false}
-                invalidText=""
-                labelText="*Line 1"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="First line"
-                type="text"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-house-secondline"
-                invalid={false}
-                invalidText=""
-                labelText="Line 2"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Second line"
-                type="text"
-              />
+              <FormItem
+                style={
+                  Object {
+                    "marginRight": "unset",
+                  }
+                }
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-firstline"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Line 1"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="First line"
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                  type="text"
+                  value=""
+                />
+              </FormItem>
+              <FormItem
+                style={
+                  Object {
+                    "marginRight": "unset",
+                  }
+                }
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-address-secondline"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Line 2"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Second line"
+                  type="text"
+                  value=""
+                />
+              </FormItem>
               <div
                 style={
                   Object {
@@ -1097,30 +1691,36 @@ ShallowWrapper {
                   }
                 }
               >
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-city"
-                  invalid={false}
-                  invalidText=""
-                  labelText="City"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="City"
-                  type="text"
-                />
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-county"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*County"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="County"
-                  type="text"
-                />
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-city"
+                    invalid={false}
+                    invalidText=""
+                    labelText="City"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="City"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-county"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*County"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="County"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
               </div>
               <div
                 style={
@@ -1129,30 +1729,36 @@ ShallowWrapper {
                   }
                 }
               >
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-country"
-                  invalid={false}
-                  invalidText=""
-                  labelText="Country"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Country"
-                  type="text"
-                />
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-postcode"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Postcode"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Postcode"
-                  type="text"
-                />
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-country"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Country"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Country"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-postcode"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Postcode"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Postcode"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
               </div>
             </FormGroup>
             <FormGroup
@@ -1161,33 +1767,48 @@ ShallowWrapper {
               message={false}
               messageText=""
             >
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-password"
-                invalid={false}
-                invalidText=""
-                labelText="*Password"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Enter password"
-                type="password"
-              />
-              <TextInput
-                className="bx--text__input"
-                disabled={false}
-                id="register-password-confirm"
-                invalid={false}
-                invalidText=""
-                labelText="*Confirm Password"
-                onChange={[Function]}
-                onClick={[Function]}
-                placeholder="Enter password"
-                type="password"
-              />
+              <FormItem
+                style={
+                  Object {
+                    "marginRight": "unset",
+                  }
+                }
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-password"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Password"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter password"
+                  type="password"
+                  value=""
+                />
+              </FormItem>
+              <FormItem>
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="register-password-confirm"
+                  invalid={false}
+                  invalidText=""
+                  labelText="*Confirm Password"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter password"
+                  type="password"
+                />
+              </FormItem>
             </FormGroup>
-            <div
+            <FormGroup
               className="Register__form-buttons"
+              invalid={false}
+              legendText=""
+              message={false}
+              messageText=""
             >
               <Button
                 className="Register__back-button"
@@ -1208,7 +1829,7 @@ ShallowWrapper {
               </Button>
               <Button
                 className="Register__register-button"
-                disabled={false}
+                disabled={true}
                 iconDescription="Provide icon description if icon is used"
                 kind="primary"
                 small={false}
@@ -1218,11 +1839,11 @@ ShallowWrapper {
                   }
                 }
                 tabIndex={0}
-                type="button"
+                type="submit"
               >
                 Register
               </Button>
-            </div>
+            </FormGroup>
           </Form>,
         ],
         "className": "Register",
@@ -1254,30 +1875,58 @@ ShallowWrapper {
                 message={false}
                 messageText=""
               >
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-first-name"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*First"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="First name"
-                  type="text"
-                />
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-last-name"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Last"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Last name"
-                  type="text"
-                />
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-first-name"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*First"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="First name"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-last-name"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Last"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Last name"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
+              </FormGroup>,
+              <FormGroup
+                invalid={false}
+                legendText=""
+                message={false}
+                messageText=""
+              >
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-email"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Email"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Email address"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
               </FormGroup>,
               <FormGroup
                 className="Register__form-address"
@@ -1286,30 +1935,53 @@ ShallowWrapper {
                 message={false}
                 messageText=""
               >
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-firstline"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Line 1"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="First line"
-                  type="text"
-                />
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-house-secondline"
-                  invalid={false}
-                  invalidText=""
-                  labelText="Line 2"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Second line"
-                  type="text"
-                />
+                <FormItem
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-firstline"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Line 1"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="First line"
+                    style={
+                      Object {
+                        "marginRight": "unset",
+                      }
+                    }
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
+                <FormItem
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-address-secondline"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Line 2"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Second line"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>
                 <div
                   style={
                     Object {
@@ -1317,30 +1989,36 @@ ShallowWrapper {
                     }
                   }
                 >
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-city"
-                    invalid={false}
-                    invalidText=""
-                    labelText="City"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="City"
-                    type="text"
-                  />
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-county"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*County"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="County"
-                    type="text"
-                  />
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-city"
+                      invalid={false}
+                      invalidText=""
+                      labelText="City"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="City"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-county"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*County"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="County"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
                 </div>
                 <div
                   style={
@@ -1349,30 +2027,36 @@ ShallowWrapper {
                     }
                   }
                 >
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-country"
-                    invalid={false}
-                    invalidText=""
-                    labelText="Country"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Country"
-                    type="text"
-                  />
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-postcode"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*Postcode"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Postcode"
-                    type="text"
-                  />
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-country"
+                      invalid={false}
+                      invalidText=""
+                      labelText="Country"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Country"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-postcode"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Postcode"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Postcode"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>
                 </div>
               </FormGroup>,
               <FormGroup
@@ -1381,33 +2065,48 @@ ShallowWrapper {
                 message={false}
                 messageText=""
               >
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-password"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Password"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Enter password"
-                  type="password"
-                />
-                <TextInput
-                  className="bx--text__input"
-                  disabled={false}
-                  id="register-password-confirm"
-                  invalid={false}
-                  invalidText=""
-                  labelText="*Confirm Password"
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  placeholder="Enter password"
-                  type="password"
-                />
+                <FormItem
+                  style={
+                    Object {
+                      "marginRight": "unset",
+                    }
+                  }
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-password"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    type="password"
+                    value=""
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-password-confirm"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Confirm Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    type="password"
+                  />
+                </FormItem>
               </FormGroup>,
-              <div
+              <FormGroup
                 className="Register__form-buttons"
+                invalid={false}
+                legendText=""
+                message={false}
+                messageText=""
               >
                 <Button
                   className="Register__back-button"
@@ -1428,7 +2127,7 @@ ShallowWrapper {
                 </Button>
                 <Button
                   className="Register__register-button"
-                  disabled={false}
+                  disabled={true}
                   iconDescription="Provide icon description if icon is used"
                   kind="primary"
                   small={false}
@@ -1438,13 +2137,14 @@ ShallowWrapper {
                     }
                   }
                   tabIndex={0}
-                  type="button"
+                  type="submit"
                 >
                   Register
                 </Button>
-              </div>,
+              </FormGroup>,
             ],
             "className": "Register__form",
+            "onSubmit": [Function],
           },
           "ref": null,
           "rendered": Array [
@@ -1454,30 +2154,36 @@ ShallowWrapper {
               "nodeType": "function",
               "props": Object {
                 "children": Array [
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-first-name"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*First"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="First name"
-                    type="text"
-                  />,
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-last-name"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*Last"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Last name"
-                    type="text"
-                  />,
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-first-name"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*First"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="First name"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>,
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-last-name"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Last"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Last name"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>,
                 ],
                 "className": "Register__form-name",
                 "invalid": false,
@@ -1492,19 +2198,42 @@ ShallowWrapper {
                   "key": undefined,
                   "nodeType": "function",
                   "props": Object {
-                    "className": "bx--text__input",
-                    "disabled": false,
-                    "id": "register-first-name",
-                    "invalid": false,
-                    "invalidText": "",
-                    "labelText": "*First",
-                    "onChange": [Function],
-                    "onClick": [Function],
-                    "placeholder": "First name",
-                    "type": "text",
+                    "children": <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-first-name"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*First"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="First name"
+                      type="text"
+                      value=""
+                    />,
                   },
                   "ref": null,
-                  "rendered": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "className": "bx--text__input",
+                      "disabled": false,
+                      "id": "register-first-name",
+                      "invalid": false,
+                      "invalidText": "",
+                      "labelText": "*First",
+                      "onChange": [Function],
+                      "onClick": [Function],
+                      "placeholder": "First name",
+                      "type": "text",
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
                   "type": [Function],
                 },
                 Object {
@@ -1512,19 +2241,42 @@ ShallowWrapper {
                   "key": undefined,
                   "nodeType": "function",
                   "props": Object {
-                    "className": "bx--text__input",
-                    "disabled": false,
-                    "id": "register-last-name",
-                    "invalid": false,
-                    "invalidText": "",
-                    "labelText": "*Last",
-                    "onChange": [Function],
-                    "onClick": [Function],
-                    "placeholder": "Last name",
-                    "type": "text",
+                    "children": <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-last-name"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Last"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Last name"
+                      type="text"
+                      value=""
+                    />,
                   },
                   "ref": null,
-                  "rendered": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "className": "bx--text__input",
+                      "disabled": false,
+                      "id": "register-last-name",
+                      "invalid": false,
+                      "invalidText": "",
+                      "labelText": "*Last",
+                      "onChange": [Function],
+                      "onClick": [Function],
+                      "placeholder": "Last name",
+                      "type": "text",
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
                   "type": [Function],
                 },
               ],
@@ -1535,31 +2287,125 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "function",
               "props": Object {
+                "children": <FormItem>
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-email"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Email"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Email address"
+                    type="text"
+                    value=""
+                  />
+                </FormItem>,
+                "invalid": false,
+                "legendText": "",
+                "message": false,
+                "messageText": "",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="register-email"
+                    invalid={false}
+                    invalidText=""
+                    labelText="*Email"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Email address"
+                    type="text"
+                    value=""
+                  />,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "register-email",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "*Email",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "Email address",
+                    "type": "text",
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                "type": [Function],
+              },
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
                 "children": Array [
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-firstline"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*Line 1"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="First line"
-                    type="text"
-                  />,
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-house-secondline"
-                    invalid={false}
-                    invalidText=""
-                    labelText="Line 2"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Second line"
-                    type="text"
-                  />,
+                  <FormItem
+                    style={
+                      Object {
+                        "marginRight": "unset",
+                      }
+                    }
+                  >
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-firstline"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Line 1"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="First line"
+                      style={
+                        Object {
+                          "marginRight": "unset",
+                        }
+                      }
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>,
+                  <FormItem
+                    style={
+                      Object {
+                        "marginRight": "unset",
+                      }
+                    }
+                  >
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-secondline"
+                      invalid={false}
+                      invalidText=""
+                      labelText="Line 2"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Second line"
+                      type="text"
+                      value=""
+                    />
+                  </FormItem>,
                   <div
                     style={
                       Object {
@@ -1567,30 +2413,36 @@ ShallowWrapper {
                       }
                     }
                   >
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-city"
-                      invalid={false}
-                      invalidText=""
-                      labelText="City"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="City"
-                      type="text"
-                    />
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-county"
-                      invalid={false}
-                      invalidText=""
-                      labelText="*County"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="County"
-                      type="text"
-                    />
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-city"
+                        invalid={false}
+                        invalidText=""
+                        labelText="City"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="City"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-county"
+                        invalid={false}
+                        invalidText=""
+                        labelText="*County"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="County"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>
                   </div>,
                   <div
                     style={
@@ -1599,30 +2451,36 @@ ShallowWrapper {
                       }
                     }
                   >
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-country"
-                      invalid={false}
-                      invalidText=""
-                      labelText="Country"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="Country"
-                      type="text"
-                    />
-                    <TextInput
-                      className="bx--text__input"
-                      disabled={false}
-                      id="register-house-postcode"
-                      invalid={false}
-                      invalidText=""
-                      labelText="*Postcode"
-                      onChange={[Function]}
-                      onClick={[Function]}
-                      placeholder="Postcode"
-                      type="text"
-                    />
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-country"
+                        invalid={false}
+                        invalidText=""
+                        labelText="Country"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="Country"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>
+                    <FormItem>
+                      <TextInput
+                        className="bx--text__input"
+                        disabled={false}
+                        id="register-address-postcode"
+                        invalid={false}
+                        invalidText=""
+                        labelText="*Postcode"
+                        onChange={[Function]}
+                        onClick={[Function]}
+                        placeholder="Postcode"
+                        type="text"
+                        value=""
+                      />
+                    </FormItem>
                   </div>,
                 ],
                 "className": "Register__form-address",
@@ -1638,19 +2496,53 @@ ShallowWrapper {
                   "key": undefined,
                   "nodeType": "function",
                   "props": Object {
-                    "className": "bx--text__input",
-                    "disabled": false,
-                    "id": "register-house-firstline",
-                    "invalid": false,
-                    "invalidText": "",
-                    "labelText": "*Line 1",
-                    "onChange": [Function],
-                    "onClick": [Function],
-                    "placeholder": "First line",
-                    "type": "text",
+                    "children": <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-firstline"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Line 1"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="First line"
+                      style={
+                        Object {
+                          "marginRight": "unset",
+                        }
+                      }
+                      type="text"
+                      value=""
+                    />,
+                    "style": Object {
+                      "marginRight": "unset",
+                    },
                   },
                   "ref": null,
-                  "rendered": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "className": "bx--text__input",
+                      "disabled": false,
+                      "id": "register-address-firstline",
+                      "invalid": false,
+                      "invalidText": "",
+                      "labelText": "*Line 1",
+                      "onChange": [Function],
+                      "onClick": [Function],
+                      "placeholder": "First line",
+                      "style": Object {
+                        "marginRight": "unset",
+                      },
+                      "type": "text",
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
                   "type": [Function],
                 },
                 Object {
@@ -1658,19 +2550,45 @@ ShallowWrapper {
                   "key": undefined,
                   "nodeType": "function",
                   "props": Object {
-                    "className": "bx--text__input",
-                    "disabled": false,
-                    "id": "register-house-secondline",
-                    "invalid": false,
-                    "invalidText": "",
-                    "labelText": "Line 2",
-                    "onChange": [Function],
-                    "onClick": [Function],
-                    "placeholder": "Second line",
-                    "type": "text",
+                    "children": <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-address-secondline"
+                      invalid={false}
+                      invalidText=""
+                      labelText="Line 2"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Second line"
+                      type="text"
+                      value=""
+                    />,
+                    "style": Object {
+                      "marginRight": "unset",
+                    },
                   },
                   "ref": null,
-                  "rendered": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "className": "bx--text__input",
+                      "disabled": false,
+                      "id": "register-address-secondline",
+                      "invalid": false,
+                      "invalidText": "",
+                      "labelText": "Line 2",
+                      "onChange": [Function],
+                      "onClick": [Function],
+                      "placeholder": "Second line",
+                      "type": "text",
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
                   "type": [Function],
                 },
                 Object {
@@ -1679,30 +2597,36 @@ ShallowWrapper {
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
-                      <TextInput
-                        className="bx--text__input"
-                        disabled={false}
-                        id="register-house-city"
-                        invalid={false}
-                        invalidText=""
-                        labelText="City"
-                        onChange={[Function]}
-                        onClick={[Function]}
-                        placeholder="City"
-                        type="text"
-                      />,
-                      <TextInput
-                        className="bx--text__input"
-                        disabled={false}
-                        id="register-house-county"
-                        invalid={false}
-                        invalidText=""
-                        labelText="*County"
-                        onChange={[Function]}
-                        onClick={[Function]}
-                        placeholder="County"
-                        type="text"
-                      />,
+                      <FormItem>
+                        <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-city"
+                          invalid={false}
+                          invalidText=""
+                          labelText="City"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="City"
+                          type="text"
+                          value=""
+                        />
+                      </FormItem>,
+                      <FormItem>
+                        <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-county"
+                          invalid={false}
+                          invalidText=""
+                          labelText="*County"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="County"
+                          type="text"
+                          value=""
+                        />
+                      </FormItem>,
                     ],
                     "style": Object {
                       "display": "flex",
@@ -1715,19 +2639,42 @@ ShallowWrapper {
                       "key": undefined,
                       "nodeType": "function",
                       "props": Object {
-                        "className": "bx--text__input",
-                        "disabled": false,
-                        "id": "register-house-city",
-                        "invalid": false,
-                        "invalidText": "",
-                        "labelText": "City",
-                        "onChange": [Function],
-                        "onClick": [Function],
-                        "placeholder": "City",
-                        "type": "text",
+                        "children": <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-city"
+                          invalid={false}
+                          invalidText=""
+                          labelText="City"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="City"
+                          type="text"
+                          value=""
+                        />,
                       },
                       "ref": null,
-                      "rendered": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "function",
+                        "props": Object {
+                          "className": "bx--text__input",
+                          "disabled": false,
+                          "id": "register-address-city",
+                          "invalid": false,
+                          "invalidText": "",
+                          "labelText": "City",
+                          "onChange": [Function],
+                          "onClick": [Function],
+                          "placeholder": "City",
+                          "type": "text",
+                          "value": "",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
                       "type": [Function],
                     },
                     Object {
@@ -1735,19 +2682,42 @@ ShallowWrapper {
                       "key": undefined,
                       "nodeType": "function",
                       "props": Object {
-                        "className": "bx--text__input",
-                        "disabled": false,
-                        "id": "register-house-county",
-                        "invalid": false,
-                        "invalidText": "",
-                        "labelText": "*County",
-                        "onChange": [Function],
-                        "onClick": [Function],
-                        "placeholder": "County",
-                        "type": "text",
+                        "children": <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-county"
+                          invalid={false}
+                          invalidText=""
+                          labelText="*County"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="County"
+                          type="text"
+                          value=""
+                        />,
                       },
                       "ref": null,
-                      "rendered": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "function",
+                        "props": Object {
+                          "className": "bx--text__input",
+                          "disabled": false,
+                          "id": "register-address-county",
+                          "invalid": false,
+                          "invalidText": "",
+                          "labelText": "*County",
+                          "onChange": [Function],
+                          "onClick": [Function],
+                          "placeholder": "County",
+                          "type": "text",
+                          "value": "",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
                       "type": [Function],
                     },
                   ],
@@ -1759,30 +2729,36 @@ ShallowWrapper {
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
-                      <TextInput
-                        className="bx--text__input"
-                        disabled={false}
-                        id="register-house-country"
-                        invalid={false}
-                        invalidText=""
-                        labelText="Country"
-                        onChange={[Function]}
-                        onClick={[Function]}
-                        placeholder="Country"
-                        type="text"
-                      />,
-                      <TextInput
-                        className="bx--text__input"
-                        disabled={false}
-                        id="register-house-postcode"
-                        invalid={false}
-                        invalidText=""
-                        labelText="*Postcode"
-                        onChange={[Function]}
-                        onClick={[Function]}
-                        placeholder="Postcode"
-                        type="text"
-                      />,
+                      <FormItem>
+                        <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-country"
+                          invalid={false}
+                          invalidText=""
+                          labelText="Country"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="Country"
+                          type="text"
+                          value=""
+                        />
+                      </FormItem>,
+                      <FormItem>
+                        <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-postcode"
+                          invalid={false}
+                          invalidText=""
+                          labelText="*Postcode"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="Postcode"
+                          type="text"
+                          value=""
+                        />
+                      </FormItem>,
                     ],
                     "style": Object {
                       "display": "flex",
@@ -1795,19 +2771,42 @@ ShallowWrapper {
                       "key": undefined,
                       "nodeType": "function",
                       "props": Object {
-                        "className": "bx--text__input",
-                        "disabled": false,
-                        "id": "register-house-country",
-                        "invalid": false,
-                        "invalidText": "",
-                        "labelText": "Country",
-                        "onChange": [Function],
-                        "onClick": [Function],
-                        "placeholder": "Country",
-                        "type": "text",
+                        "children": <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-country"
+                          invalid={false}
+                          invalidText=""
+                          labelText="Country"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="Country"
+                          type="text"
+                          value=""
+                        />,
                       },
                       "ref": null,
-                      "rendered": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "function",
+                        "props": Object {
+                          "className": "bx--text__input",
+                          "disabled": false,
+                          "id": "register-address-country",
+                          "invalid": false,
+                          "invalidText": "",
+                          "labelText": "Country",
+                          "onChange": [Function],
+                          "onClick": [Function],
+                          "placeholder": "Country",
+                          "type": "text",
+                          "value": "",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
                       "type": [Function],
                     },
                     Object {
@@ -1815,19 +2814,42 @@ ShallowWrapper {
                       "key": undefined,
                       "nodeType": "function",
                       "props": Object {
-                        "className": "bx--text__input",
-                        "disabled": false,
-                        "id": "register-house-postcode",
-                        "invalid": false,
-                        "invalidText": "",
-                        "labelText": "*Postcode",
-                        "onChange": [Function],
-                        "onClick": [Function],
-                        "placeholder": "Postcode",
-                        "type": "text",
+                        "children": <TextInput
+                          className="bx--text__input"
+                          disabled={false}
+                          id="register-address-postcode"
+                          invalid={false}
+                          invalidText=""
+                          labelText="*Postcode"
+                          onChange={[Function]}
+                          onClick={[Function]}
+                          placeholder="Postcode"
+                          type="text"
+                          value=""
+                        />,
                       },
                       "ref": null,
-                      "rendered": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "function",
+                        "props": Object {
+                          "className": "bx--text__input",
+                          "disabled": false,
+                          "id": "register-address-postcode",
+                          "invalid": false,
+                          "invalidText": "",
+                          "labelText": "*Postcode",
+                          "onChange": [Function],
+                          "onClick": [Function],
+                          "placeholder": "Postcode",
+                          "type": "text",
+                          "value": "",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
                       "type": [Function],
                     },
                   ],
@@ -1842,30 +2864,41 @@ ShallowWrapper {
               "nodeType": "function",
               "props": Object {
                 "children": Array [
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-password"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*Password"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Enter password"
-                    type="password"
-                  />,
-                  <TextInput
-                    className="bx--text__input"
-                    disabled={false}
-                    id="register-password-confirm"
-                    invalid={false}
-                    invalidText=""
-                    labelText="*Confirm Password"
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    placeholder="Enter password"
-                    type="password"
-                  />,
+                  <FormItem
+                    style={
+                      Object {
+                        "marginRight": "unset",
+                      }
+                    }
+                  >
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-password"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Password"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Enter password"
+                      type="password"
+                      value=""
+                    />
+                  </FormItem>,
+                  <FormItem>
+                    <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-password-confirm"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Confirm Password"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Enter password"
+                      type="password"
+                    />
+                  </FormItem>,
                 ],
                 "invalid": false,
                 "legendText": "",
@@ -1879,19 +2912,45 @@ ShallowWrapper {
                   "key": undefined,
                   "nodeType": "function",
                   "props": Object {
-                    "className": "bx--text__input",
-                    "disabled": false,
-                    "id": "register-password",
-                    "invalid": false,
-                    "invalidText": "",
-                    "labelText": "*Password",
-                    "onChange": [Function],
-                    "onClick": [Function],
-                    "placeholder": "Enter password",
-                    "type": "password",
+                    "children": <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-password"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Password"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Enter password"
+                      type="password"
+                      value=""
+                    />,
+                    "style": Object {
+                      "marginRight": "unset",
+                    },
                   },
                   "ref": null,
-                  "rendered": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "className": "bx--text__input",
+                      "disabled": false,
+                      "id": "register-password",
+                      "invalid": false,
+                      "invalidText": "",
+                      "labelText": "*Password",
+                      "onChange": [Function],
+                      "onClick": [Function],
+                      "placeholder": "Enter password",
+                      "type": "password",
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
                   "type": [Function],
                 },
                 Object {
@@ -1899,19 +2958,40 @@ ShallowWrapper {
                   "key": undefined,
                   "nodeType": "function",
                   "props": Object {
-                    "className": "bx--text__input",
-                    "disabled": false,
-                    "id": "register-password-confirm",
-                    "invalid": false,
-                    "invalidText": "",
-                    "labelText": "*Confirm Password",
-                    "onChange": [Function],
-                    "onClick": [Function],
-                    "placeholder": "Enter password",
-                    "type": "password",
+                    "children": <TextInput
+                      className="bx--text__input"
+                      disabled={false}
+                      id="register-password-confirm"
+                      invalid={false}
+                      invalidText=""
+                      labelText="*Confirm Password"
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      placeholder="Enter password"
+                      type="password"
+                    />,
                   },
                   "ref": null,
-                  "rendered": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "className": "bx--text__input",
+                      "disabled": false,
+                      "id": "register-password-confirm",
+                      "invalid": false,
+                      "invalidText": "",
+                      "labelText": "*Confirm Password",
+                      "onChange": [Function],
+                      "onClick": [Function],
+                      "placeholder": "Enter password",
+                      "type": "password",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
                   "type": [Function],
                 },
               ],
@@ -1920,7 +3000,7 @@ ShallowWrapper {
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "host",
+              "nodeType": "function",
               "props": Object {
                 "children": Array [
                   <Button
@@ -1942,7 +3022,7 @@ ShallowWrapper {
                   </Button>,
                   <Button
                     className="Register__register-button"
-                    disabled={false}
+                    disabled={true}
                     iconDescription="Provide icon description if icon is used"
                     kind="primary"
                     small={false}
@@ -1952,12 +3032,16 @@ ShallowWrapper {
                       }
                     }
                     tabIndex={0}
-                    type="button"
+                    type="submit"
                   >
                     Register
                   </Button>,
                 ],
                 "className": "Register__form-buttons",
+                "invalid": false,
+                "legendText": "",
+                "message": false,
+                "messageText": "",
               },
               "ref": null,
               "rendered": Array [
@@ -1990,7 +3074,7 @@ ShallowWrapper {
                   "props": Object {
                     "children": "Register",
                     "className": "Register__register-button",
-                    "disabled": false,
+                    "disabled": true,
                     "iconDescription": "Provide icon description if icon is used",
                     "kind": "primary",
                     "small": false,
@@ -1998,14 +3082,14 @@ ShallowWrapper {
                       "width": "120px",
                     },
                     "tabIndex": 0,
-                    "type": "button",
+                    "type": "submit",
                   },
                   "ref": null,
                   "rendered": "Register",
                   "type": [Function],
                 },
               ],
-              "type": "div",
+              "type": [Function],
             },
           ],
           "type": [Function],
