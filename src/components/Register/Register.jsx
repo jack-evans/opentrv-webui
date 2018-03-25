@@ -28,21 +28,7 @@ class Register extends Component {
       isDisabled: true,
       failedRegister: false
     }
-
-    this.firstName = ''
-    this.lastName = ''
     this.confirmPass = ''
-
-    this.requiredFields = [
-      'register-first-name',
-      'register-last-name',
-      'register-email',
-      'register-address-firstline',
-      'register-address-county',
-      'register-address-postcode',
-      'register-password',
-      'register-password-confirm'
-    ]
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -50,73 +36,21 @@ class Register extends Component {
 
   handleInputChange (event) {
     const target = event.target
-    const id = target.id
+    const inputfield = target.name
     const value = target.value
-
     const user = this.state.user
 
-    switch (id) {
-      case 'register-first-name': {
-        this.firstName = value
-        break
-      }
-
-      case 'register-last-name': {
-        this.lastName = value
-        break
-      }
-
-      case 'register-email': {
-        user.email = value
-        break
-      }
-
-      case 'register-address-firstline': {
-        user.address.firstLine = value
-        break
-      }
-
-      case 'register-address-secondline': {
-        user.address.secondLine = value
-        break
-      }
-
-      case 'register-address-city': {
-        user.address.city = value
-        break
-      }
-
-      case 'register-address-county': {
-        user.address.county = value
-        break
-      }
-
-      case 'register-address-country': {
-        user.address.country = value
-        break
-      }
-
-      case 'register-address-postcode': {
-        user.address.postcode = value
-        break
-      }
-
-      case 'register-password': {
-        user.password = value
-        break
-      }
-
-      case 'register-password-confirm': {
-        this.confirmPass = value
-        break
-      }
+    if (inputfield.includes('->')) {
+      const nestedInput = inputfield.split('->')
+      let address = nestedInput[0]
+      let addressProp = nestedInput[1]
+      user[address][addressProp] = value
+    } else {
+      user[inputfield] = value
     }
-
-    user.name = `${this.firstName} ${this.lastName}`
 
     if (
       user.name &&
-      (this.firstName && this.lastName) &&
       user.address.firstLine &&
       user.address.county &&
       user.address.postcode &&
@@ -159,35 +93,24 @@ class Register extends Component {
       <div className='Register'>
         <h2 className='Register__title'>Register for an account</h2>
         <Form className='Register__form' onSubmit={this.handleSubmit}>
-          <FormGroup className='Register__form-name' legendText='Name'>
-            <FormItem>
-              <TextInput
-                id='register-first-name'
-                labelText='*First'
-                placeholder='First name'
-                value={this.state.user.name.split(' ')[0]}
-                onChange={this.handleInputChange}
-                invalid={this.checkValid('register-first-name')}
-                invalidText={this.getErrorMessage('register-first-name')}
-              />
-            </FormItem>
-            <FormItem>
-              <TextInput
-                id='register-last-name'
-                labelText='*Last'
-                placeholder='Last name'
-                value={this.state.user.name.split(' ')[0]}
-                onChange={this.handleInputChange}
-                invalid={this.checkValid('register-last-name')}
-                invalidText={this.getErrorMessage('register-last-name')}
-              />
-            </FormItem>
-          </FormGroup>
           <FormGroup legendText=''>
+            <FormItem style={styles.inputs}>
+              <TextInput
+                id='register-name'
+                labelText='*Name'
+                name='name'
+                placeholder='Name e.g. John Doe'
+                value={this.state.user.name}
+                onChange={this.handleInputChange}
+                invalid={this.checkValid('register-name')}
+                invalidText={this.getErrorMessage('register-name')}
+              />
+            </FormItem>
             <FormItem>
               <TextInput
                 id='register-email'
                 labelText='*Email'
+                name='email'
                 placeholder='Email address'
                 value={this.state.user.email}
                 onChange={this.handleInputChange}
@@ -201,6 +124,7 @@ class Register extends Component {
               <TextInput
                 id='register-address-firstline'
                 labelText='*Line 1'
+                name='address->firstLine'
                 placeholder='First line'
                 value={this.state.user.address.firstLine}
                 style={{marginRight: 'unset'}}
@@ -213,6 +137,7 @@ class Register extends Component {
               <TextInput
                 id='register-address-secondline'
                 labelText='Line 2'
+                name='address->secondLine'
                 placeholder='Second line'
                 value={this.state.user.address.secondLine}
                 onChange={this.handleInputChange}
@@ -223,6 +148,7 @@ class Register extends Component {
                 <TextInput
                   id='register-address-city'
                   labelText='City'
+                  name='address->city'
                   placeholder='City'
                   value={this.state.user.address.city}
                   onChange={this.handleInputChange}
@@ -232,6 +158,7 @@ class Register extends Component {
                 <TextInput
                   id='register-address-county'
                   labelText='*County'
+                  name='address->county'
                   placeholder='County'
                   value={this.state.user.address.county}
                   onChange={this.handleInputChange}
@@ -245,6 +172,7 @@ class Register extends Component {
                 <TextInput
                   id='register-address-country'
                   labelText='Country'
+                  name='address->country'
                   placeholder='Country'
                   value={this.state.user.address.country}
                   onChange={this.handleInputChange}
@@ -254,6 +182,7 @@ class Register extends Component {
                 <TextInput
                   id='register-address-postcode'
                   labelText='*Postcode'
+                  name='address->postcode'
                   placeholder='Postcode'
                   value={this.state.user.address.postcode}
                   onChange={this.handleInputChange}
@@ -268,6 +197,7 @@ class Register extends Component {
               <TextInput
                 id='register-password'
                 labelText='*Password'
+                name='password'
                 type='password'
                 placeholder='Enter password'
                 value={this.state.user.password}
@@ -281,6 +211,7 @@ class Register extends Component {
                 id='register-password-confirm'
                 labelText='*Confirm Password'
                 type='password'
+                name='password-confirm'
                 placeholder='Enter password'
                 onChange={this.handleInputChange}
                 invalid={this.checkValid('register-confirm-password')}
