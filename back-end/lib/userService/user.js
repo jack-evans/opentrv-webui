@@ -1,15 +1,17 @@
 
+const bcrypt = require('bcrypt')
 const bunyan = require('bunyan')
 const Promise = require('bluebird')
 
 const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.stdSerializers})
+const saltRounds = 10
 
 const logFunctionEntry = (functionName, isInternalFunction, options) => {
   let logMessage = 'Entered into the ' + functionName
   if (isInternalFunction) {
-    logMessage += ' internal '
+    logMessage += ' internal'
   }
-  logMessage += 'function'
+  logMessage += ' function'
   logger.info(logMessage, options)
 }
 
@@ -25,7 +27,7 @@ const createUserRequestHandler = (req, res) => {
   module.exports.internal._createUser(req.userDb, req.body)
     .then(() => {
       logger.info('Successfully registered a new user')
-      res.status(201).end()
+      res.status(201).send({})
     })
     .catch(error => {
       switch (error.statusCode) {
@@ -46,6 +48,12 @@ const createUserRequestHandler = (req, res) => {
           res.status(500).send(error)
           break
         }
+
+        default: {
+          logger.error('Encountered unexpected error in the createUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
       }
     })
 }
@@ -58,13 +66,21 @@ const createUserRequestHandler = (req, res) => {
  * @private
  */
 const _createUser = (userDB, user) => {
-  logFunctionEntry('_createUser', true, user)
+  logFunctionEntry('_createUser', true, undefined)
 
-  const userDocument = {
-
-  }
-
-  return userDB.createUser(userDocument)
+  return bcrypt.hash(user.password, saltRounds)
+    .then(hash => {
+      const userDocument = {
+        name: user.name,
+        email: user.email,
+        password: hash,
+        address: user.address
+      }
+      return userDB.createUser(userDocument)
+    })
+    .catch(error => {
+      return Promise.reject(error)
+    })
 }
 
 /**
@@ -209,7 +225,7 @@ const deleteUserRequestHandler = (req, res) => {
   module.exports.internal._deleteUser(req.userDb, req.params.id)
     .then((user) => {
       logger.info('Successfully deleted user')
-      res.status(204).end()
+      res.status(204).send({})
     })
     .catch(error => {
       switch (error.statusCode) {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, FormItem, TextInput } from 'carbon-components-react'
+import { Button, Form, FormGroup, FormItem, Modal, TextInput } from 'carbon-components-react'
+import makeRequest from '../../utils/makeRequest'
 
 const styles = {
   inputs: {
@@ -32,6 +33,8 @@ class Register extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleModalOnClick = this.handleModalOnClick.bind(this)
+    this.checkMatch = this.checkMatch.bind(this)
   }
 
   handleInputChange (event) {
@@ -58,7 +61,8 @@ class Register extends Component {
       user.address.county &&
       user.address.postcode &&
       user.password &&
-      this.confirmPass
+      this.confirmPass &&
+      Object.getOwnPropertyNames(this.state.invalid).length < 1
     ) {
       this.setState({user: user, isDisabled: false})
     } else {
@@ -68,7 +72,40 @@ class Register extends Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    // do validation and make request
+
+    let url = '/api/v1/user'
+    let options = {
+      method: 'POST',
+      json: true,
+      body: JSON.stringify(this.state.user),
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+    return makeRequest(url, options)
+      .then(() => {
+        window.location.assign('/login')
+      })
+      .catch(() => {
+        this.setState({failedRegister: true})
+      })
+  }
+
+  handleModalOnClick () {
+    this.setState({failedRegister: false})
+  }
+
+  checkMatch () {
+    let errors = this.state.invalid
+    if (this.confirmPass !== this.state.user.password) {
+      errors['register-password-confirm'] = {
+        reason: 'noMatch',
+        message: 'The passwords you have entered do not match'
+      }
+    } else {
+      delete errors['register-password-confirm']
+    }
+    this.setState({invalid: errors})
   }
 
   checkValid (id) {
@@ -224,8 +261,9 @@ class Register extends Component {
                 type='password'
                 placeholder='Enter password'
                 onChange={this.handleInputChange}
-                invalid={this.checkValid('register-confirm-password')}
-                invalidText={this.getErrorMessage('register-confirm-password')}
+                onBlur={this.checkMatch}
+                invalid={this.checkValid('register-password-confirm')}
+                invalidText={this.getErrorMessage('register-password-confirm')}
               />
             </FormItem>
           </FormGroup>
@@ -248,6 +286,17 @@ class Register extends Component {
             </Button>
           </FormGroup>
         </Form>
+        <Modal
+          className='Register__failed-modal'
+          open={this.state.failedRegister}
+          passiveModal
+          modalHeading='Register Failed'
+          onRequestClose={this.handleModalOnClick}
+        >
+          <p>Failed to register on OpenTRV.</p>
+          <p>Please try again.</p>
+          <p>If problem persists please contact support</p>
+        </Modal>
       </div>
     )
   }

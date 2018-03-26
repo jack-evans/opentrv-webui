@@ -1,5 +1,6 @@
 import toBeType from 'jest-tobetype'
 
+const bcrypt = require('bcrypt')
 const httpMocks = require('node-mocks-http')
 const Promise = require('bluebird')
 expect.extend(toBeType)
@@ -79,6 +80,21 @@ describe('user.js', () => {
         res.on('end', () => {
           try {
             expect(res._getStatusCode()).toEqual(201)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        userService.createUserRequestHandler(req, res)
+      })
+
+      it('returns an empty object', (done) => {
+        createUserSpy.mockReturnValue(Promise.resolve())
+
+        res.on('end', () => {
+          try {
+            expect(res._getData()).toEqual({})
             done()
           } catch (e) {
             done(e)
@@ -194,6 +210,44 @@ describe('user.js', () => {
           const error = {
             statusCode: 500,
             message: 'internal server error'
+          }
+          createUserSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.createUserRequestHandler(req, res)
+        })
+      })
+
+      describe('with any other kind of error', () => {
+        it('returns a 500', (done) => {
+          const error = {
+            message: 'bang!'
+          }
+          createUserSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.createUserRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            message: 'bang!'
           }
           createUserSpy.mockReturnValue(Promise.reject(error))
 
@@ -923,6 +977,101 @@ describe('user.js', () => {
   })
 
   describe('internal functions', () => {
+    describe('_createUser', () => {
+      let fakeDatabase
+      let createUserSpy
+      let hashSpy
+      const user = {
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        password: 'test',
+        address: {
+          firstLine: '123 example street',
+          county: 'exampleCounty',
+          postcode: 'ab12cd'
+        }
+      }
+
+      beforeEach(() => {
+        fakeDatabase = {
+          createUser: () => {}
+        }
+        createUserSpy = jest.spyOn(fakeDatabase, 'createUser').mockReturnValue(Promise.resolve())
+        hashSpy = jest.spyOn(bcrypt, 'hash').mockReturnValue(Promise.resolve('1a2b3c4d'))
+      })
+
+      afterEach(() => {
+        createUserSpy.mockReset()
+        createUserSpy.mockRestore()
+        hashSpy.mockReset()
+        hashSpy.mockRestore()
+      })
+
+      it('calls the hash function', () => {
+        return userService.internal._createUser(fakeDatabase, user)
+          .then(() => {
+            expect(hashSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when the hash function succeeds', () => {
+        it('calls the createUser function', () => {
+          return userService.internal._createUser(fakeDatabase, user)
+            .then(() => {
+              expect(createUserSpy).toHaveBeenCalledTimes(1)
+            })
+        })
+
+        it('calls the createUser function with the user document containing the hashed password', () => {
+          const expectedUserDoc = {
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            password: '1a2b3c4d',
+            address: {
+              firstLine: '123 example street',
+              county: 'exampleCounty',
+              postcode: 'ab12cd'
+            }
+          }
+          return userService.internal._createUser(fakeDatabase, user)
+            .then(() => {
+              expect(createUserSpy).toHaveBeenCalledWith(expectedUserDoc)
+            })
+        })
+
+        describe('when the createUser function succeeds', () => {
+          it('returns a resolved promise', () => {
+            return userService.internal._createUser(fakeDatabase, user)
+          })
+        })
+
+        describe('when the createUser function fails', () => {
+          it('returns a rejected promise with the error in the body', () => {
+            createUserSpy.mockReturnValue(Promise.reject(new Error('Bang!')))
+            expect.assertions(1)
+            return userService.internal._createUser(fakeDatabase, user)
+              .catch(error => {
+                expect(error.message).toEqual('Bang!')
+              })
+          })
+        })
+      })
+
+      describe('when the hash function fails', () => {
+        beforeEach(() => {
+          hashSpy.mockReturnValue(Promise.reject(new Error('Bang!')))
+        })
+
+        it('returns a rejected promise with the error in the body', () => {
+          expect.assertions(1)
+          return userService.internal._createUser(fakeDatabase, user)
+            .catch(error => {
+              expect(error.message).toEqual('Bang!')
+            })
+        })
+      })
+    })
+
     describe('_getUser', () => {
       let fakeDatabase
       let getUserSpy
