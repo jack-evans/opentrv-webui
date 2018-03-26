@@ -45,12 +45,15 @@ class Register extends Component {
       let address = nestedInput[0]
       let addressProp = nestedInput[1]
       user[address][addressProp] = value
+    } else if (inputfield === 'password-confirm') {
+      this.confirmPass = value
     } else {
       user[inputfield] = value
     }
 
     if (
       user.name &&
+      user.email &&
       user.address.firstLine &&
       user.address.county &&
       user.address.postcode &&
@@ -99,6 +102,7 @@ class Register extends Component {
                 id='register-name'
                 labelText='*Name'
                 name='name'
+                required
                 placeholder='Name e.g. John Doe'
                 value={this.state.user.name}
                 onChange={this.handleInputChange}
@@ -111,6 +115,7 @@ class Register extends Component {
                 id='register-email'
                 labelText='*Email'
                 name='email'
+                required
                 placeholder='Email address'
                 value={this.state.user.email}
                 onChange={this.handleInputChange}
@@ -125,6 +130,7 @@ class Register extends Component {
                 id='register-address-firstline'
                 labelText='*Line 1'
                 name='address->firstLine'
+                required
                 placeholder='First line'
                 value={this.state.user.address.firstLine}
                 style={{marginRight: 'unset'}}
@@ -159,6 +165,7 @@ class Register extends Component {
                   id='register-address-county'
                   labelText='*County'
                   name='address->county'
+                  required
                   placeholder='County'
                   value={this.state.user.address.county}
                   onChange={this.handleInputChange}
@@ -183,6 +190,7 @@ class Register extends Component {
                   id='register-address-postcode'
                   labelText='*Postcode'
                   name='address->postcode'
+                  required
                   placeholder='Postcode'
                   value={this.state.user.address.postcode}
                   onChange={this.handleInputChange}
@@ -198,6 +206,7 @@ class Register extends Component {
                 id='register-password'
                 labelText='*Password'
                 name='password'
+                required
                 type='password'
                 placeholder='Enter password'
                 value={this.state.user.password}
@@ -210,8 +219,9 @@ class Register extends Component {
               <TextInput
                 id='register-password-confirm'
                 labelText='*Confirm Password'
-                type='password'
                 name='password-confirm'
+                required
+                type='password'
                 placeholder='Enter password'
                 onChange={this.handleInputChange}
                 invalid={this.checkValid('register-confirm-password')}
