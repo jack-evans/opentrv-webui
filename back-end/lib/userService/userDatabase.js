@@ -68,6 +68,12 @@ UserDatabase.prototype.createUser = function (userDocument) {
     })
 }
 
+/**
+ * getAllUsers method
+ * 
+ * Retrieves all users from the user database
+ * @returns {Promise} on the action of retrieving all users from the user database
+ */
 UserDatabase.prototype.getAllUsers = function () {
   let self = this
 
@@ -81,6 +87,13 @@ UserDatabase.prototype.getAllUsers = function () {
     })
 }
 
+/**
+ * getUserByEmail method
+ *
+ * Retrieve a user from the user database by an email
+ * @param {String} userEmail - the user email
+ * @returns {Promise} on the action of retrieving a user from the user database by their email
+ */
 UserDatabase.prototype.getUserByEmail = function (userEmail) {
   let self = this
 
