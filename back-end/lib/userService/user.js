@@ -133,11 +133,24 @@ const getUsersRequestHandler = (req, res) => {
     })
 }
 
+/**
+ * _getUsers internal function
+ *
+ * @param {Object} userDB - the user database
+ * @private
+ */
 const _getUsers = (userDB) => {
   logFunctionEntry('_getUsers', true, undefined)
   return userDB.getAllUsers()
 }
 
+/**
+ * _getUserByEmail internal function
+ *
+ * @param {Object} userDB - the user database
+ * @param {String} userEmail - the email of the user to retrieve from the user database
+ * @private
+ */
 const _getUserByEmail = (userDB, userEmail) => {
   logFunctionEntry('_getUserByEmail', true, undefined)
   return userDB.getUserByEmail(userEmail)
@@ -180,7 +193,7 @@ const getUserByIdRequestHandler = (req, res) => {
 }
 
 /**
- * _getUser internal function
+ * _getUserById internal function
  *
  * @param {Object} userDB - the user database
  * @param {String} userId - the id of the user to retrieve from the user database

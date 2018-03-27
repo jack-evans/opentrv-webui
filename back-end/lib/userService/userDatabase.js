@@ -70,7 +70,7 @@ UserDatabase.prototype.createUser = function (userDocument) {
 
 /**
  * getAllUsers method
- * 
+ *
  * Retrieves all users from the user database
  * @returns {Promise} on the action of retrieving all users from the user database
  */
