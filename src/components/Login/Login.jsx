@@ -24,6 +24,7 @@ class Login extends Component {
       email: this.state.email,
       pass: this.state.password
     }
+
     if (loginUser(user)) {
       window.location.assign('/overview')
     } else {
@@ -60,6 +61,7 @@ class Login extends Component {
                   id='login-email'
                   labelText='Email'
                   placeholder='Enter email address'
+                  required
                   onChange={this.handleEmailOnChange}
                 />
               </div>
@@ -69,6 +71,7 @@ class Login extends Component {
                   labelText='Password'
                   placeholder='Enter password'
                   type='password'
+                  required
                   onChange={this.handlePasswordOnChange}
                 />
               </div>

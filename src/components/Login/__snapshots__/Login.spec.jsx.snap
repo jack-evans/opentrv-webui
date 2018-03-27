@@ -43,6 +43,7 @@ ShallowWrapper {
               onChange={[Function]}
               onClick={[Function]}
               placeholder="Enter email address"
+              required={true}
               type="text"
             />
           </div>
@@ -59,6 +60,7 @@ ShallowWrapper {
               onChange={[Function]}
               onClick={[Function]}
               placeholder="Enter password"
+              required={true}
               type="password"
             />
           </div>
@@ -156,6 +158,7 @@ ShallowWrapper {
                 onChange={[Function]}
                 onClick={[Function]}
                 placeholder="Enter email address"
+                required={true}
                 type="text"
               />
             </div>
@@ -172,6 +175,7 @@ ShallowWrapper {
                 onChange={[Function]}
                 onClick={[Function]}
                 placeholder="Enter password"
+                required={true}
                 type="password"
               />
             </div>
@@ -284,6 +288,7 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Enter email address"
+                  required={true}
                   type="text"
                 />
               </div>,
@@ -300,6 +305,7 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Enter password"
+                  required={true}
                   type="password"
                 />
               </div>,
@@ -323,6 +329,7 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Enter email address"
+                  required={true}
                   type="text"
                 />,
                 "className": "Login__email-input",
@@ -342,6 +349,7 @@ ShallowWrapper {
                   "onChange": [Function],
                   "onClick": [Function],
                   "placeholder": "Enter email address",
+                  "required": true,
                   "type": "text",
                 },
                 "ref": null,
@@ -365,6 +373,7 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Enter password"
+                  required={true}
                   type="password"
                 />,
                 "className": "Login__password-input",
@@ -384,6 +393,7 @@ ShallowWrapper {
                   "onChange": [Function],
                   "onClick": [Function],
                   "placeholder": "Enter password",
+                  "required": true,
                   "type": "password",
                 },
                 "ref": null,
@@ -589,6 +599,7 @@ ShallowWrapper {
                 onChange={[Function]}
                 onClick={[Function]}
                 placeholder="Enter email address"
+                required={true}
                 type="text"
               />
             </div>
@@ -605,6 +616,7 @@ ShallowWrapper {
                 onChange={[Function]}
                 onClick={[Function]}
                 placeholder="Enter password"
+                required={true}
                 type="password"
               />
             </div>
@@ -702,6 +714,7 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Enter email address"
+                  required={true}
                   type="text"
                 />
               </div>
@@ -718,6 +731,7 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Enter password"
+                  required={true}
                   type="password"
                 />
               </div>
@@ -830,6 +844,7 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Enter email address"
+                    required={true}
                     type="text"
                   />
                 </div>,
@@ -846,6 +861,7 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Enter password"
+                    required={true}
                     type="password"
                   />
                 </div>,
@@ -869,6 +885,7 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Enter email address"
+                    required={true}
                     type="text"
                   />,
                   "className": "Login__email-input",
@@ -888,6 +905,7 @@ ShallowWrapper {
                     "onChange": [Function],
                     "onClick": [Function],
                     "placeholder": "Enter email address",
+                    "required": true,
                     "type": "text",
                   },
                   "ref": null,
@@ -911,6 +929,7 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Enter password"
+                    required={true}
                     type="password"
                   />,
                   "className": "Login__password-input",
@@ -930,6 +949,7 @@ ShallowWrapper {
                     "onChange": [Function],
                     "onClick": [Function],
                     "placeholder": "Enter password",
+                    "required": true,
                     "type": "password",
                   },
                   "ref": null,
