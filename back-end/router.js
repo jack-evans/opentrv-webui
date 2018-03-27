@@ -14,7 +14,8 @@ router.delete('/devices/:id', deviceDiscoveryService.deleteDeviceRequestHandler)
 
 // UserService
 router.post('/user', userService.createUserRequestHandler)
-router.get('/user/:id', userService.getUserRequestHandler)
+router.get('/user', userService.getUsersRequestHandler)
+router.get('/user/:id', userService.getUserByIdRequestHandler)
 router.put('/user/:id', userService.updateUserRequestHandler)
 router.delete('/user/:id', userService.deleteUserRequestHandler)
 

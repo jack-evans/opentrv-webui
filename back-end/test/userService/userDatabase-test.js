@@ -39,16 +39,19 @@ describe('userDatabase.js', () => {
   describe('userDatabase initialise method', () => {
     let createDatabaseSpy
     let useDatabaseSpy
+    let createIndexSpy
 
     beforeEach(() => {
       createDatabaseSpy = jest.spyOn(cloudantRequestHelper, 'createDatabase').mockReturnValue(Promise.resolve({ok: true}))
       useDatabaseSpy = jest.spyOn(cloudantRequestHelper, 'useDatabase').mockReturnValue(Promise.resolve(42))
+      createIndexSpy = jest.spyOn(cloudantRequestHelper, 'createIndex').mockReturnValue(Promise.resolve())
       userDatabase = new UserDatabase()
     })
 
     afterEach(() => {
       createDatabaseSpy.mockReset()
       useDatabaseSpy.mockReset()
+      createIndexSpy.mockReset()
     })
 
     it('makes a call to create a database in cloudant', () => {
@@ -63,6 +66,13 @@ describe('userDatabase.js', () => {
         return userDatabase.initialise()
           .then(() => {
             expect(useDatabaseSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      it('calls the creatIndex function', () => {
+        return userDatabase.initialise()
+          .then(() => {
+            expect(createIndexSpy).toHaveBeenCalledTimes(1)
           })
       })
     })
@@ -166,7 +176,177 @@ describe('userDatabase.js', () => {
     })
   })
 
-  describe('userDatabase getUser method', () => {
+  describe('userDatabase getAllUsers method', () => {
+    let retrieveAllDocumentsSpy
+
+    beforeEach(() => {
+      retrieveAllDocumentsSpy = jest.spyOn(cloudantRequestHelper, 'retrieveAllDocuments')
+      userDatabase = new UserDatabase()
+    })
+
+    afterEach(() => {
+      retrieveAllDocumentsSpy.mockReset()
+      retrieveAllDocumentsSpy.mockRestore()
+    })
+
+    describe('when initPromise is a rejected promise', () => {
+      beforeEach(() => {
+        userDatabase.initPromise = Promise.reject(new Error('Bang!'))
+      })
+
+      it('does not call the retrieveAllDocuments function', () => {
+        expect.assertions(1)
+        return userDatabase.getAllUsers()
+          .catch(() => {
+            expect(retrieveAllDocumentsSpy).toHaveBeenCalledTimes(0)
+          })
+      })
+
+      it('returns a rejected promise', () => {
+        expect.assertions(1)
+        return userDatabase.getAllUsers()
+          .catch(error => {
+            expect(error.message).toEqual('Bang!')
+          })
+      })
+    })
+
+    describe('when initPromise is a resolved promise', () => {
+      const mockReturnValue = [
+        {
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'john.doe@example.com',
+          id: '1234',
+          _id: '1234'
+        }, {
+          firstName: 'Jane',
+          lastName: 'Doe',
+          email: 'jane.doe@example.com',
+          id: '5678',
+          _id: '5678'
+        }
+      ]
+
+      beforeEach(() => {
+        userDatabase.initPromise = Promise.resolve()
+      })
+
+      it('calls the retrieveAllDocuments function', () => {
+        retrieveAllDocumentsSpy.mockReturnValue(Promise.resolve(mockReturnValue))
+        return userDatabase.getAllUsers()
+          .then(() => {
+            expect(retrieveAllDocumentsSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when retrieveAllDocuments resolves', () => {
+        it('returns the array of documents in the body of the resolved promise', () => {
+          retrieveAllDocumentsSpy.mockReturnValue(Promise.resolve(mockReturnValue))
+
+          return userDatabase.getAllUsers()
+            .then(documents => {
+              expect(documents).toEqual(mockReturnValue)
+            })
+        })
+      })
+
+      describe('when retrieveAllDocuments rejects', () => {
+        it('returns the error in the body of the rejected promise', () => {
+          retrieveAllDocumentsSpy.mockReturnValue(Promise.reject(new Error('Bang in the getUser method')))
+          expect.assertions(1)
+          return userDatabase.getAllUsers()
+            .catch(error => {
+              expect(error.message).toEqual('Bang in the getUser method')
+            })
+        })
+      })
+    })
+  })
+
+  describe('userDatabase getUserByEmail method', () => {
+    let findDocumentSpy
+
+    beforeEach(() => {
+      findDocumentSpy = jest.spyOn(cloudantRequestHelper, 'findDocument')
+      userDatabase = new UserDatabase()
+    })
+
+    afterEach(() => {
+      findDocumentSpy.mockReset()
+      findDocumentSpy.mockRestore()
+    })
+
+    describe('when initPromise is a rejected promise', () => {
+      beforeEach(() => {
+        userDatabase.initPromise = Promise.reject(new Error('Bang!'))
+      })
+
+      it('does not call the findDocument function', () => {
+        expect.assertions(1)
+        return userDatabase.getUserByEmail('john.doe@example.com')
+          .catch(() => {
+            expect(findDocumentSpy).toHaveBeenCalledTimes(0)
+          })
+      })
+
+      it('returns a rejected promise', () => {
+        expect.assertions(1)
+        return userDatabase.getUserByEmail('john.doe@example.com')
+          .catch(error => {
+            expect(error.message).toEqual('Bang!')
+          })
+      })
+    })
+
+    describe('when initPromise is a resolved promise', () => {
+      let email = 'john.doe@example.com'
+
+      const mockReturnValue = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        id: '1234-abcd-5678-efgh',
+        _id: '1234-abcd-5678-efgh'
+      }
+
+      beforeEach(() => {
+        userDatabase.initPromise = Promise.resolve()
+      })
+
+      it('calls the findDocument function', () => {
+        findDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
+        return userDatabase.getUserByEmail(email)
+          .then(() => {
+            expect(findDocumentSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when findDocument resolves', () => {
+        it('returns the document in the body of the resolved promise', () => {
+          findDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
+
+          return userDatabase.getUserByEmail(email)
+            .then(document => {
+              expect(document).toEqual(mockReturnValue)
+            })
+        })
+      })
+
+      describe('when findDocument rejects', () => {
+        it('returns the error in the body of the rejected promise', () => {
+          findDocumentSpy.mockReturnValue(Promise.reject(new Error('Bang in the getUser method')))
+          expect.assertions(1)
+          return userDatabase.getUserByEmail(email)
+            .catch(error => {
+              expect(error.message).toEqual('Bang in the getUser method')
+            })
+        })
+      })
+    })
+  })
+
+  describe('userDatabase getUserById method', () => {
     let retrieveDocumentSpy
 
     beforeEach(() => {
@@ -186,7 +366,7 @@ describe('userDatabase.js', () => {
 
       it('does not call the retrieveDocument function', () => {
         expect.assertions(1)
-        return userDatabase.getUser('1234')
+        return userDatabase.getUserById('1234')
           .catch(() => {
             expect(retrieveDocumentSpy).toHaveBeenCalledTimes(0)
           })
@@ -194,7 +374,7 @@ describe('userDatabase.js', () => {
 
       it('returns a rejected promise', () => {
         expect.assertions(1)
-        return userDatabase.getUser('1234')
+        return userDatabase.getUserById('1234')
           .catch(error => {
             expect(error.message).toEqual('Bang!')
           })
@@ -218,7 +398,7 @@ describe('userDatabase.js', () => {
 
       it('calls the retrieveDocument function', () => {
         retrieveDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
-        return userDatabase.getUser(id)
+        return userDatabase.getUserById(id)
           .then(() => {
             expect(retrieveDocumentSpy).toHaveBeenCalledTimes(1)
           })
@@ -228,7 +408,7 @@ describe('userDatabase.js', () => {
         it('returns the document in the body of the resolved promise', () => {
           retrieveDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
 
-          return userDatabase.getUser(id)
+          return userDatabase.getUserById(id)
             .then(document => {
               expect(document).toEqual(mockReturnValue)
             })
@@ -239,7 +419,7 @@ describe('userDatabase.js', () => {
         it('returns the error in the body of the rejected promise', () => {
           retrieveDocumentSpy.mockReturnValue(Promise.reject(new Error('Bang in the getUser method')))
           expect.assertions(1)
-          return userDatabase.getUser(id)
+          return userDatabase.getUserById(id)
             .catch(error => {
               expect(error.message).toEqual('Bang in the getUser method')
             })

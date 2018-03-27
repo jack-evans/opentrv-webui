@@ -6,6 +6,13 @@ const Promise = require('bluebird')
 const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.stdSerializers})
 const saltRounds = 10
 
+/**
+ * logFunctionEntry
+ *
+ * @param {String} functionName - name of the function
+ * @param {Boolean} isInternalFunction - is it an internal function
+ * @param {Object} options - properties to be logged
+ */
 const logFunctionEntry = (functionName, isInternalFunction, options) => {
   let logMessage = 'Entered into the ' + functionName
   if (isInternalFunction) {
@@ -84,17 +91,69 @@ const _createUser = (userDB, user) => {
 }
 
 /**
+ * GET /user
+ *
+ * @param {Object} req - the HTTP request object
+ * @param {Object} res - the HTTP response object
+ */
+const getUsersRequestHandler = (req, res) => {
+  logFunctionEntry('getUsersRequestHandler', false, undefined)
+  let promise
+
+  if (req.query.email) {
+    promise = module.exports.internal._getUserByEmail(req.userDb, req.query.email)
+  } else {
+    promise = module.exports.internal._getUsers(req.userDb)
+  }
+
+  promise
+    .then(users => {
+      res.status(200).send(users)
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the getUserRequestHandler function', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the getUserRequestHandler', error)
+          res.status(404).send(error)
+          break
+        }
+
+        case 500: {
+          logger.error('Encountered internal server error in the getUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
+}
+
+const _getUsers = (userDB) => {
+  logFunctionEntry('_getUsers', true, undefined)
+  return userDB.getAllUsers()
+}
+
+const _getUserByEmail = (userDB, userEmail) => {
+  logFunctionEntry('_getUserByEmail', true, undefined)
+  return userDB.getUserByEmail(userEmail)
+}
+
+/**
  * GET /user/{id}
  *
  * @param {Object} req - the HTTP request object
  * @param {Object} res - the HTTP response object
  */
-const getUserRequestHandler = (req, res) => {
-  logFunctionEntry('getUserRequestHandler', false, undefined)
+const getUserByIdRequestHandler = (req, res) => {
+  logFunctionEntry('getUserByIdRequestHandler', false, undefined)
 
-  module.exports.internal._getUser(req.userDb, req.params.id)
-    .then((user) => {
-      logger.info('Successfully registered a new user')
+  module.exports.internal._getUserById(req.userDb, req.params.id)
+    .then(user => {
       res.status(200).send(user)
     })
     .catch(error => {
@@ -127,8 +186,8 @@ const getUserRequestHandler = (req, res) => {
  * @param {String} userId - the id of the user to retrieve from the user database
  * @private
  */
-const _getUser = (userDB, userId) => {
-  logFunctionEntry('_getUser', true, {userId: userId})
+const _getUserById = (userDB, userId) => {
+  logFunctionEntry('_getUserById', true, {userId: userId})
 
   let error = {}
 
@@ -156,7 +215,7 @@ const _getUser = (userDB, userId) => {
     return Promise.reject(error)
   }
 
-  return userDB.getUser(userId)
+  return userDB.getUserById(userId)
 }
 
 /**
@@ -297,14 +356,17 @@ const _deleteUser = (userDB, userId) => {
 
 module.exports = {
   createUserRequestHandler: createUserRequestHandler,
-  getUserRequestHandler: getUserRequestHandler,
+  getUsersRequestHandler: getUsersRequestHandler,
+  getUserByIdRequestHandler: getUserByIdRequestHandler,
   updateUserRequestHandler: updateUserRequestHandler,
   deleteUserRequestHandler: deleteUserRequestHandler
 }
 
 module.exports.internal = {
   _createUser: _createUser,
-  _getUser: _getUser,
+  _getUsers: _getUsers,
+  _getUserByEmail: _getUserByEmail,
+  _getUserById: _getUserById,
   _updateUser: _updateUser,
   _deleteUser: _deleteUser
 }

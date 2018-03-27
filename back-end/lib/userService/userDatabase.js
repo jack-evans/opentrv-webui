@@ -32,7 +32,9 @@ UserDatabase.prototype.initialise = function () {
     .then(function () {
       self.database = cloudantRequestHelper.useDatabase(self.cloudantInstance, DATABASE_NAME)
       self.initPromise = Promise.resolve()
-      return Promise.resolve()
+
+      let dDoc = { name: 'email', type: 'json', index: { fields: [ 'email' ] } }
+      return cloudantRequestHelper.createIndex(self.database, DATABASE_NAME, dDoc)
     })
     .catch(function (error) {
       logger.error(`Encountered error when attempting to initialise the '${DATABASE_NAME}' database, reason: `, error)
@@ -66,14 +68,40 @@ UserDatabase.prototype.createUser = function (userDocument) {
     })
 }
 
+UserDatabase.prototype.getAllUsers = function () {
+  let self = this
+
+  return self.initPromise
+    .then(function () {
+      return cloudantRequestHelper.retrieveAllDocuments(self.database, DATABASE_NAME)
+    })
+    .catch(function (error) {
+      logger.error(`Encountered error when retrieving document in the '${DATABASE_NAME}' database, reason: `, error)
+      return Promise.reject(error)
+    })
+}
+
+UserDatabase.prototype.getUserByEmail = function (userEmail) {
+  let self = this
+
+  return self.initPromise
+    .then(function () {
+      return cloudantRequestHelper.findDocument(self.database, DATABASE_NAME, { selector: { email: userEmail } })
+    })
+    .catch(function (error) {
+      logger.error(`Encountered error when finding document in the '${DATABASE_NAME}' database, reason: `, error)
+      return Promise.reject(error)
+    })
+}
+
 /**
- * getUser method
+ * getUserById method
  *
  * Retrieves a user document from the user database
  * @param {String} userId - the id of the user to retrieve
  * @return {Promise} on the action of retrieving a document from the user database
  */
-UserDatabase.prototype.getUser = function (userId) {
+UserDatabase.prototype.getUserById = function (userId) {
   let self = this
 
   return self.initPromise
