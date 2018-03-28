@@ -1,6 +1,7 @@
 
 const bcrypt = require('bcrypt')
 const bunyan = require('bunyan')
+const jwt = require('jsonwebtoken')
 const Promise = require('bluebird')
 
 const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.stdSerializers})
@@ -367,12 +368,126 @@ const _deleteUser = (userDB, userId) => {
   return userDB.deleteUser(userId)
 }
 
+/**
+ * POST /user/login
+ * @param {Object} req - the HTTP request object
+ * @param {Object} res - the HTTP response object
+ */
+const loginUserRequestHandler = (req, res) => {
+  logFunctionEntry('loginUserRequestHandler', false, undefined)
+
+  // Steps to authenticate user
+  // 1. Check user email exists
+  // 2. Check password matches
+  // 3. Generate jwt for user
+  // 4. Send jwt back to ui
+
+  console.log(req.body)
+
+  module.exports.internal._getUserByEmail(req.userDb, req.body.email)
+    .then(user => {
+      return module.exports.internal._checkPassword(req.body.password, user[0].password)
+        .then(() => Promise.resolve(user))
+    })
+    .then(user => {
+      return module.exports.internal._loginUser(user)
+    })
+    .then(token => {
+      res.status(200).send({auth: true, token: token})
+    })
+    .catch(error => {
+      switch (error.statusCode) {
+        case 400: {
+          logger.error('Encountered bad request in the loginUserRequestHandler function', error)
+          res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the loginUserRequestHandler', error)
+          res.status(404).send(error)
+          break
+        }
+
+        case 500: {
+          logger.error('Encountered internal server error in the loginUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
+
+        default: {
+          logger.error('Encountered unexpected error in the loginUserRequestHandler', error)
+          res.status(500).send(error)
+          break
+        }
+      }
+    })
+}
+
+/**
+ * _checkPassword internal function
+ *
+ * @param {String} passwordToCheck - the password that the user has entered
+ * @param {String} expectedPassword - the password that is stored in hash form in the database
+ * @private
+ */
+const _checkPassword = (passwordToCheck, expectedPassword) => {
+  logFunctionEntry('_checkPassword', true, undefined)
+  return bcrypt.compare(passwordToCheck, expectedPassword)
+    .then(res => {
+      if (!res) {
+        let error = {
+          statusCode: 401,
+          message: 'Password does not match',
+          name: 'Not Authenticated'
+        }
+        return Promise.reject(error)
+      } else {
+        return Promise.resolve()
+      }
+    })
+}
+
+/**
+ * _loginUser internal function
+ *
+ * @param {Object} user - the user to create a jwt for
+ * @private
+ */
+const _loginUser = (user) => {
+  logFunctionEntry('_loginUser', true, undefined)
+
+  let payload = {
+    id: user[0].id,
+    name: user[0].name,
+    email: user[0].email
+  }
+
+  let secret = process.env.JWT_SECRET
+
+  let options = {
+    expiresIn: '13h',
+    issuer: 'opentrv'
+  }
+
+  return new Promise((resolve, reject) => {
+    jwt.sign(payload, secret, options, (err, token) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(token)
+      }
+    })
+  })
+}
+
 module.exports = {
   createUserRequestHandler: createUserRequestHandler,
   getUsersRequestHandler: getUsersRequestHandler,
   getUserByIdRequestHandler: getUserByIdRequestHandler,
   updateUserRequestHandler: updateUserRequestHandler,
-  deleteUserRequestHandler: deleteUserRequestHandler
+  deleteUserRequestHandler: deleteUserRequestHandler,
+  loginUserRequestHandler: loginUserRequestHandler
 }
 
 module.exports.internal = {
@@ -381,5 +496,7 @@ module.exports.internal = {
   _getUserByEmail: _getUserByEmail,
   _getUserById: _getUserById,
   _updateUser: _updateUser,
-  _deleteUser: _deleteUser
+  _deleteUser: _deleteUser,
+  _checkPassword: _checkPassword,
+  _loginUser: _loginUser
 }

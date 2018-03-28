@@ -20,6 +20,7 @@ router.put('/user/:id', userService.updateUserRequestHandler)
 router.delete('/user/:id', userService.deleteUserRequestHandler)
 
 // AuthenticationService
+router.post('/user/login', userService.loginUserRequestHandler)
 
 router.get('/test', (req, res) => {
   res.status(200).send({'time': new Date(), 'name': packageJson.name, 'version': packageJson.version})
