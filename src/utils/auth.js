@@ -1,3 +1,5 @@
+import makeRequest from './makeRequest'
+
 let authenticated = false
 
 export function isAuthenticated () {
@@ -5,12 +7,33 @@ export function isAuthenticated () {
 }
 
 export function loginUser (user) {
-  if (user.email === 'john.doe@example.com') {
-    authenticated = true
-  } else {
-    authenticated = false
+  let url = '/api/v1/user/login'
+  let options = {
+    method: 'POST',
+    json: true,
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(user)
   }
-  return authenticated
+
+  return makeRequest(url, options)
+    .then(res => {
+      setToken(res.token)
+      return Promise.resolve()
+    })
+}
+
+export function setToken (token) {
+  window.localStorage.setItem('token', token)
+}
+
+export function getToken () {
+  return window.localStorage.getItem('token')
+}
+
+export function logout () {
+  window.localStorage.removeItem('token')
 }
 
 /**

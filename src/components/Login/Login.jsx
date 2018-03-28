@@ -22,14 +22,16 @@ class Login extends Component {
   handleLoginOnClick () {
     let user = {
       email: this.state.email,
-      pass: this.state.password
+      password: this.state.password
     }
 
-    if (loginUser(user)) {
-      window.location.assign('/overview')
-    } else {
-      this.setState({failedLogin: true})
-    }
+    return loginUser(user)
+      .then(() => {
+        window.location.assign('/overview')
+      })
+      .catch(() => {
+        this.setState({failedLogin: true})
+      })
   }
 
   handleEmailOnChange (event) {

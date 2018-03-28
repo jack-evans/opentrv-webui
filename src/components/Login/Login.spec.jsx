@@ -1,8 +1,9 @@
 import React from 'react'
 import Login from './Login'
-import { setAuthenticated } from '../../utils/auth'
 import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { loginUser, isAuthenticated } from '../../utils/auth'
+jest.mock('../../utils/auth.js')
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -15,7 +16,7 @@ describe('Login.jsx', () => {
     let wrapper
 
     beforeEach(() => {
-      setAuthenticated(true)
+      isAuthenticated.mockReturnValue(true)
       window.location.assign = jest.fn()
       wrapper = shallow(<Login />)
     })
@@ -38,7 +39,7 @@ describe('Login.jsx', () => {
     let wrapper
 
     beforeEach(() => {
-      setAuthenticated(false)
+      isAuthenticated.mockReturnValue(false)
       wrapper = mount(<Login />)
     })
 
@@ -56,7 +57,7 @@ describe('Login.jsx', () => {
     let wrapper
 
     beforeEach(() => {
-      setAuthenticated(false)
+      isAuthenticated.mockReturnValue(false)
       wrapper = mount(<Login />)
     })
 
@@ -74,8 +75,9 @@ describe('Login.jsx', () => {
     let wrapper
 
     beforeEach(() => {
-      setAuthenticated(false)
+      isAuthenticated.mockReturnValue(false)
       window.location.assign = jest.fn()
+      loginUser.mockReturnValue(Promise.resolve())
       wrapper = mount(<Login />)
       wrapper.find('#login-email').at(1).simulate('change', { target: { value: 'john.doe@example.com' } })
       wrapper.find('#login-password').at(1).simulate('change', { target: { value: 'password' } })
@@ -85,6 +87,10 @@ describe('Login.jsx', () => {
     afterEach(() => {
       jest.resetAllMocks()
       wrapper.unmount()
+    })
+
+    it('calls loginUser', () => {
+      expect(loginUser).toHaveBeenCalledTimes(1)
     })
 
     it('calls window.location.assign', () => {
@@ -100,8 +106,9 @@ describe('Login.jsx', () => {
     let wrapper
 
     beforeEach(() => {
-      setAuthenticated(false)
+      isAuthenticated.mockReturnValue(false)
       window.location.assign = jest.fn()
+      loginUser.mockReturnValue(Promise.reject(new Error('Bang!')))
       wrapper = mount(<Login />)
       wrapper.find('#login-email').at(1).simulate('change', { target: { value: 'bad.person@example.com' } })
       wrapper.find('#login-password').at(1).simulate('change', { target: { value: 'password' } })
