@@ -20,7 +20,7 @@ const logFunctionEntry = (functionName, isInternalFunction, options) => {
     logMessage += ' internal'
   }
   logMessage += ' function'
-  logger.info(logMessage, options)
+  logger.info(logMessage, options || '')
 }
 
 /**
@@ -374,7 +374,7 @@ const _deleteUser = (userDB, userId) => {
  * @param {Object} res - the HTTP response object
  */
 const loginUserRequestHandler = (req, res) => {
-  logFunctionEntry('loginUserRequestHandler', false)
+  logFunctionEntry('loginUserRequestHandler', false, undefined)
 
   // Steps to authenticate user
   // 1. Check user email exists
