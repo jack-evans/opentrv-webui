@@ -1,9 +1,10 @@
 import React from 'react'
 import MainContent from './MainContent'
-import { setAuthenticated } from '../../utils/auth'
+import { isAuthenticated } from '../../utils/auth'
 import { MemoryRouter } from 'react-router-dom'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+jest.mock('../../utils/auth.js')
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -52,7 +53,7 @@ describe('MainContent.jsx', () => {
     let wrapper
 
     beforeEach(() => {
-      setAuthenticated(true)
+      isAuthenticated.mockReturnValue(true)
       wrapper = mount(
         <MemoryRouter initialEntries={['/overview']}>
           <MainContent />
@@ -103,7 +104,7 @@ describe('MainContent.jsx', () => {
     let wrapper
 
     beforeEach(() => {
-      setAuthenticated(true)
+      isAuthenticated.mockReturnValue(true)
       wrapper = mount(
         <MemoryRouter initialEntries={['/devices/1234']}>
           <MainContent />

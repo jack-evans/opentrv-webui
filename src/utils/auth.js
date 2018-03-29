@@ -1,9 +1,20 @@
 import makeRequest from './makeRequest'
-
-let authenticated = false
+import decode from 'jwt-decode'
 
 export function isAuthenticated () {
-  return authenticated
+  const token = getToken()
+  if (!token) {
+    return false
+  } else {
+    const decodedToken = decode(token)
+    const date = new Date(0)
+    date.setUTCSeconds(decodedToken.exp)
+    if (date < new Date()) {
+      return false
+    } else {
+      return true
+    }
+  }
 }
 
 export function loginUser (user) {
@@ -34,12 +45,4 @@ export function getToken () {
 
 export function logout () {
   window.localStorage.removeItem('token')
-}
-
-/**
- * Test helper
- * @param {boolean} val - the value to set authenticated to
- */
-export function setAuthenticated (val) {
-  authenticated = val
 }

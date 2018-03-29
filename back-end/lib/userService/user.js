@@ -374,7 +374,7 @@ const _deleteUser = (userDB, userId) => {
  * @param {Object} res - the HTTP response object
  */
 const loginUserRequestHandler = (req, res) => {
-  logFunctionEntry('loginUserRequestHandler', false, undefined)
+  logFunctionEntry('loginUserRequestHandler', false)
 
   // Steps to authenticate user
   // 1. Check user email exists
