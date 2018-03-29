@@ -382,15 +382,13 @@ const loginUserRequestHandler = (req, res) => {
   // 3. Generate jwt for user
   // 4. Send jwt back to ui
 
-  console.log(req.body)
-
   module.exports.internal._getUserByEmail(req.userDb, req.body.email)
     .then(user => {
       return module.exports.internal._checkPassword(req.body.password, user[0].password)
         .then(() => Promise.resolve(user))
     })
     .then(user => {
-      return module.exports.internal._loginUser(user)
+      return module.exports.internal._loginUser(user[0])
     })
     .then(token => {
       res.status(200).send({auth: true, token: token})
@@ -458,9 +456,9 @@ const _loginUser = (user) => {
   logFunctionEntry('_loginUser', true, undefined)
 
   let payload = {
-    id: user[0].id,
-    name: user[0].name,
-    email: user[0].email
+    id: user.id,
+    name: user.name,
+    email: user.email
   }
 
   let secret = process.env.JWT_SECRET

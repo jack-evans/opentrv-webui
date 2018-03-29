@@ -2,6 +2,7 @@ import toBeType from 'jest-tobetype'
 
 const bcrypt = require('bcrypt')
 const httpMocks = require('node-mocks-http')
+const jwt = require('jsonwebtoken')
 const Promise = require('bluebird')
 expect.extend(toBeType)
 
@@ -1410,6 +1411,684 @@ describe('user.js', () => {
     })
   })
 
+  describe('loginUserRequestHandler', () => {
+    let getUserByEmailSpy
+    let checkPasswordSpy
+    let loginUserSpy
+    let req
+    let res
+    const user = {
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      password: 'dfnejnfnakiurndmfirsnjnir',
+      address: {
+        firstLine: '123 example street',
+        county: 'example',
+        postcode: 'ab12cd'
+      }
+    }
+
+    beforeEach(() => {
+      getUserByEmailSpy = jest.spyOn(userService.internal, '_getUserByEmail')
+      checkPasswordSpy = jest.spyOn(userService.internal, '_checkPassword')
+      loginUserSpy = jest.spyOn(userService.internal, '_loginUser')
+
+      req = httpMocks.createRequest({
+        method: 'POST',
+        path: '/user/login',
+        body: {
+          email: 'john.doe@example.com',
+          password: 'pass'
+        },
+        userDb: {}
+      })
+      res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
+    })
+
+    afterEach(() => {
+      getUserByEmailSpy.mockReset()
+      checkPasswordSpy.mockReset()
+      loginUserSpy.mockReset()
+    })
+
+    afterAll(() => {
+      getUserByEmailSpy.mockRestore()
+      checkPasswordSpy.mockRestore()
+      loginUserSpy.mockRestore()
+    })
+
+    it('calls the getUserByEmail internal function', (done) => {
+      getUserByEmailSpy.mockReturnValue(Promise.resolve())
+      checkPasswordSpy.mockReturnValue(Promise.resolve())
+      loginUserSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(getUserByEmailSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      userService.loginUserRequestHandler(req, res)
+    })
+
+    it('calls the getUserByEmail internal function with the database and email', (done) => {
+      getUserByEmailSpy.mockReturnValue(Promise.resolve())
+      checkPasswordSpy.mockReturnValue(Promise.resolve())
+      loginUserSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(getUserByEmailSpy).toHaveBeenCalledWith(req.userDb, req.body.email)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      userService.loginUserRequestHandler(req, res)
+    })
+
+    describe('when the getUserByEmail internal function succeeds', () => {
+      it('calls the checkPassword internal function', (done) => {
+        getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+        checkPasswordSpy.mockReturnValue(Promise.resolve())
+        loginUserSpy.mockReturnValue(Promise.resolve())
+
+        res.on('end', () => {
+          try {
+            expect(checkPasswordSpy).toHaveBeenCalledTimes(1)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        userService.loginUserRequestHandler(req, res)
+      })
+
+      it('calls the checkPassword internal function with the entered password and the stored hash', (done) => {
+        getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+        checkPasswordSpy.mockReturnValue(Promise.resolve())
+        loginUserSpy.mockReturnValue(Promise.resolve())
+
+        res.on('end', () => {
+          try {
+            expect(checkPasswordSpy).toHaveBeenCalledWith(req.body.password, user.password)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        userService.loginUserRequestHandler(req, res)
+      })
+
+      describe('when the checkPassword internal function succeeds', () => {
+        it('calls the loginUser internal function', (done) => {
+          getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+          checkPasswordSpy.mockReturnValue(Promise.resolve())
+          loginUserSpy.mockReturnValue(Promise.resolve())
+
+          res.on('end', () => {
+            try {
+              expect(loginUserSpy).toHaveBeenCalledTimes(1)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+
+        it('calls the loginUser internal function with the user', (done) => {
+          getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+          checkPasswordSpy.mockReturnValue(Promise.resolve())
+          loginUserSpy.mockReturnValue(Promise.resolve())
+
+          res.on('end', () => {
+            try {
+              expect(loginUserSpy).toHaveBeenCalledWith(user)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+
+        describe('when the loginUser internal function succeeds', () => {
+          it('returns 200', (done) => {
+            getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+            checkPasswordSpy.mockReturnValue(Promise.resolve())
+            loginUserSpy.mockReturnValue(Promise.resolve('fakeJWT'))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(200)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+
+          it('returns the jwt in the body', (done) => {
+            getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+            checkPasswordSpy.mockReturnValue(Promise.resolve())
+            loginUserSpy.mockReturnValue(Promise.resolve('fakeJWT'))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toEqual({auth: true, token: 'fakeJWT'})
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+        })
+
+        describe('when the loginUser internal function fails', () => {
+          beforeEach(() => {
+            getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+            checkPasswordSpy.mockReturnValue(Promise.resolve())
+          })
+
+          describe('with a 400', () => {
+            it('returns a 400', (done) => {
+              const error = {
+                statusCode: 400,
+                message: 'bad request'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getStatusCode()).toEqual(400)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+
+            it('returns the error in the body', (done) => {
+              const error = {
+                statusCode: 400,
+                message: 'bad request'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getData()).toBe(error)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+          })
+
+          describe('with a 404', () => {
+            it('returns a 404', (done) => {
+              const error = {
+                statusCode: 404,
+                message: 'not found'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getStatusCode()).toEqual(404)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+
+            it('returns the error in the body', (done) => {
+              const error = {
+                statusCode: 404,
+                message: 'not found'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getData()).toBe(error)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+          })
+
+          describe('with a 500', () => {
+            it('returns a 500', (done) => {
+              const error = {
+                statusCode: 500,
+                message: 'internal server error'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getStatusCode()).toEqual(500)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+
+            it('returns the error in the body', (done) => {
+              const error = {
+                statusCode: 500,
+                message: 'internal server error'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getData()).toBe(error)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+          })
+
+          describe('with a unexpected error', () => {
+            it('returns a 500', (done) => {
+              const error = {
+                message: 'bang!'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getStatusCode()).toEqual(500)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+
+            it('returns the error in the body', (done) => {
+              const error = {
+                message: 'bang!'
+              }
+              loginUserSpy.mockReturnValue(Promise.reject(error))
+
+              res.on('end', () => {
+                try {
+                  expect(res._getData()).toBe(error)
+                  done()
+                } catch (e) {
+                  done(e)
+                }
+              })
+
+              userService.loginUserRequestHandler(req, res)
+            })
+          })
+        })
+      })
+
+      describe('when the checkPassword internal function fails', () => {
+        beforeEach(() => {
+          getUserByEmailSpy.mockReturnValue(Promise.resolve([user]))
+        })
+
+        describe('with a 400', () => {
+          it('returns a 400', (done) => {
+            const error = {
+              statusCode: 400,
+              message: 'bad request'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(400)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 400,
+              message: 'bad request'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+        })
+
+        describe('with a 404', () => {
+          it('returns a 404', (done) => {
+            const error = {
+              statusCode: 404,
+              message: 'not found'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(404)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 404,
+              message: 'not found'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+        })
+
+        describe('with a 500', () => {
+          it('returns a 500', (done) => {
+            const error = {
+              statusCode: 500,
+              message: 'internal server error'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(500)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 500,
+              message: 'internal server error'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+        })
+
+        describe('with a unexpected error', () => {
+          it('returns a 500', (done) => {
+            const error = {
+              message: 'bang!'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(500)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              message: 'bang!'
+            }
+            checkPasswordSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.loginUserRequestHandler(req, res)
+          })
+        })
+      })
+    })
+
+    describe('when the getUserByEmail internal function fails', () => {
+      describe('with a 400', () => {
+        it('returns a 400', (done) => {
+          const error = {
+            statusCode: 400,
+            message: 'bad request'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(400)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 400,
+            message: 'bad request'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 404', () => {
+        it('returns a 404', (done) => {
+          const error = {
+            statusCode: 404,
+            message: 'not found'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(404)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 404,
+            message: 'not found'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 500', () => {
+        it('returns a 500', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            statusCode: 500,
+            message: 'internal server error'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+      })
+
+      describe('with a unexpected error', () => {
+        it('returns a 500', (done) => {
+          const error = {
+            message: 'bang!'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+
+        it('returns the error in the body', (done) => {
+          const error = {
+            message: 'bang!'
+          }
+          getUserByEmailSpy.mockReturnValue(Promise.reject(error))
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toBe(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.loginUserRequestHandler(req, res)
+        })
+      })
+    })
+  })
+
   describe('internal functions', () => {
     describe('_createUser', () => {
       let fakeDatabase
@@ -1874,6 +2553,94 @@ describe('user.js', () => {
                 expect(error.message).toEqual('Bang!')
               })
           })
+        })
+      })
+    })
+
+    describe('_checkPassword', () => {
+      let compareSpy
+
+      beforeEach(() => {
+        compareSpy = jest.spyOn(bcrypt, 'compare')
+      })
+
+      afterEach(() => {
+        compareSpy.mockReset()
+      })
+
+      describe('when the passwords match', () => {
+        beforeEach(() => {
+          compareSpy.mockReturnValue(Promise.resolve(true))
+        })
+
+        it('returns a resolved promise', () => {
+          return userService.internal._checkPassword('goodPass', 'dnsidhfsdvis')
+        })
+      })
+
+      describe('when the passwords dont match', () => {
+        beforeEach(() => {
+          compareSpy.mockReturnValue(Promise.resolve(false))
+        })
+
+        it('returns a rejected promise with an error', () => {
+          expect.assertions(1)
+          return userService.internal._checkPassword('badPass', 'dnsidhfsdvis')
+            .catch(error => {
+              expect(error).toEqual({
+                statusCode: 401,
+                message: 'Password does not match',
+                name: 'Not Authenticated'
+              })
+            })
+        })
+      })
+    })
+
+    describe('_loginUser', () => {
+      let jwtSignSpy
+      const user = {
+        id: '1234-abcd',
+        name: 'John Doe',
+        email: 'john.doe@example.com'
+      }
+
+      beforeEach(() => {
+        jwtSignSpy = jest.spyOn(jwt, 'sign')
+      })
+
+      afterEach(() => {
+        jwtSignSpy.mockReset()
+      })
+
+      describe('when the jwt signs successfully', () => {
+        beforeEach(() => {
+          jwtSignSpy.mockImplementation((a, b, c, cb) => {
+            cb(null, 'fakeToken')
+          })
+        })
+
+        it('returns a resolved promise with the jwt in the body', () => {
+          return userService.internal._loginUser(user)
+            .then(token => {
+              expect(token).toEqual('fakeToken')
+            })
+        })
+      })
+
+      describe('when the jwt fails to sign', () => {
+        beforeEach(() => {
+          jwtSignSpy.mockImplementation((a, b, c, cb) => {
+            cb(new Error('Bang!'), null)
+          })
+        })
+
+        it('returns a rejected promise with the error in the body', () => {
+          expect.assertions(1)
+          return userService.internal._loginUser(user)
+            .catch(error => {
+              expect(error.message).toEqual('Bang!')
+            })
         })
       })
     })
