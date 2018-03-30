@@ -477,7 +477,7 @@ const _loginUser = (user) => {
     email: user.email
   }
 
-  let secret = fs.readFileSync(path.normalize('../jwtRS256.key'))
+  let secret = fs.readFileSync(path.normalize('../jwtRS256.key'), {encoding: 'utf8'})
 
   let options = {
     algorithm: 'RS256',
