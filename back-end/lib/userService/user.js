@@ -1,7 +1,9 @@
 
 const bcrypt = require('bcrypt')
 const bunyan = require('bunyan')
+const fs = require('fs')
 const jwt = require('jsonwebtoken')
+const path = require('path')
 const Promise = require('bluebird')
 
 const logger = bunyan.createLogger({name: 'user-service', serializers: bunyan.stdSerializers})
@@ -32,7 +34,21 @@ const logFunctionEntry = (functionName, isInternalFunction, options) => {
 const createUserRequestHandler = (req, res) => {
   logFunctionEntry('createUserRequestHandler', false, undefined)
 
-  module.exports.internal._createUser(req.userDb, req.body)
+  module.exports.internal._getUserByEmail(req.userDb, req.body.email)
+    .then(user => {
+      if (user.length > 0) {
+        let error = {
+          statusCode: 400,
+          message: 'The email is already in use with another account'
+        }
+        return Promise.reject(error)
+      } else {
+        return Promise.resolve()
+      }
+    })
+    .then(() => {
+      return module.exports.internal._createUser(req.userDb, req.body)
+    })
     .then(() => {
       logger.info('Successfully registered a new user')
       res.status(201).send({})
@@ -461,9 +477,10 @@ const _loginUser = (user) => {
     email: user.email
   }
 
-  let secret = process.env.JWT_SECRET
+  let secret = fs.readFileSync(path.normalize('../jwtRS256.key'))
 
   let options = {
+    algorithm: 'RS256',
     expiresIn: '13h',
     issuer: 'opentrv'
   }

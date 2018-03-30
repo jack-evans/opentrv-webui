@@ -19,11 +19,13 @@ describe('user.js', () => {
 
   describe('createUserRequestHandler', () => {
     let createUserSpy
+    let getUserByEmailSpy
     let req
     let res
 
     beforeEach(() => {
       createUserSpy = jest.spyOn(userService.internal, '_createUser')
+      getUserByEmailSpy = jest.spyOn(userService.internal, '_getUserByEmail')
       req = httpMocks.createRequest({
         method: 'POST',
         path: '/user',
@@ -38,18 +40,21 @@ describe('user.js', () => {
 
     afterEach(() => {
       createUserSpy.mockReset()
+      getUserByEmailSpy.mockReset()
     })
 
     afterAll(() => {
       createUserSpy.mockRestore()
+      getUserByEmailSpy.mockRestore()
     })
 
-    it('calls the createUser internal function', (done) => {
+    it('calls the getUserByEmail internal function', (done) => {
+      getUserByEmailSpy.mockReturnValue(Promise.resolve([]))
       createUserSpy.mockReturnValue(Promise.resolve())
 
       res.on('end', () => {
         try {
-          expect(createUserSpy).toHaveBeenCalledTimes(1)
+          expect(getUserByEmailSpy).toHaveBeenCalledTimes(1)
           done()
         } catch (e) {
           done(e)
@@ -59,12 +64,13 @@ describe('user.js', () => {
       userService.createUserRequestHandler(req, res)
     })
 
-    it('calls the createUser internal function with the database and the body of the request', (done) => {
+    it('calls the getUserByEmail internal function with the database and email', (done) => {
+      getUserByEmailSpy.mockReturnValue(Promise.resolve([]))
       createUserSpy.mockReturnValue(Promise.resolve())
 
       res.on('end', () => {
         try {
-          expect(createUserSpy).toHaveBeenCalledWith(req.userDb, req.body)
+          expect(getUserByEmailSpy).toHaveBeenCalledWith(req.userDb, req.body.email)
           done()
         } catch (e) {
           done(e)
@@ -74,13 +80,17 @@ describe('user.js', () => {
       userService.createUserRequestHandler(req, res)
     })
 
-    describe('when the createUser internal function succeeds', () => {
-      it('returns 201', (done) => {
+    describe('when the getUserByEmail internal function returns a blank array', () => {
+      beforeEach(() => {
+        getUserByEmailSpy.mockReturnValue(Promise.resolve([]))
+      })
+
+      it('calls the createUser internal function', (done) => {
         createUserSpy.mockReturnValue(Promise.resolve())
 
         res.on('end', () => {
           try {
-            expect(res._getStatusCode()).toEqual(201)
+            expect(createUserSpy).toHaveBeenCalledTimes(1)
             done()
           } catch (e) {
             done(e)
@@ -90,12 +100,12 @@ describe('user.js', () => {
         userService.createUserRequestHandler(req, res)
       })
 
-      it('returns an empty object', (done) => {
+      it('calls the createUser internal function with the database and the body of the request', (done) => {
         createUserSpy.mockReturnValue(Promise.resolve())
 
         res.on('end', () => {
           try {
-            expect(res._getData()).toEqual({})
+            expect(createUserSpy).toHaveBeenCalledWith(req.userDb, req.body)
             done()
           } catch (e) {
             done(e)
@@ -103,166 +113,217 @@ describe('user.js', () => {
         })
 
         userService.createUserRequestHandler(req, res)
+      })
+
+      describe('when the createUser internal function succeeds', () => {
+        it('returns 201', (done) => {
+          createUserSpy.mockReturnValue(Promise.resolve())
+
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(201)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.createUserRequestHandler(req, res)
+        })
+
+        it('returns an empty object', (done) => {
+          createUserSpy.mockReturnValue(Promise.resolve())
+
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual({})
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          userService.createUserRequestHandler(req, res)
+        })
+      })
+
+      describe('when the createUser internal function fails', () => {
+        describe('with a 400', () => {
+          it('returns a 400', (done) => {
+            const error = {
+              statusCode: 400,
+              message: 'bad request'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(400)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 400,
+              message: 'bad request'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+        })
+
+        describe('with a 409', () => {
+          it('returns a 409', (done) => {
+            const error = {
+              statusCode: 409,
+              message: 'conflict'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(409)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 409,
+              message: 'conflict'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+        })
+
+        describe('with a 500', () => {
+          it('returns a 500', (done) => {
+            const error = {
+              statusCode: 500,
+              message: 'internal server error'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(500)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 500,
+              message: 'internal server error'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+        })
+
+        describe('with any other kind of error', () => {
+          it('returns a 500', (done) => {
+            const error = {
+              message: 'bang!'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(500)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              message: 'bang!'
+            }
+            createUserSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            userService.createUserRequestHandler(req, res)
+          })
+        })
       })
     })
 
-    describe('when the createUser internal function fails', () => {
-      describe('with a 400', () => {
-        it('returns a 400', (done) => {
-          const error = {
-            statusCode: 400,
-            message: 'bad request'
-          }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getStatusCode()).toEqual(400)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
-        })
-
-        it('returns the error in the body', (done) => {
-          const error = {
-            statusCode: 400,
-            message: 'bad request'
-          }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getData()).toBe(error)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
-        })
+    describe('when getUserByEmail returns an object in the array', () => {
+      beforeEach(() => {
+        getUserByEmailSpy.mockReturnValue(Promise.resolve([{email: 'john.doe@example.com'}]))
       })
 
-      describe('with a 409', () => {
-        it('returns a 409', (done) => {
-          const error = {
-            statusCode: 409,
-            message: 'conflict'
+      it('returns 400', (done) => {
+        res.on('end', () => {
+          try {
+            expect(res._getStatusCode()).toBe(400)
+            done()
+          } catch (e) {
+            done(e)
           }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getStatusCode()).toEqual(409)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
         })
 
-        it('returns the error in the body', (done) => {
-          const error = {
-            statusCode: 409,
-            message: 'conflict'
-          }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getData()).toBe(error)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
-        })
-      })
-
-      describe('with a 500', () => {
-        it('returns a 500', (done) => {
-          const error = {
-            statusCode: 500,
-            message: 'internal server error'
-          }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getStatusCode()).toEqual(500)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
-        })
-
-        it('returns the error in the body', (done) => {
-          const error = {
-            statusCode: 500,
-            message: 'internal server error'
-          }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getData()).toBe(error)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
-        })
-      })
-
-      describe('with any other kind of error', () => {
-        it('returns a 500', (done) => {
-          const error = {
-            message: 'bang!'
-          }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getStatusCode()).toEqual(500)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
-        })
-
-        it('returns the error in the body', (done) => {
-          const error = {
-            message: 'bang!'
-          }
-          createUserSpy.mockReturnValue(Promise.reject(error))
-
-          res.on('end', () => {
-            try {
-              expect(res._getData()).toBe(error)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.createUserRequestHandler(req, res)
-        })
+        userService.createUserRequestHandler(req, res)
       })
     })
   })
