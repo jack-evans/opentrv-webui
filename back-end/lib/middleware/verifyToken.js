@@ -7,11 +7,15 @@ const verifyToken = (req, res, next) => {
 
   if (!token) {
     return res.status(403).send({ auth: false, message: 'No token provided.' })
-  } else {
-    const secret = fs.readFileSync(path.normalize('../jwtRS256.key.pub'), {encoding: 'utf8'})
+  }
+
+  fs.readFile(path.normalize('../jwtRS256.key.pub'), {encoding: 'utf8'}, (err, secret) => {
+    if (err) {
+      return res.status(500).send({ auth: false, message: 'Failed to verify token.' })
+    }
     const options = {
-      algorithms: ['RS256']// ,
-      // issuer: 'opentrv'
+      algorithms: ['RS256'],
+      issuer: 'opentrv'
     }
 
     jwt.verify(token, secret, options, (err, decoded) => {
@@ -23,7 +27,7 @@ const verifyToken = (req, res, next) => {
         next()
       }
     })
-  }
+  })
 }
 
 module.exports = verifyToken
