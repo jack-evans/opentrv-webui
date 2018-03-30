@@ -1,6 +1,7 @@
 import toBeType from 'jest-tobetype'
 
 const bcrypt = require('bcrypt')
+const fs = require('fs')
 const httpMocks = require('node-mocks-http')
 const jwt = require('jsonwebtoken')
 const Promise = require('bluebird')
@@ -2660,6 +2661,7 @@ describe('user.js', () => {
 
     describe('_loginUser', () => {
       let jwtSignSpy
+      let readFileSyncSpy
       const user = {
         id: '1234-abcd',
         name: 'John Doe',
@@ -2668,10 +2670,16 @@ describe('user.js', () => {
 
       beforeEach(() => {
         jwtSignSpy = jest.spyOn(jwt, 'sign')
+        readFileSyncSpy = jest.spyOn(fs, 'readFileSync').mockReturnValue('secret')
       })
 
       afterEach(() => {
         jwtSignSpy.mockReset()
+        readFileSyncSpy.mockReset()
+      })
+
+      afterAll(() => {
+        readFileSyncSpy.mockRestore()
       })
 
       describe('when the jwt signs successfully', () => {
