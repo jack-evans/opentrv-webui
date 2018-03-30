@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, NumberInput, TextInput, Tile } from 'carbon-components-react'
 import NotificationPanel from '../NotificationPanel/NotificationPanel'
 import makeRequest from '../../utils/makeRequest'
+import { getToken } from '../../utils/auth'
 
 class DevicePanel extends Component {
   constructor (props) {
@@ -28,7 +29,10 @@ class DevicePanel extends Component {
     let url = `/api/v1/devices/${this.deviceId}`
     let options = {
       method: 'GET',
-      json: true
+      json: true,
+      headers: {
+        'x-opentrv-token': getToken()
+      }
     }
 
     return makeRequest(url, options)
@@ -55,7 +59,8 @@ class DevicePanel extends Component {
       json: true,
       body: JSON.stringify(device),
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'x-opentrv-token': getToken()
       }
     }
 
@@ -140,7 +145,10 @@ class DevicePanel extends Component {
     let url = `/api/v1/devices`
     let options = {
       method: 'GET',
-      json: true
+      json: true,
+      headers: {
+        'x-opentrv-token': getToken()
+      }
     }
 
     return makeRequest(url, options)

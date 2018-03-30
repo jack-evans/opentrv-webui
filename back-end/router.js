@@ -4,13 +4,14 @@ const deviceDiscoveryService = require('./lib/deviceDiscoveryService/deviceDisco
 const packageJson = require('../package.json')
 const router = require('express').Router()
 const userService = require('./lib/userService/user')
+const verifyToken = require('./lib/middleware/verifyToken')
 
 // DeviceDiscoveryService
-router.post('/devices', deviceDiscoveryService.createDeviceRequestHandler)
-router.get('/devices', deviceDiscoveryService.discoverAllDevicesRequestHandler)
-router.get('/devices/:id', deviceDiscoveryService.getDeviceRequestHandler)
-router.put('/devices/:id', deviceDiscoveryService.updateDeviceRequestHandler)
-router.delete('/devices/:id', deviceDiscoveryService.deleteDeviceRequestHandler)
+router.post('/devices', verifyToken, deviceDiscoveryService.createDeviceRequestHandler)
+router.get('/devices', verifyToken, deviceDiscoveryService.discoverAllDevicesRequestHandler)
+router.get('/devices/:id', verifyToken, deviceDiscoveryService.getDeviceRequestHandler)
+router.put('/devices/:id', verifyToken, deviceDiscoveryService.updateDeviceRequestHandler)
+router.delete('/devices/:id', verifyToken, deviceDiscoveryService.deleteDeviceRequestHandler)
 
 // UserService
 router.post('/user', userService.createUserRequestHandler)

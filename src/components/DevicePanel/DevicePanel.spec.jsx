@@ -2,6 +2,8 @@ import React from 'react'
 import DevicePanel from './DevicePanel'
 import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { getToken } from '../../utils/auth'
+jest.mock('../../utils/auth')
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -11,6 +13,10 @@ describe('DevicePanel.jsx', () => {
       id: '1234'
     }
   }
+
+  beforeEach(() => {
+    getToken.mockReturnValue('fakeJWT')
+  })
 
   it('renders without crashing', () => {
     expect(shallow(<DevicePanel match={match} />)).toMatchSnapshot()

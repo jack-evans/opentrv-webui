@@ -2,12 +2,18 @@ import React from 'react'
 import Overview from './Overview'
 import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { getToken } from '../../utils/auth'
+jest.mock('../../utils/auth')
 
 const nock = require('nock')
 
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('Overview.jsx', () => {
+  beforeEach(() => {
+    getToken.mockReturnValue('fakeJWT')
+  })
+
   it('renders without crashing', () => {
     expect(shallow(<Overview />)).toMatchSnapshot()
   })
