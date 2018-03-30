@@ -231,8 +231,8 @@ ShallowWrapper {
                 className="bx--text__input"
                 disabled={false}
                 id="register-password"
-                invalid={false}
-                invalidText=""
+                invalid={true}
+                invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                 labelText="*Password"
                 name="password"
                 onChange={[Function]}
@@ -552,8 +552,8 @@ ShallowWrapper {
                   className="bx--text__input"
                   disabled={false}
                   id="register-password"
-                  invalid={false}
-                  invalidText=""
+                  invalid={true}
+                  invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                   labelText="*Password"
                   name="password"
                   onChange={[Function]}
@@ -1338,8 +1338,8 @@ ShallowWrapper {
                     className="bx--text__input"
                     disabled={false}
                     id="register-password"
-                    invalid={false}
-                    invalidText=""
+                    invalid={true}
+                    invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                     labelText="*Password"
                     name="password"
                     onChange={[Function]}
@@ -1384,8 +1384,8 @@ ShallowWrapper {
                     className="bx--text__input"
                     disabled={false}
                     id="register-password"
-                    invalid={false}
-                    invalidText=""
+                    invalid={true}
+                    invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                     labelText="*Password"
                     name="password"
                     onChange={[Function]}
@@ -1408,8 +1408,8 @@ ShallowWrapper {
                     "className": "bx--text__input",
                     "disabled": false,
                     "id": "register-password",
-                    "invalid": false,
-                    "invalidText": "",
+                    "invalid": true,
+                    "invalidText": "Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number",
                     "labelText": "*Password",
                     "name": "password",
                     "onChange": [Function],
@@ -1860,8 +1860,8 @@ ShallowWrapper {
                   className="bx--text__input"
                   disabled={false}
                   id="register-password"
-                  invalid={false}
-                  invalidText=""
+                  invalid={true}
+                  invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                   labelText="*Password"
                   name="password"
                   onChange={[Function]}
@@ -2181,8 +2181,8 @@ ShallowWrapper {
                     className="bx--text__input"
                     disabled={false}
                     id="register-password"
-                    invalid={false}
-                    invalidText=""
+                    invalid={true}
+                    invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                     labelText="*Password"
                     name="password"
                     onChange={[Function]}
@@ -2967,8 +2967,8 @@ ShallowWrapper {
                       className="bx--text__input"
                       disabled={false}
                       id="register-password"
-                      invalid={false}
-                      invalidText=""
+                      invalid={true}
+                      invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                       labelText="*Password"
                       name="password"
                       onChange={[Function]}
@@ -3013,8 +3013,8 @@ ShallowWrapper {
                       className="bx--text__input"
                       disabled={false}
                       id="register-password"
-                      invalid={false}
-                      invalidText=""
+                      invalid={true}
+                      invalidText="Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number"
                       labelText="*Password"
                       name="password"
                       onChange={[Function]}
@@ -3037,8 +3037,8 @@ ShallowWrapper {
                       "className": "bx--text__input",
                       "disabled": false,
                       "id": "register-password",
-                      "invalid": false,
-                      "invalidText": "",
+                      "invalid": true,
+                      "invalidText": "Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number",
                       "labelText": "*Password",
                       "name": "password",
                       "onChange": [Function],

@@ -209,10 +209,10 @@ describe('Register.jsx', () => {
         value: 'ab12cd',
         name: 'address->postcode'
       }, {
-        value: 'pass',
+        value: 'Passw0rd',
         name: 'password'
       }, {
-        value: 'pass',
+        value: 'Passw0rd',
         name: 'password-confirm'
       }
     ]

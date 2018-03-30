@@ -25,7 +25,12 @@ class Register extends Component {
           postcode: ''
         }
       },
-      invalid: {},
+      invalid: {
+        'register-password': {
+          reason: 'specNotMet',
+          message: 'Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number'
+        }
+      },
       isDisabled: true,
       failedRegister: false
     }
@@ -42,6 +47,7 @@ class Register extends Component {
     const inputfield = target.name
     const value = target.value
     const user = this.state.user
+    let errors = this.state.invalid
 
     if (inputfield.includes('->')) {
       const nestedInput = inputfield.split('->')
@@ -54,6 +60,17 @@ class Register extends Component {
       user[inputfield] = value
     }
 
+    let regex = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{7,}$')
+    const result = regex.test(user.password)
+    if (inputfield === 'password' && result) {
+      delete errors['register-password']
+    } else if (!result) {
+      errors['register-password'] = {
+        reason: 'specNotMet',
+        message: 'Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number'
+      }
+    }
+
     if (
       user.name &&
       user.email &&
@@ -62,11 +79,11 @@ class Register extends Component {
       user.address.postcode &&
       user.password &&
       this.confirmPass &&
-      Object.getOwnPropertyNames(this.state.invalid).length < 1
+      Object.getOwnPropertyNames(errors).length < 1
     ) {
-      this.setState({user: user, isDisabled: false})
+      this.setState({user: user, isDisabled: false, invalid: errors})
     } else {
-      this.setState({user: user})
+      this.setState({user: user, invalid: errors})
     }
   }
 
