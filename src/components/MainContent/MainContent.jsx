@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Overview from '../Overview/Overview'
 import DevicePanel from '../DevicePanel/DevicePanel'
@@ -59,19 +59,19 @@ class MainContent extends Component {
         <Route render={(props) => {
           if (props.location.pathname === '/overview') {
             return (
-              <div>
+              <Fragment>
                 <Header onClick={this.sideBarMenuEvent} isOpen={this.state.sideBarMenuOpen} />
                 <SideBarMenu isOpen={this.state.sideBarMenuOpen} />
                 <PrivateRoute path='/overview' component={Overview} />
-              </div>
+              </Fragment>
             )
           } else if (props.location.pathname.startsWith('/devices/')) {
             return (
-              <div>
+              <Fragment>
                 <Header onClick={this.sideBarMenuEvent} isOpen={this.state.sideBarMenuOpen} />
                 <SideBarMenu isOpen={this.state.sideBarMenuOpen} />
                 <PrivateRoute path='/devices/:id' component={DevicePanel} />
-              </div>
+              </Fragment>
             )
           } else {
             return <Route component={NotFound} />
