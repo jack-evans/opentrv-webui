@@ -22,9 +22,6 @@ export function loginUser (user) {
   let options = {
     method: 'POST',
     json: true,
-    headers: {
-      'content-type': 'application/json'
-    },
     body: JSON.stringify(user)
   }
 
