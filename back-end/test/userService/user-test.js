@@ -2316,44 +2316,68 @@ describe('user.js', () => {
         getUserByEmailSpy.mockRestore()
       })
 
-      it('calls the getUserByEmail database method', () => {
-        getUserByEmailSpy.mockReturnValue(Promise.resolve())
-        return userService.internal._getUserByEmail(fakeDatabase, email)
-          .then(() => {
-            expect(getUserByEmailSpy).toHaveBeenCalledTimes(1)
-          })
-      })
-
-      describe('when the getUserByEmail database method resolves', () => {
-        const fakeDoc = [
-          {
-            name: 'John Doe',
-            email: 'john.doe@example.com'
-          }
-        ]
-
-        it('returns a resolved promise', () => {
-          getUserByEmailSpy.mockReturnValue(Promise.resolve(fakeDoc))
-          return userService.internal._getUserByEmail(fakeDatabase, email)
-        })
-
-        it('returns the array of documents', () => {
-          getUserByEmailSpy.mockReturnValue(Promise.resolve(fakeDoc))
-          return userService.internal._getUserByEmail(fakeDatabase, email)
-            .then(document => {
-              expect(document).toEqual(fakeDoc)
+      describe('when the userEmail is not defined', () => {
+        it('does not call the getUserByEmail database method', () => {
+          expect.assertions(1)
+          return userService.internal._getUserByEmail(fakeDatabase, undefined)
+            .catch(() => {
+              expect(getUserByEmailSpy).not.toHaveBeenCalled()
             })
         })
-      })
 
-      describe('when the getUserByEmail database method rejects', () => {
         it('returns a rejected promise with the error in the body', () => {
           expect.assertions(1)
-          getUserByEmailSpy.mockReturnValue(Promise.reject(new Error('Bang!')))
-          return userService.internal._getUserByEmail(fakeDatabase, email)
+          return userService.internal._getUserByEmail(fakeDatabase, undefined)
             .catch(error => {
-              expect(error.message).toEqual('Bang!')
+              expect(error).toEqual({
+                statusCode: 400,
+                message: 'The email provided was undefined',
+                name: 'bad request'
+              })
             })
+        })
+      })
+
+      describe('when the userEmail is defined', () => {
+        it('calls the getUserByEmail database method', () => {
+          getUserByEmailSpy.mockReturnValue(Promise.resolve())
+          return userService.internal._getUserByEmail(fakeDatabase, email)
+            .then(() => {
+              expect(getUserByEmailSpy).toHaveBeenCalledTimes(1)
+            })
+        })
+
+        describe('when the getUserByEmail database method resolves', () => {
+          const fakeDoc = [
+            {
+              name: 'John Doe',
+              email: 'john.doe@example.com'
+            }
+          ]
+
+          it('returns a resolved promise', () => {
+            getUserByEmailSpy.mockReturnValue(Promise.resolve(fakeDoc))
+            return userService.internal._getUserByEmail(fakeDatabase, email)
+          })
+
+          it('returns the array of documents', () => {
+            getUserByEmailSpy.mockReturnValue(Promise.resolve(fakeDoc))
+            return userService.internal._getUserByEmail(fakeDatabase, email)
+              .then(document => {
+                expect(document).toEqual(fakeDoc)
+              })
+          })
+        })
+
+        describe('when the getUserByEmail database method rejects', () => {
+          it('returns a rejected promise with the error in the body', () => {
+            expect.assertions(1)
+            getUserByEmailSpy.mockReturnValue(Promise.reject(new Error('Bang!')))
+            return userService.internal._getUserByEmail(fakeDatabase, email)
+              .catch(error => {
+                expect(error.message).toEqual('Bang!')
+              })
+          })
         })
       })
     })

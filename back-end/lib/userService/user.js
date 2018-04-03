@@ -169,7 +169,16 @@ const _getUsers = (userDB) => {
  * @private
  */
 const _getUserByEmail = (userDB, userEmail) => {
-  logFunctionEntry('_getUserByEmail', true, undefined)
+  logFunctionEntry('_getUserByEmail', true, userEmail)
+
+  if (!userEmail) {
+    let error = {}
+    error.statusCode = 400
+    error.message = 'The email provided was undefined'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
   return userDB.getUserByEmail(userEmail)
 }
 
