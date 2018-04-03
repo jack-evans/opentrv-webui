@@ -65,6 +65,7 @@
     "server": "node back-end/server.js",
     "start": "concurrently \"node scripts/start.js\" \"yarn server\"",
     "build": "node scripts/build.js",
+    "start-prod": "yarn build && concurrently \"serve -s build -p 3000\" \"yarn server\"",
     "test": "node scripts/test.js --env=jsdom --coverage",
     "test-no-coverage": "node scripts/test.js --env=jsdom",
     "test-travis": "yarn lint && node scripts/test.js --env=jsdom --coverage --updateSnapshot",
