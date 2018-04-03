@@ -319,9 +319,9 @@ ShallowWrapper {
           </FormGroup>
         </Form>,
         <Modal
-          className="Register__failed-modal"
+          className="Register__modal"
           iconDescription="close the modal"
-          modalHeading="Register Failed"
+          modalHeading=""
           modalLabel=""
           onKeyDown={[Function]}
           onRequestClose={[Function]}
@@ -329,17 +329,7 @@ ShallowWrapper {
           open={false}
           passiveModal={true}
           primaryButtonDisabled={false}
-        >
-          <p>
-            Failed to register on OpenTRV.
-          </p>
-          <p>
-            Please try again.
-          </p>
-          <p>
-            If problem persists please contact support
-          </p>
-        </Modal>,
+        />,
       ],
       "className": "Register",
     },
@@ -1664,20 +1654,10 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "class",
         "props": Object {
-          "children": Array [
-            <p>
-              Failed to register on OpenTRV.
-            </p>,
-            <p>
-              Please try again.
-            </p>,
-            <p>
-              If problem persists please contact support
-            </p>,
-          ],
-          "className": "Register__failed-modal",
+          "children": Array [],
+          "className": "Register__modal",
           "iconDescription": "close the modal",
-          "modalHeading": "Register Failed",
+          "modalHeading": "",
           "modalLabel": "",
           "onKeyDown": [Function],
           "onRequestClose": [Function],
@@ -1687,41 +1667,7 @@ ShallowWrapper {
           "primaryButtonDisabled": false,
         },
         "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": "Failed to register on OpenTRV.",
-            },
-            "ref": null,
-            "rendered": "Failed to register on OpenTRV.",
-            "type": "p",
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": "Please try again.",
-            },
-            "ref": null,
-            "rendered": "Please try again.",
-            "type": "p",
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": "If problem persists please contact support",
-            },
-            "ref": null,
-            "rendered": "If problem persists please contact support",
-            "type": "p",
-          },
-        ],
+        "rendered": Array [],
         "type": [Function],
       },
     ],
@@ -2035,9 +1981,9 @@ ShallowWrapper {
             </FormGroup>
           </Form>,
           <Modal
-            className="Register__failed-modal"
+            className="Register__modal"
             iconDescription="close the modal"
-            modalHeading="Register Failed"
+            modalHeading=""
             modalLabel=""
             onKeyDown={[Function]}
             onRequestClose={[Function]}
@@ -2045,17 +1991,7 @@ ShallowWrapper {
             open={false}
             passiveModal={true}
             primaryButtonDisabled={false}
-          >
-            <p>
-              Failed to register on OpenTRV.
-            </p>
-            <p>
-              Please try again.
-            </p>
-            <p>
-              If problem persists please contact support
-            </p>
-          </Modal>,
+          />,
         ],
         "className": "Register",
       },
@@ -3380,20 +3316,10 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "class",
           "props": Object {
-            "children": Array [
-              <p>
-                Failed to register on OpenTRV.
-              </p>,
-              <p>
-                Please try again.
-              </p>,
-              <p>
-                If problem persists please contact support
-              </p>,
-            ],
-            "className": "Register__failed-modal",
+            "children": Array [],
+            "className": "Register__modal",
             "iconDescription": "close the modal",
-            "modalHeading": "Register Failed",
+            "modalHeading": "",
             "modalLabel": "",
             "onKeyDown": [Function],
             "onRequestClose": [Function],
@@ -3403,41 +3329,7 @@ ShallowWrapper {
             "primaryButtonDisabled": false,
           },
           "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": "Failed to register on OpenTRV.",
-              },
-              "ref": null,
-              "rendered": "Failed to register on OpenTRV.",
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": "Please try again.",
-              },
-              "ref": null,
-              "rendered": "Please try again.",
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": "If problem persists please contact support",
-              },
-              "ref": null,
-              "rendered": "If problem persists please contact support",
-              "type": "p",
-            },
-          ],
+          "rendered": Array [],
           "type": [Function],
         },
       ],

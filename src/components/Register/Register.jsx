@@ -31,8 +31,12 @@ class Register extends Component {
           message: 'Your password does not meet the criteria, click on the i for more info'
         }
       },
+      modalContent: {
+        heading: '',
+        message: []
+      },
       isDisabled: true,
-      failedRegister: false
+      modalOpen: false
     }
     this.confirmPass = ''
 
@@ -101,15 +105,35 @@ class Register extends Component {
     }
     return makeRequest(apiPath, options)
       .then(() => {
-        window.location.assign('/login')
+        this.setState({
+          modalOpen: true,
+          modalContent: {
+            heading: 'Successfully registered',
+            message: [
+              <p>You have successfully registered on OpenTRV.</p>,
+              <a href='/login' >Click here to go to the login screen</a>
+            ]
+          }
+        })
+        // window.location.assign('/login')
       })
       .catch(() => {
-        this.setState({failedRegister: true})
+        this.setState({
+          modalOpen: true,
+          modalContent: {
+            heading: 'Register Failed',
+            message: [
+              <p>Failed to register on OpenTRV.</p>,
+              <p>Please try again.</p>,
+              <p>If problem persists please contact support</p>
+            ]
+          }
+        })
       })
   }
 
   handleModalOnClick () {
-    this.setState({failedRegister: false})
+    this.setState({modalOpen: false})
   }
 
   checkMatch () {
@@ -311,15 +335,13 @@ class Register extends Component {
           </FormGroup>
         </Form>
         <Modal
-          className='Register__failed-modal'
-          open={this.state.failedRegister}
+          className='Register__modal'
+          open={this.state.modalOpen}
           passiveModal
-          modalHeading='Register Failed'
+          modalHeading={this.state.modalContent.heading}
           onRequestClose={this.handleModalOnClick}
         >
-          <p>Failed to register on OpenTRV.</p>
-          <p>Please try again.</p>
-          <p>If problem persists please contact support</p>
+          {this.state.modalContent.message}
         </Modal>
       </div>
     )
