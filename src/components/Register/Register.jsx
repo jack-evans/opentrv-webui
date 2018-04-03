@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, FormItem, Modal, TextInput } from 'carbon-components-react'
+import { Button, Form, FormGroup, FormItem, FormLabel, Modal, TextInput, Tooltip } from 'carbon-components-react'
 import makeRequest from '../../utils/makeRequest'
 
 const styles = {
@@ -28,7 +28,7 @@ class Register extends Component {
       invalid: {
         'register-password': {
           reason: 'specNotMet',
-          message: 'Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number'
+          message: 'Your password does not meet the criteria, click on the i for more info'
         }
       },
       isDisabled: true,
@@ -67,7 +67,7 @@ class Register extends Component {
     } else if (!result) {
       errors['register-password'] = {
         reason: 'specNotMet',
-        message: 'Your password must be at least 8 characters as well as contain at least one uppercase, one lowercase and one number'
+        message: 'Your password does not meet the criteria, click on the i for more info'
       }
     }
 
@@ -169,6 +169,7 @@ class Register extends Component {
                 id='register-email'
                 labelText='*Email'
                 name='email'
+                type='email'
                 required
                 placeholder='Email address'
                 value={this.state.user.email}
@@ -255,12 +256,18 @@ class Register extends Component {
             </div>
           </FormGroup>
           <FormGroup legendText=''>
+            <FormLabel>
+              <Tooltip triggerText='*Password' clickToOpen>
+                Password must have a minimum of 8 characters including 1 uppercase, 1 lowercase and a number.
+              </Tooltip>
+            </FormLabel>
             <FormItem style={styles.inputs}>
               <TextInput
                 id='register-password'
                 labelText='*Password'
                 name='password'
                 required
+                hideLabel
                 type='password'
                 placeholder='Enter password'
                 value={this.state.user.password}
