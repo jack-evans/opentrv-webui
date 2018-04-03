@@ -16,9 +16,9 @@ router.delete('/devices/:id', verifyToken, deviceDiscoveryService.deleteDeviceRe
 // UserService
 router.post('/user', userService.createUserRequestHandler)
 router.get('/user', userService.getUsersRequestHandler)
-router.get('/user/:id', userService.getUserByIdRequestHandler)
-router.put('/user/:id', userService.updateUserRequestHandler)
-router.delete('/user/:id', userService.deleteUserRequestHandler)
+router.get('/user/:id', verifyToken, userService.getUserByIdRequestHandler)
+router.put('/user/:id', verifyToken, userService.updateUserRequestHandler)
+router.delete('/user/:id', verifyToken, userService.deleteUserRequestHandler)
 
 // AuthenticationService
 router.post('/user/login', userService.loginUserRequestHandler)
