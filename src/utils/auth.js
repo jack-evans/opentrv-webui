@@ -18,14 +18,14 @@ export function isAuthenticated () {
 }
 
 export function loginUser (user) {
-  let url = '/api/v1/user/login'
+  let apiPath = '/api/v1/user/login'
   let options = {
     method: 'POST',
     json: true,
     body: JSON.stringify(user)
   }
 
-  return makeRequest(url, options)
+  return makeRequest(apiPath, options)
     .then(res => {
       setToken(res.token)
       return Promise.resolve()
