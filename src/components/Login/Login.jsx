@@ -63,6 +63,7 @@ class Login extends Component {
                   id='login-email'
                   labelText='Email'
                   placeholder='Enter email address'
+                  type='email'
                   required
                   onChange={this.handleEmailOnChange}
                 />

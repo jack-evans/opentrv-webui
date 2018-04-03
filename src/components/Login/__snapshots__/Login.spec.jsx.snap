@@ -44,7 +44,7 @@ ShallowWrapper {
               onClick={[Function]}
               placeholder="Enter email address"
               required={true}
-              type="text"
+              type="email"
             />
           </div>
           <div
@@ -159,7 +159,7 @@ ShallowWrapper {
                 onClick={[Function]}
                 placeholder="Enter email address"
                 required={true}
-                type="text"
+                type="email"
               />
             </div>
             <div
@@ -289,7 +289,7 @@ ShallowWrapper {
                   onClick={[Function]}
                   placeholder="Enter email address"
                   required={true}
-                  type="text"
+                  type="email"
                 />
               </div>,
               <div
@@ -330,7 +330,7 @@ ShallowWrapper {
                   onClick={[Function]}
                   placeholder="Enter email address"
                   required={true}
-                  type="text"
+                  type="email"
                 />,
                 "className": "Login__email-input",
               },
@@ -350,7 +350,7 @@ ShallowWrapper {
                   "onClick": [Function],
                   "placeholder": "Enter email address",
                   "required": true,
-                  "type": "text",
+                  "type": "email",
                 },
                 "ref": null,
                 "rendered": null,
@@ -600,7 +600,7 @@ ShallowWrapper {
                 onClick={[Function]}
                 placeholder="Enter email address"
                 required={true}
-                type="text"
+                type="email"
               />
             </div>
             <div
@@ -715,7 +715,7 @@ ShallowWrapper {
                   onClick={[Function]}
                   placeholder="Enter email address"
                   required={true}
-                  type="text"
+                  type="email"
                 />
               </div>
               <div
@@ -845,7 +845,7 @@ ShallowWrapper {
                     onClick={[Function]}
                     placeholder="Enter email address"
                     required={true}
-                    type="text"
+                    type="email"
                   />
                 </div>,
                 <div
@@ -886,7 +886,7 @@ ShallowWrapper {
                     onClick={[Function]}
                     placeholder="Enter email address"
                     required={true}
-                    type="text"
+                    type="email"
                   />,
                   "className": "Login__email-input",
                 },
@@ -906,7 +906,7 @@ ShallowWrapper {
                     "onClick": [Function],
                     "placeholder": "Enter email address",
                     "required": true,
-                    "type": "text",
+                    "type": "email",
                   },
                   "ref": null,
                   "rendered": null,
