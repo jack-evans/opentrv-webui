@@ -68,7 +68,7 @@ class Overview extends Component {
   }
 
   static discoverDevices (userFlag) {
-    let url = `/api/v1/devices?user=${userFlag}`
+    let apiPath = `/api/v1/devices?user=${userFlag}`
     let options = {
       method: 'GET',
       json: true,
@@ -77,11 +77,11 @@ class Overview extends Component {
       }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
   }
 
   deleteDevice (id) {
-    let url = `/api/v1/devices/${id}`
+    let apiPath = `/api/v1/devices/${id}`
     let options = {
       method: 'DELETE',
       json: true,
@@ -90,7 +90,7 @@ class Overview extends Component {
       }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(() => {
         return Overview.discoverDevices('no')
       })

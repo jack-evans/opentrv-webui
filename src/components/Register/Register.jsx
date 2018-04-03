@@ -90,7 +90,7 @@ class Register extends Component {
   handleSubmit (event) {
     event.preventDefault()
 
-    let url = '/api/v1/user'
+    let apiPath = '/api/v1/user'
     let options = {
       method: 'POST',
       json: true,
@@ -99,7 +99,7 @@ class Register extends Component {
         'content-type': 'application/json'
       }
     }
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(() => {
         window.location.assign('/login')
       })

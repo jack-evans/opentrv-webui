@@ -26,7 +26,7 @@ class DevicePanel extends Component {
   }
 
   componentDidMount () {
-    let url = `/api/v1/devices/${this.deviceId}`
+    let apiPath = `/api/v1/devices/${this.deviceId}`
     let options = {
       method: 'GET',
       json: true,
@@ -35,7 +35,7 @@ class DevicePanel extends Component {
       }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(device => {
         this.originalDevice = JSON.parse(JSON.stringify(device))
         this.setState({
@@ -52,7 +52,7 @@ class DevicePanel extends Component {
 
   handleSaveOnClick () {
     let device = this.state.device
-    let url = `/api/v1/devices/${device.id}`
+    let apiPath = `/api/v1/devices/${device.id}`
 
     let options = {
       method: 'PUT',
@@ -64,7 +64,7 @@ class DevicePanel extends Component {
       }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(device => {
         this.originalDevice = device
         let notifications = this.state.notifications
@@ -142,7 +142,7 @@ class DevicePanel extends Component {
       this.setState({invalid: errors})
     }
 
-    let url = `/api/v1/devices`
+    let apiPath = `/api/v1/devices`
     let options = {
       method: 'GET',
       json: true,
@@ -151,7 +151,7 @@ class DevicePanel extends Component {
       }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(devices => {
         devices = devices.filter(trv => trv.id !== device.id)
 
