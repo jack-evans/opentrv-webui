@@ -1,6 +1,15 @@
 
-export default function makeRequest (url, options) {
-  return global.fetch(url, options)
+export default function makeRequest (apiPath, options) {
+  options.mode = 'cors'
+  if (options.headers) {
+    options.headers['Content-Type'] = 'application/json'
+  } else {
+    options.headers = {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  return global.fetch(`http://localhost:3001${apiPath}`, options)
     .then(internal.checkStatus)
     .then(internal.parseJSON)
 }

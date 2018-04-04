@@ -102,6 +102,27 @@ module.exports.createIndex = (database, databaseName, ddoc) => {
 }
 
 /**
+ * findDocument
+ *
+ * @param {Object} database - the cloudant database to insert the document into
+ * @param {String} databaseName - the name of the database being interacted with
+ * @param {Object} query - the query object
+ * @returns {*} Promise on the action of finding a document
+ */
+module.exports.findDocument = (database, databaseName, query) => {
+  return new Promise((resolve, reject) => {
+    database.find(query, (err, body) => {
+      if (err) {
+        logger.info(`Unable to retrieve document in the '${databaseName}' database. Error received from cloudant: `, err)
+        reject(err)
+      } else {
+        resolve(body.docs)
+      }
+    })
+  })
+}
+
+/**
  * createDocument function
  *
  * Inserts a document into the database specified

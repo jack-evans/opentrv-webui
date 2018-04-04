@@ -1,0 +1,1135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login.jsx renders without crashing 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Login />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": <div
+        className="Login__content"
+      >
+        <div
+          className="Login__title"
+        >
+          <h1>
+            Login to OpenTRV
+          </h1>
+        </div>
+        <div
+          className="Login__input"
+        >
+          <div
+            className="Login__email-input"
+          >
+            <TextInput
+              className="bx--text__input"
+              disabled={false}
+              id="login-email"
+              invalid={false}
+              invalidText=""
+              labelText="Email"
+              onChange={[Function]}
+              onClick={[Function]}
+              placeholder="Enter email address"
+              required={true}
+              type="email"
+            />
+          </div>
+          <div
+            className="Login__password-input"
+          >
+            <TextInput
+              className="bx--text__input"
+              disabled={false}
+              id="login-password"
+              invalid={false}
+              invalidText=""
+              labelText="Password"
+              onChange={[Function]}
+              onClick={[Function]}
+              placeholder="Enter password"
+              required={true}
+              type="password"
+            />
+          </div>
+        </div>
+        <div
+          className="Login__buttons"
+        >
+          <Button
+            className="Login__back-button"
+            disabled={false}
+            href="/"
+            iconDescription="Provide icon description if icon is used"
+            kind="secondary"
+            small={false}
+            style={
+              Object {
+                "width": "120px",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            Back
+          </Button>
+          <Button
+            className="Login__login-button"
+            disabled={false}
+            iconDescription="Provide icon description if icon is used"
+            kind="primary"
+            onClick={[Function]}
+            small={false}
+            style={
+              Object {
+                "width": "120px",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            Login
+          </Button>
+        </div>
+        <Modal
+          className="Login__failed-modal"
+          iconDescription="close the modal"
+          modalHeading="Login Failed"
+          modalLabel=""
+          onKeyDown={[Function]}
+          onRequestClose={[Function]}
+          onRequestSubmit={[Function]}
+          open={false}
+          passiveModal={true}
+          primaryButtonDisabled={false}
+        >
+          <p>
+            Failed to Login to OpenTRV.
+          </p>
+          <p>
+            Please check your email and password was entered correctly.
+          </p>
+          <p>
+            If problem persists please contact support
+          </p>
+        </Modal>
+      </div>,
+      "className": "Login",
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="Login__title"
+          >
+            <h1>
+              Login to OpenTRV
+            </h1>
+          </div>,
+          <div
+            className="Login__input"
+          >
+            <div
+              className="Login__email-input"
+            >
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="login-email"
+                invalid={false}
+                invalidText=""
+                labelText="Email"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter email address"
+                required={true}
+                type="email"
+              />
+            </div>
+            <div
+              className="Login__password-input"
+            >
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="login-password"
+                invalid={false}
+                invalidText=""
+                labelText="Password"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter password"
+                required={true}
+                type="password"
+              />
+            </div>
+          </div>,
+          <div
+            className="Login__buttons"
+          >
+            <Button
+              className="Login__back-button"
+              disabled={false}
+              href="/"
+              iconDescription="Provide icon description if icon is used"
+              kind="secondary"
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Back
+            </Button>
+            <Button
+              className="Login__login-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="primary"
+              onClick={[Function]}
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Login
+            </Button>
+          </div>,
+          <Modal
+            className="Login__failed-modal"
+            iconDescription="close the modal"
+            modalHeading="Login Failed"
+            modalLabel=""
+            onKeyDown={[Function]}
+            onRequestClose={[Function]}
+            onRequestSubmit={[Function]}
+            open={false}
+            passiveModal={true}
+            primaryButtonDisabled={false}
+          >
+            <p>
+              Failed to Login to OpenTRV.
+            </p>
+            <p>
+              Please check your email and password was entered correctly.
+            </p>
+            <p>
+              If problem persists please contact support
+            </p>
+          </Modal>,
+        ],
+        "className": "Login__content",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <h1>
+              Login to OpenTRV
+            </h1>,
+            "className": "Login__title",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Login to OpenTRV",
+            },
+            "ref": null,
+            "rendered": "Login to OpenTRV",
+            "type": "h1",
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="Login__email-input"
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="login-email"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Email"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter email address"
+                  required={true}
+                  type="email"
+                />
+              </div>,
+              <div
+                className="Login__password-input"
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="login-password"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Password"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter password"
+                  required={true}
+                  type="password"
+                />
+              </div>,
+            ],
+            "className": "Login__input",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="login-email"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Email"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter email address"
+                  required={true}
+                  type="email"
+                />,
+                "className": "Login__email-input",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "className": "bx--text__input",
+                  "disabled": false,
+                  "id": "login-email",
+                  "invalid": false,
+                  "invalidText": "",
+                  "labelText": "Email",
+                  "onChange": [Function],
+                  "onClick": [Function],
+                  "placeholder": "Enter email address",
+                  "required": true,
+                  "type": "email",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="login-password"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Password"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter password"
+                  required={true}
+                  type="password"
+                />,
+                "className": "Login__password-input",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "className": "bx--text__input",
+                  "disabled": false,
+                  "id": "login-password",
+                  "invalid": false,
+                  "invalidText": "",
+                  "labelText": "Password",
+                  "onChange": [Function],
+                  "onClick": [Function],
+                  "placeholder": "Enter password",
+                  "required": true,
+                  "type": "password",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <Button
+                className="Login__back-button"
+                disabled={false}
+                href="/"
+                iconDescription="Provide icon description if icon is used"
+                kind="secondary"
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Back
+              </Button>,
+              <Button
+                className="Login__login-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Login
+              </Button>,
+            ],
+            "className": "Login__buttons",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Back",
+                "className": "Login__back-button",
+                "disabled": false,
+                "href": "/",
+                "iconDescription": "Provide icon description if icon is used",
+                "kind": "secondary",
+                "small": false,
+                "style": Object {
+                  "width": "120px",
+                },
+                "tabIndex": 0,
+                "type": "button",
+              },
+              "ref": null,
+              "rendered": "Back",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Login",
+                "className": "Login__login-button",
+                "disabled": false,
+                "iconDescription": "Provide icon description if icon is used",
+                "kind": "primary",
+                "onClick": [Function],
+                "small": false,
+                "style": Object {
+                  "width": "120px",
+                },
+                "tabIndex": 0,
+                "type": "button",
+              },
+              "ref": null,
+              "rendered": "Login",
+              "type": [Function],
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": Array [
+              <p>
+                Failed to Login to OpenTRV.
+              </p>,
+              <p>
+                Please check your email and password was entered correctly.
+              </p>,
+              <p>
+                If problem persists please contact support
+              </p>,
+            ],
+            "className": "Login__failed-modal",
+            "iconDescription": "close the modal",
+            "modalHeading": "Login Failed",
+            "modalLabel": "",
+            "onKeyDown": [Function],
+            "onRequestClose": [Function],
+            "onRequestSubmit": [Function],
+            "open": false,
+            "passiveModal": true,
+            "primaryButtonDisabled": false,
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Failed to Login to OpenTRV.",
+              },
+              "ref": null,
+              "rendered": "Failed to Login to OpenTRV.",
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Please check your email and password was entered correctly.",
+              },
+              "ref": null,
+              "rendered": "Please check your email and password was entered correctly.",
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "If problem persists please contact support",
+              },
+              "ref": null,
+              "rendered": "If problem persists please contact support",
+              "type": "p",
+            },
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": <div
+          className="Login__content"
+        >
+          <div
+            className="Login__title"
+          >
+            <h1>
+              Login to OpenTRV
+            </h1>
+          </div>
+          <div
+            className="Login__input"
+          >
+            <div
+              className="Login__email-input"
+            >
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="login-email"
+                invalid={false}
+                invalidText=""
+                labelText="Email"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter email address"
+                required={true}
+                type="email"
+              />
+            </div>
+            <div
+              className="Login__password-input"
+            >
+              <TextInput
+                className="bx--text__input"
+                disabled={false}
+                id="login-password"
+                invalid={false}
+                invalidText=""
+                labelText="Password"
+                onChange={[Function]}
+                onClick={[Function]}
+                placeholder="Enter password"
+                required={true}
+                type="password"
+              />
+            </div>
+          </div>
+          <div
+            className="Login__buttons"
+          >
+            <Button
+              className="Login__back-button"
+              disabled={false}
+              href="/"
+              iconDescription="Provide icon description if icon is used"
+              kind="secondary"
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Back
+            </Button>
+            <Button
+              className="Login__login-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="primary"
+              onClick={[Function]}
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Login
+            </Button>
+          </div>
+          <Modal
+            className="Login__failed-modal"
+            iconDescription="close the modal"
+            modalHeading="Login Failed"
+            modalLabel=""
+            onKeyDown={[Function]}
+            onRequestClose={[Function]}
+            onRequestSubmit={[Function]}
+            open={false}
+            passiveModal={true}
+            primaryButtonDisabled={false}
+          >
+            <p>
+              Failed to Login to OpenTRV.
+            </p>
+            <p>
+              Please check your email and password was entered correctly.
+            </p>
+            <p>
+              If problem persists please contact support
+            </p>
+          </Modal>
+        </div>,
+        "className": "Login",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="Login__title"
+            >
+              <h1>
+                Login to OpenTRV
+              </h1>
+            </div>,
+            <div
+              className="Login__input"
+            >
+              <div
+                className="Login__email-input"
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="login-email"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Email"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter email address"
+                  required={true}
+                  type="email"
+                />
+              </div>
+              <div
+                className="Login__password-input"
+              >
+                <TextInput
+                  className="bx--text__input"
+                  disabled={false}
+                  id="login-password"
+                  invalid={false}
+                  invalidText=""
+                  labelText="Password"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  placeholder="Enter password"
+                  required={true}
+                  type="password"
+                />
+              </div>
+            </div>,
+            <div
+              className="Login__buttons"
+            >
+              <Button
+                className="Login__back-button"
+                disabled={false}
+                href="/"
+                iconDescription="Provide icon description if icon is used"
+                kind="secondary"
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Back
+              </Button>
+              <Button
+                className="Login__login-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Login
+              </Button>
+            </div>,
+            <Modal
+              className="Login__failed-modal"
+              iconDescription="close the modal"
+              modalHeading="Login Failed"
+              modalLabel=""
+              onKeyDown={[Function]}
+              onRequestClose={[Function]}
+              onRequestSubmit={[Function]}
+              open={false}
+              passiveModal={true}
+              primaryButtonDisabled={false}
+            >
+              <p>
+                Failed to Login to OpenTRV.
+              </p>
+              <p>
+                Please check your email and password was entered correctly.
+              </p>
+              <p>
+                If problem persists please contact support
+              </p>
+            </Modal>,
+          ],
+          "className": "Login__content",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <h1>
+                Login to OpenTRV
+              </h1>,
+              "className": "Login__title",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Login to OpenTRV",
+              },
+              "ref": null,
+              "rendered": "Login to OpenTRV",
+              "type": "h1",
+            },
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="Login__email-input"
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="login-email"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Email"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter email address"
+                    required={true}
+                    type="email"
+                  />
+                </div>,
+                <div
+                  className="Login__password-input"
+                >
+                  <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="login-password"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    required={true}
+                    type="password"
+                  />
+                </div>,
+              ],
+              "className": "Login__input",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="login-email"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Email"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter email address"
+                    required={true}
+                    type="email"
+                  />,
+                  "className": "Login__email-input",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "login-email",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "Email",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "Enter email address",
+                    "required": true,
+                    "type": "email",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <TextInput
+                    className="bx--text__input"
+                    disabled={false}
+                    id="login-password"
+                    invalid={false}
+                    invalidText=""
+                    labelText="Password"
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    placeholder="Enter password"
+                    required={true}
+                    type="password"
+                  />,
+                  "className": "Login__password-input",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "className": "bx--text__input",
+                    "disabled": false,
+                    "id": "login-password",
+                    "invalid": false,
+                    "invalidText": "",
+                    "labelText": "Password",
+                    "onChange": [Function],
+                    "onClick": [Function],
+                    "placeholder": "Enter password",
+                    "required": true,
+                    "type": "password",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                "type": "div",
+              },
+            ],
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <Button
+                  className="Login__back-button"
+                  disabled={false}
+                  href="/"
+                  iconDescription="Provide icon description if icon is used"
+                  kind="secondary"
+                  small={false}
+                  style={
+                    Object {
+                      "width": "120px",
+                    }
+                  }
+                  tabIndex={0}
+                  type="button"
+                >
+                  Back
+                </Button>,
+                <Button
+                  className="Login__login-button"
+                  disabled={false}
+                  iconDescription="Provide icon description if icon is used"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  style={
+                    Object {
+                      "width": "120px",
+                    }
+                  }
+                  tabIndex={0}
+                  type="button"
+                >
+                  Login
+                </Button>,
+              ],
+              "className": "Login__buttons",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Back",
+                  "className": "Login__back-button",
+                  "disabled": false,
+                  "href": "/",
+                  "iconDescription": "Provide icon description if icon is used",
+                  "kind": "secondary",
+                  "small": false,
+                  "style": Object {
+                    "width": "120px",
+                  },
+                  "tabIndex": 0,
+                  "type": "button",
+                },
+                "ref": null,
+                "rendered": "Back",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Login",
+                  "className": "Login__login-button",
+                  "disabled": false,
+                  "iconDescription": "Provide icon description if icon is used",
+                  "kind": "primary",
+                  "onClick": [Function],
+                  "small": false,
+                  "style": Object {
+                    "width": "120px",
+                  },
+                  "tabIndex": 0,
+                  "type": "button",
+                },
+                "ref": null,
+                "rendered": "Login",
+                "type": [Function],
+              },
+            ],
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
+                <p>
+                  Failed to Login to OpenTRV.
+                </p>,
+                <p>
+                  Please check your email and password was entered correctly.
+                </p>,
+                <p>
+                  If problem persists please contact support
+                </p>,
+              ],
+              "className": "Login__failed-modal",
+              "iconDescription": "close the modal",
+              "modalHeading": "Login Failed",
+              "modalLabel": "",
+              "onKeyDown": [Function],
+              "onRequestClose": [Function],
+              "onRequestSubmit": [Function],
+              "open": false,
+              "passiveModal": true,
+              "primaryButtonDisabled": false,
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Failed to Login to OpenTRV.",
+                },
+                "ref": null,
+                "rendered": "Failed to Login to OpenTRV.",
+                "type": "p",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Please check your email and password was entered correctly.",
+                },
+                "ref": null,
+                "rendered": "Please check your email and password was entered correctly.",
+                "type": "p",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "If problem persists please contact support",
+                },
+                "ref": null,
+                "rendered": "If problem persists please contact support",
+                "type": "p",
+              },
+            ],
+            "type": [Function],
+          },
+        ],
+        "type": "div",
+      },
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

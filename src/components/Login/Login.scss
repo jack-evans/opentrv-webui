@@ -1,0 +1,32 @@
+
+.Login {
+  height: 100vh;
+
+  .Login__content {
+    align-items: center;
+    display: inline-block;
+    justify-content: center;
+    width: 500px;
+
+    .Login__title {
+      padding:40px 0 30px 0;
+    }
+
+    .Login__input {
+      text-align: left;
+
+      .Login__email-input {
+        margin-right: unset;
+        padding-bottom: 20px;
+      }
+
+      .Login__password-input {
+        padding-top: 10px;
+      }
+    }
+
+    .Login__buttons {
+      padding-top: 30px;
+    }
+  }
+}

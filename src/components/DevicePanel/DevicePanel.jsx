@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Breadcrumb, BreadcrumbItem, Button, DetailPageHeader, Icon, NumberInput, TextInput, Tile } from 'carbon-components-react'
 import NotificationPanel from '../NotificationPanel/NotificationPanel'
 import makeRequest from '../../utils/makeRequest'
+import { getToken } from '../../utils/auth'
 
 class DevicePanel extends Component {
   constructor (props) {
@@ -25,13 +26,16 @@ class DevicePanel extends Component {
   }
 
   componentDidMount () {
-    let url = `/api/v1/devices/${this.deviceId}`
+    let apiPath = `/api/v1/devices/${this.deviceId}`
     let options = {
       method: 'GET',
-      json: true
+      json: true,
+      headers: {
+        'x-opentrv-token': getToken()
+      }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(device => {
         this.originalDevice = JSON.parse(JSON.stringify(device))
         this.setState({
@@ -48,18 +52,19 @@ class DevicePanel extends Component {
 
   handleSaveOnClick () {
     let device = this.state.device
-    let url = `/api/v1/devices/${device.id}`
+    let apiPath = `/api/v1/devices/${device.id}`
 
     let options = {
       method: 'PUT',
       json: true,
       body: JSON.stringify(device),
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'x-opentrv-token': getToken()
       }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(device => {
         this.originalDevice = device
         let notifications = this.state.notifications
@@ -137,13 +142,16 @@ class DevicePanel extends Component {
       this.setState({invalid: errors})
     }
 
-    let url = `/api/v1/devices`
+    let apiPath = `/api/v1/devices`
     let options = {
       method: 'GET',
-      json: true
+      json: true,
+      headers: {
+        'x-opentrv-token': getToken()
+      }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(devices => {
         devices = devices.filter(trv => trv.id !== device.id)
 
@@ -213,7 +221,7 @@ class DevicePanel extends Component {
               statusText={this.state.statusText}>
               <Icon name='devices' />
               <Breadcrumb>
-                <BreadcrumbItem href='/'>
+                <BreadcrumbItem href='/overview'>
                   Device Overview
                 </BreadcrumbItem>
               </Breadcrumb>

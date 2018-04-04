@@ -37,6 +37,7 @@ ShallowWrapper {
       "children": Array [
         <ToastNotification
           caption="Time stamp: 1234"
+          hideCloseButton={false}
           iconDescription="closes notification"
           kind="success"
           notificationType="toast"
@@ -47,6 +48,7 @@ ShallowWrapper {
         />,
         <ToastNotification
           caption="Time stamp: 5678"
+          hideCloseButton={false}
           iconDescription="closes notification"
           kind="success"
           notificationType="toast"
@@ -66,6 +68,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "caption": "Time stamp: 1234",
+          "hideCloseButton": false,
           "iconDescription": "closes notification",
           "kind": "success",
           "notificationType": "toast",
@@ -84,6 +87,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "caption": "Time stamp: 5678",
+          "hideCloseButton": false,
           "iconDescription": "closes notification",
           "kind": "success",
           "notificationType": "toast",
@@ -108,6 +112,7 @@ ShallowWrapper {
         "children": Array [
           <ToastNotification
             caption="Time stamp: 1234"
+            hideCloseButton={false}
             iconDescription="closes notification"
             kind="success"
             notificationType="toast"
@@ -118,6 +123,7 @@ ShallowWrapper {
           />,
           <ToastNotification
             caption="Time stamp: 5678"
+            hideCloseButton={false}
             iconDescription="closes notification"
             kind="success"
             notificationType="toast"
@@ -137,6 +143,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "caption": "Time stamp: 1234",
+            "hideCloseButton": false,
             "iconDescription": "closes notification",
             "kind": "success",
             "notificationType": "toast",
@@ -155,6 +162,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "caption": "Time stamp: 5678",
+            "hideCloseButton": false,
             "iconDescription": "closes notification",
             "kind": "success",
             "notificationType": "toast",

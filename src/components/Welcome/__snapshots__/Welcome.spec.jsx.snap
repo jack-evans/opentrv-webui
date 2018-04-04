@@ -1,0 +1,681 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Welcome.jsx renders without crashing 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Welcome />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": <div>
+        <img
+          alt="OpenTRV logo"
+          src="opentrv.jpg"
+          style={
+            Object {
+              "paddingBottom": "100px",
+              "paddingTop": "100px",
+            }
+          }
+        />
+        <h2
+          style={
+            Object {
+              "paddingBottom": "10px",
+              "paddingTop": "10px",
+            }
+          }
+        >
+          Welcome to OpenTRV
+        </h2>
+        <p
+          style={
+            Object {
+              "paddingBottom": "10px",
+            }
+          }
+        >
+          New User? Click Register to create an account
+        </p>
+        <p
+          style={
+            Object {
+              "paddingBottom": "10px",
+            }
+          }
+        >
+          Existing User? Login to view your TRV system
+        </p>
+        <div
+          className="Welcome__buttons"
+        >
+          <Button
+            className="Welcome__register-button"
+            disabled={false}
+            iconDescription="Provide icon description if icon is used"
+            kind="secondary"
+            onClick={[Function]}
+            small={false}
+            style={
+              Object {
+                "width": "120px",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            Register
+          </Button>
+          <Button
+            className="Welcome__login-button"
+            disabled={false}
+            iconDescription="Provide icon description if icon is used"
+            kind="primary"
+            onClick={[Function]}
+            small={false}
+            style={
+              Object {
+                "width": "120px",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            Login
+          </Button>
+        </div>
+      </div>,
+      "className": "Welcome",
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <img
+            alt="OpenTRV logo"
+            src="opentrv.jpg"
+            style={
+              Object {
+                "paddingBottom": "100px",
+                "paddingTop": "100px",
+              }
+            }
+          />,
+          <h2
+            style={
+              Object {
+                "paddingBottom": "10px",
+                "paddingTop": "10px",
+              }
+            }
+          >
+            Welcome to OpenTRV
+          </h2>,
+          <p
+            style={
+              Object {
+                "paddingBottom": "10px",
+              }
+            }
+          >
+            New User? Click Register to create an account
+          </p>,
+          <p
+            style={
+              Object {
+                "paddingBottom": "10px",
+              }
+            }
+          >
+            Existing User? Login to view your TRV system
+          </p>,
+          <div
+            className="Welcome__buttons"
+          >
+            <Button
+              className="Welcome__register-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="secondary"
+              onClick={[Function]}
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Register
+            </Button>
+            <Button
+              className="Welcome__login-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="primary"
+              onClick={[Function]}
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Login
+            </Button>
+          </div>,
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "alt": "OpenTRV logo",
+            "src": "opentrv.jpg",
+            "style": Object {
+              "paddingBottom": "100px",
+              "paddingTop": "100px",
+            },
+          },
+          "ref": null,
+          "rendered": null,
+          "type": "img",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Welcome to OpenTRV",
+            "style": Object {
+              "paddingBottom": "10px",
+              "paddingTop": "10px",
+            },
+          },
+          "ref": null,
+          "rendered": "Welcome to OpenTRV",
+          "type": "h2",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "New User? Click Register to create an account",
+            "style": Object {
+              "paddingBottom": "10px",
+            },
+          },
+          "ref": null,
+          "rendered": "New User? Click Register to create an account",
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Existing User? Login to view your TRV system",
+            "style": Object {
+              "paddingBottom": "10px",
+            },
+          },
+          "ref": null,
+          "rendered": "Existing User? Login to view your TRV system",
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <Button
+                className="Welcome__register-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="secondary"
+                onClick={[Function]}
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Register
+              </Button>,
+              <Button
+                className="Welcome__login-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Login
+              </Button>,
+            ],
+            "className": "Welcome__buttons",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Register",
+                "className": "Welcome__register-button",
+                "disabled": false,
+                "iconDescription": "Provide icon description if icon is used",
+                "kind": "secondary",
+                "onClick": [Function],
+                "small": false,
+                "style": Object {
+                  "width": "120px",
+                },
+                "tabIndex": 0,
+                "type": "button",
+              },
+              "ref": null,
+              "rendered": "Register",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "Login",
+                "className": "Welcome__login-button",
+                "disabled": false,
+                "iconDescription": "Provide icon description if icon is used",
+                "kind": "primary",
+                "onClick": [Function],
+                "small": false,
+                "style": Object {
+                  "width": "120px",
+                },
+                "tabIndex": 0,
+                "type": "button",
+              },
+              "ref": null,
+              "rendered": "Login",
+              "type": [Function],
+            },
+          ],
+          "type": "div",
+        },
+      ],
+      "type": "div",
+    },
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": <div>
+          <img
+            alt="OpenTRV logo"
+            src="opentrv.jpg"
+            style={
+              Object {
+                "paddingBottom": "100px",
+                "paddingTop": "100px",
+              }
+            }
+          />
+          <h2
+            style={
+              Object {
+                "paddingBottom": "10px",
+                "paddingTop": "10px",
+              }
+            }
+          >
+            Welcome to OpenTRV
+          </h2>
+          <p
+            style={
+              Object {
+                "paddingBottom": "10px",
+              }
+            }
+          >
+            New User? Click Register to create an account
+          </p>
+          <p
+            style={
+              Object {
+                "paddingBottom": "10px",
+              }
+            }
+          >
+            Existing User? Login to view your TRV system
+          </p>
+          <div
+            className="Welcome__buttons"
+          >
+            <Button
+              className="Welcome__register-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="secondary"
+              onClick={[Function]}
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Register
+            </Button>
+            <Button
+              className="Welcome__login-button"
+              disabled={false}
+              iconDescription="Provide icon description if icon is used"
+              kind="primary"
+              onClick={[Function]}
+              small={false}
+              style={
+                Object {
+                  "width": "120px",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              Login
+            </Button>
+          </div>
+        </div>,
+        "className": "Welcome",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <img
+              alt="OpenTRV logo"
+              src="opentrv.jpg"
+              style={
+                Object {
+                  "paddingBottom": "100px",
+                  "paddingTop": "100px",
+                }
+              }
+            />,
+            <h2
+              style={
+                Object {
+                  "paddingBottom": "10px",
+                  "paddingTop": "10px",
+                }
+              }
+            >
+              Welcome to OpenTRV
+            </h2>,
+            <p
+              style={
+                Object {
+                  "paddingBottom": "10px",
+                }
+              }
+            >
+              New User? Click Register to create an account
+            </p>,
+            <p
+              style={
+                Object {
+                  "paddingBottom": "10px",
+                }
+              }
+            >
+              Existing User? Login to view your TRV system
+            </p>,
+            <div
+              className="Welcome__buttons"
+            >
+              <Button
+                className="Welcome__register-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="secondary"
+                onClick={[Function]}
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Register
+              </Button>
+              <Button
+                className="Welcome__login-button"
+                disabled={false}
+                iconDescription="Provide icon description if icon is used"
+                kind="primary"
+                onClick={[Function]}
+                small={false}
+                style={
+                  Object {
+                    "width": "120px",
+                  }
+                }
+                tabIndex={0}
+                type="button"
+              >
+                Login
+              </Button>
+            </div>,
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "alt": "OpenTRV logo",
+              "src": "opentrv.jpg",
+              "style": Object {
+                "paddingBottom": "100px",
+                "paddingTop": "100px",
+              },
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "img",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Welcome to OpenTRV",
+              "style": Object {
+                "paddingBottom": "10px",
+                "paddingTop": "10px",
+              },
+            },
+            "ref": null,
+            "rendered": "Welcome to OpenTRV",
+            "type": "h2",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "New User? Click Register to create an account",
+              "style": Object {
+                "paddingBottom": "10px",
+              },
+            },
+            "ref": null,
+            "rendered": "New User? Click Register to create an account",
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Existing User? Login to view your TRV system",
+              "style": Object {
+                "paddingBottom": "10px",
+              },
+            },
+            "ref": null,
+            "rendered": "Existing User? Login to view your TRV system",
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <Button
+                  className="Welcome__register-button"
+                  disabled={false}
+                  iconDescription="Provide icon description if icon is used"
+                  kind="secondary"
+                  onClick={[Function]}
+                  small={false}
+                  style={
+                    Object {
+                      "width": "120px",
+                    }
+                  }
+                  tabIndex={0}
+                  type="button"
+                >
+                  Register
+                </Button>,
+                <Button
+                  className="Welcome__login-button"
+                  disabled={false}
+                  iconDescription="Provide icon description if icon is used"
+                  kind="primary"
+                  onClick={[Function]}
+                  small={false}
+                  style={
+                    Object {
+                      "width": "120px",
+                    }
+                  }
+                  tabIndex={0}
+                  type="button"
+                >
+                  Login
+                </Button>,
+              ],
+              "className": "Welcome__buttons",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Register",
+                  "className": "Welcome__register-button",
+                  "disabled": false,
+                  "iconDescription": "Provide icon description if icon is used",
+                  "kind": "secondary",
+                  "onClick": [Function],
+                  "small": false,
+                  "style": Object {
+                    "width": "120px",
+                  },
+                  "tabIndex": 0,
+                  "type": "button",
+                },
+                "ref": null,
+                "rendered": "Register",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": "Login",
+                  "className": "Welcome__login-button",
+                  "disabled": false,
+                  "iconDescription": "Provide icon description if icon is used",
+                  "kind": "primary",
+                  "onClick": [Function],
+                  "small": false,
+                  "style": Object {
+                    "width": "120px",
+                  },
+                  "tabIndex": 0,
+                  "type": "button",
+                },
+                "ref": null,
+                "rendered": "Login",
+                "type": [Function],
+              },
+            ],
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

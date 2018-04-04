@@ -3,6 +3,7 @@ import OverviewHeader from '../OverviewHeader/OverviewHeader'
 import { Button, Loading, Search } from 'carbon-components-react'
 import DeviceTile from '../DeviceTile/DeviceTile'
 import makeRequest from '../../utils/makeRequest'
+import { getToken } from '../../utils/auth'
 
 class Overview extends Component {
   constructor (props) {
@@ -67,23 +68,29 @@ class Overview extends Component {
   }
 
   static discoverDevices (userFlag) {
-    let url = `/api/v1/devices?user=${userFlag}`
+    let apiPath = `/api/v1/devices?user=${userFlag}`
     let options = {
       method: 'GET',
-      json: true
+      json: true,
+      headers: {
+        'x-opentrv-token': getToken()
+      }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
   }
 
   deleteDevice (id) {
-    let url = `/api/v1/devices/${id}`
+    let apiPath = `/api/v1/devices/${id}`
     let options = {
       method: 'DELETE',
-      json: true
+      json: true,
+      headers: {
+        'x-opentrv-token': getToken()
+      }
     }
 
-    return makeRequest(url, options)
+    return makeRequest(apiPath, options)
       .then(() => {
         return Overview.discoverDevices('no')
       })

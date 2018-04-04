@@ -284,6 +284,99 @@ describe('cloudantRequestHelper.js', () => {
     })
   })
 
+  describe('findDocument', () => {
+    let fakeCloudantInstance
+    const goodDatabaseName = 'gooddb'
+    const badDatabaseName = 'baddb'
+
+    beforeEach(() => {
+      process.env = {
+        CDB_USER: 'admin',
+        CDB_PASS: 'pass'
+      }
+
+      fakeCloudantInstance = cloudantRequestHelper.createCloudantConnection()
+
+      fakeCloudantInstance.db = {
+        use: (databaseName) => {
+          if (databaseName === 'gooddb') {
+            return {
+              name: databaseName,
+              find: (query, callback) => {
+                const documentArray = [{
+                  id: '4321',
+                  rev: '0.0.1',
+                  _id: '4321',
+                  _rev: '0.0.1',
+                  name: 'john',
+                  content: {
+                    nestedContent: 'some nested content'
+                  }
+                }, {
+                  id: '1234',
+                  rev: '0.0.1',
+                  _id: '1234',
+                  _rev: '0.0.1',
+                  name: 'jane',
+                  content: {
+                    nestedContent: 'some nested content'
+                  }
+                }]
+
+                const document = documentArray.filter(document => {
+                  return document.name === query.selector.name
+                })
+                callback(null, { docs: [ document[0] ] })
+              }
+            }
+          }
+
+          return {
+            name: databaseName,
+            find: (documentId, callback) => {
+              const error = new Error('Bang in find document function')
+              callback(error)
+            }
+          }
+        }
+      }
+    })
+
+    afterEach(() => {
+      process.env = {}
+    })
+
+    describe('when it successfully finds the document in the database', () => {
+      it('returns a resolved promise with the document in the body', () => {
+        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, goodDatabaseName)
+        return cloudantRequestHelper.findDocument(database, goodDatabaseName, { selector: { name: 'john' } })
+          .then(document => {
+            expect(document).toEqual([{
+              id: '4321',
+              rev: '0.0.1',
+              _id: '4321',
+              _rev: '0.0.1',
+              name: 'john',
+              content: {
+                nestedContent: 'some nested content'
+              }
+            }])
+          })
+      })
+    })
+
+    describe('when it fails to find document in the database', () => {
+      it('returns a rejected promise with the error in the body', () => {
+        expect.assertions(1)
+        const database = cloudantRequestHelper.useDatabase(fakeCloudantInstance, badDatabaseName)
+        return cloudantRequestHelper.findDocument(database, badDatabaseName, { selector: { name: 'john' } })
+          .catch(error => {
+            expect(error.message).toEqual('Bang in find document function')
+          })
+      })
+    })
+  })
+
   describe('createDocument', () => {
     let fakeCloudantInstance
     const goodDatabaseName = 'gooddb'
