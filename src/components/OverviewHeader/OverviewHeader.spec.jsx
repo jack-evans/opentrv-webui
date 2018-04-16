@@ -7,12 +7,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 describe('Overview.jsx', () => {
   it('renders without crashing', () => {
-    const expectedRender = (
-      <div className='OverviewHeader'>
-        <h1>Device Overview</h1>
-      </div>
-    )
-
-    expect(shallow(<OverviewHeader />).contains(expectedRender)).toBe(true)
+    expect(shallow(<OverviewHeader />)).toMatchSnapshot()
   })
 })
