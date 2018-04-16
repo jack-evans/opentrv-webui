@@ -34,6 +34,8 @@ class Overview extends Component {
       overviewContent = (
         <PolicyOverview />
       )
+    } else {
+      return null
     }
 
     return (
