@@ -17,6 +17,7 @@ class Login extends Component {
     this.handleEmailOnChange = this.handleEmailOnChange.bind(this)
     this.handlePasswordOnChange = this.handlePasswordOnChange.bind(this)
     this.handleModalOnClick = this.handleModalOnClick.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
 
   handleLoginOnClick () {
@@ -32,6 +33,12 @@ class Login extends Component {
       .catch(() => {
         this.setState({failedLogin: true})
       })
+  }
+
+  handleKeyPress (event) {
+    if (event.key === 'Enter') {
+      this.handleLoginOnClick()
+    }
   }
 
   handleEmailOnChange (event) {
@@ -76,6 +83,7 @@ class Login extends Component {
                   type='password'
                   required
                   onChange={this.handlePasswordOnChange}
+                  onKeyPress={this.handleKeyPress}
                 />
               </div>
             </div>
