@@ -166,7 +166,8 @@ const _discoverAllDevices = (userFlag) => {
 
           arrayOfDevices.push({
             name: deviceName,
-            currentTemperature: deviceCurrentTemperature
+            currentTemperature: deviceCurrentTemperature,
+            ambientTemperature: 18
           })
         }
         logger.info('Created an array of devices', arrayOfDevices)
