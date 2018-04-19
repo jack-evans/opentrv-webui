@@ -23,6 +23,8 @@ router.delete('/user/:id', verifyToken, userService.deleteUserRequestHandler)
 // AuthenticationService
 router.post('/user/login', userService.loginUserRequestHandler)
 
+// PolicyManagementService TODO
+
 router.get('/test', (req, res) => {
   res.status(200).send({'time': new Date(), 'name': packageJson.name, 'version': packageJson.version})
 })
