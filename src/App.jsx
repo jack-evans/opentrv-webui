@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import MainContent from './components/MainContent/MainContent'
 
 class App extends Component {
@@ -10,9 +10,9 @@ class App extends Component {
    */
   render () {
     return (
-      <Fragment className='App'>
+      <div className='App'>
         <MainContent />
-      </Fragment>
+      </div>
     )
   }
 }
