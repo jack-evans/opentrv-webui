@@ -1,4 +1,7 @@
 
+const bunyan = require('bunyan')
+
+const logger = bunyan.createLogger({name: 'policy-management-service', serializers: bunyan.stdSerializers})
 
 const createPolicyRequestHandler = (req, res) => {
   logger.info('Entered into the createPolicyRequestHandler function')
@@ -36,7 +39,7 @@ const createPolicyRequestHandler = (req, res) => {
     })
 }
 
-const _createPolicy = (req, res) => {
+const _createPolicy = () => {
 
 }
 
@@ -55,9 +58,9 @@ const getAllPoliciesRequestHandler = (req, res) => {
           break
         }
 
-        case 409: {
+        case 404: {
           logger.error('Encountered conflict in the getAllPoliciesRequestHandler', error)
-          res.status(409).send(error)
+          res.status(404).send(error)
           break
         }
 
@@ -76,8 +79,7 @@ const getAllPoliciesRequestHandler = (req, res) => {
     })
 }
 
-const _getAllPolicies = (req, res) => {
-  
+const _getAllPolicies = () => {
 }
 
 const getPolicyByIdRequestHandler = (req, res) => {
@@ -95,9 +97,9 @@ const getPolicyByIdRequestHandler = (req, res) => {
           break
         }
 
-        case 409: {
+        case 404: {
           logger.error('Encountered conflict in the getPolicyByIdRequestHandler', error)
-          res.status(409).send(error)
+          res.status(404).send(error)
           break
         }
 
@@ -120,7 +122,7 @@ const _getPolicyById = () => {
 
 }
 
-const updatePolicyRequestHandler = () => {
+const updatePolicyRequestHandler = (req, res) => {
   logger.info('Entered into the updatePolicyRequestHandler function')
   module.exports.internal._updatePolicy(req.policyDb, req.body)
     .then(policyDocument => {
@@ -160,7 +162,7 @@ const _updatePolicy = () => {
 
 }
 
-const deletePolicyRequestHandler = () => {
+const deletePolicyRequestHandler = (req, res) => {
   logger.info('Entered into the deletePolicyRequestHandler function')
   module.exports.internal._deletePolicy(req.policyDb, req.params.id)
     .then(() => {
