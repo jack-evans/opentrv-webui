@@ -5,7 +5,7 @@ const logger = bunyan.createLogger({name: 'policy-management-service', serialize
 
 const createPolicyRequestHandler = (req, res) => {
   logger.info('Entered into the createPolicyRequestHandler function')
-  module.exports.internal._createPolicy(req.policyDb, req.body)
+  module.exports.internal._createPolicy(req.policyDb, req.body, req.userId)
     .then(policyDocument => {
       logger.info('Successfully created a policy document in the policies database', policyDocument)
       res.status(201).send(policyDocument)
@@ -39,8 +39,8 @@ const createPolicyRequestHandler = (req, res) => {
     })
 }
 
-const _createPolicy = () => {
-
+const _createPolicy = (policyDb, policyDoc, userId) => {
+  logger.info('Entered into the _createPolicy internal function with the following: ', {})
 }
 
 const getAllPoliciesRequestHandler = (req, res) => {
@@ -177,9 +177,9 @@ const deletePolicyRequestHandler = (req, res) => {
           break
         }
 
-        case 409: {
-          logger.error('Encountered conflict in the deletePolicyRequestHandler', error)
-          res.status(409).send(error)
+        case 404: {
+          logger.error('Encountered not found in the deletePolicyRequestHandler', error)
+          res.status(404).send(error)
           break
         }
 

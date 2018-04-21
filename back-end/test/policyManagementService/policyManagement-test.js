@@ -501,7 +501,7 @@ describe('policyManagement.js', () => {
       policyManagement.getPolicyByIdRequestHandler(req, res)
     })
 
-    describe('when the _getolicyById internal function succeeds', () => {
+    describe('when the _getPolicyById internal function succeeds', () => {
       beforeEach(() => {
         getPolicyByIdSpy.mockReturnValue(Promise.resolve({}))
       })
@@ -530,6 +530,398 @@ describe('policyManagement.js', () => {
         })
 
         policyManagement.getPolicyByIdRequestHandler(req, res)
+      })
+    })
+
+    describe('when the _getPolicyById internal function fails', () => {
+      describe('with a 400', () => {
+        const error = {
+          statusCode: 400,
+          message: 'bad request'
+        }
+
+        beforeEach(() => {
+          getPolicyByIdSpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns 400', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(400)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+
+        it('returns the error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 404', () => {
+        const error = {
+          statusCode: 404,
+          message: 'not found'
+        }
+
+        beforeEach(() => {
+          getPolicyByIdSpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns 404', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(404)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+
+        it('returns the error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 500', () => {
+        const error = {
+          statusCode: 500,
+          message: 'internal server error'
+        }
+
+        beforeEach(() => {
+          getPolicyByIdSpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns a 500', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+
+        it('returns an error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+      })
+
+      describe('with an unexpected error', () => {
+        const error = {
+          message: 'Bang!'
+        }
+
+        beforeEach(() => {
+          getPolicyByIdSpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns 500', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+
+        it('returns an error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.getPolicyByIdRequestHandler(req, res)
+        })
+      })
+    })
+  })
+
+  describe('updatePolicyRequestHandler', () => {
+    it('todo', () => {
+      expect(1).toEqual(2)
+    })
+  })
+
+  describe('deletePolicyRequestHandler', () => {
+    let req
+    let res
+    let deletePolicySpy
+
+    beforeEach(() => {
+      req = httpMocks.createRequest({
+        method: 'DELETE',
+        path: '/policy/1234',
+        params: {
+          id: '1234'
+        },
+        policyDb: {}
+      })
+      res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
+      deletePolicySpy = jest.spyOn(policyManagement.internal, '_deletePolicy')
+    })
+
+    afterEach(() => {
+      deletePolicySpy.mockReset()
+    })
+
+    afterAll(() => {
+      deletePolicySpy.mockRestore()
+    })
+
+    it('calls the _deletePolicy internal function', (done) => {
+      deletePolicySpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(deletePolicySpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      policyManagement.deletePolicyRequestHandler(req, res)
+    })
+
+    it('calls the _deletePolicy internal function with the database and the id of the policy to delete', (done) => {
+      deletePolicySpy.mockReturnValue(Promise.resolve())
+      res.on('end', () => {
+        try {
+          expect(deletePolicySpy).toHaveBeenCalledWith(req.policyDb, req.params.id)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      policyManagement.deletePolicyRequestHandler(req, res)
+    })
+
+    describe('when the _deletePolicy internal function succeeds', () => {
+      beforeEach(() => {
+        deletePolicySpy.mockReturnValue(Promise.resolve())
+      })
+
+      it('returns 204', (done) => {
+        res.on('end', () => {
+          try {
+            expect(res._getStatusCode()).toEqual(204)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        policyManagement.deletePolicyRequestHandler(req, res)
+      })
+
+      it('returns an empty body', (done) => {
+        res.on('end', () => {
+          try {
+            expect(res._getData()).toEqual({})
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        policyManagement.deletePolicyRequestHandler(req, res)
+      })
+    })
+
+    describe('when the _deletePolicy internal function fails', () => {
+      describe('with a 400', () => {
+        const error = {
+          statusCode: 400,
+          message: 'bad request'
+        }
+
+        beforeEach(() => {
+          deletePolicySpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns a 400', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(400)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
+
+        it('returns an error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 404', () => {
+        const error = {
+          statusCode: 404,
+          message: 'not found'
+        }
+
+        beforeEach(() => {
+          deletePolicySpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns a 404', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(404)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
+
+        it('returns an error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
+      })
+
+      describe('with a 500', () => {
+        const error = {
+          statusCode: 500,
+          message: 'internal server error'
+        }
+
+        beforeEach(() => {
+          deletePolicySpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns 500', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
+
+        it('returns an error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
+      })
+
+      describe('with an unexpected error', () => {
+        const error = {
+          message: 'Bang!'
+        }
+
+        beforeEach(() => {
+          deletePolicySpy.mockReturnValue(Promise.reject(error))
+        })
+
+        it('returns 500', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(500)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
+
+        it('returns an error', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getData()).toEqual(error)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          policyManagement.deletePolicyRequestHandler(req, res)
+        })
       })
     })
   })
