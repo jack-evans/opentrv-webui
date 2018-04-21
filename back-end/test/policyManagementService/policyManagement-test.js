@@ -30,7 +30,8 @@ describe('policyManagement.js', () => {
           endTime: ['19:00'],
           targetTemp: [24, 25]
         },
-        policyDb: {}
+        policyDb: {},
+        userId: '1234'
       })
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
       createPolicySpy = jest.spyOn(policyManagement.internal, '_createPolicy')
@@ -59,12 +60,12 @@ describe('policyManagement.js', () => {
       policyManagement.createPolicyRequestHandler(req, res)
     })
 
-    it('calls the _createPolicy internal function with the database and the body of the request', (done) => {
+    it('calls the _createPolicy internal function with the database, the body of the request and the userId', (done) => {
       createPolicySpy.mockReturnValue(Promise.resolve())
 
       res.on('end', () => {
         try {
-          expect(createPolicySpy).toHaveBeenCalledWith(req.policyDb, req.body)
+          expect(createPolicySpy).toHaveBeenCalledWith(req.policyDb, req.body, req.userId)
           done()
         } catch (e) {
           done(e)
@@ -252,7 +253,8 @@ describe('policyManagement.js', () => {
       req = httpMocks.createRequest({
         method: 'GET',
         path: '/policy',
-        policyDb: {}
+        policyDb: {},
+        userId: '1234'
       })
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
       getAllPoliciesSpy = jest.spyOn(policyManagement.internal, '_getAllPolicies')
@@ -272,6 +274,21 @@ describe('policyManagement.js', () => {
       res.on('end', () => {
         try {
           expect(getAllPoliciesSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      policyManagement.getAllPoliciesRequestHandler(req, res)
+    })
+
+    it('calls the _getAllPolicies internal function with the database and the userId', (done) => {
+      getAllPoliciesSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(getAllPoliciesSpy).toHaveBeenCalledWith(req.policyDb, req.userId)
           done()
         } catch (e) {
           done(e)

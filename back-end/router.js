@@ -2,6 +2,7 @@
 
 const deviceDiscoveryService = require('./lib/deviceDiscoveryService/deviceDiscovery')
 const packageJson = require('../package.json')
+const policyManagementService = require('./lib/policyManagementService/policyManagement.js')
 const router = require('express').Router()
 const userService = require('./lib/userService/user')
 const verifyToken = require('./lib/middleware/verifyToken')
@@ -23,7 +24,12 @@ router.delete('/user/:id', verifyToken, userService.deleteUserRequestHandler)
 // AuthenticationService
 router.post('/user/login', userService.loginUserRequestHandler)
 
-// PolicyManagementService TODO
+// PolicyManagementService
+router.post('/policy', verifyToken, policyManagementService.createPolicyRequestHandler)
+router.get('/policy', verifyToken, policyManagementService.getAllPoliciesRequestHandler)
+router.get('/policy/:id', verifyToken, policyManagementService.getPolicyByIdRequestHandler)
+router.put('/policy/:id', verifyToken, policyManagementService.updatePolicyRequestHandler)
+router.delete('/policy/:id', verifyToken, policyManagementService.deletePolicyRequestHandler)
 
 router.get('/test', (req, res) => {
   res.status(200).send({'time': new Date(), 'name': packageJson.name, 'version': packageJson.version})

@@ -39,16 +39,19 @@ describe('policyManagementDatabase.js', () => {
   describe('policyManagementDatabase initialise method', () => {
     let createDatabaseSpy
     let useDatabaseSpy
+    let createIndexSpy
 
     beforeEach(() => {
       createDatabaseSpy = jest.spyOn(cloudantRequestHelper, 'createDatabase').mockReturnValue(Promise.resolve({ok: true}))
       useDatabaseSpy = jest.spyOn(cloudantRequestHelper, 'useDatabase').mockReturnValue(Promise.resolve(42))
+      createIndexSpy = jest.spyOn(cloudantRequestHelper, 'createIndex').mockReturnValue(Promise.resolve())
       policyManagementDatabase = new PolicyManagementDatabase()
     })
 
     afterEach(() => {
       createDatabaseSpy.mockReset()
       useDatabaseSpy.mockReset()
+      createIndexSpy.mockReset()
     })
 
     it('makes a call to create a database in cloudant', () => {
@@ -63,6 +66,13 @@ describe('policyManagementDatabase.js', () => {
         return policyManagementDatabase.initialise()
           .then(() => {
             expect(useDatabaseSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      it('calls the creatIndex function', () => {
+        return policyManagementDatabase.initialise()
+          .then(() => {
+            expect(createIndexSpy).toHaveBeenCalledTimes(1)
           })
       })
     })
@@ -245,17 +255,17 @@ describe('policyManagementDatabase.js', () => {
     })
   })
 
-  describe.skip('policyManagementDatabase getAllPolicies method', () => {
-    let retrieveAllDocumentsSpy
+  describe('policyManagementDatabase getAllPolicies method', () => {
+    let findDocumentSpy
 
     beforeEach(() => {
-      retrieveAllDocumentsSpy = jest.spyOn(cloudantRequestHelper, 'retrieveAllDocuments')
+      findDocumentSpy = jest.spyOn(cloudantRequestHelper, 'findDocument')
       policyManagementDatabase = new PolicyManagementDatabase()
     })
 
     afterEach(() => {
-      retrieveAllDocumentsSpy.mockReset()
-      retrieveAllDocumentsSpy.mockRestore()
+      findDocumentSpy.mockReset()
+      findDocumentSpy.mockRestore()
     })
 
     describe('when initPromise is a rejected promise', () => {
@@ -263,17 +273,17 @@ describe('policyManagementDatabase.js', () => {
         policyManagementDatabase.initPromise = Promise.reject(new Error('Bang!'))
       })
 
-      it('does not call the retrieveAllDocuments function', () => {
+      it('does not call the findDocument function', () => {
         expect.assertions(1)
-        return policyManagementDatabase.getAllPolicies()
+        return policyManagementDatabase.getAllPolicies('1234')
           .catch(() => {
-            expect(retrieveAllDocumentsSpy).toHaveBeenCalledTimes(0)
+            expect(findDocumentSpy).toHaveBeenCalledTimes(0)
           })
       })
 
       it('returns a rejected promise', () => {
         expect.assertions(1)
-        return policyManagementDatabase.getAllPolicies()
+        return policyManagementDatabase.getAllPolicies('1234')
           .catch(error => {
             expect(error.message).toEqual('Bang!')
           })
@@ -294,19 +304,19 @@ describe('policyManagementDatabase.js', () => {
         policyManagementDatabase.initPromise = Promise.resolve()
       })
 
-      it('calls the retrieveAllDocuments function', () => {
-        retrieveAllDocumentsSpy.mockReturnValue(Promise.resolve(mockReturnValue))
-        return policyManagementDatabase.getAllPolicies()
+      it('calls the findDocument function', () => {
+        findDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
+        return policyManagementDatabase.getAllPolicies('1234')
           .then(() => {
-            expect(retrieveAllDocumentsSpy).toHaveBeenCalledTimes(1)
+            expect(findDocumentSpy).toHaveBeenCalledTimes(1)
           })
       })
 
-      describe('when retrieveAllDocuments resolves', () => {
+      describe('when findDocument resolves', () => {
         it('returns the array of documents in the body of the resolved promise', () => {
-          retrieveAllDocumentsSpy.mockReturnValue(Promise.resolve(mockReturnValue))
+          findDocumentSpy.mockReturnValue(Promise.resolve(mockReturnValue))
 
-          return policyManagementDatabase.getAllPolicies()
+          return policyManagementDatabase.getAllPolicies('1234')
             .then(document => {
               expect(document).toEqual(mockReturnValue)
             })
@@ -315,9 +325,9 @@ describe('policyManagementDatabase.js', () => {
 
       describe('when retrieveAllDocuments rejects', () => {
         it('returns the error in the body of the rejected promise', () => {
-          retrieveAllDocumentsSpy.mockReturnValue(Promise.reject(new Error('Bang in the getAllPolicies method')))
+          findDocumentSpy.mockReturnValue(Promise.reject(new Error('Bang in the getAllPolicies method')))
           expect.assertions(1)
-          return policyManagementDatabase.getAllPolicies()
+          return policyManagementDatabase.getAllPolicies('1234')
             .catch(error => {
               expect(error.message).toEqual('Bang in the getAllPolicies method')
             })

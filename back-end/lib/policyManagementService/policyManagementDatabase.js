@@ -2,7 +2,7 @@
 
 const bunyan = require('bunyan')
 const cloudantRequestHelper = require('../utilities/cloudantRequestHelper')
-const databaseName = 'policies'
+const DATABASE_NAME = 'policies'
 const Promise = require('bluebird')
 const uuidv4 = require('uuid/v4')
 
@@ -28,14 +28,16 @@ function PolicyManagementDatabase () {
 PolicyManagementDatabase.prototype.initialise = function () {
   let self = this
 
-  return cloudantRequestHelper.createDatabase(self.cloudantInstance, databaseName)
+  return cloudantRequestHelper.createDatabase(self.cloudantInstance, DATABASE_NAME)
     .then(function () {
-      self.database = cloudantRequestHelper.useDatabase(self.cloudantInstance, databaseName)
+      self.database = cloudantRequestHelper.useDatabase(self.cloudantInstance, DATABASE_NAME)
       self.initPromise = Promise.resolve()
-      return Promise.resolve()
+
+      let dDoc = { ddoc: '_design/findByAuthor', name: 'author', type: 'json', index: { fields: [ 'author' ] } }
+      return cloudantRequestHelper.createIndex(self.database, DATABASE_NAME, dDoc)
     })
     .catch(function (error) {
-      logger.error(`Encountered error when attempting to initialise the '${databaseName}' database, reason: `, error)
+      logger.error(`Encountered error when attempting to initialise the '${DATABASE_NAME}' database, reason: `, error)
       self.initPromise = Promise.reject(error)
       return Promise.reject(error)
     })
@@ -58,10 +60,10 @@ PolicyManagementDatabase.prototype.createPolicy = function (deviceDocument) {
       deviceDocument.id = id
       deviceDocument._id = id
 
-      return cloudantRequestHelper.createDocument(self.database, databaseName, deviceDocument)
+      return cloudantRequestHelper.createDocument(self.database, DATABASE_NAME, deviceDocument)
     })
     .catch(function (error) {
-      logger.error(`Encountered error when creating document in the '${databaseName}' database, reason: `, error)
+      logger.error(`Encountered error when creating document in the '${DATABASE_NAME}' database, reason: `, error)
       return Promise.reject(error)
     })
 }
@@ -78,10 +80,10 @@ PolicyManagementDatabase.prototype.getPolicy = function (policyId) {
 
   return self.initPromise
     .then(function () {
-      return cloudantRequestHelper.retrieveDocument(self.database, databaseName, policyId)
+      return cloudantRequestHelper.retrieveDocument(self.database, DATABASE_NAME, policyId)
     })
     .catch(function (error) {
-      logger.error(`Encountered error when retrieving document in the '${databaseName}' database, reason: `, error)
+      logger.error(`Encountered error when retrieving document in the '${DATABASE_NAME}' database, reason: `, error)
       return Promise.reject(error)
     })
 }
@@ -90,17 +92,18 @@ PolicyManagementDatabase.prototype.getPolicy = function (policyId) {
  * getAllPolicies method
  *
  * Retrieves all device documents stored in the policies database for the user id
+ * @param {String} userId - the user id of the person
  * @returns {Promise} on the action of retrieving the policies from the policies database
  */
-PolicyManagementDatabase.prototype.getAllPolicies = function () {
+PolicyManagementDatabase.prototype.getAllPolicies = function (userId) {
   let self = this
 
   return self.initPromise
     .then(function () {
-      return cloudantRequestHelper.retrieveAllDocuments(self.database, databaseName)
+      return cloudantRequestHelper.findDocument(self.database, DATABASE_NAME, { selector: { author: userId } })
     })
     .catch(function (error) {
-      logger.error(`Encountered error when retrieving documents in the '${databaseName}' database, reason: `, error)
+      logger.error(`Encountered error when retrieving documents in the '${DATABASE_NAME}' database, reason: `, error)
       return Promise.reject(error)
     })
 }
@@ -117,10 +120,10 @@ PolicyManagementDatabase.prototype.updatePolicy = function (policyDoc) {
 
   return self.initPromise
     .then(function () {
-      return cloudantRequestHelper.updateDocument(self.database, databaseName, policyDoc)
+      return cloudantRequestHelper.updateDocument(self.database, DATABASE_NAME, policyDoc)
     })
     .catch(function (error) {
-      logger.error(`Encountered error when updating a document in the '${databaseName}' database, reason: `, error)
+      logger.error(`Encountered error when updating a document in the '${DATABASE_NAME}' database, reason: `, error)
       return Promise.reject(error)
     })
 }
@@ -137,10 +140,10 @@ PolicyManagementDatabase.prototype.deletePolicy = function (policyId) {
 
   return self.initPromise
     .then(function () {
-      return cloudantRequestHelper.deleteDocument(self.database, databaseName, policyId)
+      return cloudantRequestHelper.deleteDocument(self.database, DATABASE_NAME, policyId)
     })
     .catch(function (error) {
-      logger.error(`Encountered error when deleting a document in the '${databaseName}' database, reason: `, error)
+      logger.error(`Encountered error when deleting a document in the '${DATABASE_NAME}' database, reason: `, error)
       return Promise.reject(error)
     })
 }

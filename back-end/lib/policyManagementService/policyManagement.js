@@ -40,12 +40,18 @@ const createPolicyRequestHandler = (req, res) => {
 }
 
 const _createPolicy = (policyDb, policyDoc, userId) => {
-  logger.info('Entered into the _createPolicy internal function with the following: ', {})
+  logger.info('Entered into the _createPolicy internal function with the following: ', {userId: userId, policyDoc: policyDoc})
+
+  // set the author of the policy document to be the users id, will be used when retrieving all docs for that user
+  policyDoc.author = userId
+  policyDoc.isDraft = true
+
+  return policyDb.createPolicy(policyDoc)
 }
 
 const getAllPoliciesRequestHandler = (req, res) => {
   logger.info('Entered into the getAllPoliciesRequestHandler function')
-  module.exports.internal._getAllPolicies(req.policyDb)
+  module.exports.internal._getAllPolicies(req.policyDb, req.userId)
     .then(policyDocuments => {
       logger.info('Successfully retrieved all policies from the database and gateway', policyDocuments)
       res.status(200).send(policyDocuments)
@@ -79,7 +85,10 @@ const getAllPoliciesRequestHandler = (req, res) => {
     })
 }
 
-const _getAllPolicies = () => {
+const _getAllPolicies = (policyDb, userId) => {
+  logger.info('Entered into the _getAllPolicies internal function with the userId: ', userId)
+
+  return policyDb.getAllPolicies(userId)
 }
 
 const getPolicyByIdRequestHandler = (req, res) => {
@@ -118,8 +127,35 @@ const getPolicyByIdRequestHandler = (req, res) => {
     })
 }
 
-const _getPolicyById = () => {
+const _getPolicyById = (policyDb, policyId) => {
+  logger.info('Entered into _getPolicyById internal function with the id: ', policyId)
+  let error = {}
 
+  if (!policyId) {
+    error.statusCode = 400
+    error.message = 'The id provided was undefined'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  if (typeof policyId !== 'string') {
+    error.statusCode = 400
+    error.message = 'The id provided was not in string format'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  // check uuid in following format [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
+  let regex = new RegExp('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+
+  if (!regex.test(policyId)) {
+    error.statusCode = 400
+    error.message = 'Id did not match the following regex: ' + regex
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  return policyDb.getPolicy(policyId)
 }
 
 const updatePolicyRequestHandler = (req, res) => {
@@ -158,8 +194,8 @@ const updatePolicyRequestHandler = (req, res) => {
     })
 }
 
-const _updatePolicy = () => {
-
+const _updatePolicy = (policyDb, newPolicyDoc) => {
+  logger.info('Entered into the _updatePolicy internal function with the  following: ', newPolicyDoc)
 }
 
 const deletePolicyRequestHandler = (req, res) => {
@@ -198,8 +234,35 @@ const deletePolicyRequestHandler = (req, res) => {
     })
 }
 
-const _deletePolicy = () => {
+const _deletePolicy = (policyDb, policyId) => {
+  logger.info('Entered into _deletePolicy internal function with the id: ', policyId)
+  let error = {}
 
+  if (!policyId) {
+    error.statusCode = 400
+    error.message = 'The id provided was undefined'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  if (typeof policyId !== 'string') {
+    error.statusCode = 400
+    error.message = 'The id provided was not in string format'
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  // check uuid in following format [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
+  let regex = new RegExp('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+
+  if (!regex.test(policyId)) {
+    error.statusCode = 400
+    error.message = 'Id did not match the following regex: ' + regex
+    error.name = 'bad request'
+    return Promise.reject(error)
+  }
+
+  return policyDb.deletePolicy(policyId)
 }
 
 module.exports = {
