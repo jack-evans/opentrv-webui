@@ -38,6 +38,7 @@ class DeviceOverview extends Component {
 
   componentWillUnmount () {
     clearTimeout(this.timer)
+    this.timer = {}
   }
 
   searchOnChangeHandler (event) {
