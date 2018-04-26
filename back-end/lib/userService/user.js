@@ -108,49 +108,6 @@ const _createUser = (userDB, user) => {
 }
 
 /**
- * GET /user
- *
- * @param {Object} req - the HTTP request object
- * @param {Object} res - the HTTP response object
- */
-const getUsersRequestHandler = (req, res) => {
-  logFunctionEntry('getUsersRequestHandler', false, undefined)
-  let promise
-
-  if (req.query.email) {
-    promise = module.exports.internal._getUserByEmail(req.userDb, req.query.email)
-  } else {
-    promise = module.exports.internal._getUsers(req.userDb)
-  }
-
-  promise
-    .then(users => {
-      res.status(200).send(users)
-    })
-    .catch(error => {
-      switch (error.statusCode) {
-        case 400: {
-          logger.error('Encountered bad request in the getUserRequestHandler function', error)
-          res.status(400).send(error)
-          break
-        }
-
-        case 404: {
-          logger.error('Encountered not found in the getUserRequestHandler', error)
-          res.status(404).send(error)
-          break
-        }
-
-        case 500: {
-          logger.error('Encountered internal server error in the getUserRequestHandler', error)
-          res.status(500).send(error)
-          break
-        }
-      }
-    })
-}
-
-/**
  * _getUsers internal function
  *
  * @param {Object} userDB - the user database

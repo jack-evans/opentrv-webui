@@ -1,5 +1,3 @@
-'use strict'
-
 const deviceDiscoveryService = require('./lib/deviceDiscoveryService/deviceDiscovery')
 const packageJson = require('../package.json')
 const router = require('express').Router()
