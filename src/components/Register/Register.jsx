@@ -61,7 +61,7 @@ class Register extends Component {
         } else {
           delete errors['register-name']
         }
-        
+
         if (!currentUser.email) {
           errors['register-email'] = {
             reason: 'required',
@@ -87,7 +87,7 @@ class Register extends Component {
         } else {
           delete errors['register-address-firstline']
         }
-        
+
         if (!currentUser.address.county) {
           errors['register-address-county'] = {
             reason: 'required',
@@ -107,7 +107,7 @@ class Register extends Component {
         }
 
         if (
-          errors['register-address-firstline'] || 
+          errors['register-address-firstline'] ||
           errors['register-address-county'] ||
           errors['register-address-postcode']
         ) {
@@ -118,12 +118,10 @@ class Register extends Component {
       }
 
       case 2: {
-
         break
       }
 
       case 3: {
-
         break
       }
 
@@ -591,7 +589,7 @@ class Register extends Component {
       <div className='Register'>
         <h2 className='Register__title'>Register for an account</h2>
         <div className='Register__progress-container'>
-          <div className='Register__progress-centering-div'/>
+          <div className='Register__progress-centering-div' />
           <div className='Register__progress'>
             <ProgressIndicator currentIndex={this.state.currentIndex}>
               <ProgressStep label='Name' description='Step 1: Name and Email' />
