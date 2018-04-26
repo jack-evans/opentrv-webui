@@ -2,17 +2,11 @@ import React, { Component, Fragment } from 'react'
 import { Button, FormGroup, FormItem, FormLabel, Modal, ProgressIndicator, ProgressStep, TextInput, Tooltip } from 'carbon-components-react'
 import makeRequest from '../../utils/makeRequest'
 
-const styles = {
-  inputs: {
-    marginRight: 'unset'
-  }
-}
-
 class Register extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentIndex: 0,
+      currentIndex: 4,
       user: {
         name: '',
         email: '',
@@ -41,7 +35,6 @@ class Register extends Component {
         heading: '',
         message: []
       },
-      isDisabled: true,
       modalOpen: false
     }
     this.confirmPass = ''
@@ -55,6 +48,90 @@ class Register extends Component {
   }
 
   incrementCurrentIndex () {
+    const currentUser = this.state.user
+    const errors = this.state.invalid
+
+    switch (this.state.currentIndex) {
+      case 0: {
+        if (!currentUser.name) {
+          errors['register-name'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-name']
+        }
+        
+        if (!currentUser.email) {
+          errors['register-email'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-email']
+        }
+
+        if (errors['register-name'] || errors['register-email']) {
+          this.setState({invalid: errors})
+          return
+        }
+        break
+      }
+
+      case 1: {
+        if (!currentUser.address.firstLine) {
+          errors['register-address-firstline'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-address-firstline']
+        }
+        
+        if (!currentUser.address.county) {
+          errors['register-address-county'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-address-county']
+        }
+
+        if (!currentUser.address.postcode) {
+          errors['register-address-postcode'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-address-postcode']
+        }
+
+        if (
+          errors['register-address-firstline'] || 
+          errors['register-address-county'] ||
+          errors['register-address-postcode']
+        ) {
+          this.setState({invalid: errors})
+          return
+        }
+        break
+      }
+
+      case 2: {
+
+        break
+      }
+
+      case 3: {
+
+        break
+      }
+
+      default: {
+        break
+      }
+    }
+
     this.setState(prevState => ({
       currentIndex: prevState.currentIndex + 1
     }))
@@ -75,9 +152,9 @@ class Register extends Component {
 
     if (inputfield.includes('->')) {
       const nestedInput = inputfield.split('->')
-      let address = nestedInput[0]
-      let addressProp = nestedInput[1]
-      user[address][addressProp] = value
+      let prop = nestedInput[0]
+      let nestedProp = nestedInput[1]
+      user[prop][nestedProp] = value
     } else if (inputfield === 'password-confirm') {
       this.confirmPass = value
     } else {
@@ -105,7 +182,7 @@ class Register extends Component {
       this.confirmPass &&
       Object.getOwnPropertyNames(errors).length < 1
     ) {
-      this.setState({user: user, isDisabled: false, invalid: errors})
+      this.setState({user: user, invalid: errors})
     } else {
       this.setState({user: user, invalid: errors})
     }
@@ -227,16 +304,14 @@ class Register extends Component {
             </FormGroup>
             <FormGroup className='Register__form-buttons' legendText=' '>
               <Button
-                style={{width: '120px'}}
                 kind='secondary'
-                className='Register__back-button'
+                className='Register__form-button Register__back-button'
                 href='/'
               >
                 Back
               </Button>
               <Button
-                style={{width: '120px'}}
-                className='Register__register-button'
+                className='Register__form-button Register__register-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next
@@ -328,17 +403,14 @@ class Register extends Component {
             </FormGroup>
             <FormGroup className='Register__form-buttons' legendText=' '>
               <Button
-                style={{width: '120px'}}
                 kind='secondary'
-                className='Register__back-button'
+                className='Register__form-button Register__back-button'
                 onClick={this.decrementCurrentIndex}
               >
                 Back
               </Button>
               <Button
-                type='submit'
-                style={{width: '120px'}}
-                className='Register__register-button'
+                className='Register__form-button Register__register-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next
@@ -390,17 +462,14 @@ class Register extends Component {
             </FormGroup>
             <FormGroup className='Register__form-buttons' legendText=' '>
               <Button
-                style={{width: '120px'}}
                 kind='secondary'
-                className='Register__back-button'
+                className='Register__form-button Register__back-button'
                 onClick={this.decrementCurrentIndex}
               >
                 Back
               </Button>
               <Button
-                type='submit'
-                style={{width: '120px'}}
-                className='Register__register-button'
+                className='Register__form-button Register__register-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next
@@ -422,7 +491,7 @@ class Register extends Component {
                   name='gateway->url'
                   required
                   placeholder='Enter Gateway URL'
-                  value={this.state.user.password}
+                  value={this.state.user.gateway.url}
                   onChange={this.handleInputChange}
                   invalid={this.checkValid('register-gateway-url')}
                   invalidText={this.getErrorMessage('register-gateway-url')}
@@ -435,7 +504,7 @@ class Register extends Component {
                   name='gateway->username'
                   required
                   placeholder='Enter Gateway username'
-                  value={this.state.user.password}
+                  value={this.state.user.gateway.username}
                   onChange={this.handleInputChange}
                   invalid={this.checkValid('register-gateway-username')}
                   invalidText={this.getErrorMessage('register-gateway-username')}
@@ -449,7 +518,7 @@ class Register extends Component {
                   required
                   type='password'
                   placeholder='Enter Gateway Password'
-                  value={this.state.user.password}
+                  value={this.state.user.gateway.password}
                   onChange={this.handleInputChange}
                   invalid={this.checkValid('register-gateway-password')}
                   invalidText={this.getErrorMessage('register-gateway-password')}
@@ -458,17 +527,14 @@ class Register extends Component {
             </FormGroup>
             <FormGroup className='Register__form-buttons' legendText=' '>
               <Button
-                style={{width: '120px'}}
                 kind='secondary'
-                className='Register__back-button'
+                className='Register__form-button Register__back-button'
                 onClick={this.decrementCurrentIndex}
               >
                 Back
               </Button>
               <Button
-                type='submit'
-                style={{width: '120px'}}
-                className='Register__register-button'
+                className='Register__form-button Register__register-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next
@@ -481,8 +547,35 @@ class Register extends Component {
 
       case 4: {
         registerContent = (
-          <div>
-            hello
+          <div className='Register__form'>
+            <div className='Register__form-confirm-message'>
+              <p>You have successfully filled out all the required fields to create an acccount.</p>
+              <p>Please ensure all the information is correct before clicking the register button below</p>
+            </div>
+            <FormGroup className='Register__form-buttons' legendText=' '>
+              <Button
+                kind='secondary'
+                className='Register__form-button Register__back-button'
+                onClick={this.decrementCurrentIndex}
+              >
+                Back
+              </Button>
+              <Button
+                className='Register__form-button Register__register-button'
+                onClick={this.handleSubmit}
+              >
+                Register
+              </Button>
+            </FormGroup>
+            <Modal
+              className='Register__modal'
+              open={this.state.modalOpen}
+              passiveModal
+              modalHeading={this.state.modalContent.heading}
+              onRequestClose={this.handleModalOnClick}
+            >
+              {this.state.modalContent.message}
+            </Modal>
           </div>
         )
         break
@@ -512,15 +605,6 @@ class Register extends Component {
         <div className='Register__content'>
           {registerContent}
         </div>
-        <Modal
-          className='Register__modal'
-          open={this.state.modalOpen}
-          passiveModal
-          modalHeading={this.state.modalContent.heading}
-          onRequestClose={this.handleModalOnClick}
-        >
-          {this.state.modalContent.message}
-        </Modal>
       </div>
     )
   }

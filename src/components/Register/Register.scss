@@ -25,6 +25,11 @@
     .Register__form {
       width: 600px;
       text-align: start;
+
+      .Register__form-confirm-message {
+        padding-bottom: 30px;
+        text-align: center;
+      }
   
       .Register__form-item {
         margin-right: unset;
@@ -34,14 +39,14 @@
         margin-right: unset;
         margin-bottom: unset;
       }
-  
-      .Register__form-buttons {
-        text-align: center;
-
-        .Register__form-button {
-          width: 120px;
-        }
-      }
     }
+  }
+}
+
+.Register__form-buttons {
+  text-align: center;
+
+  .Register__form-button {
+    width: 120px;
   }
 }
