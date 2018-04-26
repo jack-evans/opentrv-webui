@@ -118,10 +118,82 @@ class Register extends Component {
       }
 
       case 2: {
+        if (!currentUser.password) {
+          errors['register-password'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-password']
+        }
+
+        if (!this.confirmPass) {
+          errors['register-password-confirm'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-password-confirm']
+        }
+
+        if (currentUser.password !== this.confirmPass) {
+          errors['register-password-confirm'] = {
+            reason: 'noMatch',
+            message: 'These passwords do not match'
+          }
+
+          errors['register-password'] = {
+            reason: 'noMatch',
+            message: 'These passwords do not match'
+          }
+        } else {
+          delete errors['register-password']
+          delete errors['register-password-confirm']
+        }
+
+        if (errors['register-password'] || errors['register-password-confirm']) {
+          this.setState({invalid: errors})
+          return
+        }
         break
       }
 
       case 3: {
+        if (!currentUser.gateway.url) {
+          errors['register-gateway-url'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-gateway-url']
+        }
+
+        if (!currentUser.gateway.username) {
+          errors['register-gateway-username'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-gateway-username']
+        }
+
+        if (!currentUser.gateway.password) {
+          errors['register-gateway-password'] = {
+            reason: 'required',
+            message: 'This field is required'
+          }
+        } else {
+          delete errors['register-gateway-password']
+        }
+
+        if (
+          errors['register-gateway-url'] ||
+          errors['register-gateway-username'] ||
+          errors['register-gateway-password']
+        ) {
+          this.setState({invalid: errors})
+          return
+        }
         break
       }
 
@@ -169,21 +241,7 @@ class Register extends Component {
         message: 'Your password does not meet the criteria, click on the i for more info'
       }
     }
-
-    if (
-      user.name &&
-      user.email &&
-      user.address.firstLine &&
-      user.address.county &&
-      user.address.postcode &&
-      user.password &&
-      this.confirmPass &&
-      Object.getOwnPropertyNames(errors).length < 1
-    ) {
-      this.setState({user: user, invalid: errors})
-    } else {
-      this.setState({user: user, invalid: errors})
-    }
+    this.setState({user: user, invalid: errors})
   }
 
   handleSubmit (event) {
