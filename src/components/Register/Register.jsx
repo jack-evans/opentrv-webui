@@ -146,9 +146,6 @@ class Register extends Component {
             reason: 'noMatch',
             message: 'These passwords do not match'
           }
-        } else {
-          delete errors['register-password']
-          delete errors['register-password-confirm']
         }
 
         if (errors['register-password'] || errors['register-password-confirm']) {
@@ -367,7 +364,7 @@ class Register extends Component {
                 Back
               </Button>
               <Button
-                className='Register__form-button Register__register-button'
+                className='Register__form-button Register__next-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next
@@ -466,7 +463,7 @@ class Register extends Component {
                 Back
               </Button>
               <Button
-                className='Register__form-button Register__register-button'
+                className='Register__form-button Register__next-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next
@@ -525,7 +522,7 @@ class Register extends Component {
                 Back
               </Button>
               <Button
-                className='Register__form-button Register__register-button'
+                className='Register__form-button Register__next-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next
@@ -590,7 +587,7 @@ class Register extends Component {
                 Back
               </Button>
               <Button
-                className='Register__form-button Register__register-button'
+                className='Register__form-button Register__next-button'
                 onClick={this.incrementCurrentIndex}
               >
                 Next

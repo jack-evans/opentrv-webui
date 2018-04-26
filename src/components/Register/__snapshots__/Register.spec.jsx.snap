@@ -128,7 +128,7 @@ ShallowWrapper {
                 Back
               </Button>
               <Button
-                className="Register__form-button Register__register-button"
+                className="Register__form-button Register__next-button"
                 disabled={false}
                 iconDescription="Provide icon description if icon is used"
                 kind="primary"
@@ -415,7 +415,7 @@ ShallowWrapper {
                 Back
               </Button>
               <Button
-                className="Register__form-button Register__register-button"
+                className="Register__form-button Register__next-button"
                 disabled={false}
                 iconDescription="Provide icon description if icon is used"
                 kind="primary"
@@ -503,7 +503,7 @@ ShallowWrapper {
                   Back
                 </Button>
                 <Button
-                  className="Register__form-button Register__register-button"
+                  className="Register__form-button Register__next-button"
                   disabled={false}
                   iconDescription="Provide icon description if icon is used"
                   kind="primary"
@@ -690,7 +690,7 @@ ShallowWrapper {
                     Back
                   </Button>,
                   <Button
-                    className="Register__form-button Register__register-button"
+                    className="Register__form-button Register__next-button"
                     disabled={false}
                     iconDescription="Provide icon description if icon is used"
                     kind="primary"
@@ -735,7 +735,7 @@ ShallowWrapper {
                   "nodeType": "function",
                   "props": Object {
                     "children": "Next",
-                    "className": "Register__form-button Register__register-button",
+                    "className": "Register__form-button Register__next-button",
                     "disabled": false,
                     "iconDescription": "Provide icon description if icon is used",
                     "kind": "primary",
@@ -876,7 +876,7 @@ ShallowWrapper {
                   Back
                 </Button>
                 <Button
-                  className="Register__form-button Register__register-button"
+                  className="Register__form-button Register__next-button"
                   disabled={false}
                   iconDescription="Provide icon description if icon is used"
                   kind="primary"
@@ -1163,7 +1163,7 @@ ShallowWrapper {
                   Back
                 </Button>
                 <Button
-                  className="Register__form-button Register__register-button"
+                  className="Register__form-button Register__next-button"
                   disabled={false}
                   iconDescription="Provide icon description if icon is used"
                   kind="primary"
@@ -1251,7 +1251,7 @@ ShallowWrapper {
                     Back
                   </Button>
                   <Button
-                    className="Register__form-button Register__register-button"
+                    className="Register__form-button Register__next-button"
                     disabled={false}
                     iconDescription="Provide icon description if icon is used"
                     kind="primary"
@@ -1438,7 +1438,7 @@ ShallowWrapper {
                       Back
                     </Button>,
                     <Button
-                      className="Register__form-button Register__register-button"
+                      className="Register__form-button Register__next-button"
                       disabled={false}
                       iconDescription="Provide icon description if icon is used"
                       kind="primary"
@@ -1483,7 +1483,7 @@ ShallowWrapper {
                     "nodeType": "function",
                     "props": Object {
                       "children": "Next",
-                      "className": "Register__form-button Register__register-button",
+                      "className": "Register__form-button Register__next-button",
                       "disabled": false,
                       "iconDescription": "Provide icon description if icon is used",
                       "kind": "primary",

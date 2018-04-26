@@ -42,6 +42,7 @@ ShallowWrapper {
           >
             <OverflowMenuItem
               className="DeviceTile__overflow-menu-view"
+              disabled={false}
               hasDivider={false}
               isDelete={false}
               itemText="View"
@@ -49,6 +50,7 @@ ShallowWrapper {
             />
             <OverflowMenuItem
               className="DeviceTile__overflow-menu-delete"
+              disabled={false}
               hasDivider={true}
               isDelete={true}
               itemText="Delete"
@@ -137,6 +139,7 @@ ShallowWrapper {
           >
             <OverflowMenuItem
               className="DeviceTile__overflow-menu-view"
+              disabled={false}
               hasDivider={false}
               isDelete={false}
               itemText="View"
@@ -144,6 +147,7 @@ ShallowWrapper {
             />
             <OverflowMenuItem
               className="DeviceTile__overflow-menu-delete"
+              disabled={false}
               hasDivider={true}
               isDelete={true}
               itemText="Delete"
@@ -162,6 +166,7 @@ ShallowWrapper {
             "children": Array [
               <OverflowMenuItem
                 className="DeviceTile__overflow-menu-view"
+                disabled={false}
                 hasDivider={false}
                 isDelete={false}
                 itemText="View"
@@ -169,6 +174,7 @@ ShallowWrapper {
               />,
               <OverflowMenuItem
                 className="DeviceTile__overflow-menu-delete"
+                disabled={false}
                 hasDivider={true}
                 isDelete={true}
                 itemText="Delete"
@@ -195,6 +201,7 @@ ShallowWrapper {
               "nodeType": "function",
               "props": Object {
                 "className": "DeviceTile__overflow-menu-view",
+                "disabled": false,
                 "hasDivider": false,
                 "isDelete": false,
                 "itemText": "View",
@@ -210,6 +217,7 @@ ShallowWrapper {
               "nodeType": "function",
               "props": Object {
                 "className": "DeviceTile__overflow-menu-delete",
+                "disabled": false,
                 "hasDivider": true,
                 "isDelete": true,
                 "itemText": "Delete",
@@ -492,6 +500,7 @@ ShallowWrapper {
             >
               <OverflowMenuItem
                 className="DeviceTile__overflow-menu-view"
+                disabled={false}
                 hasDivider={false}
                 isDelete={false}
                 itemText="View"
@@ -499,6 +508,7 @@ ShallowWrapper {
               />
               <OverflowMenuItem
                 className="DeviceTile__overflow-menu-delete"
+                disabled={false}
                 hasDivider={true}
                 isDelete={true}
                 itemText="Delete"
@@ -587,6 +597,7 @@ ShallowWrapper {
             >
               <OverflowMenuItem
                 className="DeviceTile__overflow-menu-view"
+                disabled={false}
                 hasDivider={false}
                 isDelete={false}
                 itemText="View"
@@ -594,6 +605,7 @@ ShallowWrapper {
               />
               <OverflowMenuItem
                 className="DeviceTile__overflow-menu-delete"
+                disabled={false}
                 hasDivider={true}
                 isDelete={true}
                 itemText="Delete"
@@ -612,6 +624,7 @@ ShallowWrapper {
               "children": Array [
                 <OverflowMenuItem
                   className="DeviceTile__overflow-menu-view"
+                  disabled={false}
                   hasDivider={false}
                   isDelete={false}
                   itemText="View"
@@ -619,6 +632,7 @@ ShallowWrapper {
                 />,
                 <OverflowMenuItem
                   className="DeviceTile__overflow-menu-delete"
+                  disabled={false}
                   hasDivider={true}
                   isDelete={true}
                   itemText="Delete"
@@ -645,6 +659,7 @@ ShallowWrapper {
                 "nodeType": "function",
                 "props": Object {
                   "className": "DeviceTile__overflow-menu-view",
+                  "disabled": false,
                   "hasDivider": false,
                   "isDelete": false,
                   "itemText": "View",
@@ -660,6 +675,7 @@ ShallowWrapper {
                 "nodeType": "function",
                 "props": Object {
                   "className": "DeviceTile__overflow-menu-delete",
+                  "disabled": false,
                   "hasDivider": true,
                   "isDelete": true,
                   "itemText": "Delete",
