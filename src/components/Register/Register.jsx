@@ -6,7 +6,7 @@ class Register extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentIndex: 4,
+      currentIndex: 0,
       user: {
         name: '',
         email: '',
