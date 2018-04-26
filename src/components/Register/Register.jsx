@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Button, Form, FormGroup, FormItem, FormLabel, Modal, TextInput, Tooltip } from 'carbon-components-react'
+import React, { Component, Fragment } from 'react'
+import { Button, FormGroup, FormItem, FormLabel, Modal, ProgressIndicator, ProgressStep, TextInput, Tooltip } from 'carbon-components-react'
 import makeRequest from '../../utils/makeRequest'
 
 const styles = {
@@ -12,6 +12,7 @@ class Register extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      currentIndex: 0,
       user: {
         name: '',
         email: '',
@@ -23,6 +24,11 @@ class Register extends Component {
           county: '',
           country: '',
           postcode: ''
+        },
+        gateway: {
+          url: '',
+          username: '',
+          password: ''
         }
       },
       invalid: {
@@ -44,6 +50,20 @@ class Register extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleModalOnClick = this.handleModalOnClick.bind(this)
     this.checkMatch = this.checkMatch.bind(this)
+    this.incrementCurrentIndex = this.incrementCurrentIndex.bind(this)
+    this.decrementCurrentIndex = this.decrementCurrentIndex.bind(this)
+  }
+
+  incrementCurrentIndex () {
+    this.setState(prevState => ({
+      currentIndex: prevState.currentIndex + 1
+    }))
+  }
+
+  decrementCurrentIndex () {
+    this.setState(prevState => ({
+      currentIndex: prevState.currentIndex - 1
+    }))
   }
 
   handleInputChange (event) {
@@ -170,170 +190,328 @@ class Register extends Component {
   }
 
   render () {
+    let registerContent
+
+    switch (this.state.currentIndex) {
+      case 0: {
+        registerContent = (
+          <Fragment>
+            <FormGroup className='Register__form' legendText=' '>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-name'
+                  labelText='*Name'
+                  name='name'
+                  required
+                  placeholder='Name'
+                  value={this.state.user.name}
+                  onChange={this.handleInputChange}
+                  invalid={this.checkValid('register-name')}
+                  invalidText={this.getErrorMessage('register-name')}
+                />
+              </FormItem>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-email'
+                  labelText='*Email'
+                  name='email'
+                  type='email'
+                  required
+                  placeholder='Email address'
+                  value={this.state.user.email}
+                  onChange={this.handleInputChange}
+                  invalid={this.checkValid('register-email')}
+                  invalidText={this.getErrorMessage('register-email')}
+                />
+              </FormItem>
+            </FormGroup>
+            <FormGroup className='Register__form-buttons' legendText=' '>
+              <Button
+                style={{width: '120px'}}
+                kind='secondary'
+                className='Register__back-button'
+                href='/'
+              >
+                Back
+              </Button>
+              <Button
+                style={{width: '120px'}}
+                className='Register__register-button'
+                onClick={this.incrementCurrentIndex}
+              >
+                Next
+              </Button>
+            </FormGroup>
+          </Fragment>
+        )
+        break
+      }
+
+      case 1: {
+        registerContent = (
+          <Fragment>
+            <FormGroup className='Register__form' legendText=' '>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-address-firstline'
+                  labelText='*Line 1'
+                  name='address->firstLine'
+                  required
+                  placeholder='First line'
+                  value={this.state.user.address.firstLine}
+                  style={{marginRight: 'unset'}}
+                  onChange={this.handleInputChange}
+                  invalid={this.checkValid('register-address-firstline')}
+                  invalidText={this.getErrorMessage('register-address-firstline')}
+                />
+              </FormItem>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-address-secondline'
+                  labelText='Line 2'
+                  name='address->secondLine'
+                  placeholder='Second line'
+                  value={this.state.user.address.secondLine}
+                  onChange={this.handleInputChange}
+                />
+              </FormItem>
+              <div style={{display: 'flex'}}>
+                <FormItem>
+                  <TextInput
+                    id='register-address-city'
+                    labelText='City'
+                    name='address->city'
+                    placeholder='City'
+                    value={this.state.user.address.city}
+                    onChange={this.handleInputChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    id='register-address-county'
+                    labelText='*County'
+                    name='address->county'
+                    required
+                    placeholder='County'
+                    value={this.state.user.address.county}
+                    onChange={this.handleInputChange}
+                    invalid={this.checkValid('register-address-county')}
+                    invalidText={this.getErrorMessage('register-address-county')}
+                  />
+                </FormItem>
+              </div>
+              <div style={{display: 'flex'}}>
+                <FormItem>
+                  <TextInput
+                    id='register-address-country'
+                    labelText='Country'
+                    name='address->country'
+                    placeholder='Country'
+                    value={this.state.user.address.country}
+                    onChange={this.handleInputChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <TextInput
+                    id='register-address-postcode'
+                    labelText='*Postcode'
+                    name='address->postcode'
+                    required
+                    placeholder='Postcode'
+                    value={this.state.user.address.postcode}
+                    onChange={this.handleInputChange}
+                    invalid={this.checkValid('register-address-postcode')}
+                    invalidText={this.getErrorMessage('register-address-postcode')}
+                  />
+                </FormItem>
+              </div>
+            </FormGroup>
+            <FormGroup className='Register__form-buttons' legendText=' '>
+              <Button
+                style={{width: '120px'}}
+                kind='secondary'
+                className='Register__back-button'
+                onClick={this.decrementCurrentIndex}
+              >
+                Back
+              </Button>
+              <Button
+                type='submit'
+                style={{width: '120px'}}
+                className='Register__register-button'
+                onClick={this.incrementCurrentIndex}
+              >
+                Next
+              </Button>
+            </FormGroup>
+          </Fragment>
+        )
+        break
+      }
+
+      case 2: {
+        registerContent = (
+          <Fragment>
+            <FormGroup className='Register__form' legendText=' '>
+              <FormLabel>
+                <Tooltip triggerText='*Password' clickToOpen>
+                  Password must have a minimum of 8 characters including 1 uppercase, 1 lowercase and a number.
+                </Tooltip>
+              </FormLabel>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-password'
+                  labelText='*Password'
+                  name='password'
+                  required
+                  hideLabel
+                  type='password'
+                  placeholder='Enter password'
+                  value={this.state.user.password}
+                  onChange={this.handleInputChange}
+                  invalid={this.checkValid('register-password')}
+                  invalidText={this.getErrorMessage('register-password')}
+                />
+              </FormItem>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-password-confirm'
+                  labelText='*Confirm Password'
+                  name='password-confirm'
+                  required
+                  type='password'
+                  placeholder='Enter password'
+                  onChange={this.handleInputChange}
+                  onBlur={this.checkMatch}
+                  invalid={this.checkValid('register-password-confirm')}
+                  invalidText={this.getErrorMessage('register-password-confirm')}
+                />
+              </FormItem>
+            </FormGroup>
+            <FormGroup className='Register__form-buttons' legendText=' '>
+              <Button
+                style={{width: '120px'}}
+                kind='secondary'
+                className='Register__back-button'
+                onClick={this.decrementCurrentIndex}
+              >
+                Back
+              </Button>
+              <Button
+                type='submit'
+                style={{width: '120px'}}
+                className='Register__register-button'
+                onClick={this.incrementCurrentIndex}
+              >
+                Next
+              </Button>
+            </FormGroup>
+          </Fragment>
+        )
+        break
+      }
+
+      case 3: {
+        registerContent = (
+          <Fragment>
+            <FormGroup className='Register__form' legendText=' '>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-gateway-url'
+                  labelText='*Gateway URL'
+                  name='gateway->url'
+                  required
+                  placeholder='Enter Gateway URL'
+                  value={this.state.user.password}
+                  onChange={this.handleInputChange}
+                  invalid={this.checkValid('register-gateway-url')}
+                  invalidText={this.getErrorMessage('register-gateway-url')}
+                />
+              </FormItem>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-gateway-username'
+                  labelText='*Gateway Username'
+                  name='gateway->username'
+                  required
+                  placeholder='Enter Gateway username'
+                  value={this.state.user.password}
+                  onChange={this.handleInputChange}
+                  invalid={this.checkValid('register-gateway-username')}
+                  invalidText={this.getErrorMessage('register-gateway-username')}
+                />
+              </FormItem>
+              <FormItem className='Register__form-item'>
+                <TextInput
+                  id='register-gateway-password'
+                  labelText='*Gateway Password'
+                  name='gateway->password'
+                  required
+                  type='password'
+                  placeholder='Enter Gateway Password'
+                  value={this.state.user.password}
+                  onChange={this.handleInputChange}
+                  invalid={this.checkValid('register-gateway-password')}
+                  invalidText={this.getErrorMessage('register-gateway-password')}
+                />
+              </FormItem>
+            </FormGroup>
+            <FormGroup className='Register__form-buttons' legendText=' '>
+              <Button
+                style={{width: '120px'}}
+                kind='secondary'
+                className='Register__back-button'
+                onClick={this.decrementCurrentIndex}
+              >
+                Back
+              </Button>
+              <Button
+                type='submit'
+                style={{width: '120px'}}
+                className='Register__register-button'
+                onClick={this.incrementCurrentIndex}
+              >
+                Next
+              </Button>
+            </FormGroup>
+          </Fragment>
+        )
+        break
+      }
+
+      case 4: {
+        registerContent = (
+          <div>
+            hello
+          </div>
+        )
+        break
+      }
+
+      default: {
+        registerContent = null
+        break
+      }
+    }
+
     return (
       <div className='Register'>
         <h2 className='Register__title'>Register for an account</h2>
-        <Form className='Register__form' onSubmit={this.handleSubmit}>
-          <FormGroup legendText=''>
-            <FormItem style={styles.inputs}>
-              <TextInput
-                id='register-name'
-                labelText='*Name'
-                name='name'
-                required
-                placeholder='Name e.g. John Doe'
-                value={this.state.user.name}
-                onChange={this.handleInputChange}
-                invalid={this.checkValid('register-name')}
-                invalidText={this.getErrorMessage('register-name')}
-              />
-            </FormItem>
-            <FormItem>
-              <TextInput
-                id='register-email'
-                labelText='*Email'
-                name='email'
-                type='email'
-                required
-                placeholder='Email address'
-                value={this.state.user.email}
-                onChange={this.handleInputChange}
-                invalid={this.checkValid('register-email')}
-                invalidText={this.getErrorMessage('register-email')}
-              />
-            </FormItem>
-          </FormGroup>
-          <FormGroup className='Register__form-address' legendText='Address'>
-            <FormItem style={styles.inputs}>
-              <TextInput
-                id='register-address-firstline'
-                labelText='*Line 1'
-                name='address->firstLine'
-                required
-                placeholder='First line'
-                value={this.state.user.address.firstLine}
-                style={{marginRight: 'unset'}}
-                onChange={this.handleInputChange}
-                invalid={this.checkValid('register-address-firstline')}
-                invalidText={this.getErrorMessage('register-address-firstline')}
-              />
-            </FormItem>
-            <FormItem style={styles.inputs}>
-              <TextInput
-                id='register-address-secondline'
-                labelText='Line 2'
-                name='address->secondLine'
-                placeholder='Second line'
-                value={this.state.user.address.secondLine}
-                onChange={this.handleInputChange}
-              />
-            </FormItem>
-            <div style={{display: 'flex'}}>
-              <FormItem>
-                <TextInput
-                  id='register-address-city'
-                  labelText='City'
-                  name='address->city'
-                  placeholder='City'
-                  value={this.state.user.address.city}
-                  onChange={this.handleInputChange}
-                />
-              </FormItem>
-              <FormItem>
-                <TextInput
-                  id='register-address-county'
-                  labelText='*County'
-                  name='address->county'
-                  required
-                  placeholder='County'
-                  value={this.state.user.address.county}
-                  onChange={this.handleInputChange}
-                  invalid={this.checkValid('register-address-county')}
-                  invalidText={this.getErrorMessage('register-address-county')}
-                />
-              </FormItem>
-            </div>
-            <div style={{display: 'flex'}}>
-              <FormItem>
-                <TextInput
-                  id='register-address-country'
-                  labelText='Country'
-                  name='address->country'
-                  placeholder='Country'
-                  value={this.state.user.address.country}
-                  onChange={this.handleInputChange}
-                />
-              </FormItem>
-              <FormItem>
-                <TextInput
-                  id='register-address-postcode'
-                  labelText='*Postcode'
-                  name='address->postcode'
-                  required
-                  placeholder='Postcode'
-                  value={this.state.user.address.postcode}
-                  onChange={this.handleInputChange}
-                  invalid={this.checkValid('register-address-postcode')}
-                  invalidText={this.getErrorMessage('register-address-postcode')}
-                />
-              </FormItem>
-            </div>
-          </FormGroup>
-          <FormGroup legendText=''>
-            <FormLabel>
-              <Tooltip triggerText='*Password' clickToOpen>
-                Password must have a minimum of 8 characters including 1 uppercase, 1 lowercase and a number.
-              </Tooltip>
-            </FormLabel>
-            <FormItem style={styles.inputs}>
-              <TextInput
-                id='register-password'
-                labelText='*Password'
-                name='password'
-                required
-                hideLabel
-                type='password'
-                placeholder='Enter password'
-                value={this.state.user.password}
-                onChange={this.handleInputChange}
-                invalid={this.checkValid('register-password')}
-                invalidText={this.getErrorMessage('register-password')}
-              />
-            </FormItem>
-            <FormItem>
-              <TextInput
-                id='register-password-confirm'
-                labelText='*Confirm Password'
-                name='password-confirm'
-                required
-                type='password'
-                placeholder='Enter password'
-                onChange={this.handleInputChange}
-                onBlur={this.checkMatch}
-                invalid={this.checkValid('register-password-confirm')}
-                invalidText={this.getErrorMessage('register-password-confirm')}
-              />
-            </FormItem>
-          </FormGroup>
-          <FormGroup className='Register__form-buttons' legendText=''>
-            <Button
-              style={{width: '120px'}}
-              kind='secondary'
-              className='Register__back-button'
-              href='/'
-            >
-              Back
-            </Button>
-            <Button
-              type='submit'
-              style={{width: '120px'}}
-              className='Register__register-button'
-              disabled={this.state.isDisabled}
-            >
-              Register
-            </Button>
-          </FormGroup>
-        </Form>
+        <div className='Register__progress-container'>
+          <div className='Register__progress-centering-div'/>
+          <div className='Register__progress'>
+            <ProgressIndicator currentIndex={this.state.currentIndex}>
+              <ProgressStep label='Name' description='Step 1: Name and Email' />
+              <ProgressStep label='Address' description='Step 2: Home Address' />
+              <ProgressStep label='Password' description='Step 3: Password' />
+              <ProgressStep label='Gateway' description='Step 4: Gateway Details' />
+              <ProgressStep label='Confirm' description='Step 5: Confirm' />
+            </ProgressIndicator>
+          </div>
+        </div>
+        <div className='Register__content'>
+          {registerContent}
+        </div>
         <Modal
           className='Register__modal'
           open={this.state.modalOpen}

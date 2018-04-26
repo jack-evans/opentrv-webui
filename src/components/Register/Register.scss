@@ -2,24 +2,46 @@
 .Register {
   display: inline-block;
   height: 100vh;
-  justify-content: center;
 
   .Register__title {
     padding: 30px 0 30px 0;
   }
 
-  .Register__form {
-    width: 500px;
-    text-align: start;
+  .Register__progress-container {
+    display: flex;
 
-    .Register__form-address {
-      margin-right: unset;
-      margin-bottom: unset;
+    .Register__progress-centering-div {
+      width: 90px;
     }
 
-    .Register__form-buttons {
-      display: flex;
-      justify-content: center;
+    .Register__progress {
+      padding-bottom: 20px;
+    }
+  }
+
+  .Register__content {
+    display: inline-block;
+
+    .Register__form {
+      width: 600px;
+      text-align: start;
+  
+      .Register__form-item {
+        margin-right: unset;
+      }
+  
+      .Register__form-address {
+        margin-right: unset;
+        margin-bottom: unset;
+      }
+  
+      .Register__form-buttons {
+        text-align: center;
+
+        .Register__form-button {
+          width: 120px;
+        }
+      }
     }
   }
 }
