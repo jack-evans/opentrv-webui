@@ -183,7 +183,7 @@ const _getUserByEmail = (userDB, userEmail) => {
 }
 
 /**
- * GET /user/{id}
+ * GET /user
  *
  * @param {Object} req - the HTTP request object
  * @param {Object} res - the HTTP response object
@@ -191,7 +191,7 @@ const _getUserByEmail = (userDB, userEmail) => {
 const getUserByIdRequestHandler = (req, res) => {
   logFunctionEntry('getUserByIdRequestHandler', false, undefined)
 
-  module.exports.internal._getUserById(req.userDb, req.params.id)
+  module.exports.internal._getUserById(req.userDb, req.userId)
     .then(user => {
       res.status(200).send(user)
     })
@@ -507,7 +507,6 @@ const _loginUser = (user) => {
 
 module.exports = {
   createUserRequestHandler: createUserRequestHandler,
-  getUsersRequestHandler: getUsersRequestHandler,
   getUserByIdRequestHandler: getUserByIdRequestHandler,
   updateUserRequestHandler: updateUserRequestHandler,
   deleteUserRequestHandler: deleteUserRequestHandler,
