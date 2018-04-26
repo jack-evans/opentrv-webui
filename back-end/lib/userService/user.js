@@ -98,7 +98,11 @@ const _createUser = (userDB, user) => {
         name: user.name,
         email: user.email,
         password: hash,
-        address: user.address
+        address: user.address,
+        gateway: {
+          url: user.gateway.url,
+          creds: Buffer.from(user.gateway.username + ':' + user.gateway.password).toString('base64')
+        }
       }
       return userDB.createUser(userDocument)
     })
