@@ -118,7 +118,6 @@ const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
   let userTriggered = req.query.user
-  
   module.exports.internal._getGatewayInfo(req.headers['x-opentrv-token'])
     .then(gatewayInfo => {
       return module.exports.internal._discoverAllDevices(gatewayInfo, userTriggered)
@@ -242,7 +241,6 @@ const getDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the getDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  
   module.exports.internal._getGatewayInfo(req.headers['x-opentrv-token'])
     .then(gatewayInfo => {
       return module.exports.internal._getDevice(gatewayInfo, deviceId)
