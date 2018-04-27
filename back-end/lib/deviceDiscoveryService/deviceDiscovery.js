@@ -4,6 +4,7 @@
 const bunyan = require('bunyan')
 const Promise = require('bluebird')
 const rp = require('request-promise')
+const userService = require('../userService/user')
 
 const logger = bunyan.createLogger({name: 'device-discovery-service', serializers: bunyan.stdSerializers})
 
@@ -12,7 +13,7 @@ let firstTimeCalled = true
 const _getGatewayInfo = (userDb, userId) => {
   logger.info('Entered into the _getGatewayInfo internal function', userId)
 
-  return userDb.getUserById(userId)
+  return userService.internal._getUserById(userDb, userId)
     .then(user => {
       return Promise.resolve(user.gateway)
     })
