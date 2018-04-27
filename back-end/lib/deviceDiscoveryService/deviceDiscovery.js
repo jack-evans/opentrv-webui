@@ -13,7 +13,7 @@ const _getGatewayInfo = (token) => {
   logger.info('Entered into the _getGatewayInfo internal function')
 
   let options = {
-    url: 'http://localhost:3000/api/v1/user',
+    url: '/api/v1/user',
     method: 'GET',
     headers: {
       'x-opentrv-token': token
