@@ -46,6 +46,12 @@ const createDeviceRequestHandler = (req, res) => {
           break
         }
 
+        case 404: {
+          logger.error('Encountered not found in the createDeviceRequestHandler, reason: ', error)
+          res.status(404).send(error)
+          break
+        }
+
         case 409: {
           logger.error('Encountered conflict in the createDeviceRequestHandler, reason: ', error)
           res.status(409).send(error)

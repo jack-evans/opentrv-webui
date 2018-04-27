@@ -20,6 +20,7 @@ describe('deviceDiscovery.js', () => {
     let req
     let res
     let createDevicesSpy
+    let getGatewayInfoSpy
 
     beforeEach(() => {
       req = httpMocks.createRequest({
@@ -34,24 +35,28 @@ describe('deviceDiscovery.js', () => {
       })
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
       createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices')
+      getGatewayInfoSpy = jest.spyOn(deviceDiscovery.internal, '_getGatewayInfo')
     })
 
     afterEach(() => {
       createDevicesSpy.mockReset()
+      getGatewayInfoSpy.mockReset()
     })
 
     afterAll(() => {
       createDevicesSpy.mockRestore()
+      getGatewayInfoSpy.mockRestore()
     })
 
-    it('calls the _updateDevice internal function', (done) => {
+    it('calls the _getGatewayInfo internal function', (done) => {
+      getGatewayInfoSpy.mockReturnValue(Promise.resolve())
       createDevicesSpy.mockReturnValue(Promise.resolve())
 
       res.on('end', () => {
         try {
-          expect(createDevicesSpy).toHaveBeenCalledTimes(1)
+          expect(getGatewayInfoSpy).toHaveBeenCalledTimes(1)
           done()
-        } catch (e) {
+        } catch (e)  {
           done(e)
         }
       })
@@ -59,15 +64,21 @@ describe('deviceDiscovery.js', () => {
       deviceDiscovery.createDeviceRequestHandler(req, res)
     })
 
-    describe('when the _createDevice internal function succeeds', () => {
+    describe('when the _getGatewayInfo internal function succeeds', () => {
+
       beforeEach(() => {
-        createDevicesSpy.mockReturnValue(Promise.resolve())
+        getGatewayInfoSpy.mockReturnValue(Promise.resolve({
+          url: 'http://localhost:3002',
+          creds: 'a1b23c4d5e6f7g=='
+        }))
       })
 
-      it('returns 201', (done) => {
+      it('calls the _createDevice internal function', (done) => {
+        createDevicesSpy.mockReturnValue(Promise.resolve())
+
         res.on('end', () => {
           try {
-            expect(res._getStatusCode()).toEqual(201)
+            expect(createDevicesSpy).toHaveBeenCalledTimes(1)
             done()
           } catch (e) {
             done(e)
@@ -76,16 +87,176 @@ describe('deviceDiscovery.js', () => {
 
         deviceDiscovery.createDeviceRequestHandler(req, res)
       })
+
+      it('calls the _createDevice internal funciton with the the gateway info and the devices', () => {
+        createDevicesSpy.mockReturnValue(Promise.resolve())
+
+        res.on('end', () => {
+          try {
+            expect(createDevicesSpy).toHaveBeenCalledWith(
+              {
+                url: 'http://localhost:3002',
+                creds: 'a1b23c4d5e6f7g=='
+              }, req.body.devices)
+            done()
+          } catch (e) {
+            done(e)
+          }
+        })
+
+        deviceDiscovery.createDeviceRequestHandler(req, res)
+      })
+
+      describe('when the _createDevice internal function succeeds', () => {
+        beforeEach(() => {
+          createDevicesSpy.mockReturnValue(Promise.resolve())
+        })
+
+        it('returns 201', (done) => {
+          res.on('end', () => {
+            try {
+              expect(res._getStatusCode()).toEqual(201)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          })
+
+          deviceDiscovery.createDeviceRequestHandler(req, res)
+        })
+      })
+
+      describe('when the _createDevice internal function fails', () => {
+        describe('with a 400', () => {
+          it('returns a 400', (done) => {
+            const error = {
+              statusCode: 400,
+              message: 'bad request'
+            }
+            createDevicesSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(400)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            deviceDiscovery.createDeviceRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 400,
+              message: 'bad request'
+            }
+            createDevicesSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            deviceDiscovery.createDeviceRequestHandler(req, res)
+          })
+        })
+
+        describe('with a 409', () => {
+          it('returns a 409', (done) => {
+            const error = {
+              statusCode: 409,
+              message: 'conflict'
+            }
+            createDevicesSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(409)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            deviceDiscovery.createDeviceRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 409,
+              message: 'conflict'
+            }
+            createDevicesSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            deviceDiscovery.createDeviceRequestHandler(req, res)
+          })
+        })
+
+        describe('with an unexpected error', () => {
+          it('returns a 500', (done) => {
+            const error = {
+              statusCode: 500,
+              message: 'internal server error'
+            }
+            createDevicesSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getStatusCode()).toEqual(500)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+  
+            deviceDiscovery.createDeviceRequestHandler(req, res)
+          })
+
+          it('returns the error in the body', (done) => {
+            const error = {
+              statusCode: 500,
+              message: 'internal server error'
+            }
+            createDevicesSpy.mockReturnValue(Promise.reject(error))
+
+            res.on('end', () => {
+              try {
+                expect(res._getData()).toBe(error)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            })
+
+            deviceDiscovery.createDeviceRequestHandler(req, res)
+          })
+        })
+      })
     })
 
-    describe('when the _createDevice internal function fails', () => {
+    describe('when the _getGatewayInfo internal function fails', () => {
       describe('with a 400', () => {
         it('returns a 400', (done) => {
           const error = {
             statusCode: 400,
             message: 'bad request'
           }
-          createDevicesSpy.mockReturnValue(Promise.reject(error))
+          getGatewayInfoSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -104,7 +275,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 400,
             message: 'bad request'
           }
-          createDevicesSpy.mockReturnValue(Promise.reject(error))
+          getGatewayInfoSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -119,17 +290,17 @@ describe('deviceDiscovery.js', () => {
         })
       })
 
-      describe('with a 409', () => {
-        it('returns a 409', (done) => {
+      describe('with a 404', () => {
+        it('returns a 404', (done) => {
           const error = {
-            statusCode: 409,
-            message: 'conflict'
+            statusCode: 404,
+            message: 'not found'
           }
-          createDevicesSpy.mockReturnValue(Promise.reject(error))
+          getGatewayInfoSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
-              expect(res._getStatusCode()).toEqual(409)
+              expect(res._getStatusCode()).toEqual(404)
               done()
             } catch (e) {
               done(e)
@@ -141,10 +312,10 @@ describe('deviceDiscovery.js', () => {
 
         it('returns the error in the body', (done) => {
           const error = {
-            statusCode: 409,
-            message: 'conflict'
+            statusCode: 404,
+            message: 'not found'
           }
-          createDevicesSpy.mockReturnValue(Promise.reject(error))
+          getGatewayInfoSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -165,7 +336,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 500,
             message: 'internal server error'
           }
-          createDevicesSpy.mockReturnValue(Promise.reject(error))
+          getGatewayInfoSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -184,7 +355,7 @@ describe('deviceDiscovery.js', () => {
             statusCode: 500,
             message: 'internal server error'
           }
-          createDevicesSpy.mockReturnValue(Promise.reject(error))
+          getGatewayInfoSpy.mockReturnValue(Promise.reject(error))
 
           res.on('end', () => {
             try {
@@ -203,6 +374,7 @@ describe('deviceDiscovery.js', () => {
 
   describe('discoverAllDevicesRequestHandler', () => {
     let discoverAllDevicesSpy
+    let getGatewayInfoSpy
     let req
     let res
 
@@ -213,14 +385,33 @@ describe('deviceDiscovery.js', () => {
       })
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
       discoverAllDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_discoverAllDevices')
+      getGatewayInfoSpy = jest.spyOn(deviceDiscovery.internal, '_getGatewayInfo')
     })
 
     afterEach(() => {
       discoverAllDevicesSpy.mockReset()
+      getGatewayInfoSpy.mockReset()
     })
 
     afterAll(() => {
       discoverAllDevicesSpy.mockRestore()
+      getGatewayInfoSpy.mockRestore()
+    })
+
+    it('calls the _getGatewayInfo internal function', (done) => {
+      getGatewayInfoSpy.mockReturnValue(Promise.resolve())
+      discoverAllDevicesSpy.mockReturnValue(Promise.resolve())
+
+      res.on('end', () => {
+        try {
+          expect(getGatewayInfoSpy).toHaveBeenCalledTimes(1)
+          done()
+        } catch (e) {
+          done(e)
+        }
+      })
+
+      deviceDiscovery.discoverAllDevicesRequestHandler(req, res)
     })
 
     it('calls the discoverAllDevices internal function', (done) => {
