@@ -9,19 +9,10 @@ const logger = bunyan.createLogger({name: 'device-discovery-service', serializer
 
 let firstTimeCalled = true
 
-const _getGatewayInfo = (token) => {
-  logger.info('Entered into the _getGatewayInfo internal function')
+const _getGatewayInfo = (userDb, userId) => {
+  logger.info('Entered into the _getGatewayInfo internal function', userId)
 
-  let options = {
-    url: '/api/v1/user',
-    method: 'GET',
-    headers: {
-      'x-opentrv-token': token
-    },
-    json: true
-  }
-
-  return rp(options)
+  return userDb.getUserById(userId)
     .then(user => {
       return Promise.resolve(user.gateway)
     })
@@ -38,7 +29,7 @@ const createDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the createDeviceRequestHandler function', req.body)
 
   const devices = req.body.devices
-  module.exports.internal._getGatewayInfo(req.headers['x-opentrv-token'])
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
     .then(gatewayInfo => {
       return module.exports.internal._createDevices(gatewayInfo, devices)
     })
@@ -118,7 +109,7 @@ const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
   let userTriggered = req.query.user
-  module.exports.internal._getGatewayInfo(req.headers['x-opentrv-token'])
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
     .then(gatewayInfo => {
       return module.exports.internal._discoverAllDevices(gatewayInfo, userTriggered)
     })
@@ -164,7 +155,7 @@ const _discoverAllDevices = (gatewayInfo, userFlag) => {
   let options = {
     url: gatewayInfo.url + '/api/v1/trv',
     headers: {
-      authorization: 'Basic' + gatewayInfo.creds
+      authorization: 'Basic ' + gatewayInfo.creds
     },
     method: 'GET',
     json: true
@@ -241,7 +232,7 @@ const getDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the getDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  module.exports.internal._getGatewayInfo(req.headers['x-opentrv-token'])
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
     .then(gatewayInfo => {
       return module.exports.internal._getDevice(gatewayInfo, deviceId)
     })
@@ -286,7 +277,7 @@ const _getDevice = (gatewayInfo, deviceId) => {
   let options = {
     url: gatewayInfo.url + '/api/v1/trv/' + deviceId,
     headers: {
-      authorization: 'Basic' + gatewayInfo.creds
+      authorization: 'Basic ' + gatewayInfo.creds
     },
     method: 'GET',
     json: true
@@ -308,7 +299,7 @@ const updateDeviceRequestHandler = (req, res) => {
 
   let device = req.body
 
-  module.exports.internal._getGatewayInfo(req.headers['x-opentrv-token'])
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
     .then(gatewayInfo => {
       return module.exports.internal._updateDevice(gatewayInfo, device)
     })
@@ -353,7 +344,7 @@ const _updateDevice = (gatewayInfo, device) => {
   let options = {
     url: gatewayInfo.url + '/api/v1/trv/' + device.id,
     headers: {
-      authorization: 'Basic' + gatewayInfo.creds
+      authorization: 'Basic ' + gatewayInfo.creds
     },
     method: 'PUT',
     json: true,
@@ -376,7 +367,7 @@ const deleteDeviceRequestHandler = (req, res) => {
 
   let deviceId = req.params.id
 
-  module.exports.internal._getGatewayInfo(req.headers['x-opentrv-token'])
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
     .then(gatewayInfo => {
       return module.exports.internal._deleteDevice(gatewayInfo, deviceId)
     })
@@ -422,7 +413,7 @@ const _deleteDevice = (gatewayInfo, deviceId) => {
   let options = {
     url: gatewayInfo.url + '/api/v1/trv/' + deviceId,
     headers: {
-      authorization: 'Basic' + gatewayInfo.creds
+      authorization: 'Basic ' + gatewayInfo.creds
     },
     method: 'DELETE',
     json: true
