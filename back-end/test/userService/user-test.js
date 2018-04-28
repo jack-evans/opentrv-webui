@@ -1728,6 +1728,11 @@ describe('user.js', () => {
           firstLine: '123 example street',
           county: 'exampleCounty',
           postcode: 'ab12cd'
+        },
+        gateway: {
+          url: 'http://localhost:3002',
+          username: 'admin',
+          password: 'pass'
         }
       }
 
@@ -1770,6 +1775,10 @@ describe('user.js', () => {
               firstLine: '123 example street',
               county: 'exampleCounty',
               postcode: 'ab12cd'
+            },
+            gateway: {
+              url: 'http://localhost:3002',
+              creds: 'dW5kZWZpbmVkOnBhc3M='
             }
           }
           return userService.internal._createUser(fakeDatabase, user)
