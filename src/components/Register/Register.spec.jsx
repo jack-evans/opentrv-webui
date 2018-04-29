@@ -10,226 +10,304 @@ describe('Register.jsx', () => {
     expect(shallow(<Register />)).toMatchSnapshot()
   })
 
-  describe('when the user edits the name field', () => {
+  describe('when the currentIndex state is 0', () => {
     let wrapper
-    const name = 'John Doe'
 
     beforeEach(() => {
       wrapper = mount(<Register />)
-      wrapper.find('input').at(0).simulate('change', { target: { value: name, name: 'name' } })
+      wrapper.setState({currentIndex: 0})
     })
 
     afterEach(() => {
       wrapper.unmount()
     })
 
-    it('changes the name property in the user state', () => {
-      expect(wrapper.state().user.name).toEqual(name)
+    it('displays the name field', () => {
+      expect(wrapper.find('#register-name').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the email field', () => {
+      expect(wrapper.find('#register-email').length).toBeGreaterThanOrEqual(1)
+    })
+
+    describe('when a user presses the next button without entering values', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('does not increase the currentIndex', () => {
+        expect(wrapper.state('currentIndex')).toEqual(0)
+      })
+
+      it('sets an error in the invalid state for the name field', () => {
+        expect(wrapper.state('invalid')['register-name']).toBeDefined()
+      })
+
+      it('sets an error in the invalid state for the email field', () => {
+        expect(wrapper.state('invalid')['register-email']).toBeDefined()
+      })
+    })
+
+    describe('when a user presses the next button after entering values', () => {
+      const name = 'John Doe'
+      const email = 'john.doe@example.com'
+
+      beforeEach(() => {
+        wrapper.find('input').at(0).simulate('change', { target: { value: name, name: 'name' } })
+        wrapper.find('input').at(1).simulate('change', { target: { value: email, name: 'email' } })
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('increments the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(1)
+      })
     })
   })
 
-  describe('when the user edits the email field', () => {
+  describe('when the currentIndex state is 1', () => {
     let wrapper
-    const email = 'john.doe@example.com'
 
     beforeEach(() => {
       wrapper = mount(<Register />)
-      wrapper.find('input').at(1).simulate('change', { target: { value: email, name: 'email' } })
+      wrapper.setState({currentIndex: 1})
     })
 
     afterEach(() => {
       wrapper.unmount()
     })
 
-    it('changes the email property in the user state', () => {
-      expect(wrapper.state().user.email).toEqual(email)
+    it('displays the firstline field', () => {
+      expect(wrapper.find('#register-address-firstline').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the secondline field', () => {
+      expect(wrapper.find('#register-address-secondline').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the city field', () => {
+      expect(wrapper.find('#register-address-city').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the county field', () => {
+      expect(wrapper.find('#register-address-county').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the country field', () => {
+      expect(wrapper.find('#register-address-country').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the postcode field', () => {
+      expect(wrapper.find('#register-address-postcode').length).toBeGreaterThanOrEqual(1)
+    })
+
+    describe('when a user presses the next button without entering values', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('does not increase the currentIndex', () => {
+        expect(wrapper.state('currentIndex')).toEqual(1)
+      })
+
+      it('sets an error in the invalid state for the firstline field', () => {
+        expect(wrapper.state('invalid')['register-address-firstline']).toBeDefined()
+      })
+
+      it('sets an error in the invalid state for the county field', () => {
+        expect(wrapper.state('invalid')['register-address-county']).toBeDefined()
+      })
+
+      it('sets an error in the invalid state for the postcode field', () => {
+        expect(wrapper.state('invalid')['register-address-postcode']).toBeDefined()
+      })
+    })
+
+    describe('when a user presses the next button after entering values', () => {
+      const firstLine = '123 example street'
+      const county = 'exampleton'
+      const postcode = 'ab12cd'
+
+      beforeEach(() => {
+        wrapper.find('input').at(0).simulate('change', { target: { value: firstLine, name: 'address->firstLine' } })
+        wrapper.find('input').at(3).simulate('change', { target: { value: county, name: 'address->county' } })
+        wrapper.find('input').at(5).simulate('change', { target: { value: postcode, name: 'address->postcode' } })
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('increments the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(2)
+      })
+    })
+
+    describe('when a user presses the back button', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__back-button').at(0).simulate('click')
+      })
+
+      it('decrements the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(0)
+      })
     })
   })
 
-  describe('when the user edits the Line 1 address input', () => {
+  describe('when the currentIndex state is 2', () => {
     let wrapper
-    const firstLine = '123 example street'
 
     beforeEach(() => {
       wrapper = mount(<Register />)
-      wrapper.find('input').at(2).simulate('change', { target: { value: firstLine, name: 'address->firstLine' } })
+      wrapper.setState({currentIndex: 2})
     })
 
     afterEach(() => {
       wrapper.unmount()
     })
 
-    it('changes the address.firstLine property in the user state', () => {
-      expect(wrapper.state().user.address.firstLine).toEqual(firstLine)
+    it('displays the password field', () => {
+      expect(wrapper.find('#register-password').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the confirm password field', () => {
+      expect(wrapper.find('#register-password-confirm').length).toBeGreaterThanOrEqual(1)
+    })
+
+    describe('when a user presses the next button without entering values', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('does not increase the currentIndex', () => {
+        expect(wrapper.state('currentIndex')).toEqual(2)
+      })
+
+      it('sets an error in the invalid state for the password field', () => {
+        expect(wrapper.state('invalid')['register-password']).toBeDefined()
+      })
+
+      it('sets an error in the invalid state for the confirm password field', () => {
+        expect(wrapper.state('invalid')['register-password-confirm']).toBeDefined()
+      })
+    })
+
+    describe('when a user presses the next button after entering values', () => {
+      const password = 'P@ssw0rd'
+      const confirmPass = 'P@ssw0rd'
+
+      beforeEach(() => {
+        wrapper.find('input').at(0).simulate('change', { target: { value: password, name: 'password' } })
+        wrapper.find('input').at(1).simulate('change', { target: { value: confirmPass, name: 'password-confirm' } })
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('increments the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(3)
+      })
+    })
+
+    describe('when a user presses the back button', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__back-button').at(0).simulate('click')
+      })
+
+      it('decrements the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(1)
+      })
     })
   })
 
-  describe('when the user edits the Line 2 address input', () => {
+  describe('when the currentIndex state is 3', () => {
     let wrapper
-    const secondLine = 'example town'
 
     beforeEach(() => {
       wrapper = mount(<Register />)
-      wrapper.find('input').at(3).simulate('change', { target: { value: secondLine, name: 'address->secondLine' } })
+      wrapper.setState({currentIndex: 3})
     })
 
     afterEach(() => {
       wrapper.unmount()
     })
 
-    it('changes the address.secondLine property in the user state', () => {
-      expect(wrapper.state().user.address.secondLine).toEqual(secondLine)
+    it('displays the gateway url field', () => {
+      expect(wrapper.find('#register-gateway-url').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the gateway username field', () => {
+      expect(wrapper.find('#register-gateway-username').length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('displays the gateway password field', () => {
+      expect(wrapper.find('#register-gateway-password').length).toBeGreaterThanOrEqual(1)
+    })
+
+    describe('when a user presses the next button without entering values', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('does not increase the currentIndex', () => {
+        expect(wrapper.state('currentIndex')).toEqual(3)
+      })
+
+      it('sets an error in the invalid state for the firstline field', () => {
+        expect(wrapper.state('invalid')['register-gateway-url']).toBeDefined()
+      })
+
+      it('sets an error in the invalid state for the county field', () => {
+        expect(wrapper.state('invalid')['register-gateway-username']).toBeDefined()
+      })
+
+      it('sets an error in the invalid state for the postcode field', () => {
+        expect(wrapper.state('invalid')['register-gateway-password']).toBeDefined()
+      })
+    })
+
+    describe('when a user presses the next button after entering values', () => {
+      const url = 'http://localhost:3002'
+      const user = 'admin'
+      const pass = 'pass'
+
+      beforeEach(() => {
+        wrapper.find('input').at(0).simulate('change', { target: { value: url, name: 'gateway->url' } })
+        wrapper.find('input').at(1).simulate('change', { target: { value: user, name: 'gateway->username' } })
+        wrapper.find('input').at(2).simulate('change', { target: { value: pass, name: 'gateway->password' } })
+        wrapper.find('.Register__next-button').at(0).simulate('click')
+      })
+
+      it('increments the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(4)
+      })
+    })
+
+    describe('when a user presses the back button', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__back-button').at(0).simulate('click')
+      })
+
+      it('decrements the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(2)
+      })
     })
   })
 
-  describe('when the user edits the city address input', () => {
+  describe('when the currentIndex state is 4', () => {
     let wrapper
-    const city = 'example city'
 
     beforeEach(() => {
       wrapper = mount(<Register />)
-      wrapper.find('input').at(4).simulate('change', { target: { value: city, name: 'address->city' } })
+      wrapper.setState({currentIndex: 4})
     })
 
     afterEach(() => {
       wrapper.unmount()
     })
 
-    it('changes the address.city property in the user state', () => {
-      expect(wrapper.state().user.address.city).toEqual(city)
-    })
-  })
+    describe('when a user presses the back button', () => {
+      beforeEach(() => {
+        wrapper.find('.Register__back-button').at(0).simulate('click')
+      })
 
-  describe('when the user edits the county address input', () => {
-    let wrapper
-    const county = 'county'
-
-    beforeEach(() => {
-      wrapper = mount(<Register />)
-      wrapper.find('input').at(5).simulate('change', { target: { value: county, name: 'address->county' } })
-    })
-
-    afterEach(() => {
-      wrapper.unmount()
-    })
-
-    it('changes the address.county property in the user state', () => {
-      expect(wrapper.state().user.address.county).toEqual(county)
-    })
-  })
-
-  describe('when the user edits the country address input', () => {
-    let wrapper
-    const country = 'uk'
-
-    beforeEach(() => {
-      wrapper = mount(<Register />)
-      wrapper.find('input').at(6).simulate('change', { target: { value: country, name: 'address->country' } })
-    })
-
-    afterEach(() => {
-      wrapper.unmount()
-    })
-
-    it('changes the address.firstLine property in the user state', () => {
-      expect(wrapper.state().user.address.country).toEqual(country)
-    })
-  })
-
-  describe('when the user edits the postcode address input', () => {
-    let wrapper
-    const postcode = 'ab12cd'
-
-    beforeEach(() => {
-      wrapper = mount(<Register />)
-      wrapper.find('input').at(7).simulate('change', { target: { value: postcode, name: 'address->postcode' } })
-    })
-
-    afterEach(() => {
-      wrapper.unmount()
-    })
-
-    it('changes the address.postcode property in the user state', () => {
-      expect(wrapper.state().user.address.postcode).toEqual(postcode)
-    })
-  })
-
-  describe('when the user edits the password input', () => {
-    let wrapper
-    const password = 'password'
-
-    beforeEach(() => {
-      wrapper = mount(<Register />)
-      wrapper.find('input').at(8).simulate('change', { target: { value: password, name: 'password' } })
-    })
-
-    afterEach(() => {
-      wrapper.unmount()
-    })
-
-    it('changes the address.firstLine property in the user state', () => {
-      expect(wrapper.state().user.password).toEqual(password)
-    })
-  })
-
-  describe('when the user edits the confirm password input', () => {
-    let wrapper
-    const confirmPass = 'password'
-
-    beforeEach(() => {
-      wrapper = mount(<Register />)
-      wrapper.find('input').at(9).simulate('change', { target: { value: confirmPass, name: 'password-confirm' } })
-    })
-
-    afterEach(() => {
-      wrapper.unmount()
-    })
-
-    it('changes the address.firstLine property in the user state', () => {
-      expect(wrapper.instance().confirmPass).toEqual(confirmPass)
-    })
-  })
-
-  describe('when the user fills in all the required fields', () => {
-    let wrapper
-    const arrayOfInputs = [
-      {
-        value: 'John Doe',
-        name: 'name'
-      }, {
-        value: 'john.doe@example.com',
-        name: 'email'
-      }, {
-        value: '123 example street',
-        name: 'address->firstLine'
-      }, {
-        value: 'exampleCounty',
-        name: 'address->county'
-      }, {
-        value: 'ab12cd',
-        name: 'address->postcode'
-      }, {
-        value: 'Passw0rd',
-        name: 'password'
-      }, {
-        value: 'Passw0rd',
-        name: 'password-confirm'
-      }
-    ]
-
-    beforeEach(() => {
-      wrapper = mount(<Register />)
-      for (let i = 0; i < arrayOfInputs.length; i++) {
-        wrapper.find('input').at(i).simulate('change', { target: { value: arrayOfInputs[i].value, name: arrayOfInputs[i].name } })
-      }
-    })
-
-    afterEach(() => {
-      wrapper.unmount()
-    })
-
-    it('sets the isDisabled state to false', () => {
-      expect(wrapper.state().isDisabled).toEqual(false)
+      it('decrements the currentIndex state', () => {
+        expect(wrapper.state('currentIndex')).toEqual(3)
+      })
     })
   })
 })

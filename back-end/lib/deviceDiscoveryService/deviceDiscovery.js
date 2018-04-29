@@ -4,10 +4,20 @@
 const bunyan = require('bunyan')
 const Promise = require('bluebird')
 const rp = require('request-promise')
+const userService = require('../userService/user')
 
 const logger = bunyan.createLogger({name: 'device-discovery-service', serializers: bunyan.stdSerializers})
 
 let firstTimeCalled = true
+
+const _getGatewayInfo = (userDb, userId) => {
+  logger.info('Entered into the _getGatewayInfo internal function', userId)
+
+  return userService.internal._getUserById(userDb, userId)
+    .then(user => {
+      return Promise.resolve(user.gateway)
+    })
+}
 
 /**
  * POST /devices
@@ -20,7 +30,10 @@ const createDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the createDeviceRequestHandler function', req.body)
 
   const devices = req.body.devices
-  module.exports.internal._createDevices(devices)
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
+    .then(gatewayInfo => {
+      return module.exports.internal._createDevices(gatewayInfo, devices)
+    })
     .then(() => {
       logger.info('Successfully created device(s) in the Cloudant instance')
       res.status(201).end()
@@ -30,6 +43,12 @@ const createDeviceRequestHandler = (req, res) => {
         case 400: {
           logger.error('Encountered bad request in the createDeviceRequestHandler, reason: ', error)
           res.status(400).send(error)
+          break
+        }
+
+        case 404: {
+          logger.error('Encountered not found in the createDeviceRequestHandler, reason: ', error)
+          res.status(404).send(error)
           break
         }
 
@@ -52,11 +71,12 @@ const createDeviceRequestHandler = (req, res) => {
  * _createDevices function
  *
  * Saves the basic information of the devices
+ * @param {Object} gatewayInfo - gateway url and credentials
  * @param {Array} devices - array of JSON objects retrieved from the opentrv server
  * @returns {Promise} on the action of saving device information
  * @private
  */
-const _createDevices = (devices) => {
+const _createDevices = (gatewayInfo, devices) => {
   logger.info('Entered into the _createDevices internal function with', devices)
 
   if (!devices) {
@@ -70,7 +90,10 @@ const _createDevices = (devices) => {
   let promises = []
   devices.forEach((device) => {
     let options = {
-      url: 'http://localhost:3002/api/v1/trv',
+      url: gatewayInfo.url + '/api/v1/trv',
+      headers: {
+        authorization: 'Basic ' + gatewayInfo.creds
+      },
       method: 'POST',
       json: true,
       body: device
@@ -93,7 +116,10 @@ const discoverAllDevicesRequestHandler = (req, res) => {
   logger.info('Entered into the discoverAllDevicesRequestHandler function')
 
   let userTriggered = req.query.user
-  module.exports.internal._discoverAllDevices(userTriggered)
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
+    .then(gatewayInfo => {
+      return module.exports.internal._discoverAllDevices(gatewayInfo, userTriggered)
+    })
     .then(devices => {
       logger.info('Successfully retrieved device(s) from the server', devices)
       res.status(200).send(devices)
@@ -125,15 +151,19 @@ const discoverAllDevicesRequestHandler = (req, res) => {
  * _discoverAllDevices function
  *
  * Makes a call to the opentrv server that is connected to all the devices and retrieves the information of the devices
+ * @param {Object} gatewayInfo - gateway url and credentials
  * @param {Boolean} userFlag - determine if user triggers discovery or not
  * @returns {Promise} with an array of JSON objects on the action of retrieving the device information from the opentrv server
  * @private
  */
-const _discoverAllDevices = (userFlag) => {
+const _discoverAllDevices = (gatewayInfo, userFlag) => {
   logger.info('Entered into the _discoverAllDevices internal function', userFlag)
 
   let options = {
-    url: 'http://localhost:3002/api/v1/trv',
+    url: gatewayInfo.url + '/api/v1/trv',
+    headers: {
+      authorization: 'Basic ' + gatewayInfo.creds
+    },
     method: 'GET',
     json: true
   }
@@ -181,13 +211,13 @@ const _discoverAllDevices = (userFlag) => {
       } else {
         createDevicesCalled = true
         logger.info('Calling the _createDevices internal function with: ', devices)
-        return module.exports.internal._createDevices(devices)
+        return module.exports.internal._createDevices(gatewayInfo, devices)
       }
     })
     .then(devices => {
       if (createDevicesCalled) {
         logger.info('_createDevices internal function was called so now need to call the _discoverAllDevices internal function again')
-        return module.exports.internal._discoverAllDevices('no')
+        return module.exports.internal._discoverAllDevices(gatewayInfo, 'no')
       } else {
         return Promise.resolve(devices)
       }
@@ -209,7 +239,10 @@ const getDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the getDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  module.exports.internal._getDevice(deviceId)
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
+    .then(gatewayInfo => {
+      return module.exports.internal._getDevice(gatewayInfo, deviceId)
+    })
     .then(device => {
       logger.info('Successfully retrieved device from the cloudant database', device)
       res.status(200).send(device)
@@ -241,14 +274,18 @@ const getDeviceRequestHandler = (req, res) => {
  * _getDevice function
  *
  * Calls the device database to retrieve the device information
+ * @param {Object} gatewayInfo - gateway url and credentials
  * @param {String} deviceId - the id for the device document
  * @returns {Promise} on the action of retrieving the data from cloudant
  * @private
  */
-const _getDevice = (deviceId) => {
+const _getDevice = (gatewayInfo, deviceId) => {
   logger.info('Entered into the _getDevice internal function with device id:', deviceId)
   let options = {
-    url: 'http://localhost:3002/api/v1/trv/' + deviceId,
+    url: gatewayInfo.url + '/api/v1/trv/' + deviceId,
+    headers: {
+      authorization: 'Basic ' + gatewayInfo.creds
+    },
     method: 'GET',
     json: true
   }
@@ -268,7 +305,11 @@ const updateDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the updateDeviceRequestHandler function')
 
   let device = req.body
-  module.exports.internal._updateDevice(device)
+
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
+    .then(gatewayInfo => {
+      return module.exports.internal._updateDevice(gatewayInfo, device)
+    })
     .then((result) => {
       logger.info('Successfully updated device document in the cloudant database')
       res.status(200).send(result)
@@ -300,14 +341,18 @@ const updateDeviceRequestHandler = (req, res) => {
  * _updateDevice function
  *
  * Calls the device database to update the device information with the data provided
+ * @param {Object} gatewayInfo - gateway url and credentials
  * @param {Object} device - data of the device to update with
  * @returns {Promise} on the action of updating device information to cloudant
  */
-const _updateDevice = (device) => {
+const _updateDevice = (gatewayInfo, device) => {
   logger.info('Entered into the _updateDevice internal function with the device: ', device)
 
   let options = {
-    url: 'http://localhost:3002/api/v1/trv/' + device.id,
+    url: gatewayInfo.url + '/api/v1/trv/' + device.id,
+    headers: {
+      authorization: 'Basic ' + gatewayInfo.creds
+    },
     method: 'PUT',
     json: true,
     body: device
@@ -328,7 +373,11 @@ const deleteDeviceRequestHandler = (req, res) => {
   logger.info('Entered into the deleteDeviceRequestHandler function')
 
   let deviceId = req.params.id
-  module.exports.internal._deleteDevice(deviceId)
+
+  module.exports.internal._getGatewayInfo(req.userDb, req.userId)
+    .then(gatewayInfo => {
+      return module.exports.internal._deleteDevice(gatewayInfo, deviceId)
+    })
     .then(() => {
       logger.info('Successfully deleted device from the cloudant database')
       res.status(204).end()
@@ -360,15 +409,19 @@ const deleteDeviceRequestHandler = (req, res) => {
  * deleteDevice function
  *
  * Calls the device database to delete a device from the database
+ * @param {Object} gatewayInfo - gateway url and credentials
  * @param {Array} deviceId - the id of the device to be deleted
  * @returns {Promise} on the action of deleting a device in cloudant
  * @private
  */
-const _deleteDevice = (deviceId) => {
+const _deleteDevice = (gatewayInfo, deviceId) => {
   logger.info('Entered into the _deleteDevice internal function with the device id: ', deviceId)
 
   let options = {
-    url: 'http://localhost:3002/api/v1/trv/' + deviceId,
+    url: gatewayInfo.url + '/api/v1/trv/' + deviceId,
+    headers: {
+      authorization: 'Basic ' + gatewayInfo.creds
+    },
     method: 'DELETE',
     json: true
   }
@@ -403,6 +456,7 @@ module.exports = {
 }
 
 module.exports.internal = {
+  _getGatewayInfo: _getGatewayInfo,
   _createDevices: _createDevices,
   _discoverAllDevices: _discoverAllDevices,
   _getDevice: _getDevice,
