@@ -3,6 +3,7 @@ import toBeType from 'jest-tobetype'
 const httpMocks = require('node-mocks-http')
 const nock = require('nock')
 const Promise = require('bluebird')
+const userService = require('../../lib/userService/user')
 expect.extend(toBeType)
 
 describe('deviceDiscovery.js', () => {
@@ -1810,6 +1811,59 @@ describe('deviceDiscovery.js', () => {
     // URL for  the Gateway
     const GATEWAY_URL = 'http://localhost:3002'
 
+    describe('_getGatewayInfo', () => {
+      let getUserByIdSpy
+      const userId = '1234'
+
+      beforeEach(() => {
+        getUserByIdSpy = jest.spyOn(userService.internal, '_getUserById')
+      })
+
+      afterEach(() => {
+        getUserByIdSpy.mockReset()
+      })
+
+      afterAll(() => {
+        getUserByIdSpy.mockRestore()
+      })
+
+      it('calls the _getUserById internal function', () => {
+        getUserByIdSpy.mockReturnValue(Promise.resolve({}))
+
+        return deviceDiscovery.internal._getGatewayInfo({}, userId)
+          .then(() => {
+            expect(getUserByIdSpy).toHaveBeenCalledTimes(1)
+          })
+      })
+
+      describe('when the _getUserById internal function succeeds', () => {
+        it('returns the users gateway information', () => {
+          const gatewayInfo = {
+            url: 'http://localhost:3002',
+            creds: 'a1b23c4d5e6f7g=='
+          }
+          getUserByIdSpy.mockReturnValue(Promise.resolve({gateway: gatewayInfo}))
+
+          return deviceDiscovery.internal._getGatewayInfo({}, userId)
+            .then(result => {
+              expect(result).toEqual(gatewayInfo)
+            })
+        })
+      })
+
+      describe('when the _getUserById internal function fails', () => {
+        it('returns the error', () => {
+          expect.assertions(1)
+          getUserByIdSpy.mockReturnValue(Promise.reject(new Error('Bang!')))
+
+          return deviceDiscovery.internal._getGatewayInfo({}, userId)
+            .catch(error => {
+              expect(error.message).toEqual('Bang!')
+            })
+        })
+      })
+    })
+
     describe('_createDevices', () => {
       describe('when the devices array is undefined', () => {
         it('returns a 400 error', () => {
@@ -1904,7 +1958,7 @@ describe('deviceDiscovery.js', () => {
             deviceDiscovery.internal._setFirstTimeCalled(false)
             mathRandomSpy = jest.spyOn(Math, 'random')
             discoverAllDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_discoverAllDevices')
-            createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices').mockImplementation(devices => {
+            createDevicesSpy = jest.spyOn(deviceDiscovery.internal, '_createDevices').mockImplementation((gatewayInfo, devices) => {
               discoverAllDevicesSpy.mockReturnValue(Promise.resolve(devices))
               return Promise.resolve(devices)
             })

@@ -1778,12 +1778,14 @@ describe('user.js', () => {
             },
             gateway: {
               url: 'http://localhost:3002',
-              creds: 'dW5kZWZpbmVkOnBhc3M='
+              creds: 'a1b23c4d5e6f7g=='
             }
           }
+          jest.spyOn(Buffer, 'from').mockReturnValue('a1b23c4d5e6f7g==')
           return userService.internal._createUser(fakeDatabase, user)
             .then(() => {
               expect(createUserSpy).toHaveBeenCalledWith(expectedUserDoc)
+              jest.restoreAllMocks()
             })
         })
 
