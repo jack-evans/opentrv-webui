@@ -98,55 +98,16 @@ const _createUser = (userDB, user) => {
         name: user.name,
         email: user.email,
         password: hash,
-        address: user.address
+        address: user.address,
+        gateway: {
+          url: user.gateway.url,
+          creds: Buffer.from(user.gateway.username + ':' + user.gateway.password).toString('base64')
+        }
       }
       return userDB.createUser(userDocument)
     })
     .catch(error => {
       return Promise.reject(error)
-    })
-}
-
-/**
- * GET /user
- *
- * @param {Object} req - the HTTP request object
- * @param {Object} res - the HTTP response object
- */
-const getUsersRequestHandler = (req, res) => {
-  logFunctionEntry('getUsersRequestHandler', false, undefined)
-  let promise
-
-  if (req.query.email) {
-    promise = module.exports.internal._getUserByEmail(req.userDb, req.query.email)
-  } else {
-    promise = module.exports.internal._getUsers(req.userDb)
-  }
-
-  promise
-    .then(users => {
-      res.status(200).send(users)
-    })
-    .catch(error => {
-      switch (error.statusCode) {
-        case 400: {
-          logger.error('Encountered bad request in the getUserRequestHandler function', error)
-          res.status(400).send(error)
-          break
-        }
-
-        case 404: {
-          logger.error('Encountered not found in the getUserRequestHandler', error)
-          res.status(404).send(error)
-          break
-        }
-
-        case 500: {
-          logger.error('Encountered internal server error in the getUserRequestHandler', error)
-          res.status(500).send(error)
-          break
-        }
-      }
     })
 }
 
@@ -183,7 +144,7 @@ const _getUserByEmail = (userDB, userEmail) => {
 }
 
 /**
- * GET /user/{id}
+ * GET /user
  *
  * @param {Object} req - the HTTP request object
  * @param {Object} res - the HTTP response object
@@ -191,7 +152,7 @@ const _getUserByEmail = (userDB, userEmail) => {
 const getUserByIdRequestHandler = (req, res) => {
   logFunctionEntry('getUserByIdRequestHandler', false, undefined)
 
-  module.exports.internal._getUserById(req.userDb, req.params.id)
+  module.exports.internal._getUserById(req.userDb, req.userId)
     .then(user => {
       res.status(200).send(user)
     })
@@ -507,7 +468,6 @@ const _loginUser = (user) => {
 
 module.exports = {
   createUserRequestHandler: createUserRequestHandler,
-  getUsersRequestHandler: getUsersRequestHandler,
   getUserByIdRequestHandler: getUserByIdRequestHandler,
   updateUserRequestHandler: updateUserRequestHandler,
   deleteUserRequestHandler: deleteUserRequestHandler,

@@ -329,440 +329,6 @@ describe('user.js', () => {
     })
   })
 
-  describe('getUsersRequestHandler', () => {
-    let getUserByEmailSpy
-    let getUsersSpy
-    let req
-    let res
-
-    describe('when the email query parameter is set', () => {
-      const fakeUserDoc = {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        address: {
-          firstLine: '123 example street'
-        }
-      }
-
-      beforeEach(() => {
-        getUserByEmailSpy = jest.spyOn(userService.internal, '_getUserByEmail')
-        req = httpMocks.createRequest({
-          method: 'GET',
-          path: '/user',
-          query: {
-            email: 'john.doe@example.com'
-          },
-          userDb: {}
-        })
-        res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
-      })
-
-      afterEach(() => {
-        getUserByEmailSpy.mockReset()
-      })
-
-      afterAll(() => {
-        getUserByEmailSpy.mockRestore()
-      })
-
-      it('calls the getUserByEmail internal function', (done) => {
-        getUserByEmailSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-        res.on('end', () => {
-          try {
-            expect(getUserByEmailSpy).toHaveBeenCalledTimes(1)
-            done()
-          } catch (e) {
-            done(e)
-          }
-        })
-
-        userService.getUsersRequestHandler(req, res)
-      })
-
-      it('calls the getUserByEmail internal function with the database and email', (done) => {
-        getUserByEmailSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-        res.on('end', () => {
-          try {
-            expect(getUserByEmailSpy).toHaveBeenCalledWith(req.userDb, req.query.email)
-            done()
-          } catch (e) {
-            done(e)
-          }
-        })
-
-        userService.getUsersRequestHandler(req, res)
-      })
-
-      describe('when the getUserByEmail internal function succeeds', () => {
-        it('returns 200', (done) => {
-          getUserByEmailSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-          res.on('end', () => {
-            try {
-              expect(res._getStatusCode()).toEqual(200)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.getUsersRequestHandler(req, res)
-        })
-
-        it('returns the user document in the body', (done) => {
-          getUserByEmailSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-          res.on('end', () => {
-            try {
-              expect(res._getData()).toEqual([fakeUserDoc])
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.getUsersRequestHandler(req, res)
-        })
-      })
-
-      describe('when the getUserByEmail internal function fails', () => {
-        describe('with a 400', () => {
-          it('returns a 400', (done) => {
-            const error = {
-              statusCode: 400,
-              message: 'bad request'
-            }
-            getUserByEmailSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getStatusCode()).toEqual(400)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-
-          it('returns the error in the body', (done) => {
-            const error = {
-              statusCode: 400,
-              message: 'bad request'
-            }
-            getUserByEmailSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getData()).toBe(error)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-        })
-
-        describe('with a 404', () => {
-          it('returns a 404', (done) => {
-            const error = {
-              statusCode: 404,
-              message: 'not found'
-            }
-            getUserByEmailSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getStatusCode()).toEqual(404)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-
-          it('returns the error in the body', (done) => {
-            const error = {
-              statusCode: 404,
-              message: 'not found'
-            }
-            getUserByEmailSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getData()).toBe(error)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-        })
-
-        describe('with a 500', () => {
-          it('returns a 500', (done) => {
-            const error = {
-              statusCode: 500,
-              message: 'internal server error'
-            }
-            getUserByEmailSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getStatusCode()).toEqual(500)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-
-          it('returns the error in the body', (done) => {
-            const error = {
-              statusCode: 500,
-              message: 'internal server error'
-            }
-            getUserByEmailSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getData()).toBe(error)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-        })
-      })
-    })
-
-    describe('when the email query parameter is not set', () => {
-      const fakeUserDoc = {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        address: {
-          firstLine: '123 example street'
-        }
-      }
-
-      beforeEach(() => {
-        getUsersSpy = jest.spyOn(userService.internal, '_getUsers')
-        req = httpMocks.createRequest({
-          method: 'GET',
-          path: '/user',
-          userDb: {}
-        })
-        res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
-      })
-
-      afterEach(() => {
-        getUsersSpy.mockReset()
-      })
-
-      afterAll(() => {
-        getUsersSpy.mockRestore()
-      })
-
-      it('calls the getUsers internal function', (done) => {
-        getUsersSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-        res.on('end', () => {
-          try {
-            expect(getUsersSpy).toHaveBeenCalledTimes(1)
-            done()
-          } catch (e) {
-            done(e)
-          }
-        })
-
-        userService.getUsersRequestHandler(req, res)
-      })
-
-      it('calls the getUsers internal function with the database', (done) => {
-        getUsersSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-        res.on('end', () => {
-          try {
-            expect(getUsersSpy).toHaveBeenCalledWith(req.userDb)
-            done()
-          } catch (e) {
-            done(e)
-          }
-        })
-
-        userService.getUsersRequestHandler(req, res)
-      })
-
-      describe('when the getUsers internal function succeeds', () => {
-        it('returns 200', (done) => {
-          getUsersSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-          res.on('end', () => {
-            try {
-              expect(res._getStatusCode()).toEqual(200)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.getUsersRequestHandler(req, res)
-        })
-
-        it('returns the user document in the body', (done) => {
-          getUsersSpy.mockReturnValue(Promise.resolve([fakeUserDoc]))
-
-          res.on('end', () => {
-            try {
-              expect(res._getData()).toEqual([fakeUserDoc])
-              done()
-            } catch (e) {
-              done(e)
-            }
-          })
-
-          userService.getUsersRequestHandler(req, res)
-        })
-      })
-
-      describe('when the getUsers internal function fails', () => {
-        describe('with a 400', () => {
-          it('returns a 400', (done) => {
-            const error = {
-              statusCode: 400,
-              message: 'bad request'
-            }
-            getUsersSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getStatusCode()).toEqual(400)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-
-          it('returns the error in the body', (done) => {
-            const error = {
-              statusCode: 400,
-              message: 'bad request'
-            }
-            getUsersSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getData()).toBe(error)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-        })
-
-        describe('with a 404', () => {
-          it('returns a 404', (done) => {
-            const error = {
-              statusCode: 404,
-              message: 'not found'
-            }
-            getUsersSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getStatusCode()).toEqual(404)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-
-          it('returns the error in the body', (done) => {
-            const error = {
-              statusCode: 404,
-              message: 'not found'
-            }
-            getUsersSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getData()).toBe(error)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-        })
-
-        describe('with a 500', () => {
-          it('returns a 500', (done) => {
-            const error = {
-              statusCode: 500,
-              message: 'internal server error'
-            }
-            getUsersSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getStatusCode()).toEqual(500)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-
-          it('returns the error in the body', (done) => {
-            const error = {
-              statusCode: 500,
-              message: 'internal server error'
-            }
-            getUsersSpy.mockReturnValue(Promise.reject(error))
-
-            res.on('end', () => {
-              try {
-                expect(res._getData()).toBe(error)
-                done()
-              } catch (e) {
-                done(e)
-              }
-            })
-
-            userService.getUsersRequestHandler(req, res)
-          })
-        })
-      })
-    })
-  })
-
   describe('getUserByIdRequestHandler', () => {
     const fakeUserDoc = {
       name: 'John Doe',
@@ -777,9 +343,7 @@ describe('user.js', () => {
       req = httpMocks.createRequest({
         method: 'GET',
         path: '/user',
-        params: {
-          id: '1234'
-        },
+        userId: '1234',
         userDb: {}
       })
       res = httpMocks.createResponse({eventEmitter: require('events').EventEmitter})
@@ -813,7 +377,7 @@ describe('user.js', () => {
 
       res.on('end', () => {
         try {
-          expect(getUserByIdSpy).toHaveBeenCalledWith(req.userDb, req.params.id)
+          expect(getUserByIdSpy).toHaveBeenCalledWith(req.userDb, req.userId)
           done()
         } catch (e) {
           done(e)
@@ -2164,6 +1728,11 @@ describe('user.js', () => {
           firstLine: '123 example street',
           county: 'exampleCounty',
           postcode: 'ab12cd'
+        },
+        gateway: {
+          url: 'http://localhost:3002',
+          username: 'admin',
+          password: 'pass'
         }
       }
 
@@ -2206,11 +1775,17 @@ describe('user.js', () => {
               firstLine: '123 example street',
               county: 'exampleCounty',
               postcode: 'ab12cd'
+            },
+            gateway: {
+              url: 'http://localhost:3002',
+              creds: 'a1b23c4d5e6f7g=='
             }
           }
+          jest.spyOn(Buffer, 'from').mockReturnValue('a1b23c4d5e6f7g==')
           return userService.internal._createUser(fakeDatabase, user)
             .then(() => {
               expect(createUserSpy).toHaveBeenCalledWith(expectedUserDoc)
+              jest.restoreAllMocks()
             })
         })
 
