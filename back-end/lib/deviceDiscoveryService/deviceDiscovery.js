@@ -359,7 +359,7 @@ const _updateDevice = (gatewayInfo, device) => {
     body: device
   }
 
-  logger.info('Making PUT request to the internet gateway')
+  logger.info('Making PUT request to the internet gateway', options)
   return rp(options)
 }
 
