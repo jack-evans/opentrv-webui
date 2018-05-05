@@ -8,20 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 describe('Header..jsx', () => {
   it('renders without crashing', () => {
     const cbFunction = () => {}
-
-    const expectedRender = (
-      <header className='Header'>
-        <div className='Header__left-nav-toggle-container'>
-          <button type='button' className='Header__left-nav-toggle' onClick={cbFunction}>
-            <span className='Header__left-nav-icon' />
-          </button>
-        </div>
-        <a className='Header__title' href='/overview'>
-          <h3>OpenTRV</h3>
-        </a>
-      </header>
-    )
-    expect(shallow(<Header onClick={cbFunction} />).contains(expectedRender)).toBe(true)
+    expect(shallow(<Header onClick={cbFunction} />)).toMatchSnapshot()
   })
 
   describe('when the button is clicked', () => {
@@ -40,20 +27,7 @@ describe('Header..jsx', () => {
   describe('when the isOpen property is true', () => {
     it('has applied the Header__left-nav-toggle--active class to the button', () => {
       const cbFunction = () => {}
-
-      const expectedRender = (
-        <header className='Header'>
-          <div className='Header__left-nav-toggle-container'>
-            <button type='button' className='Header__left-nav-toggle Header__left-nav-toggle--active' onClick={cbFunction}>
-              <span className='Header__left-nav-icon' />
-            </button>
-          </div>
-          <a className='Header__title' href='/overview'>
-            <h3>OpenTRV</h3>
-          </a>
-        </header>
-      )
-      expect(shallow(<Header onClick={cbFunction} isOpen />).contains(expectedRender)).toBe(true)
+      expect(shallow(<Header onClick={cbFunction} isOpen />)).toMatchSnapshot()
     })
   })
 })
