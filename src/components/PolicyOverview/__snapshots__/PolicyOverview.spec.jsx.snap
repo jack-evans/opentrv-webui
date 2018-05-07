@@ -17,10 +17,208 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "host",
     "props": Object {
-      "children": "Policy Overview goes here",
+      "children": Array [
+        <div
+          className="PolicyOverview__search-bar-container"
+        >
+          <UNDEFINED>
+            <Search
+              className="PolicyOverview__search-bar"
+              id="policy-search"
+              labelText="Search"
+              onChange={[Function]}
+              placeHolderText="Search Devices"
+              small={true}
+              type="text"
+            />
+          </UNDEFINED>
+        </div>,
+        <div
+          className="PolicyOverview__content  PolicyOverview__content-loading"
+        >
+          <div>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Loading
+                active={true}
+                small={true}
+                withOverlay={false}
+              />
+            </div>
+            <div>
+              Loading. Please Wait...
+            </div>
+          </div>
+        </div>,
+      ],
+      "className": "PolicyOverview",
     },
     "ref": null,
-    "rendered": "Policy Overview goes here",
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <UNDEFINED>
+            <Search
+              className="PolicyOverview__search-bar"
+              id="policy-search"
+              labelText="Search"
+              onChange={[Function]}
+              placeHolderText="Search Devices"
+              small={true}
+              type="text"
+            />
+          </UNDEFINED>,
+          "className": "PolicyOverview__search-bar-container",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <Search
+              className="PolicyOverview__search-bar"
+              id="policy-search"
+              labelText="Search"
+              onChange={[Function]}
+              placeHolderText="Search Devices"
+              small={true}
+              type="text"
+            />,
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "className": "PolicyOverview__search-bar",
+              "id": "policy-search",
+              "labelText": "Search",
+              "onChange": [Function],
+              "placeHolderText": "Search Devices",
+              "small": true,
+              "type": "text",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": Symbol(react.fragment),
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <div>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Loading
+                active={true}
+                small={true}
+                withOverlay={false}
+              />
+            </div>
+            <div>
+              Loading. Please Wait...
+            </div>
+          </div>,
+          "className": "PolicyOverview__content  PolicyOverview__content-loading",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Loading
+                  active={true}
+                  small={true}
+                  withOverlay={false}
+                />
+              </div>,
+              <div>
+                Loading. Please Wait...
+              </div>,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <Loading
+                  active={true}
+                  small={true}
+                  withOverlay={false}
+                />,
+                "style": Object {
+                  "display": "flex",
+                  "justifyContent": "center",
+                },
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "active": true,
+                  "small": true,
+                  "withOverlay": false,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Loading. Please Wait...",
+              },
+              "ref": null,
+              "rendered": "Loading. Please Wait...",
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        "type": "div",
+      },
+    ],
     "type": "div",
   },
   Symbol(enzyme.__nodes__): Array [
@@ -29,10 +227,208 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "host",
       "props": Object {
-        "children": "Policy Overview goes here",
+        "children": Array [
+          <div
+            className="PolicyOverview__search-bar-container"
+          >
+            <UNDEFINED>
+              <Search
+                className="PolicyOverview__search-bar"
+                id="policy-search"
+                labelText="Search"
+                onChange={[Function]}
+                placeHolderText="Search Devices"
+                small={true}
+                type="text"
+              />
+            </UNDEFINED>
+          </div>,
+          <div
+            className="PolicyOverview__content  PolicyOverview__content-loading"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Loading
+                  active={true}
+                  small={true}
+                  withOverlay={false}
+                />
+              </div>
+              <div>
+                Loading. Please Wait...
+              </div>
+            </div>
+          </div>,
+        ],
+        "className": "PolicyOverview",
       },
       "ref": null,
-      "rendered": "Policy Overview goes here",
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <UNDEFINED>
+              <Search
+                className="PolicyOverview__search-bar"
+                id="policy-search"
+                labelText="Search"
+                onChange={[Function]}
+                placeHolderText="Search Devices"
+                small={true}
+                type="text"
+              />
+            </UNDEFINED>,
+            "className": "PolicyOverview__search-bar-container",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": <Search
+                className="PolicyOverview__search-bar"
+                id="policy-search"
+                labelText="Search"
+                onChange={[Function]}
+                placeHolderText="Search Devices"
+                small={true}
+                type="text"
+              />,
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "className": "PolicyOverview__search-bar",
+                "id": "policy-search",
+                "labelText": "Search",
+                "onChange": [Function],
+                "placeHolderText": "Search Devices",
+                "small": true,
+                "type": "text",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            "type": Symbol(react.fragment),
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Loading
+                  active={true}
+                  small={true}
+                  withOverlay={false}
+                />
+              </div>
+              <div>
+                Loading. Please Wait...
+              </div>
+            </div>,
+            "className": "PolicyOverview__content  PolicyOverview__content-loading",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <Loading
+                    active={true}
+                    small={true}
+                    withOverlay={false}
+                  />
+                </div>,
+                <div>
+                  Loading. Please Wait...
+                </div>,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <Loading
+                    active={true}
+                    small={true}
+                    withOverlay={false}
+                  />,
+                  "style": Object {
+                    "display": "flex",
+                    "justifyContent": "center",
+                  },
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "active": true,
+                    "small": true,
+                    "withOverlay": false,
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Loading. Please Wait...",
+                },
+                "ref": null,
+                "rendered": "Loading. Please Wait...",
+                "type": "div",
+              },
+            ],
+            "type": "div",
+          },
+          "type": "div",
+        },
+      ],
       "type": "div",
     },
   ],

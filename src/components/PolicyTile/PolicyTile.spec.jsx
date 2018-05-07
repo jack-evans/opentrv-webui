@@ -60,7 +60,7 @@ describe('PolicyTile.jsx', () => {
       const wrapper = shallow(<PolicyTile id='1234' name='test' temp={26.3} active />)
       wrapper.find('.PolicyTile__center-container').simulate('click')
 
-      expect(global.location.assign).toHaveBeenCalledWith('/Policys/1234')
+      expect(global.location.assign).toHaveBeenCalledWith('/policys/1234')
     })
   })
 
@@ -81,7 +81,7 @@ describe('PolicyTile.jsx', () => {
         const wrapper = shallow(<PolicyTile id='1234' name='test' temp={26.3} active />)
         wrapper.find('.PolicyTile__overflow-menu-view').simulate('click')
 
-        expect(global.location.assign).toHaveBeenCalledWith('/Policys/1234')
+        expect(global.location.assign).toHaveBeenCalledWith('/policys/1234')
       })
     })
   })
