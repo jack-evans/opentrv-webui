@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideBarMenuItem.jsx renders without crashing 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <SideBarMenuItem
+    href="https://test.com"
+    text="this is a test"
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": <span
+        className="SideBarMenuItem__content"
+      >
+        <h3>
+          this is a test
+        </h3>
+      </span>,
+      "className": "SideBarMenuItem",
+      "href": "https://test.com",
+      "rel": "noopener",
+      "target": "_blank",
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": <h3>
+          this is a test
+        </h3>,
+        "className": "SideBarMenuItem__content",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "this is a test",
+        },
+        "ref": null,
+        "rendered": "this is a test",
+        "type": "h3",
+      },
+      "type": "span",
+    },
+    "type": "a",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": <span
+          className="SideBarMenuItem__content"
+        >
+          <h3>
+            this is a test
+          </h3>
+        </span>,
+        "className": "SideBarMenuItem",
+        "href": "https://test.com",
+        "rel": "noopener",
+        "target": "_blank",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <h3>
+            this is a test
+          </h3>,
+          "className": "SideBarMenuItem__content",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "this is a test",
+          },
+          "ref": null,
+          "rendered": "this is a test",
+          "type": "h3",
+        },
+        "type": "span",
+      },
+      "type": "a",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
