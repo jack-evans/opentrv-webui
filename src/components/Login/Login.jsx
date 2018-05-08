@@ -62,7 +62,7 @@ class Login extends Component {
         <div className='Login'>
           <div className='Login__content'>
             <div className='Login__title'>
-              <h1>Login to OpenTRV</h1>
+              <h1>Log in to OpenTRV</h1>
             </div>
             <div className='Login__input'>
               <div className='Login__email-input'>
@@ -111,7 +111,7 @@ class Login extends Component {
               modalHeading='Login Failed'
               onRequestClose={this.handleModalOnClick}
             >
-              <p>Failed to Login to OpenTRV.</p>
+              <p>Failed to Log in to OpenTRV.</p>
               <p>Please check your email and password was entered correctly.</p>
               <p>If problem persists please contact support</p>
             </Modal>

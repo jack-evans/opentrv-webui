@@ -499,6 +499,7 @@ class Register extends Component {
                   name='password-confirm'
                   type='password'
                   placeholder='Enter password'
+                  value={this.confirmPass}
                   onChange={this.handleInputChange}
                   onBlur={this.checkMatch}
                   invalid={this.checkValid('register-password-confirm')}
