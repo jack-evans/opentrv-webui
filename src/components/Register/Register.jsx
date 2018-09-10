@@ -265,7 +265,6 @@ class Register extends Component {
             ]
           }
         })
-        // window.location.assign('/login')
       })
       .catch(() => {
         this.setState({
