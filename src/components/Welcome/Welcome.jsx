@@ -20,7 +20,7 @@ const Welcome = () => (
           className='Welcome__login-button Welcome__button'
           onClick={() => window.location.assign('/login')}
         >
-          Login
+          Log in
         </Button>
       </div>
     </div>
