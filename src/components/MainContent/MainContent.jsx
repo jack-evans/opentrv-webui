@@ -8,14 +8,7 @@ import Welcome from '../Welcome/Welcome'
 import Register from '../Register/Register'
 import Header from '../Header/Header'
 import SideBarMenu from '../SideBarMenu/SideBarMenu'
-
-const NotFound = () => {
-  return (
-    <div className='NotFound'>
-      <h1>404 - Not Found</h1>
-    </div>
-  )
-}
+import NotFound from '../NotFound/NotFound'
 
 class MainContent extends Component {
   /**

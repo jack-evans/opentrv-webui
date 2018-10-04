@@ -1,0 +1,944 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PolicyTile.jsx renders without crashing 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <PolicyTile
+    active={false}
+    id="1234"
+    name="test"
+    temp={26.3}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="PolicyTile__overflow-container"
+        >
+          <OverflowMenu
+            ariaLabel="list of options"
+            className="PolicyTile__overflow-menu"
+            flipped={false}
+            floatingMenu={false}
+            iconDescription="open and close list of options"
+            iconName="overflow-menu"
+            menuOffset={[Function]}
+            menuOffsetFlip={[Function]}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            open={false}
+            tabIndex={0}
+          >
+            <OverflowMenuItem
+              className="PolicyTile__overflow-menu-view"
+              disabled={false}
+              hasDivider={false}
+              isDelete={false}
+              itemText="View"
+              onClick={[Function]}
+            />
+            <OverflowMenuItem
+              className="PolicyTile__overflow-menu-delete"
+              disabled={false}
+              hasDivider={true}
+              isDelete={true}
+              itemText="Delete"
+              onClick={[Function]}
+            />
+          </OverflowMenu>
+        </div>,
+        <div
+          className="PolicyTile__center-container"
+          onClick={[Function]}
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }
+        >
+          <div
+            className="PolicyTile__name-container"
+          >
+            <h3>
+              test
+            </h3>
+          </div>
+          <div
+            className="PolicyTile__icon-container"
+          >
+            <div
+              className="PolicyTile__icon-circle"
+            >
+              <div>
+                <Icon
+                  description="Policys icon"
+                  fillRule="evenodd"
+                  name="schematics"
+                  role="img"
+                />
+              </div>
+            </div>
+          </div>
+        </div>,
+        <div
+          className="PolicyTile__footer"
+        >
+          <div
+            className="PolicyTile__footer-idle"
+          >
+            <div
+              className="PolicyTile__footer-idle-circle"
+            />
+            <h3>
+              Idle
+            </h3>
+          </div>
+          <div
+            className="PolicyTile__footer-temp"
+          >
+            <h3>
+              26.3
+              °C
+            </h3>
+          </div>
+        </div>,
+      ],
+      "className": "PolicyTile",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <OverflowMenu
+            ariaLabel="list of options"
+            className="PolicyTile__overflow-menu"
+            flipped={false}
+            floatingMenu={false}
+            iconDescription="open and close list of options"
+            iconName="overflow-menu"
+            menuOffset={[Function]}
+            menuOffsetFlip={[Function]}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            open={false}
+            tabIndex={0}
+          >
+            <OverflowMenuItem
+              className="PolicyTile__overflow-menu-view"
+              disabled={false}
+              hasDivider={false}
+              isDelete={false}
+              itemText="View"
+              onClick={[Function]}
+            />
+            <OverflowMenuItem
+              className="PolicyTile__overflow-menu-delete"
+              disabled={false}
+              hasDivider={true}
+              isDelete={true}
+              itemText="Delete"
+              onClick={[Function]}
+            />
+          </OverflowMenu>,
+          "className": "PolicyTile__overflow-container",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "ariaLabel": "list of options",
+            "children": Array [
+              <OverflowMenuItem
+                className="PolicyTile__overflow-menu-view"
+                disabled={false}
+                hasDivider={false}
+                isDelete={false}
+                itemText="View"
+                onClick={[Function]}
+              />,
+              <OverflowMenuItem
+                className="PolicyTile__overflow-menu-delete"
+                disabled={false}
+                hasDivider={true}
+                isDelete={true}
+                itemText="Delete"
+                onClick={[Function]}
+              />,
+            ],
+            "className": "PolicyTile__overflow-menu",
+            "flipped": false,
+            "floatingMenu": false,
+            "iconDescription": "open and close list of options",
+            "iconName": "overflow-menu",
+            "menuOffset": [Function],
+            "menuOffsetFlip": [Function],
+            "onClick": [Function],
+            "onKeyDown": [Function],
+            "open": false,
+            "tabIndex": 0,
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "className": "PolicyTile__overflow-menu-view",
+                "disabled": false,
+                "hasDivider": false,
+                "isDelete": false,
+                "itemText": "View",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "className": "PolicyTile__overflow-menu-delete",
+                "disabled": false,
+                "hasDivider": true,
+                "isDelete": true,
+                "itemText": "Delete",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="PolicyTile__name-container"
+            >
+              <h3>
+                test
+              </h3>
+            </div>,
+            <div
+              className="PolicyTile__icon-container"
+            >
+              <div
+                className="PolicyTile__icon-circle"
+              >
+                <div>
+                  <Icon
+                    description="Policys icon"
+                    fillRule="evenodd"
+                    name="schematics"
+                    role="img"
+                  />
+                </div>
+              </div>
+            </div>,
+          ],
+          "className": "PolicyTile__center-container",
+          "onClick": [Function],
+          "style": Object {
+            "cursor": "pointer",
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <h3>
+                test
+              </h3>,
+              "className": "PolicyTile__name-container",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "test",
+              },
+              "ref": null,
+              "rendered": "test",
+              "type": "h3",
+            },
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <div
+                className="PolicyTile__icon-circle"
+              >
+                <div>
+                  <Icon
+                    description="Policys icon"
+                    fillRule="evenodd"
+                    name="schematics"
+                    role="img"
+                  />
+                </div>
+              </div>,
+              "className": "PolicyTile__icon-container",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <div>
+                  <Icon
+                    description="Policys icon"
+                    fillRule="evenodd"
+                    name="schematics"
+                    role="img"
+                  />
+                </div>,
+                "className": "PolicyTile__icon-circle",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <Icon
+                    description="Policys icon"
+                    fillRule="evenodd"
+                    name="schematics"
+                    role="img"
+                  />,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "description": "Policys icon",
+                    "fillRule": "evenodd",
+                    "name": "schematics",
+                    "role": "img",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                "type": "div",
+              },
+              "type": "div",
+            },
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="PolicyTile__footer-idle"
+            >
+              <div
+                className="PolicyTile__footer-idle-circle"
+              />
+              <h3>
+                Idle
+              </h3>
+            </div>,
+            <div
+              className="PolicyTile__footer-temp"
+            >
+              <h3>
+                26.3
+                °C
+              </h3>
+            </div>,
+          ],
+          "className": "PolicyTile__footer",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="PolicyTile__footer-idle-circle"
+                />,
+                <h3>
+                  Idle
+                </h3>,
+              ],
+              "className": "PolicyTile__footer-idle",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "PolicyTile__footer-idle-circle",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Idle",
+                },
+                "ref": null,
+                "rendered": "Idle",
+                "type": "h3",
+              },
+            ],
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <h3>
+                26.3
+                °C
+              </h3>,
+              "className": "PolicyTile__footer-temp",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  26.3,
+                  "°C",
+                ],
+              },
+              "ref": null,
+              "rendered": Array [
+                26.3,
+                "°C",
+              ],
+              "type": "h3",
+            },
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="PolicyTile__overflow-container"
+          >
+            <OverflowMenu
+              ariaLabel="list of options"
+              className="PolicyTile__overflow-menu"
+              flipped={false}
+              floatingMenu={false}
+              iconDescription="open and close list of options"
+              iconName="overflow-menu"
+              menuOffset={[Function]}
+              menuOffsetFlip={[Function]}
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              open={false}
+              tabIndex={0}
+            >
+              <OverflowMenuItem
+                className="PolicyTile__overflow-menu-view"
+                disabled={false}
+                hasDivider={false}
+                isDelete={false}
+                itemText="View"
+                onClick={[Function]}
+              />
+              <OverflowMenuItem
+                className="PolicyTile__overflow-menu-delete"
+                disabled={false}
+                hasDivider={true}
+                isDelete={true}
+                itemText="Delete"
+                onClick={[Function]}
+              />
+            </OverflowMenu>
+          </div>,
+          <div
+            className="PolicyTile__center-container"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="PolicyTile__name-container"
+            >
+              <h3>
+                test
+              </h3>
+            </div>
+            <div
+              className="PolicyTile__icon-container"
+            >
+              <div
+                className="PolicyTile__icon-circle"
+              >
+                <div>
+                  <Icon
+                    description="Policys icon"
+                    fillRule="evenodd"
+                    name="schematics"
+                    role="img"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>,
+          <div
+            className="PolicyTile__footer"
+          >
+            <div
+              className="PolicyTile__footer-idle"
+            >
+              <div
+                className="PolicyTile__footer-idle-circle"
+              />
+              <h3>
+                Idle
+              </h3>
+            </div>
+            <div
+              className="PolicyTile__footer-temp"
+            >
+              <h3>
+                26.3
+                °C
+              </h3>
+            </div>
+          </div>,
+        ],
+        "className": "PolicyTile",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <OverflowMenu
+              ariaLabel="list of options"
+              className="PolicyTile__overflow-menu"
+              flipped={false}
+              floatingMenu={false}
+              iconDescription="open and close list of options"
+              iconName="overflow-menu"
+              menuOffset={[Function]}
+              menuOffsetFlip={[Function]}
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              open={false}
+              tabIndex={0}
+            >
+              <OverflowMenuItem
+                className="PolicyTile__overflow-menu-view"
+                disabled={false}
+                hasDivider={false}
+                isDelete={false}
+                itemText="View"
+                onClick={[Function]}
+              />
+              <OverflowMenuItem
+                className="PolicyTile__overflow-menu-delete"
+                disabled={false}
+                hasDivider={true}
+                isDelete={true}
+                itemText="Delete"
+                onClick={[Function]}
+              />
+            </OverflowMenu>,
+            "className": "PolicyTile__overflow-container",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "ariaLabel": "list of options",
+              "children": Array [
+                <OverflowMenuItem
+                  className="PolicyTile__overflow-menu-view"
+                  disabled={false}
+                  hasDivider={false}
+                  isDelete={false}
+                  itemText="View"
+                  onClick={[Function]}
+                />,
+                <OverflowMenuItem
+                  className="PolicyTile__overflow-menu-delete"
+                  disabled={false}
+                  hasDivider={true}
+                  isDelete={true}
+                  itemText="Delete"
+                  onClick={[Function]}
+                />,
+              ],
+              "className": "PolicyTile__overflow-menu",
+              "flipped": false,
+              "floatingMenu": false,
+              "iconDescription": "open and close list of options",
+              "iconName": "overflow-menu",
+              "menuOffset": [Function],
+              "menuOffsetFlip": [Function],
+              "onClick": [Function],
+              "onKeyDown": [Function],
+              "open": false,
+              "tabIndex": 0,
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "className": "PolicyTile__overflow-menu-view",
+                  "disabled": false,
+                  "hasDivider": false,
+                  "isDelete": false,
+                  "itemText": "View",
+                  "onClick": [Function],
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "className": "PolicyTile__overflow-menu-delete",
+                  "disabled": false,
+                  "hasDivider": true,
+                  "isDelete": true,
+                  "itemText": "Delete",
+                  "onClick": [Function],
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="PolicyTile__name-container"
+              >
+                <h3>
+                  test
+                </h3>
+              </div>,
+              <div
+                className="PolicyTile__icon-container"
+              >
+                <div
+                  className="PolicyTile__icon-circle"
+                >
+                  <div>
+                    <Icon
+                      description="Policys icon"
+                      fillRule="evenodd"
+                      name="schematics"
+                      role="img"
+                    />
+                  </div>
+                </div>
+              </div>,
+            ],
+            "className": "PolicyTile__center-container",
+            "onClick": [Function],
+            "style": Object {
+              "cursor": "pointer",
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <h3>
+                  test
+                </h3>,
+                "className": "PolicyTile__name-container",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "test",
+                },
+                "ref": null,
+                "rendered": "test",
+                "type": "h3",
+              },
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <div
+                  className="PolicyTile__icon-circle"
+                >
+                  <div>
+                    <Icon
+                      description="Policys icon"
+                      fillRule="evenodd"
+                      name="schematics"
+                      role="img"
+                    />
+                  </div>
+                </div>,
+                "className": "PolicyTile__icon-container",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <div>
+                    <Icon
+                      description="Policys icon"
+                      fillRule="evenodd"
+                      name="schematics"
+                      role="img"
+                    />
+                  </div>,
+                  "className": "PolicyTile__icon-circle",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <Icon
+                      description="Policys icon"
+                      fillRule="evenodd"
+                      name="schematics"
+                      role="img"
+                    />,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "description": "Policys icon",
+                      "fillRule": "evenodd",
+                      "name": "schematics",
+                      "role": "img",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                  "type": "div",
+                },
+                "type": "div",
+              },
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="PolicyTile__footer-idle"
+              >
+                <div
+                  className="PolicyTile__footer-idle-circle"
+                />
+                <h3>
+                  Idle
+                </h3>
+              </div>,
+              <div
+                className="PolicyTile__footer-temp"
+              >
+                <h3>
+                  26.3
+                  °C
+                </h3>
+              </div>,
+            ],
+            "className": "PolicyTile__footer",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <div
+                    className="PolicyTile__footer-idle-circle"
+                  />,
+                  <h3>
+                    Idle
+                  </h3>,
+                ],
+                "className": "PolicyTile__footer-idle",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "PolicyTile__footer-idle-circle",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "div",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Idle",
+                  },
+                  "ref": null,
+                  "rendered": "Idle",
+                  "type": "h3",
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <h3>
+                  26.3
+                  °C
+                </h3>,
+                "className": "PolicyTile__footer-temp",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    26.3,
+                    "°C",
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  26.3,
+                  "°C",
+                ],
+                "type": "h3",
+              },
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

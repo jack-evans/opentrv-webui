@@ -59,6 +59,7 @@ ShallowWrapper {
               labelText="Password"
               onChange={[Function]}
               onClick={[Function]}
+              onKeyPress={[Function]}
               placeholder="Enter password"
               required={true}
               type="password"
@@ -174,6 +175,7 @@ ShallowWrapper {
                 labelText="Password"
                 onChange={[Function]}
                 onClick={[Function]}
+                onKeyPress={[Function]}
                 placeholder="Enter password"
                 required={true}
                 type="password"
@@ -304,6 +306,7 @@ ShallowWrapper {
                   labelText="Password"
                   onChange={[Function]}
                   onClick={[Function]}
+                  onKeyPress={[Function]}
                   placeholder="Enter password"
                   required={true}
                   type="password"
@@ -372,6 +375,7 @@ ShallowWrapper {
                   labelText="Password"
                   onChange={[Function]}
                   onClick={[Function]}
+                  onKeyPress={[Function]}
                   placeholder="Enter password"
                   required={true}
                   type="password"
@@ -392,6 +396,7 @@ ShallowWrapper {
                   "labelText": "Password",
                   "onChange": [Function],
                   "onClick": [Function],
+                  "onKeyPress": [Function],
                   "placeholder": "Enter password",
                   "required": true,
                   "type": "password",
@@ -615,6 +620,7 @@ ShallowWrapper {
                 labelText="Password"
                 onChange={[Function]}
                 onClick={[Function]}
+                onKeyPress={[Function]}
                 placeholder="Enter password"
                 required={true}
                 type="password"
@@ -730,6 +736,7 @@ ShallowWrapper {
                   labelText="Password"
                   onChange={[Function]}
                   onClick={[Function]}
+                  onKeyPress={[Function]}
                   placeholder="Enter password"
                   required={true}
                   type="password"
@@ -860,6 +867,7 @@ ShallowWrapper {
                     labelText="Password"
                     onChange={[Function]}
                     onClick={[Function]}
+                    onKeyPress={[Function]}
                     placeholder="Enter password"
                     required={true}
                     type="password"
@@ -928,6 +936,7 @@ ShallowWrapper {
                     labelText="Password"
                     onChange={[Function]}
                     onClick={[Function]}
+                    onKeyPress={[Function]}
                     placeholder="Enter password"
                     required={true}
                     type="password"
@@ -948,6 +957,7 @@ ShallowWrapper {
                     "labelText": "Password",
                     "onChange": [Function],
                     "onClick": [Function],
+                    "onKeyPress": [Function],
                     "placeholder": "Enter password",
                     "required": true,
                     "type": "password",

@@ -1,8 +1,31 @@
 
 .OverviewHeader {
-  align-items: center;
   background-color: $ui-04;
   display: flex;
-  height: 100px;
-  padding: 20px 0 20px 40px;
+  height: 70px;
+
+  .OverviewHeader__title {
+    align-items: center;
+    display: flex;
+    max-width: 200px;
+    padding: 20px 0 20px 40px;
+    width: 100%;
+  }
+
+  .OverviewHeader__tabs-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .OverviewHeader__tabs {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 20px;
+      width: 250px;
+
+      .OverviewHeader__tab {
+        font-size: 18pt;
+      }
+    }
+  }
 }

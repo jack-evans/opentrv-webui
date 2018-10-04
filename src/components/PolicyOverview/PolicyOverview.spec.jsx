@@ -1,12 +1,12 @@
 import React from 'react'
+import PolicyOverview from './PolicyOverview'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import OverviewHeader from './OverviewHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-describe('Overview.jsx', () => {
+describe('PolicyOverview.jsx', () => {
   it('renders without crashing', () => {
-    expect(shallow(<OverviewHeader />)).toMatchSnapshot()
+    expect(shallow(<PolicyOverview />)).toMatchSnapshot()
   })
 })

@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Overview.jsx renders without crashing 1`] = `
+exports[`NotFound.jsx renders without crashing 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <Overview />,
+  Symbol(enzyme.__unrendered__): <NotFound />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -18,36 +18,50 @@ ShallowWrapper {
     "nodeType": "host",
     "props": Object {
       "children": Array [
-        <OverviewHeader
-          handleTabChange={[Function]}
-          tabSelected={0}
+        <img
+          alt="OpenTRV logo"
+          src="opentrv.jpg"
+          style={
+            Object {
+              "paddingBottom": "100px",
+              "paddingTop": "100px",
+            }
+          }
         />,
-        <DeviceOverview />,
+        <h1>
+          404 - Not Found
+        </h1>,
       ],
-      "className": "Overview",
+      "className": "NotFound",
     },
     "ref": null,
     "rendered": Array [
       Object {
         "instance": null,
         "key": undefined,
-        "nodeType": "function",
+        "nodeType": "host",
         "props": Object {
-          "handleTabChange": [Function],
-          "tabSelected": 0,
+          "alt": "OpenTRV logo",
+          "src": "opentrv.jpg",
+          "style": Object {
+            "paddingBottom": "100px",
+            "paddingTop": "100px",
+          },
         },
         "ref": null,
         "rendered": null,
-        "type": [Function],
+        "type": "img",
       },
       Object {
         "instance": null,
         "key": undefined,
-        "nodeType": "class",
-        "props": Object {},
+        "nodeType": "host",
+        "props": Object {
+          "children": "404 - Not Found",
+        },
         "ref": null,
-        "rendered": null,
-        "type": [Function],
+        "rendered": "404 - Not Found",
+        "type": "h1",
       },
     ],
     "type": "div",
@@ -59,36 +73,50 @@ ShallowWrapper {
       "nodeType": "host",
       "props": Object {
         "children": Array [
-          <OverviewHeader
-            handleTabChange={[Function]}
-            tabSelected={0}
+          <img
+            alt="OpenTRV logo"
+            src="opentrv.jpg"
+            style={
+              Object {
+                "paddingBottom": "100px",
+                "paddingTop": "100px",
+              }
+            }
           />,
-          <DeviceOverview />,
+          <h1>
+            404 - Not Found
+          </h1>,
         ],
-        "className": "Overview",
+        "className": "NotFound",
       },
       "ref": null,
       "rendered": Array [
         Object {
           "instance": null,
           "key": undefined,
-          "nodeType": "function",
+          "nodeType": "host",
           "props": Object {
-            "handleTabChange": [Function],
-            "tabSelected": 0,
+            "alt": "OpenTRV logo",
+            "src": "opentrv.jpg",
+            "style": Object {
+              "paddingBottom": "100px",
+              "paddingTop": "100px",
+            },
           },
           "ref": null,
           "rendered": null,
-          "type": [Function],
+          "type": "img",
         },
         Object {
           "instance": null,
           "key": undefined,
-          "nodeType": "class",
-          "props": Object {},
+          "nodeType": "host",
+          "props": Object {
+            "children": "404 - Not Found",
+          },
           "ref": null,
-          "rendered": null,
-          "type": [Function],
+          "rendered": "404 - Not Found",
+          "type": "h1",
         },
       ],
       "type": "div",

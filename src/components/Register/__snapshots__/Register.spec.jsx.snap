@@ -83,7 +83,6 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Name"
-                  required={true}
                   type="text"
                   value=""
                 />
@@ -102,7 +101,6 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Email address"
-                  required={true}
                   type="email"
                   value=""
                 />
@@ -370,7 +368,6 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Name"
-                  required={true}
                   type="text"
                   value=""
                 />
@@ -389,7 +386,6 @@ ShallowWrapper {
                   onChange={[Function]}
                   onClick={[Function]}
                   placeholder="Email address"
-                  required={true}
                   type="email"
                   value=""
                 />
@@ -458,7 +454,6 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Name"
-                    required={true}
                     type="text"
                     value=""
                   />
@@ -477,7 +472,6 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Email address"
-                    required={true}
                     type="email"
                     value=""
                   />
@@ -539,7 +533,6 @@ ShallowWrapper {
                       onChange={[Function]}
                       onClick={[Function]}
                       placeholder="Name"
-                      required={true}
                       type="text"
                       value=""
                     />
@@ -558,7 +551,6 @@ ShallowWrapper {
                       onChange={[Function]}
                       onClick={[Function]}
                       placeholder="Email address"
-                      required={true}
                       type="email"
                       value=""
                     />
@@ -588,7 +580,6 @@ ShallowWrapper {
                       onChange={[Function]}
                       onClick={[Function]}
                       placeholder="Name"
-                      required={true}
                       type="text"
                       value=""
                     />,
@@ -610,7 +601,6 @@ ShallowWrapper {
                       "onChange": [Function],
                       "onClick": [Function],
                       "placeholder": "Name",
-                      "required": true,
                       "type": "text",
                       "value": "",
                     },
@@ -636,7 +626,6 @@ ShallowWrapper {
                       onChange={[Function]}
                       onClick={[Function]}
                       placeholder="Email address"
-                      required={true}
                       type="email"
                       value=""
                     />,
@@ -658,7 +647,6 @@ ShallowWrapper {
                       "onChange": [Function],
                       "onClick": [Function],
                       "placeholder": "Email address",
-                      "required": true,
                       "type": "email",
                       "value": "",
                     },
@@ -831,7 +819,6 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Name"
-                    required={true}
                     type="text"
                     value=""
                   />
@@ -850,7 +837,6 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Email address"
-                    required={true}
                     type="email"
                     value=""
                   />
@@ -1118,7 +1104,6 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Name"
-                    required={true}
                     type="text"
                     value=""
                   />
@@ -1137,7 +1122,6 @@ ShallowWrapper {
                     onChange={[Function]}
                     onClick={[Function]}
                     placeholder="Email address"
-                    required={true}
                     type="email"
                     value=""
                   />
@@ -1206,7 +1190,6 @@ ShallowWrapper {
                       onChange={[Function]}
                       onClick={[Function]}
                       placeholder="Name"
-                      required={true}
                       type="text"
                       value=""
                     />
@@ -1225,7 +1208,6 @@ ShallowWrapper {
                       onChange={[Function]}
                       onClick={[Function]}
                       placeholder="Email address"
-                      required={true}
                       type="email"
                       value=""
                     />
@@ -1287,7 +1269,6 @@ ShallowWrapper {
                         onChange={[Function]}
                         onClick={[Function]}
                         placeholder="Name"
-                        required={true}
                         type="text"
                         value=""
                       />
@@ -1306,7 +1287,6 @@ ShallowWrapper {
                         onChange={[Function]}
                         onClick={[Function]}
                         placeholder="Email address"
-                        required={true}
                         type="email"
                         value=""
                       />
@@ -1336,7 +1316,6 @@ ShallowWrapper {
                         onChange={[Function]}
                         onClick={[Function]}
                         placeholder="Name"
-                        required={true}
                         type="text"
                         value=""
                       />,
@@ -1358,7 +1337,6 @@ ShallowWrapper {
                         "onChange": [Function],
                         "onClick": [Function],
                         "placeholder": "Name",
-                        "required": true,
                         "type": "text",
                         "value": "",
                       },
@@ -1384,7 +1362,6 @@ ShallowWrapper {
                         onChange={[Function]}
                         onClick={[Function]}
                         placeholder="Email address"
-                        required={true}
                         type="email"
                         value=""
                       />,
@@ -1406,7 +1383,6 @@ ShallowWrapper {
                         "onChange": [Function],
                         "onClick": [Function],
                         "placeholder": "Email address",
-                        "required": true,
                         "type": "email",
                         "value": "",
                       },

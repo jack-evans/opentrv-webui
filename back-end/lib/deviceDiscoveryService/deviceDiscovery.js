@@ -196,7 +196,8 @@ const _discoverAllDevices = (gatewayInfo, userFlag) => {
 
           arrayOfDevices.push({
             name: deviceName,
-            currentTemperature: deviceCurrentTemperature
+            currentTemperature: deviceCurrentTemperature,
+            ambientTemperature: 18
           })
         }
         logger.info('Created an array of devices', arrayOfDevices)
@@ -358,7 +359,7 @@ const _updateDevice = (gatewayInfo, device) => {
     body: device
   }
 
-  logger.info('Making PUT request to the internet gateway')
+  logger.info('Making PUT request to the internet gateway', options)
   return rp(options)
 }
 

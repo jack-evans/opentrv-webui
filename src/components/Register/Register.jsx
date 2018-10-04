@@ -331,7 +331,6 @@ class Register extends Component {
                   id='register-name'
                   labelText='*Name'
                   name='name'
-                  required
                   placeholder='Name'
                   value={this.state.user.name}
                   onChange={this.handleInputChange}
@@ -345,7 +344,6 @@ class Register extends Component {
                   labelText='*Email'
                   name='email'
                   type='email'
-                  required
                   placeholder='Email address'
                   value={this.state.user.email}
                   onChange={this.handleInputChange}
@@ -383,7 +381,6 @@ class Register extends Component {
                   id='register-address-firstline'
                   labelText='*Line 1'
                   name='address->firstLine'
-                  required
                   placeholder='First line'
                   value={this.state.user.address.firstLine}
                   style={{marginRight: 'unset'}}
@@ -418,7 +415,6 @@ class Register extends Component {
                     id='register-address-county'
                     labelText='*County'
                     name='address->county'
-                    required
                     placeholder='County'
                     value={this.state.user.address.county}
                     onChange={this.handleInputChange}
@@ -443,7 +439,6 @@ class Register extends Component {
                     id='register-address-postcode'
                     labelText='*Postcode'
                     name='address->postcode'
-                    required
                     placeholder='Postcode'
                     value={this.state.user.address.postcode}
                     onChange={this.handleInputChange}
@@ -487,7 +482,6 @@ class Register extends Component {
                   id='register-password'
                   labelText='*Password'
                   name='password'
-                  required
                   hideLabel
                   type='password'
                   placeholder='Enter password'
@@ -502,7 +496,6 @@ class Register extends Component {
                   id='register-password-confirm'
                   labelText='*Confirm Password'
                   name='password-confirm'
-                  required
                   type='password'
                   placeholder='Enter password'
                   value={this.confirmPass}
@@ -542,7 +535,6 @@ class Register extends Component {
                   id='register-gateway-url'
                   labelText='*Gateway URL'
                   name='gateway->url'
-                  required
                   placeholder='Enter Gateway URL'
                   value={this.state.user.gateway.url}
                   onChange={this.handleInputChange}
@@ -555,7 +547,6 @@ class Register extends Component {
                   id='register-gateway-username'
                   labelText='*Gateway Username'
                   name='gateway->username'
-                  required
                   placeholder='Enter Gateway username'
                   value={this.state.user.gateway.username}
                   onChange={this.handleInputChange}
@@ -568,7 +559,6 @@ class Register extends Component {
                   id='register-gateway-password'
                   labelText='*Gateway Password'
                   name='gateway->password'
-                  required
                   type='password'
                   placeholder='Enter Gateway Password'
                   value={this.state.user.gateway.password}

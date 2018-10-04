@@ -140,4 +140,62 @@ describe('Login.jsx', () => {
       })
     })
   })
+
+  describe('when the user presses enter after typing in their password', () => {
+    let wrapper
+
+    beforeEach(() => {
+      isAuthenticated.mockReturnValue(false)
+      window.location.assign = jest.fn()
+      loginUser.mockReturnValue(Promise.resolve())
+      wrapper = mount(<Login />)
+      wrapper.find('#login-email').at(1).simulate('change', { target: { value: 'john.doe@example.com' } })
+      wrapper.find('#login-password').at(1).simulate('change', { target: { value: 'password' } })
+      wrapper.find('#login-password').at(1).simulate('keypress', { key: 'Enter' })
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+      wrapper.unmount()
+    })
+
+    it('calls the loginUser function', () => {
+      expect(loginUser).toHaveBeenCalledTimes(1)
+    })
+
+    it('calls window.location.assign', () => {
+      expect(window.location.assign).toHaveBeenCalledTimes(1)
+    })
+
+    it('calls window.location.assign with "/overview"', () => {
+      expect(window.location.assign).toHaveBeenCalledWith('/overview')
+    })
+  })
+
+  describe('when the user presses another key after typing in their password', () => {
+    let wrapper
+
+    beforeEach(() => {
+      isAuthenticated.mockReturnValue(false)
+      window.location.assign = jest.fn()
+      loginUser.mockReturnValue(Promise.resolve())
+      wrapper = mount(<Login />)
+      wrapper.find('#login-email').at(1).simulate('change', { target: { value: 'john.doe@example.com' } })
+      wrapper.find('#login-password').at(1).simulate('change', { target: { value: 'password' } })
+      wrapper.find('#login-password').at(1).simulate('keypress', { key: 'Escape' })
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+      wrapper.unmount()
+    })
+
+    it('does not call the loginUser function', () => {
+      expect(loginUser).toHaveBeenCalledTimes(0)
+    })
+
+    it('does not call window.location.assign', () => {
+      expect(window.location.assign).toHaveBeenCalledTimes(0)
+    })
+  })
 })

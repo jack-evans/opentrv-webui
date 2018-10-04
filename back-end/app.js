@@ -15,12 +15,17 @@ const UserDatabase = require('./lib/userService/userDatabase')
 const userDb = new UserDatabase()
 userDb.initialise()
 
+const PolicyManagementDatabase = require('./lib/policyManagementService/policyManagementDatabase')
+const policyDb = new PolicyManagementDatabase()
+policyDb.initialise()
+
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 app.use((req, res, next) => {
   req.deviceDb = deviceDb
   req.userDb = userDb
+  req.policyDb = policyDb
   next()
 })
 
